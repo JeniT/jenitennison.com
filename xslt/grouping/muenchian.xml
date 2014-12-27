@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../../resources/style/page.xsl"?>
+<my:doc xmlns:my="http://www.jenitennison.com/"               
+        xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
+        xsi:schemaLocation="http://www.jenitennison.com/  
+                            ../../resources/schemas/doc.xsd"
+        xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/xslt/grouping/muenchian.xml">
+         <dc:title>Jeni's XSLT Pages: Grouping Using the Muenchian Method</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-19"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-19"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <dc:rights>
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    </dc:rights>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>Grouping Using the Muenchian Method</h1>
+   <p>
+  Grouping is a common problem in XSLT stylesheets: how do you take a list of elements and
+  arrange them into groups.  One of the most common situations in which it occurs is when
+  you are getting XML output from a database.  The database usually gives you results that
+  are structured according to the records in the database.  If it's an address book, for
+  example, it might give you something like:
+</p>
+   <my:example>
+&lt;records&gt;
+	&lt;contact id="0001"&gt;
+		&lt;title&gt;Mr&lt;/title&gt;
+		&lt;forename&gt;John&lt;/forename&gt;
+		&lt;surname&gt;Smith&lt;/surname&gt;
+	&lt;/contact&gt;
+	&lt;contact id="0002"&gt;
+		&lt;title&gt;Dr&lt;/title&gt;
+		&lt;forename&gt;Amy&lt;/forename&gt;
+		&lt;surname&gt;Jones&lt;/surname&gt;
+	&lt;/contact&gt;
+	...
+&lt;/records&gt;
+</my:example>
+   <p>
+  The problem is how to turn this flat input into a number of lists, grouped by surname,
+  to give something like:
+</p>
+   <my:example>
+Jones,&lt;br /&gt;
+	Amy (Dr)&lt;br /&gt;
+	Brian (Mr)&lt;br /&gt;
+Smith,&lt;br /&gt;
+	Fiona (Ms)&lt;br /&gt;
+	John (Mr)&lt;br /&gt;
+</my:example>
+   <p>
+  There are two steps in getting to a solution:
+</p>
+   <ol>
+      <li>identifying what the surnames are</li>
+      <li>getting all the contacts that have the same surname</li>
+   </ol>
+   <p>
+  Identifying what the surnames are involves identifying one contact with each surname
+  within the XML, which may as well be the first one that appears in it.  One way to find
+  these is to get those contacts that do not have a surname that is the same as a surname
+  of any previous contact:
+</p>
+   <my:example>
+contact[not(surname = preceding-sibling::contact/surname)]
+</my:example>
+   <p>
+  Once these contacts have been identified, it's easy to find out their surnames, and to
+  gather together all the contacts that have the same surname:
+</p>
+   <my:example>
+&lt;xsl:apply-templates select="/records/contact[surname = current()/surname]" /&gt;
+</my:example>
+   <p>
+  The trouble with this method is that it involves two XPaths that take a lot of
+  processing for big XML sources (such as those from big databases).  Searching through
+  all the preceding siblings with the 'preceding-siblings' axis takes a long time if
+  you're near the end of the records.  Similarly, getting all the contacts with a certain
+  surname involves looking at every single contact each time.  This makes it very
+  inefficient.
+</p>
+   <p>
+  The Muenchian Method is a method developed by Steve Muench for performing these
+  functions in a more efficient way using keys.  Keys work by assigning a key value to a
+  node and giving you easy access to that node through the key value.  If there are lots
+  of nodes that have the same key value, then all those nodes are retrieved when you use
+  that key value.  Effectively this means that if you want to group a set of nodes
+  according to a particular property of the node, then you can use keys to group them
+  together.
+</p>
+   <p>
+  Let's take our address book above.  We want to group the contacts according to their
+  surname, so we create a key that assigns each contact a key value that is the surname
+  given in the record.  The nodes that we want to group should be matched by the pattern
+  in the 'match' attribute.  The key value that we want to use is the one that's given by
+  the 'use' attribute:
+</p>
+   <my:example>
+&lt;xsl:key name="contacts-by-surname" match="contact" use="surname" /&gt;
+</my:example>
+   <p>
+  Once this key is defined, if we know a surname, we can quickly access all the contacts
+  that have that surname.  For example:
+</p>
+   <my:example>
+key('contacts-by-surname', 'Smith')
+</my:example>
+   <p>
+  will give all the records that have the surname 'Smith'.  So it's easy to satisfy the
+  second thing we needed to do (get all the contacts with the same surname):
+</p>
+   <my:example>
+&lt;xsl:apply-templates select="key('contacts-by-surname', surname)" /&gt;
+</my:example>
+   <p>
+  The first thing that we needed to do, though, was identify what the surnames were, which
+  involved identifying the first contact within the XML that had a particular surname.  We
+  can use keys again here.  We know that a contact will be part of list of nodes that is
+  given when we use the key on its surname: the question is whether it will be the first
+  in that list (which is arranged in document order) or further down?  We're only
+  interested in the records that are first in the list.
+</p>
+   <p>
+  Finding out whether a contact is first in the list returned by the key involves
+  comparing the contact node with the node that is first in the list returned by the key.
+  There are a couple of generic methods of testing whether two nodes are identical:
+</p>
+   <ol>
+      <li>
+         <p>
+      compare the unique identifiers generated for the two nodes (using generate-id()):
+    </p>
+         <my:example>
+contact[generate-id() =
+        generate-id(key('contacts-by-surname', surname)[1])]
+	  </my:example>
+      </li>
+      <li>
+         <p>
+	    see whether a node set made up of the two nodes has one or two nodes in it - nodes
+	    can't be repeated in a node set, so if there's only one node in it, then they must
+	    be the same node:
+	  </p>
+         <my:example>
+contact[count(. | key('contacts-by-surname', surname)[1]) = 1]
+    </my:example>
+      </li>
+   </ol>
+   <p>
+  Once you've identified the groups, you can sort them in whatever order you like.
+  Similarly, you can sort the nodes within the group however you want.  Here is a
+  template, then, that creates the output that we specified from the XML we were given
+  from the database:
+</p>
+   <my:example>
+&lt;xsl:key name="contacts-by-surname" match="contact" use="surname" /&gt;
+&lt;xsl:template match="records"&gt;
+	&lt;xsl:for-each select="contact[count(. | key('contacts-by-surname', surname)[1]) = 1]"&gt;
+		&lt;xsl:sort select="surname" /&gt;
+		&lt;xsl:value-of select="surname" /&gt;,&lt;br /&gt;
+		&lt;xsl:for-each select="key('contacts-by-surname', surname)"&gt;
+			&lt;xsl:sort select="forename" /&gt;
+			&lt;xsl:value-of select="forename" /&gt; (&lt;xsl:value-of select="title" /&gt;)&lt;br /&gt;
+		&lt;/xsl:for-each&gt;
+	&lt;/xsl:for-each&gt;
+&lt;/xsl:template&gt;
+</my:example>
+   <p>
+  The Muenchian Method is usually the best method to use for grouping nodes together from
+  the XML source to your output because it doesn't involve trawling through large numbers
+  of nodes, and it's therefore more efficient.  It's especially beneficial where you have
+  a flat output from a database, for example, that you need to structure into some kind of
+  hierarchy.  It can be applied in any situation where you are grouping nodes according to
+  a property of the node that is retrievable through an XPath.
+</p>
+   <p>
+  The downside is that the Muenchian Method will only work with a XSLT Processor that
+  supports keys.  This rules out James Clark's xt and pre-May 2000 versions of MSXML.  In
+  addition, using keys can be quite memory intensive, because all the nodes and their key
+  values have to be kept in memory.  Finally, it can be quite complicated to use keys where
+  the nodes that you want to group are spread across different source documents.
+</p>
+   <h2 id="links">Links</h2>
+   <my:links>
+      <my:link href="http://www.w3.org/TR/xslt#key">XSLT Recommendation: Keys</my:link>
+      <my:link href="http://www.w3.org/TR/xslt#misc-func">XSLT Recommendation: generate-id()</my:link>
+   </my:links>
+</my:doc>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf      = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+          xmlns:rdfs     = "http://www.w3.org/2000/01/rdf-schema#"
+          xmlns:owl      = "http://www.w3.org/2002/07/owl#"
+          xmlns:dc       = "http://purl.org/dc/elements/1.1/"
+	  xmlns:cc       = "http://creativecommons.org/ns#"
+          xmlns:foaf     = "http://xmlns.com/foaf/0.1/"
+          xmlns:admingeo = "http://data.ordnancesurvey.co.uk/ontology/admingeo/"
+>
+
+    <rdf:Description rdf:about="">
+        <dc:date>2009-09-28</dc:date>
+        <dc:creator>John Goodwin</dc:creator>
+        <dc:rights>Crown Copyright 2009</dc:rights>
+	<dc:rights>This data is issued under a Creative Commons 
+                    Attribution 2.0 UK: England &amp; Wales License. Attribution should be made to Ordnance Survey.
+        </dc:rights>
+        <dc:publisher>Ordnance Survey</dc:publisher>
+        <dc:title>Ordnance Survey Administrative Geography RDF</dc:title>
+	<cc:license rdf:resource="http://creativecommons.org/licenses/by/2.0/uk/"/>
+    </rdf:Description>
+
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041442">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthorityAssemblyConstituency"/>
+<rdfs:label>Ealing and Hillingdon</rdfs:label>
+<foaf:name>Ealing and Hillingdon</foaf:name>
+<admingeo:hasUnitID>41442</admingeo:hasUnitID>
+<admingeo:hasAreaCode>LAC</admingeo:hasAreaCode>
+<admingeo:hasArea>17124.546</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041443">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthorityAssemblyConstituency"/>
+<rdfs:label>Croydon and Sutton</rdfs:label>
+<foaf:name>Croydon and Sutton</foaf:name>
+<admingeo:hasUnitID>41443</admingeo:hasUnitID>
+<admingeo:hasAreaCode>LAC</admingeo:hasAreaCode>
+<admingeo:hasArea>13035.059</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041444">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthorityAssemblyConstituency"/>
+<rdfs:label>City and East</rdfs:label>
+<foaf:name>City and East</foaf:name>
+<admingeo:hasUnitID>41444</admingeo:hasUnitID>
+<admingeo:hasAreaCode>LAC</admingeo:hasAreaCode>
+<admingeo:hasArea>10110.183</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041445">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthorityAssemblyConstituency"/>
+<rdfs:label>Brent and Harrow</rdfs:label>
+<foaf:name>Brent and Harrow</foaf:name>
+<admingeo:hasUnitID>41445</admingeo:hasUnitID>
+<admingeo:hasAreaCode>LAC</admingeo:hasAreaCode>
+<admingeo:hasArea>9369.545</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041446">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthorityAssemblyConstituency"/>
+<rdfs:label>Lambeth and Southwark</rdfs:label>
+<foaf:name>Lambeth and Southwark</foaf:name>
+<admingeo:hasUnitID>41446</admingeo:hasUnitID>
+<admingeo:hasAreaCode>LAC</admingeo:hasAreaCode>
+<admingeo:hasArea>5716.28</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041447">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthorityAssemblyConstituency"/>
+<rdfs:label>Greenwich and Lewisham</rdfs:label>
+<foaf:name>Greenwich and Lewisham</foaf:name>
+<admingeo:hasUnitID>41447</admingeo:hasUnitID>
+<admingeo:hasAreaCode>LAC</admingeo:hasAreaCode>
+<admingeo:hasArea>8575.896</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041448">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthorityAssemblyConstituency"/>
+<rdfs:label>Bexley and Bromley</rdfs:label>
+<foaf:name>Bexley and Bromley</foaf:name>
+<admingeo:hasUnitID>41448</admingeo:hasUnitID>
+<admingeo:hasAreaCode>LAC</admingeo:hasAreaCode>
+<admingeo:hasArea>21442.08</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041449">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthorityAssemblyConstituency"/>
+<rdfs:label>West Central</rdfs:label>
+<foaf:name>West Central</foaf:name>
+<admingeo:hasUnitID>41449</admingeo:hasUnitID>
+<admingeo:hasAreaCode>LAC</admingeo:hasAreaCode>
+<admingeo:hasArea>5156.803</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041450">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthorityAssemblyConstituency"/>
+<rdfs:label>Merton and Wandsworth</rdfs:label>
+<foaf:name>Merton and Wandsworth</foaf:name>
+<admingeo:hasUnitID>41450</admingeo:hasUnitID>
+<admingeo:hasAreaCode>LAC</admingeo:hasAreaCode>
+<admingeo:hasArea>7284.488</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041451">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthorityAssemblyConstituency"/>
+<rdfs:label>North East</rdfs:label>
+<foaf:name>North East</foaf:name>
+<admingeo:hasUnitID>41451</admingeo:hasUnitID>
+<admingeo:hasAreaCode>LAC</admingeo:hasAreaCode>
+<admingeo:hasArea>7271.36</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041452">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthorityAssemblyConstituency"/>
+<rdfs:label>Havering and Redbridge</rdfs:label>
+<foaf:name>Havering and Redbridge</foaf:name>
+<admingeo:hasUnitID>41452</admingeo:hasUnitID>
+<admingeo:hasAreaCode>LAC</admingeo:hasAreaCode>
+<admingeo:hasArea>17089.937</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041453">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthorityAssemblyConstituency"/>
+<rdfs:label>South West</rdfs:label>
+<foaf:name>South West</foaf:name>
+<admingeo:hasUnitID>41453</admingeo:hasUnitID>
+<admingeo:hasAreaCode>LAC</admingeo:hasAreaCode>
+<admingeo:hasArea>15260.759</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041454">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthorityAssemblyConstituency"/>
+<rdfs:label>Barnet and Camden</rdfs:label>
+<foaf:name>Barnet and Camden</foaf:name>
+<admingeo:hasUnitID>41454</admingeo:hasUnitID>
+<admingeo:hasAreaCode>LAC</admingeo:hasAreaCode>
+<admingeo:hasArea>10853.241</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041455">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthorityAssemblyConstituency"/>
+<rdfs:label>Enfield and Haringey</rdfs:label>
+<foaf:name>Enfield and Haringey</foaf:name>
+<admingeo:hasUnitID>41455</admingeo:hasUnitID>
+<admingeo:hasAreaCode>LAC</admingeo:hasAreaCode>
+<admingeo:hasArea>11179.954</admingeo:hasArea>
+</rdf:Description>
+
+
+</rdf:RDF>

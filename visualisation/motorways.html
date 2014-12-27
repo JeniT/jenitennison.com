@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <script src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAcS2PumB7VTENX8T7F9IU_RTUBzBFkaEnJqYc0fbAKLUJp8is4xRFC-IE3stMU_chXmJqmWIqr_6Gdg' type='text/javascript'></script>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {'packages': ['geomap']});
+      google.setOnLoadCallback(drawMap);
+      function drawMap() {
+        // Replace the data source URL on next line with your data source URL.
+        var query = new google.visualization.Query('http://www.jenitennison.com/visualisation/data/motorways');
+        query.setQuery('select lat, long, number');
+        // Send the query with a callback function.
+        query.send(handleQueryResponse);
+      };
+      function handleQueryResponse(response) {
+        if (response.isError()) {
+          alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+          return;
+        }
+
+        var data = response.getDataTable();
+        data.insertColumn(2, 'number');
+        var geomap = new google.visualization.GeoMap(document.getElementById('map_div'));
+        geomap.draw(data, {
+          region: "GB",
+          dataMode: 'markers'
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <div id="map_div"></div>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+---
+---
+
+@import 'fonts';
+
+@import 'bootstrap-custom';
+@import 'bootstrap';
+
+body {
+  padding-top: $navbar-height;
+  padding-bottom: $navbar-height;
+}
+
+blockquote { 
+  font-size: $font-size-base;
+}
+
+.navbar {
+  background-color: $brand-primary;
+  &.navbar-default {
+    .navbar-brand {
+      color: $brand-secondary;
+    }
+    .navbar-nav > li {
+      > a {
+        color: $brand-secondary;
+      }
+      &.active > a {
+        background-color: lighten($brand-primary, 10%)
+      }
+    }
+  }
+
+}
+
+.sidebar {
+  background-color: $gray-lighter;
+  padding: $line-height-computed;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: $navbar-height;
+  padding-top: $navbar-height / 4;
+  padding-bottom: $navbar-height / 4;
+  background-color: $brand-secondary;
+  color: white;
+
+  .logo {
+    height: $font-size-base;
+    margin-right: $font-size-base / 2;
+  }
+
+  a {
+    color: white;
+  }
+}

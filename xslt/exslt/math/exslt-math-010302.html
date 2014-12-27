@@ -1,0 +1,316 @@
+<?xml version="1.0">
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "/resources/dtd/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>Extensions to XSLT 1.0 (EXSLT 1.0) - Math</title>
+      <link rel="stylesheet" href="/resources/style/base.css"/>
+      <link rel="alternate" type="text/xml" href="/index.xml"/>
+     <style>
+      .issue { margin-left: 5%; }
+      .error { color: red; }
+      .function { font-weight: bolder; }
+      .element { font: 'Courier New', Courier, monospace;
+                 font-size: 0.8em; }
+     </style>
+   </head>
+   <body>
+      <h1>Extensions to XSLT 1.0 (EXSLT 1.0) - Math</h1>
+      <p>
+         This version: <a href="http://www.jenitennison.com/xslt/exslt/math/exslt-math-010302.html">exslt-math-010302.html</a><br />
+         Most Recent version: <a href="http://www.jenitennison.com/xslt/exslt/math/">http://www.jenitennison.com/xslt/exslt/math/</a><br />
+         Author: <a href="mailto:mail@jenitennison.com">Jeni Tennison</a>
+      </p>
+      <h3>Abstract</h3>
+      <p>
+         This document describes EXSLT 1.0 - Math.  EXSLT 1.0 is a set of extension elements and functions that XSLT authors may find helpful when creating stylesheets.  EXSLT 1.0 - Math covers those extension elements and functions that provide facilities to do with maths.
+      </p>
+      <p>
+         Other parts of EXSLT 1.0 include:
+      </p>
+      <ul>
+         <li><a href="http://www.jenitennison.com/xslt/exslt/common/">EXSLT 1.0 - Common</a></li>
+         <li><a href="http://www.jenitennison.com/xslt/exslt/math/">EXSLT 1.0 - Math</a></li>
+      </ul>
+
+      <h3>Status of this Document</h3>
+
+      <p>
+         This document is a first draft for review by the implementers of XSLT processors and the XSLT stylesheet authors.  It is based on discussions on <a class="offsite" href="http://www.mulberrytech.com/xsl/xsl-list">XSL-List</a>.  Comments on this document should be sent to <a href="mailto:xsl-list@mulberrytech.com">XSL-List</a>.
+      </p>
+      <p>
+         This document has no official standing and has not been considered nor approved by any organization.
+      </p>
+
+      <h3>Contents</h3>
+      <p>
+         1. <a href="#introduction">Introduction</a><br />
+         2. <a href="#namespace">Namespace</a><br />
+         3. <a href="#functions">Math Functions</a><br />
+      </p>
+
+      <h4>Appendices</h4>
+      <p>
+         A. <a href="#references">References</a><br />
+         B. <a href="#samples">Implementations in EXSLT</a><br />
+         C. <a href="#acknowledgements">Acknowledgements</a><br />
+      </p>
+
+      <h2 id="introduction">1. Introduction</h2>
+
+      <p>
+         This document describes EXSLT 1.0 - Math.  EXSLT 1.0 is a set of extension elements and functions that XSLT authors may find helpful when creating stylesheets.  EXSLT 1.0 - Math covers those extension elements and functions that provide facilities to do with maths.
+      </p>
+      <p>
+         The extension elements and functions defined within this document are governed by the general rules about extensions to XSLT covered in [<a class="offsite" href="http://www.w3.org/TR/xslt#extension">14. Extensions</a>] in [<a href="#reference-XSLT">XSLT 1.0</a>].
+      </p>
+      <p>
+         An XSLT processor that supports EXSLT 1.0 - Math using the extension elements and functions defined within this document must conform to the behaviour described within this document.
+         An XSLT processor that supports EXSLT 1.0 - Math is not required to support any other parts of EXSLT 1.0.
+      </p>
+      <div class="issue">
+         <p>
+            <strong>Issue: EXSLT 1.0 - Common support</strong> - should a processor that supports EXSLT 1.0 - Math be required to support EXSLT 1.0 - Common?
+         </p>
+      </div>
+
+      <h2 id="namespace">2. Namespace</h2>
+
+      <p>
+         The namespace for the extension elements and functions described in this document is:
+      </p>
+      <pre>
+http://xmlns.opentechnology.org/xslt-extensions/math
+      </pre>
+      <p>
+         Throughout this document, the prefix <code>num</code> is used to refer to this namespace. Any other prefix can be used within a particular stylesheet (though a prefix must be specified to enable the extension functions to be recognised as extensions).
+      </p>
+
+      <h2 id="functions">3. Math Functions</h2>
+
+      <p>
+         This section defines the extension functions in EXSLT 1.0 - Math.
+      </p>
+
+      <div class="issue">
+         <p>
+            <strong>Issue: EXSLT 1.0 - Math Functions</strong> - some of these functions have string arguments that are dynamically evaluated as expressions.  Might it be best to ignore these functions for EXSLT 1.0 and address them when we generally address dynamic evaluation?
+         </p>
+      </div>
+
+      <p id="function-num:max">
+         <b>Function:</b> <var>number</var> <b>num:max</b>(<var>node-set</var>, <var>string</var>?)
+      </p>
+      <p>
+         The <span class="function">num:max</span> function returns the maximum value of the nodes in the node set passed as the first argument.  The 'value' of a node is calculated by evaluating the expression held in the string passed as the second argument with the current node equal to the node whose value is being calculated.
+      </p>
+      <p id="function-num:min">
+         <b>Function:</b> <var>number</var> <b>num:min</b>(<var>node-set</var>, <var>string</var>?)
+      </p>
+      <p>
+         The <span class="function">num:min</span> function returns the minimum value of the nodes in the node set passed as the first argument.  The 'value' of a node is calculated by evaluating the expression held in the string passed as the second argument with the current node equal to the node whose value is being calculated.
+      </p>
+      <p id="function-num:highest">
+         <b>Function:</b> <var>node-set</var> <b>num:highest</b>(<var>node-set</var>, <var>string</var>?)
+      </p>
+      <p>
+         The <span class="function">num:highest</span> function returns the nodes in the node set passed as the first argument with the highest value.  The 'value' of a node is calculated by evaluating the expression held in the string passed as the second argument with the current node equal to the node whose value is being calculated.
+      </p>
+      <p id="function-num:lowest">
+         <b>Function:</b> <var>node-set</var> <b>num:lowest</b>(<var>node-set</var>, <var>string</var>?)
+      </p>
+      <p>
+         The <span class="function">num:lowest</span> function returns the nodes in the node set passed as the first argument with the lowest value.  The 'value' of a node is calculated by evaluating the expression held in the string passed as the second argument with the current node equal to the node whose value is being calculated.
+      </p>
+      <p id="function-num:sum">
+         <b>Function:</b> <var>number</var> <b>num:sum</b>(<var>node-set</var>, <var>string</var>?)
+      </p>
+      <p>
+         The <span class="function">num:sum</span> function returns the sum of the values of the nodes in the node set passed as the first argument.  The 'value' of a node is calculated by evaluating the expression held in the string passed as the second argument with the current node equal to the node whose value is being calculated.
+      </p>
+
+      <h2 id="references">A. References</h2>
+      
+      <dl>
+         <dt id="reference-exslt-common"><b>EXSLT Common</b></dt>
+         <dd>Jeni Tennison. <i>Extensions to XSLT 1.0 (EXSLT 1.0) - Common</i>.  See <a href="http://www.jenitennison.com/xslt/exslt/common">http://www.jenitennison.com/xslt/exslt/common</a></dd>
+         <dt id="reference-XSLT"><b>XSLT</b></dt>
+         <dd>World Wide Web Consortium. <i>XSL Transformations (XSLT)</i>. W3C Recommendation. See <a class="offsite" href="http://www.w3.org/TR/xslt">http://www.w3.org/TR/xslt</a></dd>
+         <dt id="reference-XPath"><b>XPath</b></dt>
+         <dd>World Wide Web Consortium. <i>XML Path Language</i>. W3C Recommendation. See <a class="offsite" href="http://www.w3.org/TR/xpath">http://www.w3.org/TR/xpath</a></dd>
+      </dl>
+      
+      <h2 id="samples">B. Sample Extension Functions</h2>
+
+      <p>
+         This appendix holds example implementations of the functions defined in this document, using <a href="http://www.jenitennison.com/xslt/exslt/common/#element-function"><code>exsl:function</code></a> as described in [<a href="#reference-exslt-common">EXSLT Common</a>].
+      </p>
+
+      <p id="function-num:max">
+         <b>Function:</b> <var>number</var> <b>num:max</b>(<var>node-set</var>, <var>string</var>?)
+      </p>
+      <p class="note">
+         Note that the use of the second argument is fudged in this implementation: the 'value' of a node is calculated using <a href="http://www.jenitennison.com/xslt/exslt/common/#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the string passed as the second argument to <span class="function">num:max</span>.
+      </p>
+      <pre>
+&lt;exsl:function name="num:max">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:variable name="value-of-first" 
+                 select="number(com:eval($node-set[1], $expr))" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($node-set) &lt;= 1">
+         &lt;exsl:result select="$value-of-first" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;xsl:variable name="max-of-rest"
+                          select="num:max($node-set[position() != 1], $expr)" />
+         &lt;xsl:choose>
+            &lt;xsl:when test="$value-of-first &gt; $max-of-rest">
+               &lt;exsl:result select="$value-of-first" />
+            &lt;/xsl:when>
+            &lt;xsl:otherwise>
+               &lt;exsl:result select="$max-of-rest" />
+            &lt;/xsl:otherwise>
+         &lt;/xsl:choose>
+      &lt;/xsl:otherwise>
+   &lt;/xsl:choose>
+&lt;/exsl:function>
+      </pre>
+      <p id="function-num:min">
+         <b>Function:</b> <var>number</var> <b>num:min</b>(<var>node-set</var>, <var>string</var>?)
+      </p>
+      <p class="note">
+         Note that the use of the second argument is fudged in this implementation: the 'value' of a node is calculated using <a href="http://www.jenitennison.com/xslt/exslt/common/#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the string passed as the second argument to <span class="function">num:min</span>.
+      </p>
+      <pre>
+&lt;exsl:function name="num:min">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:variable name="value-of-first" 
+                 select="number(com:eval($node-set[1], $expr))" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($node-set) &lt;= 1">
+         &lt;exsl:result select="$value-of-first" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;xsl:variable name="min-of-rest"
+                          select="num:min($node-set[position() != 1], $expr)" />
+         &lt;xsl:choose>
+            &lt;xsl:when test="$value-of-first &lt; $max-of-rest">
+               &lt;exsl:result select="$value-of-first" />
+            &lt;/xsl:when>
+            &lt;xsl:otherwise>
+               &lt;exsl:result select="$min-of-rest" />
+            &lt;/xsl:otherwise>
+         &lt;/xsl:choose>
+      &lt;/xsl:otherwise>
+   &lt;/xsl:choose>
+&lt;/exsl:function>
+      </pre>
+      <p id="function-num:highest">
+         <b>Function:</b> <var>node-set</var> <b>num:highest</b>(<var>node-set</var>, <var>string</var>?)
+      </p>
+      <p class="note">
+         Note that the use of the second argument is fudged in this implementation: the 'value' of a node is calculated using <a href="http://www.jenitennison.com/xslt/exslt/common/#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the string passed as the second argument to <span class="function">num:highest</span>.
+      </p>
+      <pre>
+&lt;exsl:function name="num:highest">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($node-set) &lt;= 1">
+         &lt;exsl:result select="$node-set[1]" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;xsl:variable name="highest-of-rest"
+                          select="num:highest($node-set[position() != 1], 
+                                              $expr)" />
+         &lt;xsl:variable name="highest-of-rest-value"
+                          select="number(com:eval($highest-of-rest, $expr))" />
+         &lt;xsl:variable name="current-value"
+                          select="number(com:eval($node-set[1], $expr))" />
+         &lt;xsl:choose>
+            &lt;xsl:when test="$current-value = $highest-of-rest-value">
+               &lt;exsl:result select="$node-set[1] | $highest-of-rest" />
+            &lt;/xsl:when>
+            &lt;xsl:when test="$current-value &gt; $highest-of-rest-value">
+               &lt;exsl:result select="$node-set[1]" />
+            &lt;/xsl:when>
+            &lt;xsl:otherwise>
+               &lt;exsl:result select="$highest-of-rest" />
+            &lt;/xsl:otherwise>
+         &lt;/xsl:choose>
+      &lt;/xsl:otherwise>
+   &lt;/xsl:choose>
+&lt;/exsl:function>
+      </pre>
+      <p id="function-num:lowest">
+         <b>Function:</b> <var>node-set</var> <b>num:lowest</b>(<var>node-set</var>, <var>string</var>?)
+      </p>
+      <p class="note">
+         Note that the use of the second argument is fudged in this implementation: the 'value' of a node is calculated using <a href="http://www.jenitennison.com/xslt/exslt/common/#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the string passed as the second argument to <span class="function">num:lowest</span>.
+      </p>
+      <pre>
+&lt;exsl:function name="num:lowest">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($node-set) &lt;= 1">
+         &lt;exsl:result select="$node-set[1]" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;xsl:variable name="lowest-of-rest"
+                          select="num:lowest($node-set[position() != 1], 
+                                             $expr)" />
+         &lt;xsl:variable name="lowest-of-rest-value"
+                          select="number(com:eval($lowest-of-rest, $expr))" />
+         &lt;xsl:variable name="current-value"
+                          select="number(com:eval($node-set[1], $expr))" />
+         &lt;xsl:choose>
+            &lt;xsl:when test="$current-value = $lowest-of-rest-value">
+               &lt;exsl:result select="$node-set[1] | $lowest-of-rest" />
+            &lt;/xsl:when>
+            &lt;xsl:when test="$current-value &lt; $lowest-of-rest-value">
+               &lt;exsl:result select="$node-set[1]" />
+            &lt;/xsl:when>
+            &lt;xsl:otherwise>
+               &lt;exsl:result select="$highest-of-rest" />
+            &lt;/xsl:otherwise>
+         &lt;/xsl:choose>
+      &lt;/xsl:otherwise>
+   &lt;/xsl:choose>
+&lt;/exsl:function>
+      </pre>
+      <p id="function-num:sum">
+         <b>Function:</b> <var>number</var> <b>num:sum</b>(<var>node-set</var>, <var>string</var>?)
+      </p>
+      <p class="note">
+         Note that the use of the second argument is fudged in this implementation: the 'value' of a node is calculated using <a href="http://www.jenitennison.com/xslt/exslt/common/#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the string passed as the second argument to <span class="function">num:sum</span>.
+      </p>
+      <pre>
+&lt;exsl:function name="num:sum">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:variable name="value-of-first"
+                    select="number(com:eval($node-set[1], $expr))" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($node-set) &lt;= 1">
+         &lt;exsl:result select="$value-of-first" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;exsl:result select="$value-of-first +
+                                 num:sum($node-set[position() != 1], $expr)" />
+      &lt;/xsl:otherwise>
+   &lt;/xsl:choose>
+&lt;/exsl:function>
+      </pre>
+
+      <h2 id="acknowledgements">C. Acknowledgements</h2>
+
+      <p>
+         This document describes many functions that are currently in use in <a href="http://users.iclway.co.uk/mhkay/saxon" class="offsite">Saxon</a> by Mike Kay.  It has also been informed and inspired by discussions on <a class="offsite" href="http://www.mulberrytech.com/xsl/xsl-list">XSL-List</a>.
+      </p>
+
+   </body>
+</html>

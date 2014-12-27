@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="test-svg.xsl" ?>
+<stats>
+   <item><label>Jan</label><value>642</value></item>
+   <item><label>Feb</label><value>527</value></item>
+   <item><label>Mar</label><value>364</value></item>
+   <item><label>Apr</label><value>843</value></item>
+   <item><label>May</label><value>295</value></item>
+   <item><label>Jun</label><value>250</value></item>
+   <item><label>Jul</label><value>654</value></item>
+   <item><label>Aug</label><value>828</value></item>
+   <item><label>Sep</label><value>454</value></item>
+   <item><label>Oct</label><value>732</value></item>
+   <item><label>Nov</label><value>236</value></item>
+   <item><label>Dec</label><value>546</value></item>
+</stats>

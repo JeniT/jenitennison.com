@@ -1,0 +1,353 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>Unit Testing XSLT</title>
+      <link rel="stylesheet" href="/resources/style/base.css"/>
+   </head>
+   <body>
+      <h1>Unit Testing XSLT</h1>
+      <div>
+         <h2>Introduction</h2>
+         <p>This is a package that makes it easy to write and run unit tests for
+      XSLT code. All you need is to unzip the .zip file <a href="unit-testing.zip">unit-testing.zip</a> somewhere and install <a href="http://saxon.sf.net/">Saxon 8.4B</a> (or later), with
+      <code>saxon8.jar</code> in your <code>CLASSPATH</code>.</p>
+         <div class="note">
+            <p>I've made various upgrades to the testing package since August. 
+      These changes are reflected in the text below.</p>
+         </div>
+         <div class="note">
+            <p>My apologies to Linux and Mac users: I would supply shell files for
+        running the unit tests, but I don't know how to write them. Any kindly
+        soul who wishes to donate is more than welcome: it should all be
+        portable, since it's just Java and XSLT. Actually, I'm no expert at
+        writing Windows batch files either, so if anyone wants to smarten up
+        <code>test.bat</code> they're more than welcome.</p>
+         </div>
+      </div>
+      <div>
+         <h2>Writing the Tests</h2>
+         <p>I've tried to design this package to make writing tests easy. That
+      means avoiding having to write anything that could be created
+      automatically, such as test IDs (although you can supply them), calls to
+      the tested functions or templates or comparison code. You write the tests
+      inside your stylesheet, just before the code that you want to test.</p>
+         <div class="example">
+            <div class="title">Simple Example</div>
+            <p>This is a really simple example of a single test that checks the
+        result of calling the <code>eg:square()</code> function with the
+        <code>number</code> parameter set to <code>2</code>. The
+        expected result is the number <code>4</code>.</p>
+            <pre>&lt;test:tests&gt;
+  &lt;test:test&gt;
+    &lt;test:param name="number" select="2" /&gt;
+    &lt;test:expect select="4" /&gt;
+  &lt;/test:test&gt;
+&lt;/test:tests&gt;
+&lt;xsl:function name="eg:square" as="xs:double"&gt;
+  &lt;xsl:param name="number" as="xs:double" /&gt;
+  &lt;xsl:sequence select="$number * $number" /&gt;
+&lt;/xsl:function&gt;</pre>
+         </div>
+         <p>All the testing elements are in the namespace
+      <code>http://www.jenitennison.com/xslt/unit-test</code>, so you need
+      to declare that in your stylesheet and you probably want to prevent
+      namespace declarations for that namespace littering your code, so you need
+      to use the <code>exclude-result-prefixes</code> attribute on
+      <code>&lt;xsl:stylesheet&gt;</code> as follows:</p>
+         <pre>&lt;xsl:stylesheet version="..."
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                ...
+                xmlns:test="http://www.jenitennison.com/xslt/unit-test"
+                exclude-result-prefixes="... test"&gt;
+...
+&lt;/xsl:stylesheet&gt;</pre>
+         <p>The tests that are applicable to a particular template or function are
+      all wrapped in a <code>&lt;test:tests&gt;</code> element. This is
+      primarily to make it easy to collapse them all out of the way (in editors
+      that can do such a thing) so they don't become too distracting when
+      writing the code. Individual tests are given in
+      <code>&lt;test:test&gt;</code> elements.</p>
+         <p>Both <code>&lt;test:tests&gt;</code> and
+      <code>&lt;test:test&gt;</code> elements can have an
+      <code>id</code> attribute to specify a unique identifier and/or a
+      <code>&lt;test:title&gt;</code> child that gives a human-readable
+      title. Both are optional.</p>
+         <p>Within the <code>&lt;test:test&gt;</code> element, you need to
+      specify the input to the template or function and the expected output. The
+      input can consist of a context node (for templates only) specified with an
+      optional <code>&lt;test:context&gt;</code> element and any number of
+      parameters specified with <code>&lt;test:param&gt;</code> elements.
+      The expected output must be specified with a
+      <code>&lt;test:expect&gt;</code> element.</p>
+         <p>The values for the context, parameters and expected result are all
+      defined in the same ways. For atomic values (strings, numbers and the
+      like), use the <code>select</code> attribute, as in the example
+      previously. If you want to specify nodes, you need to supply a document
+      from which the nodes can be selected. You can do this either with the
+      <code>href</code> attribute, which gives a URI for an external
+      document, or by embedding the document (or document fragment) within the
+      relevant element. The <code>select</code> attribute is then used to
+      select nodes within the document; the path it holds is interpreted from
+      the root/document node of the document. The default value for the 
+      <code>select</code> attribute is <code>"/*"</code>, which 
+      selects (all) the document element(s).</p>
+         <div class="example">
+            <div class="title">Testing using external documents</div>
+            <p>If you want to test the stylesheet as a whole, the easiest thing to
+        do is to create external input/output files and reference them. Note
+        that the result must be an XML document, so you can't use this to test
+        HTML output.</p>
+            <pre>&lt;test:tests&gt;
+  &lt;test:test&gt;
+    &lt;test:context href="input.xml" /&gt;
+    &lt;test:expect href="output.xml" /&gt;
+  &lt;/test:test&gt;
+&lt;/test:tests&gt;
+&lt;xsl:template match="/"&gt;
+  ...
+&lt;/xsl:template&gt;</pre>
+         </div>
+         <div class="example">
+            <div class="title">Supplying nodes as context and expected value</div>
+            <p>You can test with simplified documents by simply embedding the
+        important part within the test itself. The embedded document should
+        include any important ancestors of the relevant element, but doesn't
+        need to include any of the irrelevant parts of the document. Use the
+        <code>select</code> attribute to pick the nodes you want from the
+        document. Remember that if your function or template returns something
+        other than elements, you will need a <code>select</code>
+        attribute on the <code>&lt;test:expect&gt;</code> element too.</p>
+            <pre>&lt;test:tests&gt;
+  &lt;test:test&gt;
+    &lt;test:title&gt;Empty header cells&lt;/test:title&gt;
+    &lt;test:context select="/table/tgroup/thead/row/entry"&gt;
+      &lt;table&gt;
+        &lt;tgroup&gt;
+          &lt;thead&gt;
+            &lt;row&gt;
+              &lt;entry /&gt;
+            &lt;/row&gt;
+          &lt;/thead&gt;
+        &lt;/tgroup&gt;
+      &lt;/table&gt;
+    &lt;/test:context&gt;
+    &lt;test:expect&gt;
+      &lt;th&gt;&amp;#x160;&lt;/th&gt;
+    &lt;/test:expect&gt;
+  &lt;/test:test&gt;
+&lt;/test:tests&gt;    
+&lt;xsl:template match="thead/row/entry"&gt;
+  ...
+  &lt;xsl:when test="not(*) and not(normalize-space(.))"&gt;
+    &lt;th&gt;&amp;#x160;&lt;/th&gt;
+  &lt;/xsl:when&gt;
+  ...
+&lt;/xsl:template&gt;</pre>
+         </div>
+         <div class="note">Differences in whitespace-only text nodes between the expected and 
+      actual result are ignored in this version. If you want to generate tests
+      that take whitespace-only text nodes into account, you'll need to 
+      configure the testing; see below.</div>
+      </div>
+      <div>
+         <h2>Running the Tests</h2>
+         <p>Quick version: change directory to the directory where you unzipped
+      anything and run <code>test.bat</code> with the stylesheet you want
+      to test as the only argument. The command line looks like:</p>
+         <pre>test <var>stylesheet.xsl</var>
+         </pre>
+         <p>Long version: there are three steps, the last one optional, and of
+      course you can reuse the results of any one of them.</p>
+         <ol>
+            <li>
+               <p>Process your stylesheet with
+          <code>generate-tests.xsl</code>. The result is a stylesheet
+          that contains the code for the tests. You can put this wherever you
+          want; <code>test.bat</code> puts it in the same directory as the
+          original stylesheet, and calls it
+          <code>test-<var>stylesheet</var>.xsl</code>.
+          Generating the stylesheet shouldn't produce any errors, unless you've
+          written a test wrong or <code>generate-tests.xsl</code> still
+          contains bugs. I'm afraid that there's not much error-checking code in
+          <code>generate-tests.xsl</code> at the moment, so either could
+          result in errors.</p>
+            </li>
+            <li>
+               <p>Run the generated stylesheet using anything you like as the source
+          document, or by invoking the <code>main</code> template
+          directly. This runs the unit tests themselves. The result is an XML
+          document holding a report on what tests were run and their results;
+          <code>test.bat</code> puts it in the same directory again as the
+          original stylesheet, and calls it
+          <code>test-<var>stylesheet</var>-result.xml</code>.
+        </p>
+               <p>You may get errors at this stage, associated with supplying
+          invalid values for parameters for example. If the stylesheet fails any
+          of the tests, you'll get a message telling you the ID and title of the
+          test. The ID may be gibberish if you haven't supplied any IDs or
+          titles, so this is a good reason to include them. If you don't get any
+          errors or messages, then you know everything's gone smoothly.</p>
+            </li>
+            <li>
+               <p>Finally, particularly if there were failed tests that you can't
+          trace, you can format the XML report using
+          <code>format-report.xsl</code>. This produces a nice HTML page
+          (well, an HTML page) from the XML report; <code>test.bat</code>
+          puts it in the same directory as the original stylesheet, and calls it
+          <code>test-<var>stylesheet</var>-result.html</code>.
+          You shouldn't get any errors at this stage, but it's always possible.
+          Open up the HTML document and there you have it.</p>
+            </li>
+         </ol>
+         <p>If you want to customize the HTML report that you get, you can edit
+      <code>base.css</code> or (of course),
+      <code>format-report.xsl</code> to your heart's content.</p>
+      </div>
+      <div>
+         <h2>Standalone Test Suites</h2>
+         <p>Wouldn't you know it, while I prefer to have tests embedded in my 
+      stylesheet, it turns out other people don't! Well, you can have the best
+      of both worlds.</p>
+         <p>A standalone test suite has a <code>&lt;test:suite&gt;</code>
+      document element. The <code>&lt;test:suite&gt;</code> element has 
+      two attributes: <code>stylesheet</code>, which is a URL (relative 
+      to the test suite document) that points to the stylesheet tested by the
+      suite; and <code>date</code>, which is a <code>xs:dateTime</code>
+      that gives the date/time for the suite, useful for versioning.</p>
+         <p>The <code>&lt;test:suite&gt;</code> element contains one or 
+      more <code>&lt;test:tests&gt;</code> elements, which are the same
+      as described above except that they also contain, immediately after the 
+      <code>&lt;test:title&gt;</code> element if there is one, a 
+      <code>&lt;test:xslt&gt;</code> element. The 
+      <code>&lt;test:xslt&gt;</code> element contains either an 
+      <code>&lt;xsl:template&gt;</code> or a 
+      <code>&lt;xsl:function&gt;</code> element, with 
+      <code>name</code>, <code>match</code> and/or 
+      <code>mode</code> attributes to identify the template/function 
+      being tested but no content.</p>
+         <div class="example">
+            <div class="title">Standalone Test Suite</div>
+            <p>Here's what a standalone test suite for a 
+        <code>utils.xsl</code> stylesheet, last modified at 12:44 on
+        September 20th 2005, looks like. The only test shown is for the 
+        <code>eg:square</code> function.</p>
+            <pre>&lt;test:suite stylesheet="utils.xsl"
+            date="2005-09-20T12:44:00"&gt;
+        
+&lt;test:tests&gt;
+  &lt;test:xslt&gt;
+    &lt;xsl:function name="eg:square" /&gt;
+  &lt;/test:xslt&gt;
+  &lt;test:test&gt;
+    &lt;test:param name="number" select="2" /&gt;
+    &lt;test:expect select="4" /&gt;
+  &lt;/test:test&gt;
+  ...
+&lt;/test:tests&gt;
+...
+&lt;/test:suite&gt;</pre>
+         </div>
+         <p>You can use a standalone test suite as the argument to 
+      <code>test.bat</code> (or input to 
+      <code>generate-tests.xsl</code> if you're doing things by hand),
+      and the tests will be run on the referenced stylesheet.</p>
+         <p>The <code>extract-tests.xsl</code> stylesheet transforms a
+      stylesheet that has tests embedded in it into a standalone test suite. I
+      haven't done the reverse of that as yet...</p>
+      </div>
+      <div>
+         <h2>Configuring the Testing</h2>
+         <p>You can configure the details of how the testing is carried out, and
+      in particular how sequences/items/nodes are compared, by creating your
+      own implementations of the various functions in 
+      <code>generate-tests-utils.xsl</code>. A 
+      <code>test:config</code> attribute on the 
+      <code>&lt;xsl:stylesheet&gt;</code> element, or a 
+      <code>config</code> attribute on the 
+      <code>&lt;test:suite&gt;</code> element in a standalone test suite,
+      can point to a stylesheet which contains these implementations in order
+      to override the default behaviour.</p>
+         <div class="example">
+            <div class="title">Ignoring Insignificant Ordering Differences</div>
+            <p>By default, this testing package compares the expected and actual 
+        results on an item-by-item basis. So if you expect</p>
+            <pre>&lt;xs:all&gt;
+  &lt;xs:element ref="foo" /&gt;
+  &lt;xs:element ref="bar" /&gt;
+&lt;/xs:all&gt;</pre>
+            <p>but you get</p>
+            <pre>&lt;xs:all&gt;
+  &lt;xs:element ref="bar" /&gt;
+  &lt;xs:element ref="foo" /&gt;
+&lt;/xs:all&gt;</pre>
+            <p>then the test fails.</p>
+            <p>In some cases, it might be that you really don't care what order
+        particular elements appear in, just as long as they're all generated.
+        In this example, the <code>&lt;xs:element&gt;</code> elements 
+        appearing in the content of the <code>&lt;xs:all&gt;</code>
+        element can appear in any order with the same meaning.</p>
+            <p>To configure the testing package to ignore these ordering 
+        differences, you can create <code>xsd-config.xsl</code>,
+        which overrides the <code>test:sorted-children</code> function
+        from <code>generate-test-utils.xsl</code>. This ensures that
+        the sequence of <code>&lt;xs:element&gt;</code> elements are
+        sorted by name before being compared, effectively ignoring the original
+        order in which they appeared.</p>
+            <p>To use <code>xsd-config.xsl</code>, include a reference to
+        it from the <code>test:config</code> attribute on the 
+        <code>&lt;xsl:styelsheet&gt;</code> document element.</p>
+            <pre>&lt;xsl:stylesheet version="2.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:test="http://www.jenitennison.com/xslt/unit-test"
+                extension-element-prefixes="test"
+                test:config="xsd-config.xsl"&gt;
+...  
+&lt;/xsl:stylesheet&gt;</pre>
+         </div>
+      </div>
+      <div>
+         <h2>Background</h2>
+         <p>I've heard a lot about XP over the last few years, but never really
+      got into the whole unit testing thing: I think that like a lot of
+      programmers, I viewed writing tests as too much hard work. But during this
+      summer (2005), I'm working on a project that's using an XP development
+      methodology, plus Tim Bray talked glowingly about XP and unit testing
+      during his talk about the XML Summer School. I decided that if I was going
+      to do unit testing, I needed it to be really easy to write and run the
+      tests.</p>
+         <p>So during the remaining couple of days at the XML Summer School, I
+      hacked up the solution you see here. I tried to remain true to the rest of
+      the XP philosophy: this does the minimum of what I need it to do at the
+      moment, and if I find I need it to do more, <em>then</em> I'll
+      add the code to do it.</p>
+         <p>The way I use it is that I've rigged up &lt;oXygen/&gt; with an
+      "External Tool" so that I can hit a button and have the tests run and the
+      results come up in the browser. If you use &lt;oXygen/&gt;, it's easy
+      enough to do: go to Tools &gt; External Tools &gt; Preferences, click New
+      and fill in the form as follows (I have the unit testing files in
+      <code>D:\library\unit testing</code>):</p>
+         <dl>
+            <dt>Name</dt>
+            <dd>
+               <p>Test Stylesheet</p>
+            </dd>
+            <dt>Description</dt>
+            <dd>
+               <p>Runs the unit tests embedded in the current stylesheet</p>
+            </dd>
+            <dt>Working Directory</dt>
+            <dd>
+               <p>
+                  <code>D:\library\unit testing</code>
+               </p>
+            </dd>
+            <dt>Command</dt>
+            <dd>
+               <p>
+                  <code>"D:\library\unit testing\test.bat" ${cf}</code>
+               </p>
+            </dd>
+         </dl>
+      </div>
+   </body>
+</html>

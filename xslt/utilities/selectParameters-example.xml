@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../../resources/style/page.xsl"?><my:doc xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/xslt/utilities/markup-example.xml">
+         <dc:title>Jeni's XSLT Utilities: Select Parameters: Example</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-20"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2000-11-02"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <dc:rights>
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    </dc:rights>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>Select Parameters Utility: Example</h1>
+   <p>
+  The <my:link href="selectParameters.xml">Select Parameters Utility</my:link> helps you create
+  dynamic web pages.  You can use it to let users of your webpages select the parameters that they
+  want to apply within the stylesheet.
+</p>
+   <p>
+  This page gives a simple example of using the Select Parameters Utility to allow users to select
+  what function they want to see an explanation of.  Say you had some XML like:
+</p>
+   <my:example>
+&lt;functions&gt;
+  &lt;function&gt;
+    &lt;defn&gt;string concat(string, string, string*)&lt;/defn&gt;
+    &lt;desc&gt;The concat function returns the concatenation of its arguments.&lt;/desc&gt;
+  &lt;/function&gt;
+  &lt;function&gt;
+    &lt;defn&gt;boolean starts-with(string, string)&lt;/defn&gt;
+    &lt;desc&gt;The starts-with function returns true if the first argument string starts with
+    the second argument string, and otherwise returns false.&lt;/desc&gt;
+  &lt;/function&gt;
+  &lt;function&gt;
+    &lt;defn&gt;boolean contains(string, string)&lt;/defn&gt;
+    &lt;desc&gt;The contains function returns true if the first argument string contains the
+    second argument string, and otherwise returns false.&lt;/desc&gt;
+  &lt;/function&gt;
+  &lt;function&gt;
+    &lt;defn&gt;string substring-before(string, string)&lt;/defn&gt;
+    &lt;desc&gt;The substring-before function returns the substring of the first argument string
+    that precedes the first occurrence of the second argument string in the first argument
+    string, or the empty string if the first argument string does not contain the second
+    argument string. For example, substring-before("1999/04/01","/") returns 1999.&lt;/desc&gt;
+  &lt;/function&gt;
+  &lt;function&gt;
+    &lt;defn&gt;string substring-after(string, string)&lt;/defn&gt;
+    &lt;desc&gt;The substring-after function returns the substring of the first argument string
+    that follows the first occurrence of the second argument string in the first argument
+    string, or the empty string if the first argument string does not contain the second
+    argument string. For example, substring-after("1999/04/01","/") returns 04/01, and
+    substring-after("1999/04/01","19") returns 99/04/01.&lt;/desc&gt;
+  &lt;/function&gt;
+&lt;/functions&gt;
+</my:example>
+   <p>
+  And you have a stylesheet that uses a parameter to determine what function to display:
+</p>
+   <my:example>
+&lt;xsl:param name="function" select="'starts-with'" /&gt;
+
+&lt;xsl:template match="/"&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;Function Descriptions&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;h1&gt;Function Descriptions&lt;/h1&gt;
+      &lt;xsl:apply-templates select="functions/function[contains(defn, concat($function, '('))]" /&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+&lt;/xsl:template&gt;
+
+&lt;xsl:template match="function"&gt;
+  &lt;h2&gt;Function: &lt;xsl:value-of select="defn" /&gt;&lt;/h2&gt;
+  &lt;p&gt;&lt;xsl:value-of select="desc" /&gt;&lt;/p&gt;
+&lt;/xsl:template&gt;
+</my:example>
+   <p>
+  You want to let your users select which function they want to view the details of
+  dynamically, using a drop-down list.
+</p>
+   <p>
+  First, you need to import the selectParameters stylesheet into your stylesheet: 
+</p>
+   <my:example>
+&lt;xsl:import href="selectParameters.xsl" /&gt;
+</my:example>
+   <p>
+  Second, you need to call the 'insert-selectParameters-form' template at the point within your
+  stylesheet where you want the form to be placed, for example:
+</p>
+   <my:example>
+&lt;xsl:template match="/"&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;Function Descriptions&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;h1&gt;Function Descriptions&lt;/h1&gt;
+      &lt;p&gt;Select the function that you wish to learn about:&lt;/p&gt;
+      &lt;xsl:call-template name="insert-selectParameters-form" /&gt;
+      &lt;xsl:apply-templates select="functions/function[contains(defn, concat($function, '('))]" /&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+&lt;/xsl:template&gt;
+</my:example>
+   <p>
+  Third, you need to add the 'http://www.jenitennison.com/xslt/doc' namespace to your
+  stylesheet as an extension prefix, which means adding a namespace declaration and the
+  'extension-element-prefixes' attribute to the xsl:stylesheet element, to give something
+  like:
+</p>
+   <my:example>
+&lt;xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:doc="http://www.jenitennison.com/xslt/doc"
+                extension-element-prefixes="doc"&gt;
+</my:example>
+   <p>
+  Finally, you need to add some documentation within your stylesheet for the parameter
+  that you want the users to be able to change.  This should give a label for the form
+  where they select the value of the parameter, and give any options for that parameter if
+  applicable.  The 'name' attribute of the 'doc:param' element should be the same as the
+  name of the parameter that you're documenting.
+</p>
+   <my:example>
+&lt;doc:param name="function"&gt;
+  &lt;doc:label&gt;Function: &lt;/doc:label&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;concat&lt;/doc:value&gt;&lt;doc:choice&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;starts-with&lt;/doc:value&gt;&lt;doc:choice&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;contains&lt;/doc:value&gt;&lt;doc:choice&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;substring-before&lt;/doc:value&gt;&lt;doc:choice&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;substring-after&lt;/doc:value&gt;&lt;doc:choice&gt;
+&lt;/doc:param&gt;
+</my:example>
+   <p>
+      <my:link href="functions.xml">See the end result</my:link>
+      <my:aside>only in MSXML July or later</my:aside>. 
+</p>
+   <h2>More Information</h2>
+   <my:links>
+      <my:link href="selectParameters.xml">Instructions</my:link>
+      <my:link href="paramDoc.xml">Parameter Documentation</my:link>
+      <my:link href="selectParameters-explanation.xml">How it Works</my:link>
+   </my:links>
+</my:doc>

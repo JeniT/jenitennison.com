@@ -1,0 +1,1158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf      = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+          xmlns:rdfs     = "http://www.w3.org/2000/01/rdf-schema#"
+          xmlns:owl      = "http://www.w3.org/2002/07/owl#"
+          xmlns:dc       = "http://purl.org/dc/elements/1.1/"
+	  xmlns:cc       = "http://creativecommons.org/ns#"
+          xmlns:foaf     = "http://xmlns.com/foaf/0.1/"
+          xmlns:admingeo = "http://data.ordnancesurvey.co.uk/ontology/admingeo/"
+>
+
+    <rdf:Description rdf:about="">
+        <dc:date>2009-09-28</dc:date>
+        <dc:creator>John Goodwin</dc:creator>
+        <dc:rights>Crown Copyright 2009</dc:rights>
+	<dc:rights>This data is issued under a Creative Commons 
+                    Attribution 2.0 UK: England &amp; Wales License. Attribution should be made to Ordnance Survey.
+        </dc:rights>
+        <dc:publisher>Ordnance Survey</dc:publisher>
+        <dc:title>Ordnance Survey Administrative Geography RDF</dc:title>
+	<cc:license rdf:resource="http://creativecommons.org/licenses/by/2.0/uk/"/>
+    </rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041303">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Cardiff North</rdfs:label>
+<foaf:name>Cardiff North</foaf:name>
+<admingeo:hasUnitID>41303</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>4262.346</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041308">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Pontypridd</rdfs:label>
+<foaf:name>Pontypridd</foaf:name>
+<admingeo:hasUnitID>41308</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>10499.359</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041309">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Vale of Clwyd</rdfs:label>
+<foaf:name>Vale of Clwyd</foaf:name>
+<admingeo:hasUnitID>41309</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>22405.733</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041313">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Monmouth</rdfs:label>
+<foaf:name>Monmouth</foaf:name>
+<admingeo:hasUnitID>41313</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>83874.208</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041314">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Cardiff Central</rdfs:label>
+<foaf:name>Cardiff Central</foaf:name>
+<admingeo:hasUnitID>41314</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>1683.793</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041316">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Arfon</rdfs:label>
+<foaf:name>Arfon</foaf:name>
+<admingeo:hasUnitID>41316</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>43690.428</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041318">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Islwyn</rdfs:label>
+<foaf:name>Islwyn</foaf:name>
+<admingeo:hasUnitID>41318</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>11201.157</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041319">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Clwyd West</rdfs:label>
+<foaf:name>Clwyd West</foaf:name>
+<admingeo:hasUnitID>41319</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>93090.972</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041322">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Neath</rdfs:label>
+<foaf:name>Neath</foaf:name>
+<admingeo:hasUnitID>41322</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>26530.299</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041325">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Ogmore</rdfs:label>
+<foaf:name>Ogmore</foaf:name>
+<admingeo:hasUnitID>41325</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>20291.528</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041328">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Preseli Pembrokeshire</rdfs:label>
+<foaf:name>Preseli Pembrokeshire</foaf:name>
+<admingeo:hasUnitID>41328</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>119310.498</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041330">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Alyn and Deeside</rdfs:label>
+<foaf:name>Alyn and Deeside</foaf:name>
+<admingeo:hasUnitID>41330</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>15689.567</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041335">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Caerphilly</rdfs:label>
+<foaf:name>Caerphilly</foaf:name>
+<admingeo:hasUnitID>41335</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>11454.459</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041341">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Wrexham</rdfs:label>
+<foaf:name>Wrexham</foaf:name>
+<admingeo:hasUnitID>41341</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>10313.8</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041344">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Swansea West</rdfs:label>
+<foaf:name>Swansea West</foaf:name>
+<admingeo:hasUnitID>41344</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>3735.835</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041349">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Swansea East</rdfs:label>
+<foaf:name>Swansea East</foaf:name>
+<admingeo:hasUnitID>41349</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>4984.839</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041354">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Delyn</rdfs:label>
+<foaf:name>Delyn</foaf:name>
+<admingeo:hasUnitID>41354</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>33259.233</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041360">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Carmarthen East and Dinefwr</rdfs:label>
+<foaf:name>Carmarthen East and Dinefwr</foaf:name>
+<admingeo:hasUnitID>41360</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>156088.624</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041361">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Aberavon</rdfs:label>
+<foaf:name>Aberavon</foaf:name>
+<admingeo:hasUnitID>41361</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>18652.41</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041367">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Merthyr Tydfil and Rhymney</rdfs:label>
+<foaf:name>Merthyr Tydfil and Rhymney</foaf:name>
+<admingeo:hasUnitID>41367</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>16192.658</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041375">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Torfaen</rdfs:label>
+<foaf:name>Torfaen</foaf:name>
+<admingeo:hasUnitID>41375</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>11753.804</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041378">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Montgomeryshire</rdfs:label>
+<foaf:name>Montgomeryshire</foaf:name>
+<admingeo:hasUnitID>41378</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>218153.466</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041380">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Llanelli</rdfs:label>
+<foaf:name>Llanelli</foaf:name>
+<admingeo:hasUnitID>41380</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>27600.979</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041382">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Brecon and Radnorshire</rdfs:label>
+<foaf:name>Brecon and Radnorshire</foaf:name>
+<admingeo:hasUnitID>41382</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>301471.726</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041387">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Newport East</rdfs:label>
+<foaf:name>Newport East</foaf:name>
+<admingeo:hasUnitID>41387</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>16686.42</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041389">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Blaenau Gwent</rdfs:label>
+<foaf:name>Blaenau Gwent</foaf:name>
+<admingeo:hasUnitID>41389</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>10875.624</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041391">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Aberconwy</rdfs:label>
+<foaf:name>Aberconwy</foaf:name>
+<admingeo:hasUnitID>41391</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>62267.111</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041393">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Vale of Glamorgan</rdfs:label>
+<foaf:name>Vale of Glamorgan</foaf:name>
+<admingeo:hasUnitID>41393</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>32170.494</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041395">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Bridgend</rdfs:label>
+<foaf:name>Bridgend</foaf:name>
+<admingeo:hasUnitID>41395</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>8926.255</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041396">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Clwyd South</rdfs:label>
+<foaf:name>Clwyd South</foaf:name>
+<admingeo:hasUnitID>41396</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>62274.522</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041401">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Ceredigion</rdfs:label>
+<foaf:name>Ceredigion</foaf:name>
+<admingeo:hasUnitID>41401</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>180587.035</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041405">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Cardiff West</rdfs:label>
+<foaf:name>Cardiff West</foaf:name>
+<admingeo:hasUnitID>41405</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>5098.832</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041407">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Newport West</rdfs:label>
+<foaf:name>Newport West</foaf:name>
+<admingeo:hasUnitID>41407</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>10689.6</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041515">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Cynon Valley</rdfs:label>
+<foaf:name>Cynon Valley</foaf:name>
+<admingeo:hasUnitID>41515</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>18239.37</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041517">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Cardiff South and Penarth</rdfs:label>
+<foaf:name>Cardiff South and Penarth</foaf:name>
+<admingeo:hasUnitID>41517</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>5700.191</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041519">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Gower</rdfs:label>
+<foaf:name>Gower</foaf:name>
+<admingeo:hasUnitID>41519</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>33399.14</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041520">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Ynys Mon</rdfs:label>
+<foaf:name>Ynys Mon</foaf:name>
+<admingeo:hasUnitID>41520</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>74904.63</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041524">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Carmarthen West and South Pembrokeshire</rdfs:label>
+<foaf:name>Carmarthen West and South Pembrokeshire</foaf:name>
+<admingeo:hasUnitID>41524</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>105916.606</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041529">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Rhondda</rdfs:label>
+<foaf:name>Rhondda</foaf:name>
+<admingeo:hasUnitID>41529</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>9988.9</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000043185">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyConstituency"/>
+<rdfs:label>Dwyfor Meirionnydd</rdfs:label>
+<foaf:name>Dwyfor Meirionnydd</foaf:name>
+<admingeo:hasUnitID>43185</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAC</admingeo:hasAreaCode>
+<admingeo:hasArea>218549.114</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041532">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyElectoralRegion"/>
+<rdfs:label>South Wales Central</rdfs:label>
+<foaf:name>South Wales Central</foaf:name>
+<admingeo:hasUnitID>41532</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAE</admingeo:hasAreaCode>
+<admingeo:hasArea>87643.286</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041533">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyElectoralRegion"/>
+<rdfs:label>South Wales East</rdfs:label>
+<foaf:name>South Wales East</foaf:name>
+<admingeo:hasUnitID>41533</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAE</admingeo:hasAreaCode>
+<admingeo:hasArea>172727.931</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041534">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyElectoralRegion"/>
+<rdfs:label>Mid and West Wales</rdfs:label>
+<foaf:name>Mid and West Wales</foaf:name>
+<admingeo:hasUnitID>41534</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAE</admingeo:hasAreaCode>
+<admingeo:hasArea>1327678.048</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041535">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyElectoralRegion"/>
+<rdfs:label>North Wales</rdfs:label>
+<foaf:name>North Wales</foaf:name>
+<admingeo:hasUnitID>41535</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAE</admingeo:hasAreaCode>
+<admingeo:hasArea>417895.996</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041536">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/WelshAssemblyElectoralRegion"/>
+<rdfs:label>South Wales West</rdfs:label>
+<foaf:name>South Wales West</foaf:name>
+<admingeo:hasUnitID>41536</admingeo:hasUnitID>
+<admingeo:hasAreaCode>WAE</admingeo:hasAreaCode>
+<admingeo:hasArea>116520.306</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041301">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Edinburgh East and Musselburgh</rdfs:label>
+<foaf:name>Edinburgh East and Musselburgh</foaf:name>
+<admingeo:hasUnitID>41301</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>3035.981</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041302">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Linlithgow</rdfs:label>
+<foaf:name>Linlithgow</foaf:name>
+<admingeo:hasUnitID>41302</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>19967.911</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041304">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Cumbernauld and Kilsyth</rdfs:label>
+<foaf:name>Cumbernauld and Kilsyth</foaf:name>
+<admingeo:hasUnitID>41304</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>10499.441</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041305">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Clydebank and Milngavie</rdfs:label>
+<foaf:name>Clydebank and Milngavie</foaf:name>
+<admingeo:hasUnitID>41305</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>6582.581</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041306">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Glasgow Shettleston</rdfs:label>
+<foaf:name>Glasgow Shettleston</foaf:name>
+<admingeo:hasUnitID>41306</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>1531.035</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041307">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Hamilton South</rdfs:label>
+<foaf:name>Hamilton South</foaf:name>
+<admingeo:hasUnitID>41307</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>6268.707</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041310">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Kilmarnock and Loudoun</rdfs:label>
+<foaf:name>Kilmarnock and Loudoun</foaf:name>
+<admingeo:hasUnitID>41310</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>37512.822</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041311">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Dumfries</rdfs:label>
+<foaf:name>Dumfries</foaf:name>
+<admingeo:hasUnitID>41311</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>208339.293</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041312">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Glasgow Maryhill</rdfs:label>
+<foaf:name>Glasgow Maryhill</foaf:name>
+<admingeo:hasUnitID>41312</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>2016.738</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041315">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Galloway and Upper Nithsdale</rdfs:label>
+<foaf:name>Galloway and Upper Nithsdale</foaf:name>
+<admingeo:hasUnitID>41315</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>459265.056</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041317">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Livingston</rdfs:label>
+<foaf:name>Livingston</foaf:name>
+<admingeo:hasUnitID>41317</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>23148.186</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041320">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Stirling</rdfs:label>
+<foaf:name>Stirling</foaf:name>
+<admingeo:hasUnitID>41320</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>217775.426</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041321">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Dumbarton</rdfs:label>
+<foaf:name>Dumbarton</foaf:name>
+<admingeo:hasUnitID>41321</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>54084.03</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041323">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Glasgow Rutherglen</rdfs:label>
+<foaf:name>Glasgow Rutherglen</foaf:name>
+<admingeo:hasUnitID>41323</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>2730.961</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041324">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Clydesdale</rdfs:label>
+<foaf:name>Clydesdale</foaf:name>
+<admingeo:hasUnitID>41324</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>138743.266</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041327">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Cunninghame South</rdfs:label>
+<foaf:name>Cunninghame South</foaf:name>
+<admingeo:hasUnitID>41327</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>11765.861</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041329">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>East Lothian</rdfs:label>
+<foaf:name>East Lothian</foaf:name>
+<admingeo:hasUnitID>41329</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>68988.162</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041336">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Dunfermline West</rdfs:label>
+<foaf:name>Dunfermline West</foaf:name>
+<admingeo:hasUnitID>41336</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>16142.217</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041347">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Greenock and Inverclyde</rdfs:label>
+<foaf:name>Greenock and Inverclyde</foaf:name>
+<admingeo:hasUnitID>41347</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>7422.338</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041351">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>North East Fife</rdfs:label>
+<foaf:name>North East Fife</foaf:name>
+<admingeo:hasUnitID>41351</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>79941.693</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041355">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Glasgow Pollok</rdfs:label>
+<foaf:name>Glasgow Pollok</foaf:name>
+<admingeo:hasUnitID>41355</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>2274.847</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041356">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Midlothian</rdfs:label>
+<foaf:name>Midlothian</foaf:name>
+<admingeo:hasUnitID>41356</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>26289.488</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041357">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Aberdeen North</rdfs:label>
+<foaf:name>Aberdeen North</foaf:name>
+<admingeo:hasUnitID>41357</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>9061.282</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041358">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Ross, Skye and Inverness West</rdfs:label>
+<foaf:name>Ross, Skye and Inverness West</foaf:name>
+<admingeo:hasUnitID>41358</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>931698.254</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041359">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Western Isles</rdfs:label>
+<foaf:name>Western Isles</foaf:name>
+<admingeo:hasUnitID>41359</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>326854.402</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041362">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Perth</rdfs:label>
+<foaf:name>Perth</foaf:name>
+<admingeo:hasUnitID>41362</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>142525.506</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041363">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Edinburgh West</rdfs:label>
+<foaf:name>Edinburgh West</foaf:name>
+<admingeo:hasUnitID>41363</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>10480.877</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041364">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Edinburgh Central</rdfs:label>
+<foaf:name>Edinburgh Central</foaf:name>
+<admingeo:hasUnitID>41364</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>1668.22</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041365">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Angus</rdfs:label>
+<foaf:name>Angus</foaf:name>
+<admingeo:hasUnitID>41365</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>75627.211</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041366">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>North Tayside</rdfs:label>
+<foaf:name>North Tayside</foaf:name>
+<admingeo:hasUnitID>41366</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>525474.305</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041368">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Coatbridge and Chryston</rdfs:label>
+<foaf:name>Coatbridge and Chryston</foaf:name>
+<admingeo:hasUnitID>41368</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>7729.095</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041369">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Glasgow Govan</rdfs:label>
+<foaf:name>Glasgow Govan</foaf:name>
+<admingeo:hasUnitID>41369</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>1855.009</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041370">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Edinburgh Pentlands</rdfs:label>
+<foaf:name>Edinburgh Pentlands</foaf:name>
+<admingeo:hasUnitID>41370</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>9187.812</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041371">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>West Aberdeenshire and Kincardine</rdfs:label>
+<foaf:name>West Aberdeenshire and Kincardine</foaf:name>
+<admingeo:hasUnitID>41371</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>340695.773</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041372">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Gordon</rdfs:label>
+<foaf:name>Gordon</foaf:name>
+<admingeo:hasUnitID>41372</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>204372.215</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041373">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Edinburgh North and Leith</rdfs:label>
+<foaf:name>Edinburgh North and Leith</foaf:name>
+<admingeo:hasUnitID>41373</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>1728.485</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041374">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Dundee East</rdfs:label>
+<foaf:name>Dundee East</foaf:name>
+<admingeo:hasUnitID>41374</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>2306.058</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041376">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Motherwell and Wishaw</rdfs:label>
+<foaf:name>Motherwell and Wishaw</foaf:name>
+<admingeo:hasUnitID>41376</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>4224.551</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041377">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Falkirk West</rdfs:label>
+<foaf:name>Falkirk West</foaf:name>
+<admingeo:hasUnitID>41377</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>10820.496</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041379">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Glasgow Springburn</rdfs:label>
+<foaf:name>Glasgow Springburn</foaf:name>
+<admingeo:hasUnitID>41379</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>1996.796</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041381">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Inverness East, Nairn and Lochaber</rdfs:label>
+<foaf:name>Inverness East, Nairn and Lochaber</foaf:name>
+<admingeo:hasUnitID>41381</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>880919.31</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041383">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Dunfermline East</rdfs:label>
+<foaf:name>Dunfermline East</foaf:name>
+<admingeo:hasUnitID>41383</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>20662.414</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041384">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>West Renfrewshire</rdfs:label>
+<foaf:name>West Renfrewshire</foaf:name>
+<admingeo:hasUnitID>41384</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>28850.359</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041385">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Banff and Buchan</rdfs:label>
+<foaf:name>Banff and Buchan</foaf:name>
+<admingeo:hasUnitID>41385</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>120864.715</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041386">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Glasgow Kelvin</rdfs:label>
+<foaf:name>Glasgow Kelvin</foaf:name>
+<admingeo:hasUnitID>41386</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>1304.104</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041388">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Dundee West</rdfs:label>
+<foaf:name>Dundee West</foaf:name>
+<admingeo:hasUnitID>41388</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>2461.694</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041390">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Shetland Islands</rdfs:label>
+<foaf:name>Shetland Islands</foaf:name>
+<admingeo:hasUnitID>41390</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>165659.027</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041392">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Carrick, Cumnock and Doon Valley</rdfs:label>
+<foaf:name>Carrick, Cumnock and Doon Valley</foaf:name>
+<admingeo:hasUnitID>41392</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>197494.163</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041397">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Glasgow Cathcart</rdfs:label>
+<foaf:name>Glasgow Cathcart</foaf:name>
+<admingeo:hasUnitID>41397</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>1830.03</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041398">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Glasgow Baillieston</rdfs:label>
+<foaf:name>Glasgow Baillieston</foaf:name>
+<admingeo:hasUnitID>41398</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>3123.027</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041399">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Central Fife</rdfs:label>
+<foaf:name>Central Fife</foaf:name>
+<admingeo:hasUnitID>41399</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>10514.396</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041400">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Paisley South</rdfs:label>
+<foaf:name>Paisley South</foaf:name>
+<admingeo:hasUnitID>41400</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>3928.576</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041402">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Aberdeen Central</rdfs:label>
+<foaf:name>Aberdeen Central</foaf:name>
+<admingeo:hasUnitID>41402</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>2481.709</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041403">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Roxburgh and Berwickshire</rdfs:label>
+<foaf:name>Roxburgh and Berwickshire</foaf:name>
+<admingeo:hasUnitID>41403</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>258907.983</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041404">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Strathkelvin and Bearsden</rdfs:label>
+<foaf:name>Strathkelvin and Bearsden</foaf:name>
+<admingeo:hasUnitID>41404</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>13450.609</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041406">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>East Kilbride</rdfs:label>
+<foaf:name>East Kilbride</foaf:name>
+<admingeo:hasUnitID>41406</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>28415.683</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041408">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Kirkcaldy</rdfs:label>
+<foaf:name>Kirkcaldy</foaf:name>
+<admingeo:hasUnitID>41408</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>10131.371</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041409">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Glasgow Anniesland</rdfs:label>
+<foaf:name>Glasgow Anniesland</foaf:name>
+<admingeo:hasUnitID>41409</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>1618.862</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041513">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Tweeddale, Ettrick and Lauderdale</rdfs:label>
+<foaf:name>Tweeddale, Ettrick and Lauderdale</foaf:name>
+<admingeo:hasUnitID>41513</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>224594.563</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041514">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Eastwood</rdfs:label>
+<foaf:name>Eastwood</foaf:name>
+<admingeo:hasUnitID>41514</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>17379.185</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041516">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Ochil</rdfs:label>
+<foaf:name>Ochil</foaf:name>
+<admingeo:hasUnitID>41516</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>44240.124</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041518">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Cunninghame North</rdfs:label>
+<foaf:name>Cunninghame North</foaf:name>
+<admingeo:hasUnitID>41518</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>78619.627</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041521">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Moray</rdfs:label>
+<foaf:name>Moray</foaf:name>
+<admingeo:hasUnitID>41521</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>193651.146</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041522">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Caithness, Sutherland and Easter Ross</rdfs:label>
+<foaf:name>Caithness, Sutherland and Easter Ross</foaf:name>
+<admingeo:hasUnitID>41522</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>835818.986</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041523">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Hamilton North and Bellshill</rdfs:label>
+<foaf:name>Hamilton North and Bellshill</foaf:name>
+<admingeo:hasUnitID>41523</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>4804.753</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041525">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Paisley North</rdfs:label>
+<foaf:name>Paisley North</foaf:name>
+<admingeo:hasUnitID>41525</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>4029.841</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041526">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Edinburgh South</rdfs:label>
+<foaf:name>Edinburgh South</foaf:name>
+<admingeo:hasUnitID>41526</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>2351.081</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041527">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Aberdeen South</rdfs:label>
+<foaf:name>Aberdeen South</foaf:name>
+<admingeo:hasUnitID>41527</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>9023.842</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041528">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Argyll and Bute</rdfs:label>
+<foaf:name>Argyll and Bute</foaf:name>
+<admingeo:hasUnitID>41528</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>676769.718</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041530">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Falkirk East</rdfs:label>
+<foaf:name>Falkirk East</foaf:name>
+<admingeo:hasUnitID>41530</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>20672.634</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041531">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Airdrie and Shotts</rdfs:label>
+<foaf:name>Airdrie and Shotts</foaf:name>
+<admingeo:hasUnitID>41531</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>22536.265</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041614">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Orkney Islands</rdfs:label>
+<foaf:name>Orkney Islands</foaf:name>
+<admingeo:hasUnitID>41614</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>108621.023</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000043395">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentConstituency"/>
+<rdfs:label>Ayr</rdfs:label>
+<foaf:name>Ayr</foaf:name>
+<admingeo:hasUnitID>43395</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPC</admingeo:hasAreaCode>
+<admingeo:hasArea>15498.642</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041542">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentElectoralRegion"/>
+<rdfs:label>North East Scotland</rdfs:label>
+<foaf:name>North East Scotland</foaf:name>
+<admingeo:hasUnitID>41542</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPE</admingeo:hasAreaCode>
+<admingeo:hasArea>766894.499</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041543">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentElectoralRegion"/>
+<rdfs:label>Glasgow</rdfs:label>
+<foaf:name>Glasgow</foaf:name>
+<admingeo:hasUnitID>41543</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPE</admingeo:hasAreaCode>
+<admingeo:hasArea>20281.408</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041544">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentElectoralRegion"/>
+<rdfs:label>South of Scotland</rdfs:label>
+<foaf:name>South of Scotland</foaf:name>
+<admingeo:hasUnitID>41544</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPE</admingeo:hasAreaCode>
+<admingeo:hasArea>1583596.989</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041545">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentElectoralRegion"/>
+<rdfs:label>Highlands and Islands</rdfs:label>
+<foaf:name>Highlands and Islands</foaf:name>
+<admingeo:hasUnitID>41545</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPE</admingeo:hasAreaCode>
+<admingeo:hasArea>4119991.866</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041546">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentElectoralRegion"/>
+<rdfs:label>Central Scotland</rdfs:label>
+<foaf:name>Central Scotland</foaf:name>
+<admingeo:hasUnitID>41546</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPE</admingeo:hasAreaCode>
+<admingeo:hasArea>153484.445</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041547">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentElectoralRegion"/>
+<rdfs:label>Mid Scotland and Fife</rdfs:label>
+<foaf:name>Mid Scotland and Fife</foaf:name>
+<admingeo:hasUnitID>41547</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPE</admingeo:hasAreaCode>
+<admingeo:hasArea>1067407.451</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041548">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentElectoralRegion"/>
+<rdfs:label>Lothians</rdfs:label>
+<foaf:name>Lothians</foaf:name>
+<admingeo:hasUnitID>41548</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPE</admingeo:hasAreaCode>
+<admingeo:hasArea>97858.04</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041549">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/ScottishParliamentElectoralRegion"/>
+<rdfs:label>West of Scotland</rdfs:label>
+<foaf:name>West of Scotland</foaf:name>
+<admingeo:hasUnitID>41549</admingeo:hasUnitID>
+<admingeo:hasAreaCode>SPE</admingeo:hasAreaCode>
+<admingeo:hasArea>214347.146</admingeo:hasArea>
+</rdf:Description>
+
+
+</rdf:RDF>

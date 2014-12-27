@@ -1,0 +1,66 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=PowerPoint.Slide>
+<meta name=Generator content="Microsoft PowerPoint 9">
+
+<script>
+<!--
+if( window.name != "PPTNts" )
+  parent.location.href = "../Typing%20in%20Transformations.html";
+//-->
+</script>
+</head>
+
+<body bgcolor=white text=black>
+
+<table border=0 width="100%">
+ <tr>
+  <td width=5 nowrap></td>
+  <td width="100%"></td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>There are only a dozen or
+  so atomic types that are actually well-supported by the functions and
+  operators in XPath 2.0.</font><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>I include xs:token only
+  because it's useful for doing whitespace-ignoring comparison of strings,
+  which is something that's quite a common requirement in stylesheets. In fact,
+  there's no real support for xs:token in XPath 2.0.</font><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>Some types (xs:duration,
+  xs:anyURI and the Gregorian date types) should really be avoided. Avoidance
+  here means that you shouldn't use them in function signatures, and that, when
+  designing markup languages, you shouldn't use these formats for element and
+  attribute values (whether or not you're using Schema-Aware features). For
+  example, it's better to have an attribute with the xs:date format CCYY-MM-01
+  (i.e. with a fixed day component) than with the xs:gYearMonth format CCYY-MM;
+  doing so makes it a lot easier to access information, such as the month
+  represented in the attribute, in an appropriate type rather than as a string,
+  via string manipulation.</font><br>
+  </td>
+ </tr>
+</table>
+
+</body>
+
+</html>

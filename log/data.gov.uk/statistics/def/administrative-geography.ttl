@@ -1,0 +1,86 @@
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix admingeo: <http://data.ordnancesurvey.co.uk/ontology/admingeo/> .
+@base <http://statistics.data.gov.uk/def/administrative-geography/> .
+
+# Classes
+
+<Country> a rdfs:Class ;
+  rdfs:label "Country" ;
+  skos:prefLabel "Country" ;
+  rdfs:isDefinedIn <> .
+
+<County> a rdfs:Class ;
+  rdfs:label "County" ;
+  skos:prefLabel "County" ;
+  skos:note <http://en.wikipedia.org/wiki/Metropolitan_and_non-metropolitan_counties_of_England> ;
+  rdfs:comment "Includes old-style metropolitan counties as well as new-style non-metropolitan counties." ;
+  rdfs:isDefinedIn <> .
+
+<MetropolitanCounty> a rdfs:Class ;
+  rdfs:label "Metropolitan County" ;
+  skos:prefLabel "Metropolitan County" ;
+  skos:note <http://en.wikipedia.org/wiki/Metropolitan_county> ;
+  rdfs:isDefinedIn <> ;
+  rdfs:subClassOf <County> .
+
+<NonMetropolitanCounty> a rdfs:Class ;
+  rdfs:label "Non-Metropolitan County" ;
+  skos:prefLabel "Non-Metropolitan County" ;
+  skos:altLabel "Shire County" ;
+  skos:note <http://en.wikipedia.org/wiki/Shire_county> ;
+  rdfs:isDefinedIn <> ;
+  rdfs:subClassOf <County> ;
+  rdfs:subClassOf admingeo:County .
+
+<LocalAuthorityDistrict> a rdfs:Class ;
+  rdfs:label "Local Authority District" ;
+  skos:prefLabel "Local Authority District" ;
+  rdfs:comment "A superclass for areas that have local authorities, such as metropolitan and non-metropolitan districts, unitary authorities and London boroughs." ;
+  rdfs:isDefinedIn <> .
+
+admingeo:District rdfs:subClassOf <LocalAuthorityDistrict> .
+admingeo:MetropolitanDistrict rdfs:subClassOf <LocalAuthorityDistrict> .
+admingeo:UnitaryAuthority rdfs:subClassOf <LocalAuthorityDistrict> .
+admingeo:LondonBorough rdfs:subClassOf <LocalAuthorityDistrict> .
+
+<LocalAuthority> a rdfs:Class ;
+  rdfs:label "Local Authority" ;
+  skos:prefLabel "Local Authority" ;
+  rdfs:comment "Councils of various kinds, including both county and district councils." ;
+  rdfs:isDefinedIn <> .
+
+# Properties
+
+<coverage> a rdf:Property ;
+  rdfs:label "coverage" ;
+  skos:prefLabel "coverage" ;
+  rdfs:isDefinedIn <> ;
+  rdfs:domain <LocalAuthority> .
+
+<country> a rdf:Property ;
+  rdfs:label "country" ;
+  skos:prefLabel "country" ;
+  rdfs:isDefinedIn <> ;
+  rdfs:range <Country> .
+
+<region> a rdf:Property ;
+  rdfs:label "government office region" ;
+  skos:prefLabel "government office region" ;
+  rdfs:isDefinedIn <> ;
+  rdfs:range admingeo:GovernmentOfficeRegion .
+
+<county> a rdf:Property ;
+  rdfs:label "county" ;
+  skos:prefLabel "county" ;
+  rdfs:isDefinedIn <> ;
+  rdfs:range <County> .
+
+<district> a rdf:Property ;
+  rdfs:label "local authority district" ;
+  skos:prefLabel "local authority district" ;
+  rdfs:isDefinedIn <> ;
+  rdfs:range <LocalAuthorityDistrict> .

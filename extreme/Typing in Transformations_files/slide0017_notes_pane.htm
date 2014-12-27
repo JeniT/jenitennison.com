@@ -1,0 +1,63 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=PowerPoint.Slide>
+<meta name=Generator content="Microsoft PowerPoint 9">
+
+<script>
+<!--
+if( window.name != "PPTNts" )
+  parent.location.href = "../Typing%20in%20Transformations.html";
+//-->
+</script>
+</head>
+
+<body bgcolor=white text=black>
+
+<table border=0 width="100%">
+ <tr>
+  <td width=5 nowrap></td>
+  <td width="100%"></td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>The last point here
+  describes the design guidelines that have been employed by the functions in
+  the F&amp;O spec. There are several cases where the required type of the
+  argument is a more general version of what the function <i>actually</i>
+  requires, and the body/definition of the function does the checking of the
+  supplied value. For example, functions that actually require a positive
+  integer (xs:positiveInteger) should declare the argument type as xs:integer
+  instead, so that users can supply an integer literal rather than having to
+  explicitly cast an integer literal to the xs:positiveInteger subtype.
+  Similarly, functions that you'd expect to take an xs:anyURI actually take an
+  xs:string because that's easier for the user to call; the fact that the
+  supplied string has to be in the format of an xs:anyURI is written in to the
+  definition of the function.</font><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>The implication of this is
+  that only a few atomic types (those listed earlier) are actually useful when
+  defining functions, because they are the only ones that are easy for users to
+  generate, either as literals or through functions. It's a little ironic that
+  authors of functions can't really take advantage of the extra error-checking
+  that they get by declaring the type of their function arguments because if
+  they do so they will really burden the users of those functions. This,
+  coupled with the lack of support for polymorphism, means we end up with
+  almost the same amount of error-checking code for arguments of atomic types
+  as we had before.</font><br>
+  </td>
+ </tr>
+</table>
+
+</body>
+
+</html>

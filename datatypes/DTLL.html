@@ -1,0 +1,1463 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <title>Datatype Library Language (DTLL)</title>
+      <link rel="stylesheet" href="base.css" />
+   </head>
+   <body><h1>Datatype Library Language (DTLL)</h1>
+      <div><h2>Status</h2>
+         <p>This document is a basic specification of the Datatype Library
+      Language (DTLL). It includes, embedded within it, the RELAX NG Compact
+      Syntax schema for DTLL. There are still many areas that require greater
+      detail.</p>
+         <p>This version is a simplification of the previous version of DTLL which
+      attempts to find the minimum required to support the definition of datatypes
+      for the purposes of validation. In particular, the changes are:</p>
+         <ul><li><p>Hierarchies of datatypes have been removed: datatypes no longer have supertypes or
+          subtypes, and consequently do not have parameters or constraints. 
+          The concept of abstract datatypes is also no longer needed. It is still
+          possible to create datatypes that are based on other datatypes,
+          however; for example, to create an integer between 1 and 10, you could
+          do:</p>
+               <div class="example"><div class="title">Basing one type on another</div>
+                  <pre>
+            &lt;datatype name="integer-from-1-to-10"&gt;
+              &lt;variable name="integer" select="." type="integer" /&gt;
+              &lt;condition test="$integer &gt;= 1" /&gt;
+              &lt;condition test="$integer &amp;lt;= 10" /&gt;
+            &lt;/datatype&gt;
+            </pre>
+               </div>
+            </li>
+            <li><p>There's no longer a specialised parsing method for enumerated
+          values: these can be parsed using regular expressions and tested
+          against external code lists using normal constraints by accessing the
+          code lists using the <code>doc()</code> function.</p>
+            </li>
+            <li><p>The method for parsing lists of values has been simplified: the
+          DTLL processor only has to break up the list into separate values;
+          testing that these values are of particular types can be done using
+          constraints.</p>
+            </li>
+            <li><p>There's no method for specifying the collation used to compare
+          values of a particular datatype. The main purpose of supplying a
+          collation is to facilitate XPath datatyping rather than validation.
+          Although the lack of collations makes writing conditions harder, it's
+          still generally possible to do so without them.</p>
+            </li>
+            <li><p>A couple of extra extension functions to XPath 1.0 have been
+          added, though others have been removed.</p>
+            </li>
+            <li><p>Mapping has been modified to support the kinds of things you'd
+          otherwise do with hierarchies, including strong and weak typing. The
+          nooks and crannies of mappings and type conversions haven't been
+          properly explored yet, but I thought it was better to "release early"
+          than wait 'til I had time to do so.</p>
+            </li>
+         </ul>
+      </div>
+      <div><h2>Introduction</h2>
+         <p>Unlike XML Schema, RELAX NG doesn't provide a mechanism for users to
+    define their own types. If they're not satisfied with the two built-in
+    types of string and token, RELAX NG users have to create a datatype
+    library, which they then refer to from the schema.</p>
+         <p>Most RELAX NG validators provide built-in support for the XML Schema
+    datatype library. Many also support an interface that allows you to plug
+    in datatype modules, written in the programming language of your choice,
+    to define extra datatypes. But the fact that these datatype libraries have
+    to be programmed means that ordinary users find them hard to
+    construct.</p>
+         <p>One option would be for RELAX NG validators to support datatype
+    definition via XML Schema - using <code>&lt;xs:simpleType&gt;</code>
+    elements to create new atomic types. However, there are several problems
+    with this:</p>
+         <ul><li><p>It wouldn't be particularly easy for implementations to support
+        the <code>&lt;xs:simpleType&gt;</code> elements in isolation,
+        but RELAX NG validators don't want to have to be able to understand
+        XML Schema schemas.</p>
+            </li>
+            <li><p>It wouldn't be particularly easy for RELAX NG users to switch to
+        using the very different style employed by XML Schema, and again RELAX
+        NG users don't want to have to be able to write XML Schema
+        schemas.</p>
+            </li>
+            <li><p>Creating user-defined datatypes based on the XML Schema
+        datatypes means incorporating all the built-in types, including types
+        that are unlikely be required for a particular schema.</p>
+            </li>
+            <li><p>In general, the XML Schema type system goes against RELAX NG's
+        open philosophy, for example by dictating the required format for
+        numbers and dates when different markup languages might reasonably use
+        different formats (for internationalisation reasons, for
+        example).</p>
+            </li>
+         </ul>
+         <p>So the primary motivation for putting together a language for datatype
+    libraries is to enable RELAX NG users to construct their own datatypes
+    without having to resort to a procedural programming language or having to
+    learn how to use XML Schema, which might not be suited for their
+    needs.</p>
+      </div>
+      <div><h2>Overview</h2>
+         <pre class="rng">datatypes xs = "http://www.w3.org/2001/XMLSchema-datatypes"
+default namespace dt = "http://www.jenitennison.com/datatypes"
+namespace local = ""
+
+start = \datatypes</pre>
+         <p><code>&lt;datatypes&gt;</code> is the document element.</p>
+         <p>The <code>version</code> attribute holds the version of the
+    datatype library language. The current version is 0.4.</p>
+         <p>If a DTLL version 0.4 processor encounters a datatype library with a
+    version higher than 0.4, it must treat any attributes or elements that it
+    doesn't understand (that are not part of DTLL 0.4) in the same way as it
+    would treat extension attributes or elements found in the same
+    location.</p>
+         <pre class="rng">\datatypes = element datatypes {
+               attribute version { "0.4" },
+               ns?, 
+               extension-attribute*,
+               top-level-element*
+             }</pre>
+      </div>
+      <div><h2>Top-Level Elements</h2>
+         <pre class="rng">top-level-element |= named-datatype
+top-level-element |= top-level-map
+top-level-element |= \include
+top-level-element |= \div
+top-level-element |= extension-top-level-element</pre>
+         <p><code>&lt;include&gt;</code> elements include datatype
+    libraries from elsewhere. It is as if the content of the included document
+    (the children of the <code>&lt;datatypes&gt;</code>element) is
+    inserted into the datatype library in place of the
+    <code>&lt;include&gt;</code> element.</p>
+         <pre class="rng">\include = element include {
+             attribute href { xs:anyURI },
+             extension-attribute*
+           }</pre>
+         <p>It is an error for a datatype library to contain circular includes. If
+      the datatype library A includes the datatype library B, then B must not
+      include A or include any datatype library that (at any remove) includes A.</p>
+         <p><code>&lt;div&gt;</code> elements are simply used to partition
+    a datatype library and to provide a scope for <code>ns</code>
+    attributes.</p>
+         <pre class="rng">\div = element div {
+         ns?,
+         extension-attribute*,
+         top-level-element*
+       }</pre>
+         <p>Extension top-level elements can be used to hold data that is used
+    within the datatype library (such as code lists used to test enumerated values),
+    documentation, or information that is used by implementations. For
+    example, an extension top-level element can be used by an implementation
+    to define extension functions (using XSLT, for example) that can be used
+    in the XPath expressions used within the datatype library.</p>
+         <pre class="rng">extension-top-level-element = extension-element</pre>
+      </div>
+      <div><h2>Datatype Definitions</h2>
+         <p>Named datatypes are given at the top level of the datatype library
+    using <code>&lt;datatype&gt;</code> elements. Each named datatype
+    has a qualified name that can be used to refer to it.</p>
+         <p>The name of the datatype is given in the <code>name</code>
+    attribute. If this is unprefixed, the nearest ancestor
+    <code>ns</code> attribute (including one on the
+    <code>&lt;datatype&gt;</code> element itself) is used to provide the
+    namespace for the datatype.</p>
+         <pre class="rng">named-datatype = element datatype {
+                   attribute name { xs:QName }, ns?,
+                   extension-attribute*,
+                   datatype-definition-element*
+                 }</pre>
+         <p>Anonymous datatypes are used to provide the datatype for a
+    property or variable if that property or variable's
+    type can't be referred to by name.</p>
+         <pre class="rng">anonymous-datatype = element datatype { 
+                       extension-attribute*,
+                       datatype-definition-element*
+                     }</pre>
+         <p>Datatypes are referenced using qualified names. If the qualified
+    name hasn't got a prefix, the nearest ancestor <code>ns</code>
+    attribute (including one on the element that's referring to the datatype)
+    is used to resolve the name.</p>
+         <pre class="rng">datatype-reference = xs:QName</pre>
+         <p>A datatype definition consists of a number of elements that test
+      values and define variables. If a value passes the tests specified by
+      these elements, then it's a valid value for the datatype.</p>
+         <pre class="rng">datatype-definition-element |= property
+datatype-definition-element |= parse
+datatype-definition-element |= condition
+datatype-definition-element |= except
+datatype-definition-element |= variable
+datatype-definition-element |= local-map
+datatype-definition-element |= extension-definition-element</pre>
+         <p>Extension definition elements can be used at any point within a
+    datatype definition. If a processor doesn't recognise an extension
+    definition element, it must ignore it and behave as if the value passed
+    whatever test the extension definition element represented.</p>
+         <div class="example"><div class="title">Using Extension Definition Elements for Documentation</div>
+            <p>Extension definition elements can be used to hold documentation
+      about the datatype. For example, an
+      <code>&lt;eg:example&gt;</code> element might be used to provide
+      example legal values of the datatype:</p>
+            <pre>&lt;datatype name="RRGGBBColour"&gt;
+  &lt;eg:example&gt;#FFFFFF&lt;/eg:example&gt;
+  &lt;eg:example&gt;#123456&lt;/eg:example&gt;
+  &lt;parse name="RRGGBB"&gt;
+    &lt;regex&gt;#(?[RR][0-9A-F]{2})(?[GG][0-9A-F]{2})(?[BB][0-9A-F]{2})&lt;/regex&gt;
+  &lt;/parse&gt;
+  ...
+&lt;/datatype&gt;</pre>
+         </div>
+         <pre class="rng">extension-definition-element = extension-element</pre>
+         <div><h3>Except</h3>
+            <p>Certain aspects of a datatype definition can be negated by being
+      placed in an <code>&lt;except&gt;</code> element. A value is only
+      valid if it <em>isn't</em> valid according to any of the
+      datatype definition elements held within an
+      <code>&lt;except&gt;</code> element.</p>
+            <pre class="rng">except = element except {
+           extension-attribute*,
+           negative-test+
+         }
+         
+negative-test |= condition
+negative-test |= variable
+negative-test |= parse</pre>
+         </div>
+      </div>
+      <div><h2>Parsing</h2>
+         <p>Parsing can perform two functions: it tests whether a value adheres
+    to a particular format, and can assign a tree value to a variable to
+    enable pieces of the string value to be extracted, tested, assigned to
+    properties and so on.</p>
+         <p>The <code>&lt;parse&gt;</code> element holds any number of
+    parsing methods, one or more of which must be satisfied in order for the
+    value to be considered valid. The <code>name</code> attribute, if
+    present, specifies the name of the variable to which the tree resulting
+    from the parse is assigned. The first successful parse of those specified
+      within the <code>&lt;parse&gt;</code> element is used to give the
+    value of this variable (thus the processor does not have to attempt to
+    perform any parses once one has been successful).</p>
+         <p>A datatype can specify as many <code>&lt;parse&gt;</code>
+    elements as it wishes. All must be satisfied by a value for that value to
+    be a legal value of the datatype.</p>
+         <pre class="rng">parse = element parse {
+          name?, preprocess*,
+          extension-attribute*,
+          parsing-method+
+        }</pre>
+         <div><h3>Preprocessing</h3>
+            <p>Before a value is parsed by a <code>&lt;parse&gt;</code>
+      element, it can be preprocessed. This does not change the string value,
+      but it may simplify the specification of the parsing method that's
+      used.</p>
+            <p>The only built-in form of preprocessing is whitespace processing.
+      The whitespace can be preserved (<code>'preserve'</code>),
+      whitespace characters replaced by space characters
+      (<code>'replace'</code>), or leading and trailing whitespace
+      stripped and sequences of whitespace characters replaced by spaces
+      (<code>'collapse'</code>, the default).</p>
+            <pre class="rng">preprocess |= attribute whitespace {
+                "preserve" | "replace" | "collapse"
+              }</pre>
+            <p>Implementations may specify extension preprocessing methods with
+        additional attributes. These must be ignored by implementations that
+        don't support them.</p>
+            <pre class="rng">preprocess |= extension-preprocess-attribute
+extension-preprocess-attribute = extension-attribute</pre>
+         </div>
+         <div><h3>Parsing Methods</h3>
+            <p>There are two core methods of parsing: via a regular expression,
+        and by specifying a list. This set of methods can be supplemented by 
+        extension parsing elements.</p>
+            <pre class="rng">parsing-method |= regex
+parsing-method |= \list
+parsing-method |= extension-parsing-element</pre>
+            <div><h4>Regex Parsing</h4>
+               <p>The <code>&lt;regex&gt;</code> element specifies parsing
+        via an extended regular expression. To be a legal value, the entire
+        string value must be matched by the regular expression. (Although it's
+        legal to use <code>^</code> and <code>$</code> to mark the
+        beginning and end of the matched string, it's not necessary.)</p>
+               <p>The tree value generated by parsing consists of a root
+        (document) node with text node and element children. The string value
+        of the root (document) node is the string value itself. There is one
+        element for each named subexpression. The element's name being the
+        name of the subexpression with the namespace indicated by the prefix
+        indicated in the name. If no prefix is used, the element is in no
+        namespace. The string value of each of these elements is the matched
+        part of the string value as a whole.</p>
+               <div class="example"><div class="title">Regular Expression Parsing</div>
+                  <p>For example, the regex:</p>
+                  <pre>(?[year]-?[0-9]{4})-(?[month][0-9]{2})-(?[day][0-9]{2})</pre>
+                  <p>parsing the value:</p>
+                  <pre>2003-12-19</pre>
+                  <p>generates the tree:</p>
+                  <pre>(root)
+   +- year
+   |   +- "2003"
+   +- "-"
+   +- month
+   |   +- "12"
+   +- "-"
+   +- day
+       +- "19"</pre>
+               </div>
+               <pre class="rng">regex = element regex {
+          regex-flags*,
+          extension-attribute*,
+          extended-regular-expression
+        }</pre>
+               <div><h5>Regular Expression Flags</h5>
+                  <p>Four attributes modify the way in which regular expressions
+          are applied. These are equivalent to the flags available within
+          XPath 2.0.</p>
+                  <p>By default, the <code>"."</code> meta-character matches
+          all characters except the newline (<code>#xA</code>)
+          character. If <code>dot-all="true"</code> then
+          <code>"."</code> matches all characters, including the newline
+          character.</p>
+                  <pre class="rng">regex-flags |= attribute dot-all { boolean }</pre>
+                  <p>By default, <code>^</code> matches the beginning of the
+          entire string and <code>$</code> the end of the entire string.
+          If <code>multi-line="true"</code> then <code>^</code>
+          matches the beginning of each line as well as the beginning of the
+          string, and <code>$</code> matches the end of each line as
+          well as the end of the string. Lines are delimited by newline
+          (<code>#xA</code>) characters.</p>
+                  <pre class="rng">regex-flags |= attribute multi-line { boolean }</pre>
+                  <p>By default, the regular expression is case sensitive. If
+          <code>case-insensitive="true"</code> then the matching is
+          case-insensitive, which means that the regular expression
+          <code>"a"</code> will match the string
+          <code>"A"</code>.</p>
+                  <pre class="rng">regex-flags |= attribute case-insensitive { boolean }</pre>
+                  <p>By default, whitespace within the regular expression matches
+          whitespace in the string. If
+          <code>ignore-whitespace="true"</code>, whitespace in the
+          regular expression is removed prior to matching, and you need to use
+          <code>"\s"</code> to match whitespace. This can be used to
+          create more readable regular expressions.</p>
+                  <div class="example"><div class="title">Ignoring Whitespace in Regular Expressions</div>
+                     <pre>&lt;regex ignore-whitespace="true"&gt;
+    (?[year][0-9]{4})-
+    (?[month][0-9]{2})-
+    (?[day][0-9]{2})
+  &lt;/regex&gt;</pre>
+                  </div>
+                  <div class="note"><p>This is not the same as <code>&lt;parse
+            whitespace="collapse"&gt;...&lt;/parse&gt;</code>, which
+            preprocesses the string value itself.</p>
+                  </div>
+                  <pre class="rng">regex-flags |= attribute ignore-whitespace { boolean }</pre>
+                  <p>Boolean values are <code>'true'</code> or
+          <code>'false'</code>, with optional leading and trailing
+          whitespace.</p>
+                  <pre class="rng">boolean = xs:boolean { pattern = "true|false" }</pre>
+               </div>
+            </div>
+            <div><h4>Lists</h4>
+               <p>The <code>&lt;list&gt;</code> element specifies parsing of
+          the string value into a list of values, simply using a 
+          <code>separator</code> attribute to provide a regular 
+          expression to break up the list into items.</p>
+               <p>The result of parsing the string value based on the
+          <code>&lt;list&gt;</code> element is a node-set of sibling
+          elements. The names of the item elements are implementation-defined.
+        </p>
+               <div class="example"><div class="title">Parsing Lists</div>
+                  <p>For example, if you have:</p>
+                  <pre>&lt;list separator="\s*,\s*" /&gt;</pre>
+                  <p>and the string value:</p>
+                  <pre>1, 2, 3, 45</pre>
+                  <p>then the variable is set to the elements in the tree:</p>
+                  <pre>(root)
+   +- item
+   |   +- "1"
+   +- item
+   |   +- "2"
+   +- item
+   |   +- "3"
+   +- item
+       +- "45"</pre>
+               </div>
+               <p>These elements need not be named <code>'item'</code>.</p>
+               <p>The <code>separator</code> attribute specifies a regular
+        expression that matches the separators in the list. The default is
+        <code>"\s+"</code> (one or more whitespace characters). It is an
+        error if the regular expression matches an empty string (i.e. if it
+        matches <code>""</code>).</p>
+               <pre class="rng">\list = element list {
+          attribute separator { regular-expression }?,
+          extension-attribute*
+        }</pre>
+            </div>
+            <div><h4>Extension Parsing Elements</h4>
+               <p>Extension parsing elements can be used to parse elements using
+        methods other than the core methods explained above. Extension parsing
+        elements can be used, for example, to parse a value using EBNF (Extended
+          Backus-Naur Form) or PEGs (Parsing Expression Grammars).</p>
+               <p>If the extension parsing element isn't recognised, the value is
+        considered to fail the parse. If the extension parsing element occurs
+        in a <code>&lt;parse&gt;</code> element without any alternative
+        parsing methods, this means no value can match the datatype, and the
+        implementation must issue a warning. Usually, an extension parsing
+        element will be used alongside a built-in parsing method.</p>
+               <div class="example"><div class="title">Using Extension Parsing Elements</div>
+                  <pre>&lt;parse name="path"&gt;
+   &lt;ext:ebnf ref="http://www.w3.org/1999/xpath" /&gt;
+   &lt;regex dot-all="true"&gt;.*&lt;/regex&gt;
+ &lt;/parse&gt;</pre>
+               </div>
+               <pre class="rng">extension-parsing-element = extension-element</pre>
+            </div>
+         </div>
+      </div>
+      <div><h2>Testing</h2>
+         <p>Conditions define run-time tests that check values.</p>
+         <p>The <code>&lt;condition&gt;</code> element tests whether a
+    particular condition is satisfied by a value. The value is not valid if
+    the test evaluates to false.</p>
+         <pre class="rng">condition = element condition {
+               extension-attribute*,
+               test 
+             }</pre>
+         <p>Tests are done through a <code>test</code> attribute which
+    holds an XPath expression. If the effective boolean value of the result of
+      evaluating the XPath expression is true then the test succeeds and the
+      condition is satisfied.</p>
+         <pre class="rng">test = attribute test { XPath }</pre>
+      </div>
+      <div><h2>Variable Binding</h2>
+         <p>Properties and variables declare variables for use
+      in binding expressions (i.e. XPath expressions). Property variables are of
+      the form <code>$this.<var>name</var> 
+            </code> where
+      <var>name</var> is the name of the property; ordinary
+      variables just use the name of the variable. The variable
+      <code>$this</code> refers to the value itself (as does the XPath
+      expression <code>.</code>).</p>
+         <p>Variable binding is carried out in the order the variables are
+      declared. It is an error if a variable is referenced without being
+      declared. The scope of a variable binding is limited to the following
+      siblings of the variable declaration and their descendants.</p>
+         <div><h3>Properties</h3>
+            <p>The <code>&lt;property&gt;</code> element specifies a
+        property of the datatype. The values of properties are available via the
+        <code>dt:property()</code> extension function within XPath
+        expressions in DTLL (or via other implementation-defined APIs).
+        The value of a property for a value can be referenced using
+        <code>$this.<var>name</var>
+               </code> where
+        <var>name</var> is the value of the
+        <code>name</code> attribute on the
+        <code>&lt;property&gt;</code> element.</p>
+            <div class="example"><div class="title">Properties</div>
+               <p>For example, consider:</p>
+               <pre>&lt;datatype name="RRGGBB"&gt;
+   &lt;parse name="colour"&gt;
+     &lt;regex ignore-whitespace="true"&gt;
+       #(?[red][0-9A-F]{2})
+        (?[green][0-9A-F]{2})
+        (?[blue][0-9A-F]{2})
+     &lt;/regex&gt;
+   &lt;/parse&gt;
+   &lt;property name="red" type="hexByte" select="$colour/red" /&gt;
+   &lt;property name="green" type="hexByte" select="$colour/green" /&gt;
+   &lt;property name="blue" type="hexByte" select="$colour/blue" /&gt;
+   &lt;property name="is-greyscale" select="$this.red = $this.green and 
+                                         $this.green = $this.blue" /&gt;
+&lt;/datatype&gt;</pre>
+            </div>
+            <pre class="rng">property = element property {
+             name, type?, binding,
+             extension-attribute*
+           }</pre>
+         </div>
+         <div><h3>Variables</h3>
+            <p>The <code>&lt;variable&gt;</code> element binds a value to a 
+        variable. Variables are similar to properties except that their values
+        aren't accessible via APIs. The value of a variable is accessed through
+        <code>$<var>name</var>
+               </code>, where
+        <var>name</var> is the name of the variable.  It is an
+        error if the name of a variable starts with (or is)
+        <code>'this'</code>. For future use, it is also an error if the
+        name of a variable starts with (or is) <code>'type'</code>.
+        Variables are used for intermediate calculations.</p>
+            <pre class="rng">variable = element variable {
+             name, type?, binding,
+             extension-attribute*
+           }</pre>
+         </div>
+         <div><h3>Type Specifiers</h3>
+            <p>There are two ways to specify a type: via a
+      <code>type</code> attribute or via an anonymous
+      <code>&lt;datatype&gt;</code> element.</p>
+            <pre class="rng">type |= attribute type { datatype-reference }
+type |= anonymous-datatype</pre>
+            <p>If there is a mapping specified from the type of the provided value
+        to the required type, then that mapping is used to convert the value to
+        the required type. If the value is a standard XPath 1.0 type (string,
+        number, boolean or node-set), then that value is converted to a string
+        using the <code>string()</code> function and interpreted as the
+        string value of the required type. Otherwise (there's no mapping and the
+        value is not a standard XPath type), it's an error.</p>
+            <p>If no type is specified for a variable or property, then the
+        supplied value is used directly. Note that this value can be a standard
+        XPath type (string, number, boolean or node-set) as well as a value of a
+        datatype defined in the datatype library.</p>
+         </div>
+         <div><h3>Value Specifiers</h3>
+            <p>There are two built-in ways to bind a value to a property or
+        variable: through the <code>value</code> attribute, which holds a
+        literal value or through a <code>select</code> attribute, which
+        holds an XPath expression. Implementations can also define their own
+        extension binding elements.</p>
+            <pre class="rng">binding = (literal-value | select), extension-binding-element*</pre>
+            <p>If a <code>value</code> attribute is specified, its value is
+      the string value of the value of the variable or property; the type of the
+        variable or property is used to interpret that value.</p>
+            <pre class="rng">literal-value = attribute value { text }</pre>
+            <p>If a <code>select</code> attribute is specified, the XPath
+      expression it contains is evaluated to give the value of the property or variable.</p>
+            <pre class="rng">select = attribute select { XPath }</pre>
+            <p>Extension binding elements are used where more power is needed to
+      specify the value of a parameter, property or variable. This can be used
+      to provide values using methods such as XSLT or MathML. If an
+      implementation does not support any of the extension binding elements
+      specified, then it must assign to the variable the value specified by
+      the <code>value</code> or <code>select</code> attribute
+        instead. If an implementation supports one or more of the extension
+        binding elements, then it must use the first extension binding element
+        it understands to calculate the value of the variable.</p>
+            <pre class="rng">extension-binding-element = extension-element</pre>
+         </div>
+      </div>
+      <div><h2>Maps</h2>
+         <p>Maps provide a way of converting a value of one datatype to
+      another datatype. Maps are either strong or weak. If there's a strong map from
+      datatype A to datatype B then every legal value of datatype A must map
+      onto a legal value of datatype B. A weak map means that some of the values
+      of datatype A can be mapped on to legal values of datatype B. In both
+      cases, the mapping is uni-directional: often a strong map from A to B is
+      coupled with a weak map from B to A.</p>
+         <p>The <code>&lt;map&gt;</code> element defines a map from one
+      datatype to another. The attributes of the
+      <code>&lt;map&gt;</code> element defines how the mapping is
+      done.</p>
+         <div class="note"><p>Note that it is possible for there to be maps to and from two
+      datatypes, but it is not necessarily the case that a round-trip will
+      result in the same string value.</p>
+            <div class="example"><div class="title">Changes When Round-Tripping</div>
+               <p>For example, with the datatype definitions:</p>
+               <pre>&lt;datatype name="UKDate"&gt;
+  &lt;parse name="date"&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      (?[day][0-9]{1,2})/(?[month][0-9]{1,2})/(?[year][0-9]{4})
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;property name="year" select="$date/year" /&gt;
+  &lt;property name="month" select="$date/month" /&gt;
+  &lt;property name="day" select="$date/day" /&gt;
+&lt;/datatype&gt;
+
+&lt;datatype name="ISODate"&gt;
+  &lt;parse name="date"&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      (?[year][0-9]{4})-(?[month][0-9]{2})-(?[day][0-9]{2})
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;property name="year" select="$date/year" /&gt;
+  &lt;property name="month" select="$date/month" /&gt;
+  &lt;property name="day" select="$date/day" /&gt;
+&lt;/datatype&gt;
+        
+&lt;map from="UKDate" to="ISODate"
+  select="concat(format-number($this.year, '0000'), '-',
+                 format-number($this.month, '00'), '-',
+                 format-number($this.day, '00'))" /&gt;
+        
+&lt;map from="ISODate" to="UKDate"
+  select="concat($this.day, '/', $this.month, '/', $this.year)" /&gt;</pre>
+               <p>the UKDate <code>"5/1/1947"</code> maps to the ISODate
+        <code>"1947-01-05"</code>, which maps back to the UKDate
+        <code>"05/01/1947"</code>.</p>
+            </div>
+         </div>
+         <p>Local maps appear within a <code>&lt;datatype&gt;</code> element
+      and define maps from or to the datatype in which they're defined to or from
+      the datatype referenced in the <code>to</code> or
+      <code>from</code> attribute. Top-level maps appear within the
+    <code>&lt;datatypes&gt;</code> element and define maps from the
+    datatype referenced in the <code>from</code> attribute to the
+    datatype referenced in the <code>to</code> attribute.</p>
+         <pre class="rng">local-map = element map {
+              (from | to), kind?, mapping,
+              extension-attribute*
+            }
+      
+top-level-map = element map {
+                  from, to, kind?, mapping,
+                  extension-attribute*
+                }</pre>
+         <p>The <code>to</code> attribute holds a reference to a
+      datatype, which is the datatype to which a value can be mapped, or a
+      <code>*</code>. The value <code>*</code> indicates that the
+      map describes how to map from the datatype specified by the
+      <code>from</code> attribute to any other datatype.</p>
+         <pre class="rng">to = attribute to { datatype-reference | "*" }</pre>
+         <p>The <code>from</code> attribute holds a reference to a
+    datatype, which is the datatype from which a value can be mapped, or a
+      <code>*</code>. The value <code>*</code> indicates that the
+      map describes how to map to the datatype specified by the
+      <code>to</code> attribute from any other datatype.</p>
+         <pre class="rng">from = attribute from { datatype-reference | "*" }</pre>
+         <p>The <code>kind</code> attribute indicates whether the map is a
+      strong or weak map. Strong maps are guaranteed to succeed; weak maps may
+      fail, depending on the value. If the <code>kind</code> attribute is
+      missing, the <code>&lt;map&gt;</code> element defines a strong map
+      if both datatypes are specified and a weak map if the map is to/from any
+      type.</p>
+         <pre class="rng">kind = attribute kind { "strong" | "weak" }</pre>
+         <p>A <code>&lt;map&gt;</code> element that specifies a map from
+      datatype A to datatype B also implicitly defines weak maps from A to any type
+      via B and from any type to B via A.</p>
+         <p>It is an error if there are two or more explicit maps defined between the same
+      two datatypes, or from/to a datatype and any type. It is an error if there
+      are two or more implicit maps from/to a datatype and any type unless there
+      is an explicit map from/to that datatype and any type. There can only be one
+      map defined to be from any type to any type.</p>
+         <div class="example"><div class="title">Mapping Error</div>
+            <p>The following is an error:</p>
+            <pre>1 | &lt;map from="A" to="B" select="..." /&gt;
+2 | &lt;map from="A" to="C" select="..." /&gt;</pre>
+            <p>1 sets up an explicit map from A to B. This sets up an implicit map
+        from A to any type via B and from any type to B via A. 2 sets up an explicit map
+        from A to C. This sets up an implicit map from A to any type via B and from
+        any type to B via A. This is an error because there are two implicit maps from
+        A to any type and no explicit map from A to any type. To fix the error,
+        an explicit map from A to any type needs to be created:</p>
+            <pre>&lt;map from="A" to="*" as="B" /&gt;</pre>
+         </div>
+         <p>The map itself is defined through a binding which creates
+      a string which is a valid string value for the target datatype or
+      through an <code>as</code> attribute. If an <code>as</code>
+      attribute is provided, the mapping must be carried out via the
+      intermediate datatype specified by the <code>as</code> attribute.</p>
+         <pre class="rng">mapping |= binding
+mapping |= attribute as { datatype-reference }</pre>
+         <div class="example"><div class="title">Mapping via other datatypes</div>
+            <p>In this example, hue-saturation-luminance (HSL) and red-green-blue
+        (RGB) colours map to and from each other directly, and colour keywords
+        can be mapped to RGB colours. To map from colour keywords to HSL
+        colours, you first convert from the keyword to the RGB colour, then from
+        that to the equivalent HSL colour.</p>
+            <pre>&lt;map from="HSLcolour" to="RGBcolour" select="..." /&gt;
+&lt;map from="RGBcolour" to="HSLcolour" select="..." /&gt;
+&lt;map from="colourkeyword" to="RGBcolour" select="..." /&gt;
+&lt;map from="colourkeyword" to="HSLcolour" as="RGBcolour" /&gt;</pre>
+         </div>
+         <div class="sidebar"><p>I ought to add something here about the context that's used to
+        evaluate the binding expression that's used to map the value. Basically,
+        the value that's being mapped is the context item in that expression.</p>
+            <p>If you look at the examples in the appendix, you'll see that this
+        leads to a lot of use of the <code>dt:property()</code> function
+        to get information about the properties of the value that's being
+        mapped. I think it would be useful to have some pre-set variable
+        bindings available for use within the mapping binding expression, namely
+        that <code>$this</code> would refer to the value itself, variables
+        of the form <code>$this.<var>property</var>
+               </code>
+        to the values of various properties and
+        <code>$<var>var</var>
+               </code> giving access to the
+        other variables defined within the datatype definition (this is actually
+        already assumed within many of the examples in the appendix).</p>
+            <p>For example, rather than</p>
+            <pre>&lt;map from="date" to="dateTime" 
+     select="concat(dt:property(., 'year'), '-',
+                    dt:property(., 'month'), '-',
+                    dt:property(., 'day'), 'T00:00:00',
+                    dt:property(., 'timezone'))" /&gt;</pre>
+            <p>you would have</p>
+            <pre>&lt;map from="date" to="dateTime"
+     select="concat($this.year, '-', $this.month, '-', $this.day, 
+                    'T00:00:00', $this.timezone)" /&gt;</pre>
+         </div>
+         <p>To work out how to convert from a source value of type S to a
+      target value of a required type R, an application has to locate an
+      appropriate mapping pathway to use. A mapping pathway can consist of
+      several steps via intermediate types. To convert from S to R, the value is
+      converted from S to an intermediate type I and then from I to R.</p>
+         <p>There is a mapping pathway from S to R if a mapping binding is specified
+      for converting directly from S to R, or if there is a mapping pathway from
+      S to I and a mapping pathway from I to R.</p>
+         <p>There may be multiple mappings specified from S to R. The
+      first of the following list of available mappings that provides a mapping
+      pathway from S to R is used.</p>
+         <ul><li><p>A (strong or weak) mapping defined to be from S to R.</p>
+            </li>
+            <li><p>An explicit strong mapping defined to be from S to any type.</p>
+            </li>
+            <li><p>An explicit strong mapping defined to be from any type to R.</p>
+            </li>
+            <li><p>An explicit weak mapping defined to be from S to any type.</p>
+            </li>
+            <li><p>An explicit weak mapping defined to be from any type to R.</p>
+            </li>
+            <li><p>An implicit mapping defined to be from S to any type.</p>
+            </li>
+            <li><p>An implicit mapping defined to be from any type to R.</p>
+            </li>
+            <li><p>A mapping defined to be from any type to any type.</p>
+            </li>
+         </ul>
+         <div class="example"><div class="title">Identifying Mapping Pathways</div>
+            <p>Consider the following mapping definitions and the mapping from A to
+        B:</p>
+            <pre>1 | &lt;map from="A" to="*" as="C" /&gt;
+2 | &lt;map from="A" to="C" select="..." /&gt;
+3 | &lt;map from="A" to="D" select="..." /&gt;
+4 | &lt;map from="D" to="B" select="..." /&gt;</pre>
+            <p>These explicit mappings generate the following implicit mappings:</p>
+            <pre>5 | &lt;map from="*" to="C" as="A" /&gt;
+6 | &lt;map from="*" to="D" as="A" /&gt;
+7 | &lt;map from="D" to="*" as="B" /&gt;
+8 | &lt;map from="*" to="B" as="D" /&gt;</pre>
+            <p>There are two possible mappings from A to B: 1 (explicitly from A to any type,
+        via C) and 8 (implicitly from any type to B via D). Since 1 is preferred
+        over 8, we first try to find a mapping pathway via C. There's a mapping binding
+        from A to C (2), and an implicit mapping (8) from any type to B via D, so we try to
+        find a mapping from C to D and from D to B. There's an implicit mapping
+        from any type to D (6) via A, so we need mappings from C to A and from A
+        to D. There's no mapping from C to A, so there's no mapping pathway
+        based on 1.</p>
+            <p>Since the mapping defined by 1 does not lead to a mapping pathway,
+        we try to find a mapping pathway using the mapping defined by 8, via D.
+        There's a mapping binding defined from A to D (3) and a mapping binding
+        defined from D to B (4).</p>
+            <p>The final conversion used is from A to D to B, using the mapping
+        bindings defined in 3 and 4.</p>
+         </div>
+      </div>
+      <div><h2>Common Constructs</h2>
+         <div><h3>Common Types</h3>
+            <p>XPath 1.0 expressions are used to bind values to variables or
+        properties and to express tests in conditions.</p>
+            <pre class="rng">XPath = text</pre>
+            <p>Variable and property values are available within an
+      XPath expression if the variable or property is declared
+      prior to the XPath expression.</p>
+            <div class="sidebar"><p>We have several possible choices about what variant of XPath to
+        accept:</p>
+               <ul><li><p>XPath 1.0</p>
+                  </li>
+                  <li><p>XPath 2.0</p>
+                  </li>
+                  <li><p>a restricted version of XPath 2.0</p>
+                  </li>
+                  <li><p>control version via xpath-version attribute</p>
+                  </li>
+                  <li><p>implementation-defined</p>
+                  </li>
+               </ul>
+               <p>Whichever we use, implementations will still be able to support
+        more via extension binding elements. I think, therefore, that the last
+        two options aren't necessary.</p>
+               <p>The useful things in XPath 2.0 are its support for if
+        expressions and for sequences of atomic values; there's also a lot
+        that's in excess of what's required. Subsetting just makes it harder
+        to get conformant processors and for users to remember which bits are
+        in and which bits are out. I'm inclined to stick to XPath 1.0 for
+        now, which has built-in support for strings, numbers and boolean values.</p>
+            </div>
+            <p>Within a datatype library, each datatype has a
+        corresponding extension function named after the name of the datatype.
+        This function takes a single argument, which can be of any type, and returns a
+        typed value of the type specified by the name of the function. The
+        supplied value is converted to the required type using the same rules as
+        for type conversions for variables. Note that this works for all
+        datatypes, including lists.</p>
+            <p>Other extension functions are:</p>
+            <dl><dt><code>dt:item(list-value, number)</code>
+               </dt>
+               <dd><p>returns the item in the list-value at the index given by the
+            number (counting starts from 1); returns an empty string if the
+            number is greater than the number of items in the list-value.
+            Values that aren't of a list type are treated like list-type
+            values with a single item.</p>
+               </dd>
+               <dt><code>dt:property(value, prop-name)</code>
+               </dt>
+               <dd><p>returns the value of the named property for the value</p>
+               </dd>
+               <dt><code>dt:if(test, true, false)</code>
+               </dt>
+               <dd><p>returns the true value if the test is true and the false value
+              if the test is false. Note that both the true and false arguments
+              are evaluated (unlike the <code>if</code> expression in
+              XPath 2.0.</p>
+               </dd>
+               <dt><code>dt:default(value, default)</code>
+               </dt>
+               <dd><p>returns the first argument if the effective boolean value of
+              the first argument is true, and the second argument otherwise</p>
+               </dd>
+            </dl>
+            <p>A regular expression as defined in XPath 2.0</p>
+            <pre class="rng">regular-expression = text</pre>
+            <p>Extended regular expressions can have named subexpressions. Named
+      subexpressions are specified with the syntax
+      <code>(?[<var>name</var>]<var>regex</var>)</code>
+      where <var>name</var> is name of the subexpression and
+      <var>regex</var> is the subexpression itself.</p>
+            <div class="example"><div class="title">Extended Regular Expression</div>
+               <pre>(?[year]-?[0-9]{4})-(?[month][0-9]{2})-(?[day][0-9]{2})</pre>
+            </div>
+            <pre class="rng">extended-regular-expression = text</pre>
+            <div class="sidebar"><p>Some people don't like the syntax used here for naming subpatterns
+          within a regular expression. Here are the reasons that I chose this
+          one.</p>
+               <p>Using XML elements would be a possibility, as in</p>
+               <pre>&lt;year&gt;-?[0-9]{4}&lt;/year&gt;-&lt;month&gt;[0-9]{2}&lt;/month&gt;-&lt;day&gt;[0-9]{2}&lt;/day&gt;</pre>
+               <p>but it is fairly verbose.</p>
+               <p>The <code>(?<var>...</var>)</code> syntax is
+          the standard syntax for expressing extensions to normal regular
+          expressions, as used in Python, Perl etc.</p>
+               <p>You need a character before the name starts in order to leave open
+          the possibility of extensions such as <code>(?i)</code> to set
+          flags for the regular expression within the regular expression itself.
+          This extension is used in Python and Perl, amongst others.</p>
+               <p>You need a character after the name of the subpattern in order to
+          separate it from the subpattern itself.</p>
+               <p>Paired brackets are a good choice because they bracket the name,
+          but
+          <code>(?(<var>name</var>)<var>pattern</var>)</code>
+          means too many round braces,
+          <code>(?&lt;<var>name</var>&gt;<var>pattern</var>)</code>
+          is hard to embed within an XML document and
+          <code>(?{<var>name</var>}<var>pattern</var>)</code>
+          would be confusing for Perl/Python programmers, since that syntax is
+          used to embed code in regular expressions in those languages. That
+          leaves
+          <code>(?[<var>name</var>]<var>pattern</var>)</code>
+          as the only possibility.</p>
+               <p>Another possibility is to use unpaired characters before and after
+          the name. The strongest option here is probably
+          <code>(?$<var>name</var>:<var>pattern</var>)</code>
+          but I worry that this will lead people to think that the subpatterns
+          are assigned directly to variables (rather than being used to
+          construct a tree of elements).</p>
+            </div>
+         </div>
+         <div><h3>Common Attributes</h3>
+            <pre class="rng">name = attribute name { xs:NCName }
+dt-name = attribute dt:name { xs:NCName }
+ns = attribute ns { xs:anyURI }</pre>
+         </div>
+         <div><h3>Extension Elements and Attributes</h3>
+            <p>Extension elements are any attributes that aren't in the DTLL
+        namespace. They can contain anything (including DTLL elements).
+        Extension attributes are any attributes that are in neither
+        the DTLL namespace or no namespace (unprefixed). They can have any kind
+        of value.</p>
+            <pre class="rng">extension-element = element * - dt:* { anything }
+
+extension-attribute = attribute * - (local:* | dt:*) { text }
+
+anything = attribute * { text }*,
+           mixed { element * { anything }* }</pre>
+         </div>
+      </div>
+      <h2>Appendix A Extended Examples</h2>
+      <div><h3>Numbers</h3>
+         <p>This example shows a way of defining the numeric datatypes from XML
+        Schema, plus a hexadecimal byte datatype. It includes an extension
+        function defined within the datatype library using XSLT 2.0.</p>
+         <pre>&lt;datatypes version="0.4" 
+           xmlns="http://www.jenitennison.com/datatypes"
+           xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+           xsl:version="2.0"
+           xmlns:eg="http://www.jenitennison.com/datatypes/examples"
+           ns="http://www.jenitennison.com/datatypes/examples"&gt;
+  
+&lt;datatype name="double"&gt;
+  &lt;parse name="double"&gt;
+    &lt;regex&gt;(?[mantissa](\+|-)?[0-9]+(\.[0-9]+)?)([eE](?[exponent][0-9]+))?&lt;/regex&gt;
+    &lt;regex&gt;(?[inf]\+?INF)&lt;/regex&gt;
+    &lt;regex&gt;(?[neginf]-INF&lt;/regex&gt;
+    &lt;regex&gt;(?[nan]NaN)&lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;variable name="mantissa" type="decimal" select="$double/mantissa" /&gt;
+  &lt;variable name="exponent" type="integer" 
+    select="dt:default($double/exponent, 0)" /&gt;
+  &lt;property name="xpath-value" 
+    select="dt:if($double/inf,
+                  1 div 0,
+            dt:if($double/neginf,
+                  -1 div 0,
+            dt:if($double/nan,
+                  number('NaN'),
+              eg:power($mantissa, $exponent))))" /&gt;
+&lt;/datatype&gt;  
+
+&lt;datatype name="decimal"&gt;
+  &lt;parse&gt;
+    &lt;regex&gt;(\+|-)?[0-9]+(\.[0-9]+)?&lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;map to="double" select="." /&gt;
+  &lt;map from="double" kind="weak" select="." /&gt;
+&lt;/datatype&gt;    
+  
+&lt;datatype name="integer"&gt;
+  &lt;parse&gt;
+    &lt;regex&gt;(\+|-)?[0-9]+&lt;/regex&gt;
+  &lt;/parse&gt;  
+  &lt;map from="decimal" select="round(.)" /&gt;
+  &lt;map to="decimal" select="." /&gt;
+&lt;/datatype&gt;
+
+&lt;datatype name="nonNegativeInteger"&gt;
+  &lt;parse&gt;
+    &lt;regex&gt;\+?[0-9]+&lt;/regex&gt;
+  &lt;/parse&gt;    
+  &lt;map from="integer" select="dt:if(. &gt;= 0, ., -.)" /&gt;
+  &lt;map to="integer" select="." /&gt;
+&lt;/datatype&gt;  
+  
+&lt;datatype name="positiveInteger"&gt;
+  &lt;condition test=". != 0" /&gt;
+  &lt;map to="nonNegativeInteger" select="." /&gt;
+  &lt;map from="nonNegativeInteger" kind="weak" select="." /&gt;
+&lt;/datatype&gt;
+  
+&lt;datatype name="nonPositiveInteger"&gt;
+  &lt;parse&gt;
+    &lt;regex&gt;-[0-9]+&lt;/regex&gt;
+  &lt;/parse&gt;  
+  &lt;map from="integer" select="dt:if(. &gt; 0, -., .)" /&gt;
+  &lt;map to="integer" select="." /&gt;
+&lt;/datatype&gt;  
+  
+&lt;datatype name="negativeInteger"&gt;
+  &lt;variable name="value" type="nonPositiveInteger" select="." /&gt;
+  &lt;condition test=". != 0" /&gt;
+  &lt;map to="nonPositiveInteger" select="." /&gt;
+  &lt;map from="nonPositiveInteger" kind="weak" select="." /&gt;
+&lt;/datatype&gt;  
+  
+&lt;datatype name="long"&gt;
+  &lt;variable name="value" type="integer" select="." /&gt;
+  &lt;condition test=". &gt;= -9223372036854775808" /&gt;
+  &lt;condition test=". &amp;lt;= 9223372036854775807" /&gt;
+  &lt;map to="integer" select="." /&gt;
+  &lt;map from="integer" kind="weak" select="." /&gt;
+&lt;/datatype&gt;  
+
+&lt;datatype name="int"&gt;
+  &lt;variable name="value" type="long" select="." /&gt;
+  &lt;condition test=". &gt;= -2147483648" /&gt;
+  &lt;condition test=". &amp;lt;= 2147483647" /&gt;
+  &lt;map to="long" select="." /&gt;
+  &lt;map from="long" kind="weak" select="." /&gt;
+&lt;/datatype&gt;  
+
+&lt;datatype name="short"&gt;
+  &lt;variable name="value" type="int" select="." /&gt;
+  &lt;condition test=". &gt;= -32768" /&gt;
+  &lt;condition test=". &amp;lt;= 32767" /&gt;
+  &lt;map to="int" select="." /&gt;
+  &lt;map from="int" kind="weak" select="." /&gt;
+&lt;/datatype&gt;  
+
+&lt;datatype name="byte"&gt;
+  &lt;variable name="value" type="short" select="." /&gt;
+  &lt;condition test=". &gt;= -128" /&gt;
+  &lt;condition test=". &amp;lt;= 127" /&gt;
+  &lt;map to="short" select="." /&gt;
+  &lt;map from="short" kind="weak" select="." /&gt;
+&lt;/datatype&gt;  
+
+&lt;datatype name="unsignedLong"&gt;
+  &lt;variable name="value" type="nonNegativeInteger" select="." /&gt;
+  &lt;condition test=". &amp;lt;= 18446744073709551615" /&gt;
+  &lt;map to="nonNegativeInteger" select="." /&gt;
+  &lt;map from="nonNegativeInteger" kind="weak" select="." /&gt;
+&lt;/datatype&gt;  
+
+&lt;datatype name="unsignedInt"&gt;
+  &lt;variable name="value" type="unsignedLong" select="." /&gt;
+  &lt;condition test=". &amp;lt;= 4294967295" /&gt;
+  &lt;map to="unsignedLong" select="." /&gt;
+  &lt;map from="unsignedLong" kind="weak" select="." /&gt;
+&lt;/datatype&gt;  
+
+&lt;datatype name="unsignedShort"&gt;
+  &lt;variable name="value" type="unsignedInt" select="." /&gt;
+  &lt;condition test=". &amp;lt;= 65535" /&gt;
+  &lt;map to="unsignedInt" select="." /&gt;
+  &lt;map from="unsignedInt" kind="weak" select="." /&gt;
+&lt;/datatype&gt;  
+  
+&lt;datatype name="unsignedByte"&gt;
+  &lt;variable name="value" type="unsignedShort" select="." /&gt;
+  &lt;condition test=". &amp;lt;= 255" /&gt;
+  &lt;map to="unsignedShort" select="." /&gt;
+  &lt;map from="unsignedShort" kind="weak" select="." /&gt;
+&lt;/datatype&gt;  
+  
+&lt;datatype name="hexByte"&gt;
+  &lt;parse&gt;
+    &lt;regex&gt;[0-9A-F]{2}&lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;variable name="hexDigits" select="'0123456789ABCDEF'" /&gt;
+  &lt;map to="unsignedByte" 
+    select="string-length(substring-before(substring(., 1, 1),
+                                           $hexDigits) * 16 +
+            string-length(substring-before(substring(., 2, 1),
+                                           $hexDigits))" /&gt;
+  &lt;map from="unsignedByte" 
+    select="concat(substring($hexDigits, floor(. div 16), 1),
+                   substring($hexDigits, . mod 16, 1))" /&gt;
+&lt;/datatype&gt;  
+  
+&lt;xsl:function name="eg:power"&gt;
+  &lt;xsl:param name="number" /&gt;
+  &lt;xsl:param name="power" /&gt;
+  &lt;xsl:sequence select="eg:_power($number, $power, 1)" /&gt;
+&lt;/xsl:function&gt;
+
+&lt;xsl:function name="eg:_power"&gt;
+  &lt;xsl:param name="number" /&gt;
+  &lt;xsl:param name="power" /&gt;
+  &lt;xsl:param name="result" /&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when test="$power = 0"&gt;
+      &lt;xsl:sequence select="$result" /&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:otherwise&gt;
+      &lt;xsl:sequence select="eg:_power($number, $power - 1, $result * $number)" /&gt;
+    &lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;
+&lt;/xsl:function&gt;  
+  
+&lt;/datatypes&gt;</pre>
+      </div>
+      <div><h3>Dates and Durations</h3>
+         <p>This example illustrates the date, time and duration types from XML
+        Schema and XPath 2.0.</p>
+         <pre>&lt;datatypes version="0.4" 
+           xmlns="http://www.jenitennison.com/datatypes"
+           xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+           xsl:version="2.0"
+           xmlns:eg="http://www.jenitennison.com/datatypes/examples"
+           ns="http://www.jenitennison.com/datatypes/examples"&gt;
+
+&lt;datatype name="dateTime"&gt;
+  &lt;parse name="dateTime"&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      (?[date]-?[0-9]{4,}-[0-9]{2}-[0-9]{2})
+      T(?[time][0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+))
+      (?[timezone](Z|((\+|-)[0-9]{2}:[0-9]{2})))?
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;property name="timezone" type="timezone" select="$dateTime/timezone" /&gt;
+  &lt;property name="date" type="date" 
+    select="concat($dateTime/date, $this.timezone)" /&gt;
+  &lt;property name="time" type="time" 
+    select="concat($dateTime/time, $this.timezone)" /&gt;
+  &lt;property name="year" type="year" select="dt:property($this.date, 'year')" /&gt;
+  &lt;property name="month" type="month" select="dt:property($this.date, 'month')" /&gt;
+  &lt;property name="day" type="day" select="dt:property($this.date, 'day')" /&gt;
+  &lt;property name="hour" type="hour" select="dt:property($this.time, 'hour')" /&gt;
+  &lt;property name="minute" type="minute" select="dt:property($this.time, 'minute')" /&gt;
+  &lt;property name="second" type="second" select="dt:property($this.time, 'second')" /&gt;
+&lt;/datatype&gt;  
+  
+&lt;datatype name="date"&gt;
+  &lt;parse name="date"&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      (?[year]-?[0-9]{4,})-
+      (?[month][0-9]{2})-
+      (?[day][0-9]{2})
+      (?[timezone](Z|((\+|-)[0-9]{2}:[0-9]{2})))?
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;property name="year" type="year" select="$date/year" /&gt;
+  &lt;property name="month" type="month" select="$date/month" /&gt;
+  &lt;property name="day" type="day" select="$date/day" /&gt;
+  &lt;property name="timezone" type="timezone" select="$date/timezone" /&gt;
+  &lt;condition test="($this.month = 1 or $this.month = 3 or $this.month = 5 
+                    $this.month = 7 or $this.month = 8 or $this.month = 10 or
+                    $this.month = 12) or $this.day &amp;lt;= 30" /&gt;
+  &lt;condition test="$this.month != 2 or
+                   $this.day &amp;lt;= 28 or
+                   ($this.day = 29 and
+                    ($this.year mod 400 = 0 or
+                     ($this.year mod 4 = 0 and
+                      not($this.year mod 100 = 0))))" /&gt;
+  
+  &lt;map from="dateTime" select="dt:property(., 'date')" /&gt;
+  &lt;map to="dateTime" 
+    select="concat(dt:property(., 'year'), '-',
+                   dt:property(., 'month'), '-',
+                   dt:property(., 'day'), 'T00:00:00',
+                   dt:property(., 'timezone'))" /&gt;
+&lt;/datatype&gt;
+  
+&lt;datatype name="time"&gt;
+  &lt;parse name="time"&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      (?[hour][0-9]{2}):
+      (?[minute][0-9]{2}):
+      (?[second][0-9]{2}(\.[0-9]+)?)
+      (?[timezone](Z|((\+|-)[0-9]{2}:[0-9]{2})))?
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;property name="hour" type="hour" select="$time/hour" /&gt;
+  &lt;property name="minute" type="minute" select="$time/minute" /&gt;
+  &lt;property name="second" type="second" select="$time/second" /&gt;
+  &lt;property name="timezone" type="timezone" select="$time/timezone" /&gt;
+  &lt;map from="dateTime" select="dt:property(., 'time')" /&gt;
+&lt;/datatype&gt;
+  
+&lt;datatype name="gYearMonth"&gt;
+  &lt;parse name="gYearMonth"&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      (?[year]-?[0-9]{4,})-
+      (?[month][0-9]{2})
+      (?[timezone](Z|((\+|-)[0-9]{2}:[0-9]{2})))?
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;property name="year" type="year" select="$gYearMonth/year" /&gt;
+  &lt;property name="month" type="month" select="$gYearMonth/month" /&gt;
+  &lt;property name="timezone" type="timezone" select="$gYearMonth/timezone" /&gt;
+  
+  &lt;map from="date"
+    select="concat(dt:property(., 'year'), '-', 
+                   dt:property(., 'month'),
+                   dt:property(., 'timezone'))" /&gt;
+  &lt;map to="date" 
+    select="concat(dt:property(., 'year'), '-',
+                   dt:property(., 'month'), '-01',
+                   dt:property(., 'timezone'))" /&gt;
+&lt;/datatype&gt;  
+
+&lt;datatype name="gYear"&gt;
+  &lt;parse name="gYear"&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      (?[year]-?[0-9]{4,})
+      (?[timezone](Z|((\+|-)[0-9]{2}:[0-9]{2})))?
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;property name="year" type="year" select="$gYear/year" /&gt;
+  &lt;property name="timezone" type="timezone" select="$gYear/timezone" /&gt;
+  
+  &lt;map from="gYearMonth"
+    select="concat(dt:property(., 'year'), dt:property(., 'timezone'))" /&gt;
+  &lt;map to="gYearMonth" 
+    select="concat(dt:property(., 'year'), '-01', dt:property(., 'timezone'))" /&gt;
+&lt;/datatype&gt;  
+  
+&lt;datatype name="gMonthDay"&gt;
+  &lt;parse name="date"&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      --(?[month][0-9]{2})-
+      (?[day][0-9]{2})
+      (?[timezone](Z|((\+|-)[0-9]{2}:[0-9]{2})))?
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;property name="month" type="month" select="$date/month" /&gt;
+  &lt;property name="day" type="day" select="$date/day" /&gt;
+  &lt;property name="timezone" type="timezone" select="$date/timezone" /&gt;
+  &lt;condition test="($this.month = 1 or $this.month = 3 or $this.month = 5 
+                    $this.month = 7 or $this.month = 8 or $this.month = 10 or
+                    $this.month = 12) or $this.day &amp;lt;= 30" /&gt;
+  &lt;condition test="$this.month != 2 or
+                   $this.day &amp;lt;= 29" /&gt;
+  
+  &lt;map from="date"
+    select="concat('--', dt:property(., 'month'), '-', 
+                   dt:property(., 'day'),
+                   dt:property(., 'timezone'))" /&gt;
+&lt;/datatype&gt;
+
+&lt;datatype name="gMonth"&gt;
+  &lt;parse name="date"&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      --(?[month][0-9]{2})
+      (?[timezone](Z|((\+|-)[0-9]{2}:[0-9]{2})))?
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;property name="month" type="month" select="$date/month" /&gt;
+  &lt;property name="timezone" type="timezone" select="$date/timezone" /&gt;
+
+  &lt;map from="gMonthDay"
+    select="concat('--', dt:property(., 'month'),
+                   dt:property(., 'timezone'))" /&gt;
+  &lt;map to="gMonthDay"
+    select="concat('--', dt:property(., 'month'), '-01',
+                   dt:property(., 'timezone'))" /&gt;
+&lt;/datatype&gt;
+
+&lt;datatype name="gDay"&gt;
+  &lt;parse name="date"&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      ---(?[day][0-9]{2})
+      (?[timezone](Z|((\+|-)[0-9]{2}:[0-9]{2})))?
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;property name="day" type="day" select="$date/day" /&gt;
+  &lt;property name="timezone" type="timezone" select="$date/timezone" /&gt;
+
+  &lt;map from="gMonthDay"
+    select="concat('---', dt:property(., 'day'),
+                   dt:property(., 'timezone'))" /&gt;
+&lt;/datatype&gt;
+
+&lt;datatype name="year"&gt;
+  &lt;parse&gt;
+    &lt;regex&gt;-?[0-9]{4,}&lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;condition test=". != 0" /&gt;
+&lt;/datatype&gt;
+  
+&lt;datatype name="month"&gt;
+  &lt;parse&gt;
+    &lt;regex&gt;[0-9]{2}&lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;condition test=". &gt;= 1" /&gt;
+  &lt;condition test=". &amp;lt;= 12" /&gt;
+  &lt;variable name="month-element"
+    select="document('')/*/eg:months/eg:month[position() = $this]" /&gt;
+  &lt;property name="abbreviation" select="string($month-element/@abbr)" /&gt;
+  &lt;property name="name" select="string($month-element)" /&gt;
+&lt;/datatype&gt;
+
+&lt;eg:months&gt;
+  &lt;eg:month abbr="Jan"&gt;January&lt;/eg:month&gt;
+  &lt;eg:month abbr="Feb"&gt;February&lt;/eg:month&gt;
+  &lt;eg:month abbr="Mar"&gt;March&lt;/eg:month&gt;
+  &lt;eg:month abbr="Apr"&gt;April&lt;/eg:month&gt;
+  &lt;eg:month abbr="May"&gt;May&lt;/eg:month&gt;
+  &lt;eg:month abbr="Jun"&gt;June&lt;/eg:month&gt;
+  &lt;eg:month abbr="Jul"&gt;July&lt;/eg:month&gt;
+  &lt;eg:month abbr="Aug"&gt;August&lt;/eg:month&gt;
+  &lt;eg:month abbr="Sep"&gt;September&lt;/eg:month&gt;
+  &lt;eg:month abbr="Oct"&gt;October&lt;/eg:month&gt;
+  &lt;eg:month abbr="Nov"&gt;November&lt;/eg:month&gt;
+  &lt;eg:month abbr="Dec"&gt;December&lt;/eg:month&gt;
+&lt;/eg:months&gt;  
+  
+&lt;datatype name="day"&gt;
+  &lt;parse&gt;
+    &lt;regex&gt;[0-9]{2}&lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;condition test=". &gt;= 1" /&gt;
+  &lt;condition test=". &amp;lt;= 31" /&gt;
+&lt;/datatype&gt;  
+  
+&lt;datatype name="hour"&gt;
+  &lt;parse&gt;
+    &lt;regex&gt;[0-9]{2}&lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;condition test=". &gt;= 0" /&gt;
+  &lt;condition test=". &amp;lt; 24" /&gt;
+&lt;/datatype&gt;
+  
+&lt;datatype name="minute"&gt;
+  &lt;parse&gt;
+    &lt;regex&gt;[0-9]{2}&lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;condition test=". &gt;= 0" /&gt;
+  &lt;condition test=". &amp;lt; 60" /&gt;
+&lt;/datatype&gt;
+  
+&lt;datatype name="second"&gt;
+  &lt;parse&gt;
+    &lt;regex&gt;[0-9]{2}(\.[0-9]+)?&lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;condition test=". &gt;= 0" /&gt;
+  &lt;condition test=". &amp;lt;= 60" /&gt;
+&lt;/datatype&gt;
+  
+&lt;datatype name="timezone"&gt;
+  &lt;parse name="timezone"&gt;
+    &lt;regex&gt;Z&lt;/regex&gt;
+    &lt;regex&gt;(?[hour](\+|-)[0-9]{2}):(?[minute][0-9]{2})&lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;condition test="$timezone = 'Z' or 
+                   ($timezone/hour &gt;= -14 and $timezone/hour &amp;lt;= 14)" /&gt;
+  &lt;condition test="$timezone = 'Z' or
+                   ($timezone/minute &gt;= 0 and $timezone/minute &amp;lt; 60)" /&gt;
+  &lt;map to="dayTimeDuration" 
+    select="dt:if($timezone =  'Z',
+                  'PT0H0S',
+            dt:if($timezone/hour &gt;= 0,
+                  concat('PT', $timezone/hour, 'H',
+                               $timezone/minute, 'M'),
+                  concat('-PT', -$timezone/hour, 'H',
+                                $timezone/minute, 'M')))" /&gt;
+  &lt;map from="dayTimeDuration" kind="weak"
+    select="dt:if(dt:property(., 'hours') = 0 and
+                  dt:property(., 'minutes') = 0,
+                  'Z',
+            dt:if(dt:property(., 'hours') &gt;= 0,
+                  concat('+', format-number(dt:property(., 'hours'), '00'),
+                         ':', format-number(dt:property(., 'minutes'), '00')),
+                  concat('-', format-number(-dt:property(., 'hours'), '00'),
+                         ':', format-number(-dt:property(., 'minutes'), '00'))))" /&gt;
+&lt;/datatype&gt;
+  
+&lt;include href="numbers.dtl" /&gt;  
+  
+&lt;datatype name="duration"&gt;
+  &lt;parse name="duration"&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      (?[neg]-)?
+      P(?[years][0-9]+Y)?
+       (?[months][0-9]+M)?
+       (?[days][0-9]+D)?
+       (T(?[hours][0-9]+H)?
+         (?[minutes][0-9]+M)?
+         (?[seconds][0-9](\.[0-9]+)?)?)?
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;condition test="$duration/years or $duration/months or $duration/days or
+                   $duration/hours or $duration/minutes or $duration/seconds" /&gt;
+  &lt;variable name="neg" type="integer" select="dt:if($duration/neg, -1, 1)" /&gt;
+  &lt;property name="years" type="nonNegativeInteger" 
+    select="$neg * dt:default($duration/years, 0)" /&gt;
+  &lt;property name="months" type="nonNegativeInteger" 
+    select="$neg * dt:default($duration/months, 0)" /&gt;
+  &lt;property name="days" type="nonNegativeInteger" 
+    select="$neg * dt:default($duration/days, 0)" /&gt;
+  &lt;property name="hours" type="nonNegativeInteger" 
+    select="$neg * dt:default($duration/hours, 0)" /&gt;
+  &lt;property name="minutes" type="nonNegativeInteger" 
+    select="$neg * dt:default($duration/minutes, 0)" /&gt;
+  &lt;property name="seconds" type="decimal" 
+    select="$neg * dt:default($duration/seconds, 0)" /&gt;
+&lt;/datatype&gt;  
+  
+&lt;datatype name="canonical-duration"&gt;
+  &lt;parse&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      (?[neg]-)?
+      P(?[months][0-9]+M)?
+       (T(?[seconds][0-9](\.[0-9]+)?)?)?
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;variable name="duration" type="duration" select="." /&gt;
+  &lt;property name="months" type="nonNegativeInteger"
+    select="dt:property($duration, 'months')" /&gt;
+  &lt;property name="seconds" type="nonNegativeInteger"
+    select="dt:property($duration, 'seconds')" /&gt;
+  &lt;map from="duration"
+    select="dt:if(dt:property(., 'years') &gt;= 0,
+                  concat('P', dt:property(., 'years') * 12 + 
+                              dt:property(., 'months'), 'MT',
+                              dt:property(., 'days') * 24 * 60 * 60 +
+                              dt:property(., 'hours') * 60 * 60 +
+                              dt:property(., 'minutes') * 60 +
+                              dt:property(., 'seconds'), 'S'),
+                  concat('-P', -dt:property(., 'years') * 12 +
+                               -dt:property(., 'months'), 'MT'))
+                               -dt:property(., 'days') * 24 * 60 * 60 +
+                               -dt:property(., 'hours') * 60 * 60 +
+                               -dt:property(., 'minutes') * 60 +
+                               -dt:property(., 'seconds'), 'S')" /&gt;
+  &lt;map to="duration" select="." /&gt;
+&lt;/datatype&gt;
+  
+&lt;datatype name="yearMonthDuration"&gt;
+  &lt;parse&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      (?[neg]-)?
+      P(?[years][0-9]+Y)?
+       (?[months][0-9]+M)?
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;variable name="duration" type="duration" select="." /&gt;
+  &lt;property name="years" type="nonNegativeInteger"
+    select="dt:property($duration, 'years')" /&gt;
+  &lt;property name="months" type="nonNegativeInteger"
+    select="dt:property($duration, 'months')" /&gt;
+  
+  &lt;map from="duration"
+    select="dt:if(dt:property(., 'years') &gt;= 0,
+                  concat('P', dt:property(., 'years'), 'Y',
+                              dt:property(., 'months'), 'M'),
+                  concat('-P', -dt:property(., 'years'), 'Y',
+                               -dt:property(., 'months'), 'M'))" /&gt;
+  &lt;map to="duration" select="." /&gt;
+&lt;/datatype&gt;  
+  
+&lt;datatype name="canonical-yearMonthDuration"&gt;
+  &lt;parse&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      (?[neg]-)?P(?[months][0-9]+M)
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;variable name="duration" type="canonical-duration" select="." /&gt;
+  &lt;property name="months" type="nonNegativeInteger"
+    select="dt:property($duration, 'months')" /&gt;
+  &lt;map from="canonical-duration"
+    select="dt:if(dt:property(., 'months') &gt;= 0,
+                  concat('P', dt:property(., 'months'), 'M'),
+                  concat('-P', -dt:property(., 'months'), 'M'))" /&gt;
+  &lt;map to="canonical-duration" select="." /&gt;
+&lt;/datatype&gt;
+  
+&lt;datatype name="dayTimeDuration"&gt;
+  &lt;parse&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      (?[neg]-)?
+      P(?[days][0-9]+D)?
+       (T(?[hours][0-9]+H)?
+         (?[minutes][0-9]+M)?
+         (?[seconds][0-9](\.[0-9]+)?)?)?
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;variable name="duration" type="duration" select="." /&gt;
+  &lt;property name="days" type="nonNegativeInteger"
+    select="dt:property($duration, 'days')" /&gt;
+  &lt;property name="hours" type="nonNegativeInteger"
+    select="dt:property($duration, 'hours')" /&gt;
+  &lt;property name="minutes" type="nonNegativeInteger"
+    select="dt:property($duration, 'minutes')" /&gt;
+  &lt;property name="seconds" type="nonNegativeInteger"
+    select="dt:property($duration, 'seconds')" /&gt;
+
+  &lt;map from="duration"
+    select="dt:if(dt:property(., 'days') &gt;= 0,
+                  concat('P', dt:property(., 'days'), 'DT',
+                              dt:property(., 'hours'), 'H',
+                              dt:property(., 'minutes'), 'M',
+                              dt:property(., 'seconds'), 'S'),
+                  concat('-P', -dt:property(., 'days'), 'DT',
+                               -dt:property(., 'hours'), 'H',
+                               -dt:property(., 'minutes'), 'M',
+                               -dt:property(., 'seconds'), 'S')" /&gt;
+  &lt;map to="duration" select="." /&gt;
+&lt;/datatype&gt;
+  
+&lt;datatype name="canonical-dayTimeDuration"&gt;
+  &lt;parse&gt;
+    &lt;regex ignore-whitespace="true"&gt;
+      (?[neg]-)?PT(?[seconds][0-9]+S)
+    &lt;/regex&gt;
+  &lt;/parse&gt;
+  &lt;variable name="duration" type="canonical-duration" select="." /&gt;
+  &lt;property name="seconds" type="decimal"
+    select="dt:property($duration, 'seconds')" /&gt;
+  &lt;map from="canonical-duration"
+    select="dt:if(dt:property(., 'seconds') &gt;= 0,
+                  concat('PT', dt:property(., 'seconds'), 'S'),
+                  concat('-PT', -dt:property(., 'seconds'), 'S'))" /&gt;
+  &lt;map to="canonical-duration" select="." /&gt;
+&lt;/datatype&gt;
+
+&lt;/datatypes&gt;</pre>
+      </div>
+   </body>
+</html>

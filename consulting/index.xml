@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../resources/style/page.xsl"?><my:doc xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/consulting/index.xml">
+         <dc:title>Jeni Tennison Consulting Ltd</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2000-11-02"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2002-02-27"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>Jeni Tennison Consulting Ltd</h1>
+   <p>
+   Jeni Tennison Consulting Ltd was set up to enable me to work on XML and XSLT 
+   projects as a freelance contractor.  The services I'm offering are things like:
+</p>
+   <ul>
+      <li>designing XML-based applications (including designing DTDs and XML Schemas)</li>
+      <li>
+        implementing XML-based applications, with both server-side and 
+        client-side transformation of XML into (X)HTML/XSL/any other markup 
+        language
+      </li>
+      <li>training/mentoring on XML, XSLT &amp; XML Schema</li>
+      <li>technical authoring of documentation or requirements specifications</li>
+      <li>customer or end-user support for vendors of XML software</li>
+   </ul>
+   <p>
+      My particular area of expertise is XSLT, but as with any programming 
+      language, there are a lot of things that XSLT can be used for, and some 
+      of them are more interesting than others.  The kinds of work I find 
+      particularly interesting draws on my knowledge engineering background or 
+      gives me an opportunity to learn additional XML-related skills.  Work 
+      involving XML Schema would be particularly interesting to me, for example.
+   </p>
+   <p>Previous and current clients include:</p>
+   <my:links>
+      <my:link href="www.cyence.com">Cyence International</my:link>
+      <my:link href="www.cambridge.org">Cambridge University Press</my:link>
+      <my:link href="www.slipstone.co.uk">Slipstone</my:link>
+      <my:link href="www.sterlingcommerce.com">Sterling Commerce</my:link>
+      <my:link href="www.stilo.com">Stilo Technology</my:link>
+      <my:link href="www.xi-advies.nl">Xi advies bv</my:link>
+      <my:link href="www.3tl.com">3tl</my:link>
+      <my:link href="www.scottishamicable.com">Scottish Amicable</my:link>
+   </my:links>
+   <p>
+   Please <a href="mailto:jeni@jenitennison.com">get in touch</a> if you'd like 
+   to discuss opportunities for collaboration, or if you want some work in 
+   XML/XSLT/XML Schema done.  No job is too small.
+</p>
+   <h2 id="links">Links</h2>
+   <my:links>
+      <my:link href="../cv.xml">My CV</my:link>
+      <my:link href="/xslt/index.xml">My XSLT Pages</my:link>
+   </my:links>
+</my:doc>

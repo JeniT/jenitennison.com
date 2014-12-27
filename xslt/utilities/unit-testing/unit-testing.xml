@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../datatypes/weave.xsl" type="text/xsl"?>
+<!DOCTYPE article SYSTEM "http://www.oasis-open.org/docbook/xml/simple/1.0/sdocbook.dtd">
+<article>
+  <title>Unit Testing XSLT</title>
+  <articleinfo>
+    <date>2005-09-20</date>
+    <author><firstname>Jeni</firstname> <surname>Tennison</surname></author>
+  </articleinfo>
+  
+  <section>
+    <title>Introduction</title>
+    <para>This is a package that makes it easy to write and run unit tests for
+      XSLT code. All you need is to unzip the .zip file <ulink
+      url="unit-testing.zip">unit-testing.zip</ulink> somewhere and install <ulink
+      url="http://saxon.sf.net/">Saxon 8.4B</ulink> (or later), with
+      <filename>saxon8.jar</filename> in your <filename>CLASSPATH</filename>.</para>
+    
+    <note>
+      <para>I've made various upgrades to the testing package since August. 
+      These changes are reflected in the text below.</para>
+    </note>
+    
+    <note>
+      <para>My apologies to Linux and Mac users: I would supply shell files for
+        running the unit tests, but I don't know how to write them. Any kindly
+        soul who wishes to donate is more than welcome: it should all be
+        portable, since it's just Java and XSLT. Actually, I'm no expert at
+        writing Windows batch files either, so if anyone wants to smarten up
+        <filename>test.bat</filename> they're more than welcome.</para>
+    </note>
+  </section>
+  
+  
+  <section>
+    <title>Writing the Tests</title>
+    <para>I've tried to design this package to make writing tests easy. That
+      means avoiding having to write anything that could be created
+      automatically, such as test IDs (although you can supply them), calls to
+      the tested functions or templates or comparison code. You write the tests
+      inside your stylesheet, just before the code that you want to test.</para>
+    
+    <example>
+      <title>Simple Example</title>
+      <para>This is a really simple example of a single test that checks the
+        result of calling the <literal>eg:square()</literal> function with the
+        <literal>number</literal> parameter set to <literal>2</literal>. The
+        expected result is the number <literal>4</literal>.</para>
+      <programlisting><![CDATA[<test:tests>
+  <test:test>
+    <test:param name="number" select="2" />
+    <test:expect select="4" />
+  </test:test>
+</test:tests>
+<xsl:function name="eg:square" as="xs:double">
+  <xsl:param name="number" as="xs:double" />
+  <xsl:sequence select="$number * $number" />
+</xsl:function>]]></programlisting>
+    </example>
+    
+    <para>All the testing elements are in the namespace
+      <literal>http://www.jenitennison.com/xslt/unit-test</literal>, so you need
+      to declare that in your stylesheet and you probably want to prevent
+      namespace declarations for that namespace littering your code, so you need
+      to use the <literal>exclude-result-prefixes</literal> attribute on
+      <literal>&lt;xsl:stylesheet&gt;</literal> as follows:</para>
+    
+    <programlisting><![CDATA[<xsl:stylesheet version="..."
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                ...
+                xmlns:test="http://www.jenitennison.com/xslt/unit-test"
+                exclude-result-prefixes="... test">
+...
+</xsl:stylesheet>]]></programlisting>
+    
+    <para>The tests that are applicable to a particular template or function are
+      all wrapped in a <literal>&lt;test:tests&gt;</literal> element. This is
+      primarily to make it easy to collapse them all out of the way (in editors
+      that can do such a thing) so they don't become too distracting when
+      writing the code. Individual tests are given in
+      <literal>&lt;test:test&gt;</literal> elements.</para>
+    
+    <para>Both <literal>&lt;test:tests&gt;</literal> and
+      <literal>&lt;test:test&gt;</literal> elements can have an
+      <literal>id</literal> attribute to specify a unique identifier and/or a
+      <literal>&lt;test:title&gt;</literal> child that gives a human-readable
+      title. Both are optional.</para>
+    
+    <para>Within the <literal>&lt;test:test&gt;</literal> element, you need to
+      specify the input to the template or function and the expected output. The
+      input can consist of a context node (for templates only) specified with an
+      optional <literal>&lt;test:context&gt;</literal> element and any number of
+      parameters specified with <literal>&lt;test:param&gt;</literal> elements.
+      The expected output must be specified with a
+      <literal>&lt;test:expect&gt;</literal> element.</para>
+    
+    <para>The values for the context, parameters and expected result are all
+      defined in the same ways. For atomic values (strings, numbers and the
+      like), use the <literal>select</literal> attribute, as in the example
+      previously. If you want to specify nodes, you need to supply a document
+      from which the nodes can be selected. You can do this either with the
+      <literal>href</literal> attribute, which gives a URI for an external
+      document, or by embedding the document (or document fragment) within the
+      relevant element. The <literal>select</literal> attribute is then used to
+      select nodes within the document; the path it holds is interpreted from
+      the root/document node of the document. The default value for the 
+      <literal>select</literal> attribute is <literal>"/*"</literal>, which 
+      selects (all) the document element(s).</para>
+    
+    <example>
+      <title>Testing using external documents</title>
+      <para>If you want to test the stylesheet as a whole, the easiest thing to
+        do is to create external input/output files and reference them. Note
+        that the result must be an XML document, so you can't use this to test
+        HTML output.</para>
+      <programlisting><![CDATA[<test:tests>
+  <test:test>
+    <test:context href="input.xml" />
+    <test:expect href="output.xml" />
+  </test:test>
+</test:tests>
+<xsl:template match="/">
+  ...
+</xsl:template>]]></programlisting>
+    </example>
+    
+    <example>
+      <title>Supplying nodes as context and expected value</title>
+      <para>You can test with simplified documents by simply embedding the
+        important part within the test itself. The embedded document should
+        include any important ancestors of the relevant element, but doesn't
+        need to include any of the irrelevant parts of the document. Use the
+        <literal>select</literal> attribute to pick the nodes you want from the
+        document. Remember that if your function or template returns something
+        other than elements, you will need a <literal>select</literal>
+        attribute on the <literal>&lt;test:expect&gt;</literal> element too.</para>
+      <programlisting><![CDATA[<test:tests>
+  <test:test>
+    <test:title>Empty header cells</test:title>
+    <test:context select="/table/tgroup/thead/row/entry">
+      <table>
+        <tgroup>
+          <thead>
+            <row>
+              <entry />
+            </row>
+          </thead>
+        </tgroup>
+      </table>
+    </test:context>
+    <test:expect>
+      <th>&#x160;</th>
+    </test:expect>
+  </test:test>
+</test:tests>    
+<xsl:template match="thead/row/entry">
+  ...
+  <xsl:when test="not(*) and not(normalize-space(.))">
+    <th>&#x160;</th>
+  </xsl:when>
+  ...
+</xsl:template>]]></programlisting>
+    </example>    
+    
+    <note>Differences in whitespace-only text nodes between the expected and 
+      actual result are ignored in this version. If you want to generate tests
+      that take whitespace-only text nodes into account, you'll need to 
+      configure the testing; see below.</note>
+  </section>
+  
+  <section>
+    <title>Running the Tests</title>
+    <para>Quick version: change directory to the directory where you unzipped
+      anything and run <command>test.bat</command> with the stylesheet you want
+      to test as the only argument. The command line looks like:</para>
+    <programlisting>test <replaceable>stylesheet.xsl</replaceable></programlisting>
+    
+    <para>Long version: there are three steps, the last one optional, and of
+      course you can reuse the results of any one of them.</para>
+    
+    <orderedlist>
+      <listitem>
+        <para>Process your stylesheet with
+          <filename>generate-tests.xsl</filename>. The result is a stylesheet
+          that contains the code for the tests. You can put this wherever you
+          want; <command>test.bat</command> puts it in the same directory as the
+          original stylesheet, and calls it
+          <filename>test-<replaceable>stylesheet</replaceable>.xsl</filename>.
+          Generating the stylesheet shouldn't produce any errors, unless you've
+          written a test wrong or <filename>generate-tests.xsl</filename> still
+          contains bugs. I'm afraid that there's not much error-checking code in
+          <filename>generate-tests.xsl</filename> at the moment, so either could
+          result in errors.</para>
+      </listitem>
+      <listitem>
+        <para>Run the generated stylesheet using anything you like as the source
+          document, or by invoking the <literal>main</literal> template
+          directly. This runs the unit tests themselves. The result is an XML
+          document holding a report on what tests were run and their results;
+          <command>test.bat</command> puts it in the same directory again as the
+          original stylesheet, and calls it
+          <filename>test-<replaceable>stylesheet</replaceable>-result.xml</filename>.
+        </para>
+        <para>You may get errors at this stage, associated with supplying
+          invalid values for parameters for example. If the stylesheet fails any
+          of the tests, you'll get a message telling you the ID and title of the
+          test. The ID may be gibberish if you haven't supplied any IDs or
+          titles, so this is a good reason to include them. If you don't get any
+          errors or messages, then you know everything's gone smoothly.</para>
+      </listitem>
+      <listitem>
+        <para>Finally, particularly if there were failed tests that you can't
+          trace, you can format the XML report using
+          <filename>format-report.xsl</filename>. This produces a nice HTML page
+          (well, an HTML page) from the XML report; <command>test.bat</command>
+          puts it in the same directory as the original stylesheet, and calls it
+          <filename>test-<replaceable>stylesheet</replaceable>-result.html</filename>.
+          You shouldn't get any errors at this stage, but it's always possible.
+          Open up the HTML document and there you have it.</para>
+      </listitem>
+    </orderedlist>    
+    
+    <para>If you want to customize the HTML report that you get, you can edit
+      <filename>base.css</filename> or (of course),
+      <filename>format-report.xsl</filename> to your heart's content.</para>
+  </section>
+  
+  
+  <section>
+    <title>Standalone Test Suites</title>
+    
+    <para>Wouldn't you know it, while I prefer to have tests embedded in my 
+      stylesheet, it turns out other people don't! Well, you can have the best
+      of both worlds.</para>
+    
+    <para>A standalone test suite has a <literal>&lt;test:suite&gt;</literal>
+      document element. The <literal>&lt;test:suite&gt;</literal> element has 
+      two attributes: <literal>stylesheet</literal>, which is a URL (relative 
+      to the test suite document) that points to the stylesheet tested by the
+      suite; and <literal>date</literal>, which is a <literal>xs:dateTime</literal>
+      that gives the date/time for the suite, useful for versioning.</para>
+    
+    <para>The <literal>&lt;test:suite&gt;</literal> element contains one or 
+      more <literal>&lt;test:tests&gt;</literal> elements, which are the same
+      as described above except that they also contain, immediately after the 
+      <literal>&lt;test:title&gt;</literal> element if there is one, a 
+      <literal>&lt;test:xslt&gt;</literal> element. The 
+      <literal>&lt;test:xslt&gt;</literal> element contains either an 
+      <literal>&lt;xsl:template&gt;</literal> or a 
+      <literal>&lt;xsl:function&gt;</literal> element, with 
+      <literal>name</literal>, <literal>match</literal> and/or 
+      <literal>mode</literal> attributes to identify the template/function 
+      being tested but no content.</para>
+    
+    <example>
+      <title>Standalone Test Suite</title>
+      <para>Here's what a standalone test suite for a 
+        <filename>utils.xsl</filename> stylesheet, last modified at 12:44 on
+        September 20th 2005. The only test shown is for the 
+        <literal>eg:square</literal> function.</para>
+      <programlisting><![CDATA[<test:suite stylesheet="utils.xsl"
+            date="2005-09-20T12:44:00">
+        
+<test:tests>
+  <test:xslt>
+    <xsl:function name="eg:square" />
+  </test:xslt>
+  <test:test>
+    <test:param name="number" select="2" />
+    <test:expect select="4" />
+  </test:test>
+  ...
+</test:tests>
+...
+</test:suite>]]></programlisting>
+    </example>    
+    
+    <para>You can use a standalone test suite as the argument to 
+      <command>test.bat</command> (or input to 
+      <filename>generate-tests.xsl</filename> if you're doing things by hand),
+      and the tests will be run on the referenced stylesheet.</para>
+
+    <para>The <filename>extract-tests.xsl</filename> stylesheet transforms a
+      stylesheet that has tests embedded in it into a standalone test suite. I
+      haven't done the reverse of that as yet...</para>
+  </section>
+  
+  
+  <section>
+    <title>Configuring the Testing</title>
+    
+    <para>You can configure the details of how the testing is carried out, and
+      in particular how sequences/items/nodes are compared, by creating your
+      own implementations of the various functions in 
+      <filename>generate-tests-utils.xsl</filename>. A 
+      <literal>test:config</literal> attribute on the 
+      <literal>&lt;xsl:stylesheet&gt;</literal> element, or a 
+      <literal>config</literal> attribute on the 
+      <literal>&lt;test:suite&gt;</literal> element in a standalone test suite,
+      can point to a stylesheet which contains these implementations in order
+      to override the default behaviour.</para>
+    
+    <example>
+      <title>Ignoring Insignificant Ordering Differences</title>
+      
+      <para>By default, this testing package compares the expected and actual 
+        results on an item-by-item basis. So if you expect</para>
+      <programlisting><![CDATA[<xs:all>
+  <xs:element ref="foo" />
+  <xs:element ref="bar" />
+</xs:all>]]></programlisting>
+      <para>but you get</para>
+      <programlisting><![CDATA[<xs:all>
+  <xs:element ref="bar" />
+  <xs:element ref="foo" />
+</xs:all>]]></programlisting>
+      <para>then the test fails.</para>      
+        
+      <para>In some cases, it might be that you really don't care what order
+        particular elements appear in, just as long as they're all generated.
+        In this example, the <literal>&lt;xs:element&gt;</literal> elements 
+        appearing in the content of the <literal>&lt;xs:all&gt;</literal>
+        element can appear in any order with the same meaning.</para>
+      
+      <para>To configure the testing package to ignore these ordering 
+        differences, you can create <filename>xsd-config.xsl</filename>,
+        which overrides the <literal>test:sorted-children</literal> function
+        from <filename>generate-test-utils.xsl</filename>. This ensures that
+        the sequence of <literal>&lt;xs:element&gt;</literal> elements are
+        sorted by name before being compared, effectively ignoring the original
+        order in which they appeared.</para>
+      
+      <para>To use <filename>xsd-config.xsl</filename>, include a reference to
+        it from the <literal>test:config</literal> attribute on the 
+        <literal>&lt;xsl:styelsheet&gt;</literal> document element.</para>
+      
+      <programlisting><![CDATA[<xsl:stylesheet version="2.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:test="http://www.jenitennison.com/xslt/unit-test"
+                extension-element-prefixes="test"
+                test:config="xsd-config.xsl">
+...  
+</xsl:stylesheet>]]></programlisting>
+    </example>
+  </section>
+  
+  <section>
+    <title>Background</title>
+    <para>I've heard a lot about XP over the last few years, but never really
+      got into the whole unit testing thing: I think that like a lot of
+      programmers, I viewed writing tests as too much hard work. But during this
+      summer (2005), I'm working on a project that's using an XP development
+      methodology, plus Tim Bray talked glowingly about XP and unit testing
+      during his talk about the XML Summer School. I decided that if I was going
+      to do unit testing, I needed it to be really easy to write and run the
+      tests.</para>
+    
+    <para>So during the remaining couple of days at the XML Summer School, I
+      hacked up the solution you see here. I tried to remain true to the rest of
+      the XP philosophy: this does the minimum of what I need it to do at the
+      moment, and if I find I need it to do more, <emphasis>then</emphasis> I'll
+      add the code to do it.</para>
+    
+    <para>The way I use it is that I've rigged up &lt;oXygen/&gt; with an
+      "External Tool" so that I can hit a button and have the tests run and the
+      results come up in the browser. If you use &lt;oXygen/&gt;, it's easy
+      enough to do: go to Tools &gt; External Tools &gt; Preferences, click New
+      and fill in the form as follows (I have the unit testing files in
+      <filename>D:\library\unit testing</filename>):</para>
+    
+    <variablelist>
+      <varlistentry>
+        <term>Name</term>
+        <listitem><para>Test Stylesheet</para></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Description</term>
+        <listitem><para>Runs the unit tests embedded in the current stylesheet</para></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Working Directory</term>
+        <listitem><para><filename>D:\library\unit testing</filename></para></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Command</term>
+        <listitem><para><command>"D:\library\unit testing\test.bat" ${cf}</command></para></listitem>
+      </varlistentry>      
+    </variablelist>
+  </section>
+
+</article>

@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <script src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAcS2PumB7VTENX8T7F9IU_RTUBzBFkaEnJqYc0fbAKLUJp8is4xRFC-IE3stMU_chXmJqmWIqr_6Gdg' type='text/javascript'></script>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+      <!--
+    google.visualization.Query.setResponse({version:0.6,status:'ok',reqId:0,table:{cols:[{id:'lat',type:'number'},{id:'long',type:'number'},{id:'value',type:'number'}],rows:[{c:[{v:'51.3133'},{v:'-2.88521'},{v:3478}]},{c:[{v:'51.3133'},{v:'-2.88521'},{v:4120}]},{c:[{v:'51.8109'},{v:'-2.24218'},{v:3152}]},{c:[{v:'51.8109'},{v:'-2.24218'},{v:3673}]},{c:[{v:'52.5439'},{v:'-1.96751'},{v:1912}]},{c:[{v:'52.5439'},{v:'-1.96751'},{v:2242}]}]}}) -->
+    <script type="text/javascript">
+      google.load('visualization', '1', {'packages': ['geomap']});
+      google.setOnLoadCallback(drawMap);
+      function drawMap() {
+        /*
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'lat');
+        data.addColumn('number', 'long');
+        data.addColumn('number', 'value');
+        data.addRow([51.3133,-2.88521,3478]);
+        //data.addRow([51.3133,-2.88521,4120]);
+        data.addRow([51.8109,-2.24218,3152]);
+        //data.addRow([51.8109,-2.24218,3673]);
+        data.addRow([52.5439,-1.96751,1912]);
+        //data.addRow([52.5439,-1.96751,2242]);
+        var geomap = new google.visualization.GeoMap(document.getElementById('map_div'));
+        geomap.draw(data, {
+          region: "GB",
+          dataMode: 'markers'
+        });
+        */
+        // Replace the data source URL on next line with your data source URL.
+        var query = new google.visualization.Query('http://www.jenitennison.com/visualisation/data/traffic-flow');
+        query.setQuery('select lat, long, value, number');
+        // Send the query with a callback function.
+        query.send(handleQueryResponse);
+      };
+      function handleQueryResponse(response) {
+        if (response.isError()) {
+          alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+          return;
+        }
+
+        var data = response.getDataTable();
+        //data.setColumnLabel(3, 'Motor Vehicles');
+        var geomap = new google.visualization.GeoMap(document.getElementById('map_div'));
+        geomap.draw(data, {
+          region: "GB",
+          dataMode: 'markers'
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <div id="map_div"></div>
+  </body>
+</html>

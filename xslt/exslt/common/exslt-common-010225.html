@@ -1,0 +1,1152 @@
+<?xml version="1.0">
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "/resources/dtd/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>User-Defined Extension Functions in XSLT</title>
+      <link rel="stylesheet" href="/resources/style/base.css"/>
+      <link rel="alternate" type="text/xml" href="/index.xml"/>
+	  <style>
+		.issue { margin-left: 5%; }
+		.error { color: red; }
+		.function { font-weight: bolder; }
+		.element { font: 'Courier New', Courier, monospace;
+		           font-size: 0.8em; }
+	  </style>
+   </head>
+   <body>
+		<h1>User-Defined Extension Functions in XSLT</h1>
+		<p>
+			Version: 0.1<br />
+			Author: <a href="mailto:mail@jenitennison.com">Jeni Tennison</a>
+		</p>
+		<h3>Abstract</h3>
+		<p>
+			This document describes a method for defining user extension functions using XSLT in XSLT 1.0.
+		</p>
+		<p>
+			XPath contains a number of functions that allow you to perform manipulation of strings, numbers, node sets and so on.  While these cover basic functionality, there are often situations where stylesheet authors either need to or want to do more within an XPath.
+		</p>
+		<p>
+			Most XSLT applications offer a range of extension functions.  However, using only implementation's extension functions limits the stylesheet author to those thought of and implemented by a particular vendor.  It also means that the stylesheet itself is limited to that vendor.  Allowing users to define their own extension functions enables them to create the functions that they need for their particular application and enhances the portability of their stylesheets.
+		</p>
+		<p>
+			Stylesheet authors need to have a ways of defining their own functions.  These definitions may be in any programming language, but it is likely that different XSLT processors will support different languages.  The one language that all XSLT processors support is XSLT.  It therefore makes sense to allow stylesheet authors to define extension functions using XSLT - the implementation may not be as efficient as it would be in, say, Java, but at least it can be supported across platforms and implementations, and limits the number of langauges that stylesheet authors have to learn.
+		</p>
+
+		<h3>Status of this Document</h3>
+
+		<p>
+			This document is a first draft for review by the implementers of XSLT processors and the XSLT stylesheet authors.  It is based on discussions on <a class="offsite" href="http://www.mulberrytech.com/xsl/xsl-list">XSL-List</a>.  Comments on this document should be sent to <a href="mailto:xsl-list@mulberrytech.com">XSL-List</a>.
+		</p>
+
+		<h3>Contents</h3>
+		<p>
+			1. <a href="#introduction">Introduction</a><br />
+			2. <a href="#namespace">Namespace</a><br />
+			3. <a href="#defining">Defining Extension Functions</a><br />
+			&nbsp;&nbsp;&nbsp;3.1 <a href="#arguments">Defining Function Arguments</a><br />
+			&nbsp;&nbsp;&nbsp;3.2 <a href="#return">Defining Function Return Values</a><br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.2.1 <a href="#return-values">Return Values</a><br />
+			4. <a href="#calling">Calling Extension Functions</a><br />
+			5. <a href="#functions">Additional Functions</a><br />
+			A. <a href="#references">References</a><br />
+			B. <a href="#samples">Sample Functions</a><br />
+			&nbsp;&nbsp;&nbsp;B.1 <a href="#com">Common Extension Functions</a><br />
+			&nbsp;&nbsp;&nbsp;B.2 <a href="#set">Set Functions</a><br />
+			&nbsp;&nbsp;&nbsp;B.3 <a href="#num">Numerical Functions</a><br />
+			&nbsp;&nbsp;&nbsp;B.4 <a href="#gen">Generative Functions</a><br />
+			&nbsp;&nbsp;&nbsp;B.5 <a href="#sort">Sorting Functions</a><br />
+			&nbsp;&nbsp;&nbsp;B.6 <a href="#doc">Other Document Functions</a><br />
+			C. <a href="#acknowledgements">Acknowledgements</a><br />
+		</p>
+
+		<h2 id="introduction">1. Introduction</h2>
+
+		<p>
+			This document defines extension elements and functions to support user definition of extension functions using XSLT, in XSLT 1.0.
+		</p>
+		<p>
+			The extension elements and functions defined within this document are governed by the general rules about extensions to XSLT covered in <a class="offsite" href="http://www.w3.org/TR/xslt#extension">Section 14 [Extensions]</a> in the XSLT 1.0 Recommendation which can be found at <a class="offsite" href="http://www.w3.org/TR/xslt">http://www.w3.org/TR/xslt</a>.
+		</p>
+		<p>
+			An XSLT processor that supports user-defined extension functions in XSLT using the extension elements and functions defined within this document must conform to the behaviour described within this document.
+		</p>
+
+		<h2 id="namespace">2. Namespace</h2>
+
+		<p>
+			The namespace for the extension elements and functions described in this document is:
+		</p>
+		<pre>
+...
+		</pre>
+		<div class="issue">
+			<p>
+				<strong>Issue: Namespace</strong> - what namespace should be used for these extension elements/functions?  Possibility:
+			</p>
+			<pre>
+http://xmlns.opentechnology.org/xslt-extensions/common
+			</pre>
+		</div>
+		<p>
+			Throughout this document, the prefix <code>exsl</code> is used to refer to this namespace. Any other prefix can be used within a particular stylesheet (though a prefix must be specified to enable the extension functions to be recognised as extensions).
+		</p>
+
+		<h2 id="defining">3. Defining Extension Functions</h2>
+
+		<pre id="element-function">
+&lt;exsl:function
+   <b>name</b> = <var>QName</var>>
+   &lt;!-- Content: (<a class="offsite" href="http://www.w3.org/TR/xslt#element-param">xsl:param</a>*,
+                  (<a class="offsite" href="http://www.w3.org/TR/xslt#element-variable">xsl:variable</a> | <a class="offsite" href="http://www.w3.org/TR/xslt#element-if">xsl:if</a> | <a class="offsite" href="http://www.w3.org/TR/xslt#element-choose">xsl:choose</a> | <a class="offsite" href="http://www.w3.org/TR/xslt#element-message">xsl:message</a>)*,
+		  (<a href="#element-return">exsl:return</a>, <a class="offsite" href="http://www.w3.org/TR/xslt#element-fallback">xsl:fallback</a>?)? -->
+&lt;/exsl:function>
+		</pre>
+		<p>
+			Extension functions written in XSLT are defined by the <a href="#element-function"><code>exsl:function</code></a> element, which can occur only at the top level of the stylesheet.
+		</p>
+		<div class="issue">
+			<p>
+				<strong>Issue: Wrapper</strong> - should there be a wrapper element to contain the <a href="#element-function"><code>exsl:function</code></a> elements in a document?
+			</p>
+			<p>
+				<strong>Issue: Conditions</strong> - should <code>xsl:if</code> and <code>xsl:choose</code> be allowed as direct children of <a href="#element-function"><code>exsl:function</code></a>?  It makes it easier to do conditional processing if they are.  But conditional processing could alternatively be achieved through an extension to XPath syntax that gave a conditional construct.
+			</p>
+		</div>
+		<p>
+			An <a href="#element-function"><code>exsl:function</code></a> element must have a <code>name</code> attribute, indicating the name of the function.  The value of the <code>name</code> attribute is a <a class="offsite" href="http://www.w3.org/TR/REC-xml-names#NT-QName">QName</a>, which is expanded as described in <a class="offsite" href="http://www.w3.org/TR/xslt#qname">Section 2.4 [Qualified Names]</a> in the XSLT 1.0 Recommendation.  It is an error if the namespace URI of the expanded name of the function is null - extension functions must not be in a null namespace.
+		</p>
+		<p class="note">
+			Note: the rules on resolving qualified names entail that if no prefix is defined, the namespace URI resolves to the null namespace.  Thus, it is an error if the qualified name specified does not have a prefix.
+		</p>
+		<p>
+			When an extension function defined with <a href="#element-function"><code>exsl:function</code></a> is called, the content of the <a href="#element-function"><code>exsl:function</code></a> is instantiated to give the return value of the function.
+		</p>
+		<p>
+			It is an error if the instantiation of the content of <a href="#element-function"><code>exsl:function</code></a> results in the creation of result tree nodes unless they are created as part of a result tree fragment.  An XSLT processor may signal the error; if it does not signal the error, it must recover by ignoring the result tree nodes.
+		</p>
+		<div class="issue">
+			<p>
+				<strong>Issue: RTF error</strong> - should generating result nodes be an unrecoverable error?
+			</p>
+		</div>
+		<p>
+			The implication of this is that <a class="offsite" href="http://www.w3.org/TR/xslt#literal-result-element">literal result elements</a>, <a class="offsite" href="http://www.w3.org/TR/xslt#element-copy"><code>xsl:copy</code></a>, <a class="offsite" href="http://www.w3.org/TR/xslt#element-copy-of"><code>xsl:copy-of</code></a>, <a class="offsite" href="http://www.w3.org/TR/xslt#element-element"><code>xsl:element</code></a>, <a class="offsite" href="http://www.w3.org/TR/xslt#element-attribute"><code>xsl:attribute</code></a>, <a class="offsite" href="http://www.w3.org/TR/xslt#element-processing-instruction"><code>xsl:processing-instruction</code></a>, <a class="offsite" href="http://www.w3.org/TR/xslt#element-comment"><code>xsl:comment</code></a>, <a class="offsite" href="http://www.w3.org/TR/xslt#element-text"><code>xsl:text</code></a>, <a class="offsite" href="http://www.w3.org/TR/xslt#element-value-of"><code>xsl:value-of</code></a> and <a class="offsite" href="http://www.w3.org/TR/xslt#element-number"><code>xsl:number</code></a> elements must not be instantiated during the instantiation of the content of <a href="#element-function"><code>exsl:function</code></a>, unless they are instantiated during the creation of a result tree fragment (i.e. within <a class="offsite" href="http://www.w3.org/TR/xslt#element-variable"><code>xsl:variable</code></a>, <a class="offsite" href="http://www.w3.org/TR/xslt#element-param"><code>xsl:param</code></a>, <a class="offsite" href="http://www.w3.org/TR/xslt#element-with-param"><code>xsl:with-param</code></a> or <a href="#element-return"><code>exsl:return</code></a>).
+		</p>
+		<p>
+			It is an error if the instantiation of the content of <a href="#element-function"><code>exsl:function</code></a> results in a call to or application of a template unless the template is called or applied within a variable-binding element such as <a class="offsite" href="http://www.w3.org/TR/xslt#element-variable"><code>xsl:variable</code></a> or <a class="offsite" href="http://www.w3.org/TR/xslt#element-param"><code>xsl:param</code></a> or within <a href="#element-return"><code>exsl:return</code></a>.
+		</p>
+		<div class="issue">
+			<p>
+				<strong>Issue: Templates</strong> - should it be possible to call or apply templates within <a href="#element-function"><code>exsl:function</code></a> outside variable-binding elements?  Given that generating result nodes is an error, the only purpose of calling or applying templates would be for templates that generate messages.  This is achievable using an extension function instead.
+			</p>
+		</div>
+		<p>
+			It is an error if the instantiation of the content of <a href="#element-function"><code>exsl:function</code></a> results in an <a class="offsite" href="http://www.w3.org/TR/xslt#element-for-each"><code>xsl:for-each</code></a> element being instantiated unless the <a class="offsite" href="http://www.w3.org/TR/xslt#element-for-each"><code>xsl:for-each</code></a> is within a variable-binding element such as <a class="offsite" href="http://www.w3.org/TR/xslt#element-variable"><code>xsl:variable</code></a> or <a class="offsite" href="http://www.w3.org/TR/xslt#element-param"><code>xsl:param</code></a> or within <a href="#element-return"><code>exsl:return</code></a>.
+		</p>
+		<div class="issue">
+			<p>
+				<strong>Issue: <a class="offsite" href="http://www.w3.org/TR/xslt#element-for-each"><code>xsl:for-each</code></a></strong> - should <a class="offsite" href="http://www.w3.org/TR/xslt#element-for-each"><code>xsl:for-each</code></a> be allowed within <a href="#element-function"><code>exsl:function</code></a> outside variable-binding elements?  It would ease the return of node sets created (a) from other documents or (b) involving sorting the node set in other than document order. This is achievable by building an RTF with IDs referring to the relevant nodes instead.
+			</p>
+		</div>
+
+		<h3 id="arguments">3.1 Defining Function Arguments</h3>
+
+		<p>
+			Arguments for functions are defined with the <a class="offsite" href="http://www.w3.org/TR/xslt#element-param"><code>xsl:param</code></a> element, as specified in <a class="offsite" href="http://www.w3.org/TR/xslt#variables">Section 11 [Variables and Parameters]</a> of the XSLT 1.0 Recommendation.
+		</p>
+		<div class="issue">
+			<p>
+				<strong>Issue: Arguments</strong> - should arguments be specified with the <a class="offsite" href="http://www.w3.org/TR/xslt#element-param"><code>xsl:param</code></a> element or through attributes on <a href="#element-function"><code>exsl:function</code></a>?  One problem with specifying them as arguments is that the attribute order is not guaranteed; this wouldn't be a problem if arguments were passed by name rather than position.
+			</p>
+		</div>
+		<p>
+			When an extension function is called with arguments passed by position, the values passed as arguments are assigned to parameters according to the position of the <a class="offsite" href="http://www.w3.org/TR/xslt#element-param"><code>xsl:param</code></a>.  The first argument is assigned to the first parameter, the second to the second and so on.  The presence of an <a class="offsite" href="http://www.w3.org/TR/xslt#element-param"><code>xsl:param</code></a> indicates that an argument is expected for the function but does not imply that an argument <em>has</em> to be passed to the function.
+		</p>
+		<div class="issue">
+			<p>
+				<strong>Issue: Optional arguments</strong> - should there be an extension attribute on <a class="offsite" href="http://www.w3.org/TR/xslt#element-param"><code>xsl:param</code></a> that indicates whether an argument is optional?
+			</p>
+		</div>
+		<p>
+			An XSLT processor must not signal an error if an extension function is called with fewer arguments than there are parameters defined for the extension function.  It is an error to call a function with more arguments than there are parameters defined for the extension function.  An XSLT processor may signal the error; if it does not signal the error, then it must recover by ignoring the extra arguments.
+		</p>
+		<div class="issue">
+			<p>
+				<strong>Issue: Argument error</strong> - should trying to pass more arguments than there are <a class="offsite" href="http://www.w3.org/TR/xslt#element-param"><code>xsl:param</code></a> elements be considered an error?  Should it be an unrecoverable error?
+			</p>
+		</div>
+		<p>
+			As an example, take the following function definition:
+		</p>
+		<pre>
+&lt;exsl:function name="my:func">
+   &lt;xsl:param name="foo" />
+   &lt;xsl:param name="bar" select="false()" />
+   ...
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p>
+			All the following function calls are legal:
+		</p>
+		<pre>
+my:func()
+my:func('Fred')
+my:func('Fred', true())
+my:func('Fred', 'Barney')
+		</pre>
+		<p>
+			The following function call is illegal:
+		</p>
+		<pre class="error">
+my:func('Fred', true(), 'Barney')
+		</pre>
+		<p>
+			The value specified by an <a class="offsite" href="http://www.w3.org/TR/xslt#element-param"><code>xsl:param</code></a> indicates the default value for an argument if that argument is not given in a function call, but does not indicate the acceptable value types for the function.
+		</p>
+		<div class="issue">
+			<p>
+				<strong>Issue: Argument types</strong> - should there be an extension attribute on <a class="offsite" href="http://www.w3.org/TR/xslt#element-param"><code>xsl:param</code></a> that indicates the value type of an argument?
+			</p>
+		</div>
+
+		<h3 id="return">3.2 Defining Function Return Values</h3>
+
+		<p>
+			When a function is called, the content of the <a href="#element-function"><code>exsl:function</code></a> element is instantiated to give the return value of the function.  The instantiation of the content of the <a href="#element-function"><code>exsl:function</code></a> element may involve the instantiation of an <a href="#element-return"><code>exsl:return</code></a> element.
+		</p>
+		<pre id="element-return">
+&lt;exsl:return
+   select = <var>expression</var>>
+   &lt;!-- Content: <var>template</var> -->
+&lt;/exsl:return>
+		</pre>
+		<p>
+			The <a href="#element-return"><code>exsl:return</code></a> element works in a similar way to variable-binding elements as described in <a class="offsite" href="http://www.w3.org/TR/xslt#variable-values">Section 11.2</a> of the XSLT 1.0 Recommendation (see <a href="#return-values">[3.2.1 Return Values]</a>).
+		</p>
+		<div class="issue">
+			<p>
+				<strong>Issue: <a href="#element-return"><code>exsl:return</code></a> name</strong> - should <a href="#element-return"><code>exsl:return</code></a> be called exsl:result instead?
+			</p>
+			<p>
+				<strong>Issue: exsl:reference-of</strong> - should it be possible to return node sets by building them up gradually through an extension element such as <code>exsl:reference-of</code>?  It would ease the return of multiple nodes from a function.  This is achievable by building an RTF with IDs pointing to the relevant nodes instead.
+			</p>
+		</div>
+		<p>
+			It is an error for <a href="#element-return"><code>exsl:return</code></a> to appear outside the content of <a href="#element-function"><code>exsl:function</code></a>.  For example, the following is an error:
+		</p>
+		<pre class="error">
+&lt;xsl:template match="foo">
+   &lt;exsl:return select="." />
+&lt;/xsl:template>
+		</pre>
+		<div class="issue">
+			<p>
+				<strong>Issue: <a href="#element-return"><code>exsl:return</code></a> parent</strong> - should the use of <a href="#element-return"><code>exsl:return</code></a> be restricted to within <a href="#element-function"><code>exsl:function</code></a> or is this too restrictive?  Are there any other places where <a href="#element-return"><code>exsl:return</code></a> might be useful?
+			</p>
+		</div>
+		<p>
+			It is an error if instantiating the content of the <a href="#element-function"><code>exsl:function</code></a> element results in the instantion of more than one <a href="#element-return"><code>exsl:return</code></a> elements.  An XSLT processor may signal the error; if it does not signal the error, it must recover by ignoring all <a href="#element-return"><code>exsl:return</code></a> elements after the first.
+		</p>
+		<div class="issue">
+			<p>
+				<strong>Issue: Multiple <a href="#element-return"><code>exsl:return</code></a> error</strong> - should instantiating <a href="#element-return"><code>exsl:return</code></a> more than once be an unrecoverable error?
+			</p>
+		</div>
+		<p>
+			The following is an error if the value of the context node when the function is called is equal to the string <code>'yes'</code>, as two <a href="#element-return"><code>exsl:return</code></a> elements are instantiated: one within the <code>xsl:if</code> and one directly within the <a href="#element-function"><code>exsl:function</code></a>:
+		</p>
+		<pre>
+&lt;exsl:function name="my:func1">
+   &lt;xsl:if test=". = 'yes'">
+      &lt;exsl:return select="true()" />
+   &lt;/<code>xsl:if</code>>
+   &lt;exsl:return select="false()" />
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p>
+			If an XSLT processor recovers from this error, the above function is equivalent to:
+		</p>
+		<pre>
+&lt;exsl:function name="my:func1">
+   &lt;xsl:choose>
+      &lt;xsl:when test=". = 'yes'">
+	 &lt;exsl:return select="true()" />
+	 </xsl:when>
+	 <xsl:otherwise>
+	 &lt;exsl:return select="false()" />
+	 </xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p>
+			It is an error if an <a href="#element-return"><code>exsl:return</code></a> element occurs within an <a href="#element-return"><code>exsl:return</code></a> element.  Thus the following is an error:
+		</p>
+		<pre class="error">
+&lt;exsl:function name="my:func2">
+   &lt;exsl:return>
+      &lt;exsl:return select="." />
+   &lt;/exsl:return>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p>
+			It is an error if instantiating the content of a variable-binding element (i.e. <a class="offsite" href="http://www.w3.org/TR/xslt#element-variable"><code>xsl:variable</code></a>, <a class="offsite" href="http://www.w3.org/TR/xslt#element-param"><code>xsl:param</code></a>) results in the instantiation of an <a href="#element-return"><code>exsl:return</code></a> element. Thus the following is an error:
+		</p>
+		<pre class="error">
+&lt;exsl:function name="my:func3">
+   &lt;xsl:variable name="foo">
+      &lt;exsl:return select="." />
+   &lt;/xsl:variable>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p>
+			If no <a href="#element-return"><code>exsl:return</code></a> element is instantiated during the execution of a function, the return value for the function is the empty string (<code>''</code>).
+		</p>
+		<div class="issue">
+			<p>
+				<strong>Issue: Return values</strong> - should the default return value from a function be a node set instead of an empty string?  Attempting to interpret a string as a node set will lead to an unrecoverable error.  For example:
+			</p>
+			<pre>
+&lt;exsl:function name="my:root">
+   &lt;xsl:if test="false()">
+      &lt;exsl:return select="/" />
+   &lt;/<code>xsl:if</code>>
+&lt;/<code>exsl:function</code>>
+			</pre>
+			<p>
+				would (accidentally) return an empty string.  If it was used in:
+			</p>
+			<pre>
+&lt;xsl:variable name="foo" select="my:root()/foo" />
+			</pre>
+			<p>
+				this would cause an unrecoverable error.
+			</p>
+		</div>
+
+		<h4 id="return-values">3.2.1 Return Values</h4>
+
+		<p>
+			The <a href="#element-return"><code>exsl:return</code></a> element can specify the value of the variable in three alternative ways.
+		</p>
+		<ul>
+			<li>
+				<p>
+					If the <a href="#element-return"><code>exsl:return</code></a> element has a <code>select</code> attribute, then the value of the attribute must be an expression and the returned value is the object that results from evaluating the expression. In this case, the content must be empty.
+				</p>
+				<div class="issue">
+					<p>
+						<strong>Issue: <a href="#element-return"><code>exsl:return</code></a> expressions</strong> - should the <code>select</code> attribute on <a href="#element-return"><code>exsl:return</code></a> hold an extended XPath syntax that includes things such as conditional constructs?
+					</p>
+				</div>
+			</li>
+			<li>
+				<p>
+					If the <a href="#element-return"><code>exsl:return</code></a> element does not have a <code>select</code> attribute and has non-empty content (i.e. the <a href="#element-return"><code>exsl:return</code></a> element has one or more child nodes), then the content of the <a href="#element-return"><code>exsl:return</code></a> element specifies the value.  The content of the <a href="#element-return"><code>exsl:return</code></a> element is a template, which is instantiated to give the returned value. The value is a result tree  fragment equivalent to a node-set containing just a single root node having as children the sequence of nodes produced by instantiating the template. The base URI of the nodes in the result tree fragment is the base URI of the <a href="#element-return"><code>exsl:return</code></a> element.
+				</p>
+				<p>
+					It is an error if a member of the sequence of nodes created by instantiating the template is an attribute node or a namespace node, since a root node cannot have an attribute node or a namespace node as a child. An XSLT processor may signal the error; if it does not signal the error, it must recover by not adding the attribute node or namespace node.
+				</p>
+			</li>
+			<li>
+				<p>
+					If the <a href="#element-return"><code>exsl:return</code></a> element has empty content and does not have a <code>select</code> attribute, then the returned value is an empty string. Thus
+				</p>
+				<pre>
+&lt;exsl:return />
+				</pre>
+				<p>
+					is equivalent to
+				</p>
+				<pre>
+&lt;exsl:return select="''"/>
+				</pre>
+			</li>
+		</ul>
+
+		<h2 id="calling">4. Calling Extension Functions</h2>
+
+		<p>
+			Extension functions defined using <a href="#element-function"><code>exsl:function</code></a> can be called in the same way as XPath functions.  Calling extension functions in this way causes arguments to be passed by position.
+		</p>
+		<div class="issue">
+			<p>
+				<strong>Issue: Arguments by name</strong> - should there be a way to pass arguments to extension function by parameter name?
+			</p>
+			<p>
+				<strong>Issue: Dynamic calls</strong> - should there be a way to dynamically determine the name of the function being called?
+			</p>
+		</div>
+
+		<h2 id="functions">5. Additional Functions</h2>
+
+		<p>
+			This section defines additional common extension functions.
+		</p>
+		<p id="function-node-set">
+			<b>Function:</b> <var>node-set</var> <b>exsl:node-set</b>(<var>object</var>)
+		</p>
+		<p>
+			The purpose of the <span class="function">exsl:node-set</span> function is to convert a result tree fragment into a node set.  If the argument is a node set already, it is simply returned as is.  It is an error if the argument to <span class="function">exsl:node-set</span> is not a node set or a result tree fragment.
+		</p>
+		<div class="issue">
+			<p>
+				<strong>Issue: <span class="function">exsl:node-set</span> name</strong> - should <span class="function">exsl:node-set</span> be called something else instead?
+			</p>
+			<p>
+				<strong>Issue: <span class="function">exsl:node-set</span> argument</strong> - should authors be able to use <span class="function">exsl:node-set</span> to create a node set from a type other than a result tree fragment?  If a value other than a node set or result tree fragment were passed as an argument, this could be converted to a string and a node set generated with a root node with a single text node child with a string value of the value.
+			</p>
+		</div>
+		<div class="issue">
+			<p>
+				<strong>Issue: <span class="function">exsl:if</span></strong> - should this specification define an <span class="function">exsl:if</span> function for conditional processing that doesn't involve evaluating both the true and false parts?
+			</p>
+			<p>
+				<strong>Issue: Type tests</strong> - should this specification define functions to test the type of values passed as parameters?  Several XPath functions allow an argument to be either a string or a node set, but treating a string as a node set will cause an error and there's no way to detect whether a variable value is actually a string or a node set.
+			</p>
+		</div>
+
+		<h2 id="references">A. References</h2>
+		
+		<dl>
+			<dt><b>XSLT</b></dt>
+			<dd>World Wide Web Consortium. <i>XSL Transformations (XSLT)</i>. W3C Recommendation. See <a class="offsite" href="http://www.w3.org/TR/xslt">http://www.w3.org/TR/xslt</a></dd>
+			<dt><b>XPath</b></dt>
+			<dd>World Wide Web Consortium. <i>XML Path Language</i>. W3C Recommendation. See <a class="offsite" href="http://www.w3.org/TR/xpath">http://www.w3.org/TR/xpath</a></dd>
+		</dl>
+		
+		<h2 id="samples">B. Sample Extension Functions</h2>
+
+		<p>
+			This appendix holds example implementations of several extension functions.
+		</p>
+
+		<h3 id="com">B.1 Common Extension Functions</h3>
+
+		<p id="function-com:if">
+			<b>Function:</b> <var>object</var> <b>com:if</b>(<var>boolean</var>, <var>object</var>, <var>object</var>)
+		</p>
+		<p>
+			The <span class="function">com:if</span> function returns the second argument if the first argument is true and the third argument if the first argument is false.  Both the second and third arguments are evaluated whether the first argument is true or false.
+		</p>
+		<pre>
+&lt;exsl:function name="com:if">
+   &lt;xsl:param name="test" select="true()" />
+   &lt;xsl:param name="true" />
+   &lt;xsl:param name="false" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="$test">
+         &lt;exsl:return select="$true" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;exsl:return select="$false" />
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p id="function-com:eval">
+			<b>Function:</b> <var>RTF</var> <b>com:eval</b>(<var>node-set</var>, <var>string</var>?)
+		</p>
+		<p>
+			The <span class="function">com:eval</span> function is used to give the 'value' of a node.  Usually the value of a node is its string value, but in different contexts it may be generated by, for example, counting how many children it has or the value of a particular attribute.
+		</p>
+		<p>
+			The first argument is a node set; if the node set has more than one node in it then only the first node is considered.  By default, the string value of the node is returned as a result tree fragment.  Stylesheet authors can change what value is returned by adding templates that match the node in <code>com:eval</code> mode and return different values.
+		</p>
+		<p>
+			The second argument is a string. This nominally gives the expression that should be evaluated for the node, but is actually simply passed through as a parameter to the template that gives the value for the node.  A stylesheet author can use the expression to retrieve different values for the same node in different situations.
+		</p>
+		<pre>
+&lt;exsl:function name="com:eval">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;exsl:return>
+      &lt;xsl:apply-templates select="$node-set[1]">
+         &lt;xsl:with-param name="expr" select="$expr" />
+      &lt;/xsl:apply-templates>
+   &lt;/exsl:return>
+&lt;/<code>exsl:function</code>>
+		
+&lt;xsl:template match="node()" mode="com:eval">
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:value-of select="." />
+&lt;/xsl:template>
+		</pre>
+		<p>
+			For example, stylesheet authors could add a template to enable the retrieval of a count of the number of cells a table row contains:
+		</p>
+		<pre>
+&lt;xsl:template match="tr" mode="com:eval">
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="$expr = 'count(td)'">
+         &lt;xsl:value-of select="count(td)" />
+      &lt;/xsl:when>
+	  &lt;xsl:otherwise>
+	     &lt;xsl:value-of select="." />
+	  &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/xsl:template>
+		</pre>
+		<p>
+			The <span class="function">com:eval</span> function is used as a basis of functions such as <a href="#function-set:distinct"><span class="function">set:distinct</span></a>, <a href="#function-num:max"><span class="function">num:max</span></a>, <a href="#function-num:min"><span class="function">num:min</span></a> and so on.
+		</p>
+
+		<h3 id="set">B.2 Set Functions</h3>
+
+		<p id="function-set:difference">
+			<b>Function:</b> <var>node-set</var> <b>set:difference</b>(<var>node-set</var>, <var>node-set</var>)
+		</p>
+		<p>
+			The <span class="function">set:difference</span> function returns the difference between two node sets - those nodes that are in the node set passed as the first argument that are not in the node set passed as the second argument.
+		</p>
+		<pre>
+&lt;exsl:function name="set:difference">
+   &lt;xsl:param name="node-set1" select="/.." />
+   &lt;xsl:param name="node-set2" select="/.." />
+   &lt;exsl:return select="$node-set1[count(.|$node-set2) != count($node-set2)]" />
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p id="function-set:has-same-nodes">
+			<b>Function:</b> <var>boolean</var> <b>set:has-same-node</b>(<var>node-set</var>, <var>node-set</var>)
+		</p>
+		<p>
+			The <span class="function">set:has-same-node</span> function returns true if the node set passed as the first argument shares any nodes with the node set passed as the second argument. If there are no nodes that are in both node sets, then it returns false.
+		</p>
+		<pre>
+&lt;exsl:function name="set:has-same-node">
+   &lt;xsl:param name="node-set1" select="/.." />
+   &lt;xsl:param name="node-set2" select="/.." />
+   &lt;exsl:return
+      select="boolean($node-set1[count(.|$node-set2) = count($node-set2)])" />
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p>
+			<b>Function:</b> <var>node-set</var> <b>set:intersection</b>(<var>node-set</var>, <var>node-set</var>)
+		</p>
+		<p>
+			The <span class="function">set:intersection</span> function returns a node set comprising the nodes that are within both the node sets passed as arguments to it.
+		</p>
+		<pre>
+&lt;exsl:function name="set:intersection">
+   &lt;xsl:param name="node-set1" select="/.." />
+   &lt;xsl:param name="node-set2" select="/.." />
+   &lt;exsl:return select="$node-set1[count(.|$node-set2) = count($node-set2)]" />
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p id="function-set:distinct">
+			<b>Function:</b> <var>node-set</var> <b>set:distinct</b>(<var>node-set</var>, <var>string</var>?)
+		</p>
+		<p>
+			The <span class="function">set:distinct</span> function returns the nodes within the node set passed as the first argument that have different values.  The 'value' of a node is calculated using <a href="#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the object passed as the second argument to <span class="function">set:distinct</span>.
+		</p>
+		<pre>
+&lt;exsl:function name="set:distinct">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:param name="distinct" select="/.." />
+   &lt;xsl:choose>
+      &lt;xsl:when test="not($node-set)">
+         &lt;exsl:return select="/.." />
+      &lt;/xsl:when>
+      &lt;xsl:when test="count($node-set) = 1">
+         &lt;xsl:variable name="node-value" 
+	               select="string(com:eval(., $expr))" />
+         &lt;xsl:choose>
+	    &lt;xsl:when test="$distinct[string(com:eval(., $expr)) = 
+	                              $node-value]">
+	       &lt;exsl:return select="$distinct" />
+	    &lt;/xsl:when>
+	    &lt;xsl:otherwise>
+	       &lt;exsl:return select="$distinct | $node-set" />
+	    &lt;/xsl:otherwise>
+	 &lt;/<code>xsl:choose</code>>
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;exsl:return
+	    select="set:distinct($node-set[1], 
+	                         $expr, 
+	                         set:distinct($node-set[position() != 1], 
+				              $expr))" />
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p id="function-set:leading">
+			<b>Function:</b> <var>node-set</var> <b>set:leading</b>(<var>node-set</var>, <var>string</var>, <var>string</var>?)
+		</p>
+		<p>
+			The <span class="function">set:leading</span> function returns the nodes in the node set passed as the first argument that precede, in document order, the first node in the node set whose value is equal to the string passed as the second argument.  The 'value' of a node is calculated using <a href="#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the object passed as the third argument to <span class="function">set:leading</span>.
+		</p>
+		<pre>
+&lt;exsl:function name="set:leading">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="value" />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="not($node-set) or 
+                      string(com:eval($node-set[1], $expr)) =
+                      string($value)">
+         &lt;exsl:return select="/.." />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;exsl:return select="$node-set[1] | 
+	                      set:leading($node-set[position() != 1], 
+			                  $value, $expr)" />
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p id="function-set:following">
+			<b>Function:</b> <var>node-set</var> <b>set:following</b>(<var>node-set</var>, <var>string</var>, <var>string</var>?)
+		</p>
+		<p>
+			The <span class="function">set:following</span> function returns the nodes in the node set passed as the first argument that is itself or that follow, in document order, the first node in the node set whose value is equal to the string passed as the second argument.  The 'value' of a node is calculated using <a href="#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the object passed as the third argument to <span class="function">set:following</span>.
+		</p>
+		<pre>
+&lt;exsl:function name="set:following">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="value" />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="not($node-set)">
+         &lt;exsl:return select="/.." />
+      &lt;/xsl:when>
+      &lt;xsl:when test="string(com:eval($node-set[1], $expr)) =
+                      string($value)">
+         &lt;exsl:return select="$node-set" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;exsl:return select="set:following($node-set[position() != 1],
+	                                    $value, $expr)" />
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p id="function-set:exists">
+			<b>Function:</b> <var>boolean</var> <b>set:exists</b>(<var>node-set</var>, <var>string</var>?)
+		</p>
+		<p>
+			The <span class="function">set:exists</span> function returns true if the value of any of the nodes in the node set passed as the first argument is true.  The 'value' of a node is calculated using <a href="#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the object passed as the second argument to <span class="function">set:exists</span>.
+		</p>
+		<pre>
+&lt;exsl:function name="set:exists">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="not($node-set)">
+         &lt;exsl:return select="false()" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;xsl:variable name="value" 
+	               select="string(com:eval($node-set[1], $expr))" />
+	 &lt;xsl:choose>
+	    &lt;xsl:when test="$value = 'false' or not($value)">
+               &lt;exsl:return select="set:exists($node-set[position() != 1],
+	                                       $value, $expr)" />
+	    &lt;/xsl:when>
+            &lt;xsl:otherwise>
+	       &lt;exsl:return select="true()" />
+	    &lt;/xsl:otherwise>
+	 &lt;/<code>xsl:choose</code>>
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p id="function-set:for-all">
+			<b>Function:</b> <var>boolean</var> <b>set:for-all</b>(<var>node-set</var>, <var>string</var>?)
+		</p>
+		<p>
+			The <span class="function">set:for-all</span> function returns true if the value of all the nodes in the node set passed as the first argument is true.  The 'value' of a node is calculated using <a href="#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the object passed as the second argument to <span class="function">set:for-all</span>.
+		</p>
+		<pre>
+&lt;exsl:function name="set:for-all">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="not($node-set)">
+         &lt;exsl:return select="true()" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;xsl:variable name="value"
+	               select="string(com:eval($node-set[1], $expr))" />
+         &lt;xsl:choose>
+	    &lt;xsl:when test="$value = 'false' or not($value)">
+	       &lt;exsl:return select="false()" />
+	    &lt;/xsl:when>
+	    &lt;xsl:otherwise>
+               &lt;exsl:return select="set:for-all($node-set[position() != 1],
+	                                        $value, $expr)" />
+	    &lt;/xsl:otherwise>
+	 &lt;/<code>xsl:choose</code>>
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+
+		<h3 id="num">B.3 Numerical Functions</h3>
+
+		<p id="function-num:max">
+			<b>Function:</b> <var>number</var> <b>num:max</b>(<var>node-set</var>, <var>string</var>?)
+		</p>
+		<p>
+			The <span class="function">num:max</span> function returns the maximum value of the nodes in the node set passed as the first argument.  The 'value' of a node is calculated using <a href="#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the object passed as the second argument to <span class="function">num:max</span>.
+		</p>
+		<pre>
+&lt;exsl:function name="num:max">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:variable name="value-of-first" 
+                 select="number(com:eval($node-set[1], $expr))" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($node-set) &lt;= 1">
+         &lt;exsl:return select="$value-of-first" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;xsl:variable name="max-of-rest"
+                       select="num:max($node-set[position() != 1], $expr)" />
+	 &lt;xsl:choose>
+	    &lt;xsl:when test="$value-of-first &gt; $max-of-rest">
+	       &lt;exsl:return select="$value-of-first" />
+	    &lt;/xsl:when>
+	    &lt;xsl:otherwise>
+	       &lt;exsl:return select="$max-of-rest" />
+	    &lt;/xsl:otherwise>
+	 &lt;/<code>xsl:choose</code>>
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p id="function-num:min">
+			<b>Function:</b> <var>number</var> <b>num:min</b>(<var>node-set</var>, <var>string</var>?)
+		</p>
+		<p>
+			The <span class="function">num:min</span> function returns the minimum value of the nodes in the node set passed as the first argument.  The 'value' of a node is calculated using <a href="#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the object passed as the second argument to <span class="function">num:min</span>.
+		</p>
+		<pre>
+&lt;exsl:function name="num:min">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:variable name="value-of-first" 
+                 select="number(com:eval($node-set[1], $expr))" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($node-set) &lt;= 1">
+         &lt;exsl:return select="$value-of-first" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+      &lt;xsl:variable name="min-of-rest"
+                       select="num:min($node-set[position() != 1], $expr)" />
+	 &lt;xsl:choose>
+	    &lt;xsl:when test="$value-of-first &lt; $max-of-rest">
+	       &lt;exsl:return select="$value-of-first" />
+	    &lt;/xsl:when>
+	    &lt;xsl:otherwise>
+	       &lt;exsl:return select="$min-of-rest" />
+	    &lt;/xsl:otherwise>
+	 &lt;/<code>xsl:choose</code>>
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p id="function-num:highest">
+			<b>Function:</b> <var>node-set</var> <b>num:highest</b>(<var>node-set</var>, <var>string</var>?)
+		</p>
+		<p>
+			The <span class="function">num:highest</span> function returns the node in the node set passed as the first argument with the highest value.  The 'value' of a node is calculated using <a href="#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the object passed as the second argument to <span class="function">num:highest</span>.
+		</p>
+		<pre>
+&lt;exsl:function name="num:highest">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($node-set) &lt;= 1">
+         &lt;exsl:return select="$node-set[1]" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;xsl:variable name="highest-of-rest"
+                       select="num:highest($node-set[position() != 1], 
+		                           $expr)" />
+	 &lt;xsl:choose>
+	    &lt;xsl:when test="number(com:eval($node-set[1], $expr)) &gt; 
+	                    number(com:eval($highest-of-rest, $expr))">
+	       &lt;exsl:return select="$node-set[1]" />
+	    &lt;/xsl:when>
+	    &lt;xsl:otherwise>
+	       &lt;exsl:return select="$highest-of-rest" />
+	    &lt;/xsl:otherwise>
+	 &lt;/<code>xsl:choose</code>>
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p id="function-num:lowest">
+			<b>Function:</b> <var>node-set</var> <b>num:lowest</b>(<var>node-set</var>, <var>string</var>?)
+		</p>
+		<p>
+			The <span class="function">num:lowest</span> function returns the node in the node set passed as the first argument with the lowest value.  The 'value' of a node is calculated using <a href="#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the object passed as the second argument to <span class="function">num:lowest</span>.
+		</p>
+		<pre>
+&lt;exsl:function name="num:lowest">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($node-set) &lt;= 1">
+         &lt;exsl:return select="$node-set[1]" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;xsl:variable name="lowest-of-rest"
+                       select="num:lowest($node-set[position() != 1], 
+		                          $expr)" />
+	 &lt;xsl:choose>
+	    &lt;xsl:when test="number(com:eval($node-set[1], $expr)) &lt; 
+	                    number(com:eval($lowest-of-rest, $expr))">
+	       &lt;exsl:return select="$node-set[1]" />
+	    &lt;/xsl:when>
+	    &lt;xsl:otherwise>
+	       &lt;exsl:return select="$lowest-of-rest" />
+	    &lt;/xsl:otherwise>
+	 &lt;/<code>xsl:choose</code>>
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p id="function-num:sum">
+			<b>Function:</b> <var>number</var> <b>num:sum</b>(<var>node-set</var>, <var>string</var>?)
+		</p>
+		<p>
+			The <span class="function">num:sum</span> function returns the sum of the values of the nodes in the node set passed as the first argument.  The 'value' of a node is calculated using <a href="#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the object passed as the second argument to <span class="function">num:sum</span>.
+		</p>
+		<pre>
+&lt;exsl:function name="num:sum">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:variable name="value-of-first"
+                 select="number(com:eval($node-set[1], $expr))" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($node-set) &lt;= 1">
+         &lt;exsl:return select="$value-of-first" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;exsl:return select="$value-of-first +
+	                      num:sum($node-set[position() != 1], $expr)" />
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+
+		<h3 id="gen">B.4 Generative Functions</h3>
+
+		<p id="function-gen:range">
+			<b>Function:</b> <var>node-set</var> <b>gen:range</b>(<var>number</var>, <var>number</var>)
+		</p>
+		<p>
+			The <span class="function">gen:range</span> function generates a node set in which the string values of the nodes are numbers between the number passed as the first argument and the number passed as the second argument.
+		</p>
+		<pre>
+&lt;exsl:function name="gen:range">
+   &lt;xsl:param name="start" select="0" />
+   &lt;xsl:param name="end" select="0" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="number($start) &gt; number($end)">
+         &lt;exsl:return select="/.." />
+      &lt;/xsl:when>
+      &lt;xsl:when test="number($start) = number($end)">
+         &lt;xsl:variable name="rtf">
+	    &lt;node>&lt;xsl:value-of select="$start" />&lt;/node>
+	 &lt;/xsl:variable>
+	 &lt;exsl:return select="exsl:node-set($rtf)" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;xsl:variable name="mid-point" 
+	               select="$start + floor(($end - $start) div 2)" />
+         &lt;xsl:variable name="rtf">
+	    &lt;xsl:copy-of select="gen:range($start, $midpoint)" />
+	    &lt;xsl:copy-of select="gen:range($midpoint + 1, $end)" />
+	 &lt;/xsl:variable>
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p id="function-gen:padding">
+			<b>Function:</b> <var>string</var> <b>gen:padding</b>(<var>number</var>, <var>string</var>?)
+		</p>
+		<p>
+			The <span class="function">gen:padding</span> function generates a string generated by repeating the string given as the second argument (or a space [<code>' '</code>] if there is no second argument) repeated the number of times specified by the first argument.
+		</p>
+		<pre>
+&lt;exsl:function name="gen:padding">
+   &lt;xsl:param name="repeat" select="1" />
+   &lt;xsl:param name="string" select="' '" />
+   &lt;xsl:variable name="padding">
+      &lt;xsl:for-each select="gen:range(1, $repeat)">
+         &lt;xsl:value-of select="$string" />
+      &lt;/xsl:for-each>
+   &lt;/xsl:variable>
+   &lt;exsl:return select="string($padding)" />
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<p id="function-gen:tokens">
+			<b>Function:</b> <var>node-set</var> <b>gen:tokens</b>(<var>string</var>, <var>string</var>?)
+		</p>
+		<p>
+			The <span class="function">gen:tokens</span> function tokenises the string passed as the first argument by splitting it at each character in the string passed as the second argument.  If no second argument is specified, then a space (<code>' '</code>) is assumed.
+		</p>
+		<pre>
+&lt;exsl:function name="gen:tokens">
+   &lt;xsl:param name="string" />
+   &lt;xsl:param name="delimiters" select="' '" />
+   &lt;xsl:variable name="char" select="substring($delimiters, 1, 1)" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="string-length($delimiters) &gt; 1">
+         &lt;xsl:variable name="replacement"
+                       select="gen:padding(string-length($delimiters) - 1,
+		                           $char)" />
+         &lt;xsl:variable name="string-tokens"
+                       select="translate($string, 
+		                         substring($delimiters, 2),
+			                 $replacement)" />
+	 &lt;exsl:return select="gen:tokens($string, $char)" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;xsl:choose>
+	    &lt;xsl:when test="contains($string, $delimiters)">
+	       &lt;exsl:return>
+	          &lt;node>
+		     &lt;xsl:value-of select="substring-before($string, $char)" />
+		  &lt;/node>
+		  &lt;xsl:copy-of 
+		     select="gen:tokens(substring-after($string, $char),
+		                        $char)" />
+	       &lt;/exsl:return>
+	    &lt;/xsl:when>
+	    &lt;xsl:otherwise>
+	       &lt;node>&lt;xsl:value-of select="$string" />&lt;/node>
+	    &lt;/xsl:otherwise>
+	 &lt;/<code>xsl:choose</code>>
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+
+		<h3 id="sort">B.5 Sorting Functions</h3>
+
+		<p id="function-sort:position">
+			<b>Function:</b> <var>number</var> <b>sort:position</b>(<var>node-set</var>, <var>string</var>?, <var>string</var>?, <var>string</var>?)
+		</p>
+		<p>
+			The <span class="function">sort:position</span> function gives the position of the current node within the node-set passed as the first argument when the nodes in it are sorted by value. The 'value' of a node is calculated using <a href="#function-com:eval"><span class="function">com:eval</span></a> with a first argument being the node, and the second argument being the expression passed as the fourth argument to <span class="function">sort:position</span>.
+		</p>
+		<p>
+			The second argument gives the order in which the nodes should be sorted.  It should either be <code>'ascending'</code> or <code>'descending'</code>.  The default is <code>'ascending'</code>.  The third argument gives the data type of the nodes.  It should be <code>'text'</code> or <code>'number'</code> or a qualified name.  The default is <code>'text'</code>.
+		</p>
+		<pre>
+&lt;exsl:function name="sort:position">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="order" select="'ascending'" />
+   &lt;xsl:param name="data-type" select="'text'" />
+   &lt;xsl:param name="expr" select="'.'" />
+   &lt;xsl:variable name="current" select="." />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($current | $node-set) = count($node-set)">
+         &lt;xsl:variable name="position">
+            &lt;xsl:for-each select="$node-set">
+               &lt;xsl:sort select="com:eval(., $expr)"
+	                 order="{$order}"
+		         data-type="{$data-type}" />
+               &lt;xsl:if test="count(.|$current) = 1">
+                  &lt;xsl:value-of select="position()" />
+               &lt;/<code>xsl:if</code>>
+            &lt;/xsl:for-each>
+	 &lt;/xsl:variable>
+	 &lt;exsl:return select="number($position)" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;exsl:return select="1 div 0" />
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+
+		<h3 id="doc">B.6 Other Document Functions</h3>
+
+		<p id="function-doc:key">
+			<b>Function:</b> <var>node-set</var> <b>doc:key</b>(<var>string</var>, <var>object</var>, <var>node-set</var>, <var>node-set</var>?)
+		</p>
+		<p>
+			The <span class="function">doc:key</span> function is an extension of the XSLT <a class="offsite" href="http://www.w3.org/TR/xslt#function-key"><span class="function">key</span></a> function that retrieves nodes in documents aside from the one the current node is in.
+		</p>
+		<p>
+			The first two arguments operate in the same way as the two arguments to <a class="offsite" href="http://www.w3.org/TR/xslt#function-key"><span class="function">key</span></a>.  The third and fourth arguments operate in the same way as the two arguments to <a class="offsite" href="http://www.w3.org/TR/xslt#function-document"><span class="function">document</span></a>.
+		</p>
+		<pre>
+&lt;exsl:function name="doc:key">
+   &lt;xsl:param name="key-name" />
+   &lt;xsl:param name="key-value" />
+   &lt;xsl:param name="documents" select="/.." />
+   &lt;xsl:param name="base-URI" select="document('')" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($documents) &gt; 1">
+         &lt;exsl:return select="doc:key($key-name, $key-value, 
+	                              $documents[1], $base-URI) |
+			      doc:key($key-name, $key-value,
+			              $documents[position() != 1], 
+				      $base-URI)" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;xsl:variable name="doc"
+	               select="document($documents, $base-URI)" />
+         &lt;xsl:variable name="nodes">
+  	    &lt;xsl:for-each select="$doc">
+	       &lt;xsl:for-each select="key($key-name, $key-value)">
+	          &lt;node id="{generate-id()}" />
+	       &lt;/xsl:for-each>
+	    &lt;/xsl:for-each>
+         &lt;/xsl:variable>
+	 &lt;xsl:variable name="doc-nodes" select="$doc//node() | $doc//@*" />
+	 &lt;exsl:return select="$doc-nodes[generate-id() = $nodes/node/@id]" />
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<div class="note">
+			<p>
+				Note: this function would be vastly more efficient if the <a href="#element-return"><code>exsl:return</code></a> element were permitted as a descendant of <a class="offsite" href="http://www.w3.org/TR/xslt#element-for-each"><code>xsl:for-each</code></a>:
+			</p>
+			<pre>
+&lt;exsl:function name="doc:key">
+   &lt;xsl:param name="key-name" />
+   &lt;xsl:param name="key-value" />
+   &lt;xsl:param name="documents" select="/.." />
+   &lt;xsl:param name="base-URI" select="document('')" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($documents) &gt; 1">
+         &lt;exsl:return select="doc:key($key-name, $key-value, 
+	                                 $documents[1], $base-URI) |
+		   	         doc:key($key-name, $key-value,
+			                 $documents[position() != 1], 
+				         $base-URI)" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+	 &lt;xsl:for-each select="document($documents, $base-URI)">
+	    &lt;exsl:return select="key($key-name, $key-value)" />
+	 &lt;/xsl:for-each>
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+			</pre>
+		</div>
+		<p id="function-doc:id">
+			<b>Function:</b> <var>node-set</var> <b>doc:id</b>(<var>object</var>, <var>node-set</var>, <var>node-set</var>?)
+		</p>
+		<p>
+			The <span class="function">doc:id</span> function is an extension of the XPath <a class="offsite" href="http://www.w3.org/TR/xpath#function-id"><span class="function">id</span></a> function that retrieves nodes in documents aside from the one the context node is in.
+		</p>
+		<p>
+			The first argument operates in the same way as the argument to <a class="offsite" href="http://www.w3.org/TR/xpath#function-id"><span class="function">id</span></a>.  The second and third arguments operate in the same way as the two arguments to <a class="offsite" href="http://www.w3.org/TR/xslt#function-document"><span class="function">document</span></a>.
+		</p>
+		<pre>
+&lt;exsl:function name="doc:id">
+   &lt;xsl:param name="id" />
+   &lt;xsl:param name="documents" select="/.." />
+   &lt;xsl:param name="base-URI" select="document('')" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($documents) &gt; 1">
+         &lt;exsl:return select="doc:id($id, $documents[1], $base-URI) |
+			      doc:id($id, $documents[position() != 1], 
+				     $base-URI)" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;xsl:variable name="doc"
+	               select="document($documents, $base-URI)" />
+         &lt;xsl:variable name="nodes">
+  	    &lt;xsl:for-each select="$doc">
+	       &lt;xsl:for-each select="id($id)">
+	          &lt;node id="{generate-id()}" />
+	       &lt;/xsl:for-each>
+	    &lt;/xsl:for-each>
+         &lt;/xsl:variable>
+	 &lt;xsl:variable name="doc-nodes" select="$doc//node() | $doc//@*" />
+	 &lt;exsl:return select="$doc-nodes[generate-id() = $nodes/node/@id]" />
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+		<div class="note">
+			<p>
+				Note: this function would be vastly more efficient if the <a href="#element-return"><code>exsl:return</code></a> element were permitted as a descendant of <a class="offsite" href="http://www.w3.org/TR/xslt#element-for-each"><code>xsl:for-each</code></a>:
+			</p>
+			<pre>
+&lt;exsl:function name="doc:id">
+   &lt;xsl:param name="id" />
+   &lt;xsl:param name="documents" select="/.." />
+   &lt;xsl:param name="base-URI" select="document('')" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="count($documents) &gt; 1">
+         &lt;exsl:return select="doc:id($id, $documents[1], $base-URI) |
+   			         doc:id($id, $documents[position() != 1], 
+				        $base-URI)" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+	 &lt;xsl:for-each select="document($documents, $base-URI)">
+	    &lt;exsl:return select="id($id)" />
+	 &lt;/xsl:for-each>
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+			</pre>
+		</div>
+		<p id="function-doc:unparsed-entity-uri">
+			<b>Function:</b> <var>string</var> <b>doc:unparsed-entity-uri</b>(<var>string</var>, <var>node-set</var>, <var>node-set</var>?)
+		</p>
+		<p>
+			The <span class="function">doc:unparsed-entity-uri</span> function is an extension of the XSLT <a class="offsite" href="http://www.w3.org/TR/xslt#function-unparsed-entity-uri"><span class="function">unparsed-entity-uri</span></a> function that retrieves the URL of an entity in documents aside from the one the context node is in.  This function can be used to search in documents other than the one holding the context node, but will return the first URL that it finds; if the entity is defined with different URLs in different documents, then only the first document given in the node set specified as the second argument (when considered in document order) will be returned.
+		</p>
+		<p>
+			The first argument operates in the same way as the argument to <a class="offsite" href="http://www.w3.org/TR/xslt#function-unparsed-entity-uri"><span class="function">unparsed-entity-uri</span></a>.  The second and third arguments operate in the same way as the two arguments to <a class="offsite" href="http://www.w3.org/TR/xslt#function-document"><span class="function">document</span></a>.
+		</p>
+		<pre>
+&lt;exsl:function name="doc:unparsed-entity-uri">
+   &lt;xsl:param name="entity-name" />
+   &lt;xsl:param name="documents" select="/.." />
+   &lt;xsl:param name="base-URI" select="document('')" />
+   &lt;xsl:variable name="entity-URI">
+      &lt;xsl:for-each select="document($documents[1], $base-URI)">
+         &lt;xsl:value-of select="unparsed-entity-uri($entity-name)" />
+      &lt;/xsl:for-each>
+   &lt;/xsl:variable>
+   &lt;xsl:choose>
+      &lt;xsl:when test="string($entity-URI)">
+         &lt;exsl:return select="string($entity-URI)" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;exsl:return 
+	    select="doc:unparsed-entity-uri($entity-name,
+                                            $documents[position() != 1],
+					    $base-URI)" />
+      &lt;/xsl:otherwise>
+   &lt;/<code>xsl:choose</code>>
+&lt;/<code>exsl:function</code>>
+		</pre>
+
+		<h2 id="acknowledgements">B. Acknowledgements</h2>
+
+		<p>
+			This has been informed and inspired by discussions on <a class="offsite" href="http://www.mulberrytech.com/xsl/xsl-list">XSL-List</a> with:
+		</p>
+		<p>
+			David Carlisle<br />
+			Joe English<br />
+			Clark C. Evans<br />
+			Dave Gomboc<br />
+			Yevgeniy (Eugene) Kaganovich<br />
+			Mike Kay<br />
+			Steve Muench<br />
+			Miloslav Nic<br />
+			Francis Norton<br />
+			Dimitre Novatchev<br />
+			Uche Ogbuji<br />
+			David Rosenborg
+		</p>
+	</body>
+</html>

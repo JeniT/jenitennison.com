@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../../resources/style/page.xsl"?><my:doc xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/xslt/utilities/markup.xml">
+         <dc:title>Jeni's XSLT Utilities: Markup</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-19"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-19"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <dc:rights>
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    </dc:rights>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>Markup Utility</h1>
+   <p>
+  The Markup Utility is a utility for finding and
+  changing words and phrases within some text.  You can use it to:
+</p>
+   <ul>
+      <li>highlight important terms in your text</li>
+      <li>link phrases to other pages</li>
+      <li>search and replace words within some text</li>
+   </ul>
+   <h2>Instructions</h2>
+   <ol>
+      <li>Download the <my:link href="markup.xsl"/> stylesheet into the same directory as your stylesheet.</li>
+      <li>
+         <p>Import the markup.xsl stylesheet into your stylesheet:</p>
+         <my:example>&lt;xsl:import href="markup.xsl" /&gt;</my:example>
+      </li>
+      <li>
+         <p>Call the template 'markup' with two parameters: text being the text to be marked
+  up, and phrases being the phrases to be marked up within it:</p>
+         <my:example>
+&lt;xsl:call-template name="markup"&gt;
+  &lt;xsl:with-param name="text" select="." /&gt;
+  &lt;xsl:with-param name="phrases" select="/doc/keywords/keyword" /&gt;
+&lt;/xsl:call-template&gt;
+</my:example>
+      </li>
+      <li>
+         <p>Create templates in 'markup' mode that match the keyword nodes and do the marking
+  up.  These can use the 'word' parameter to give the actual term that's being marked
+  up:</p>
+         <my:example>
+&lt;xsl:template match="*" mode="markup"&gt;
+  &lt;xsl:param name="word" /&gt;
+  &lt;a href="{@id}.html"&gt;
+    &lt;xsl:value-of select="$word" /&gt;
+  &lt;/a&gt;
+&lt;/xsl:template&gt;
+</my:example>
+      </li>
+   </ol>
+   <p>
+  There are a few extra options that you can set as parameters for the 'markup' template, namely:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>words-only</my:name>
+         <my:default type="boolean">true</my:default>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>only whole words should be marked up (separated by
+      punctuation)</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>any matching occurrence should be marked up, whether whole word or not.</my:desc>
+         </my:option>
+      </my:var>
+      <my:var>
+         <my:name>first-only</my:name>
+         <my:default type="boolean">false</my:default>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>only the first occurence of a word in a piece of text should be marked up</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>all occurrences of a word in a piece of text should be marked up</my:desc>
+         </my:option>
+      </my:var>
+      <my:var>
+         <my:name>match-case</my:name>
+         <my:default type="boolean">false</my:default>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>only occurences where the case matches exactly should be marked up</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>all occurences of the word should be marked up, regardless of case</my:desc>
+         </my:option>
+      </my:var>
+   </my:vars>
+   <h2>More Information</h2>
+   <my:links>
+      <my:link href="markup-example.xml">A Simple Example</my:link>
+      <my:link href="markup-explanation.xml">How it Works</my:link>
+   </my:links>
+</my:doc>

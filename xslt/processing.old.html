@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "/resources/dtd/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>Jeni's XSLT Pages: General Processing</title>
+      <link rel="stylesheet" href="/resources/style/base.css"/>
+   </head>
+   <body>
+      <p id="xml-link">
+					Try the <a href="/xslt/processing.xml">XML version</a> of this page.
+					If you have problems with it, consult the
+					<a href="http://www.dpawson.co.uk/" class="offsite">XSLT FAQ</a>.
+				</p>
+      <p id="link-up">
+         <a class="img" href="index.xml">
+            <img src="/resources/icons/up.gif" width="23" height="24"/>
+         </a>
+      </p>
+
+
+
+      <h1>Calling Stylesheets</h1>
+
+      <p>
+	This page will hold information about how stylesheets generally work, including
+	information on the built-in templates.  For now, here are some posts:
+</p>
+
+      <div class="post">
+
+         <div class="question">
+            <p>
+               <img src="/resources/icons/click-question.gif" height="28" width="28" border="0"/> Is there a generic way to code for</p>
+            <ol>
+	
+               <li>"grab any attribute and simply repeat it" or</li>
+	
+               <li>"grab IMPLIED attribute WHEN they're there and deal with them"</li>
+
+            </ol>
+         </div>
+
+         <div class="response">
+
+            <p>XSLT processors do not know whether an attribute is declared as #REQUIRED
+or #IMPLIED or has a default value or whatever.  All the XSLT processor can
+see is the result given to it by the XML parser.  The XML parser that it
+uses *may* look at the DTD and fill in the gaps accordingly (such as adding
+#FIXED or defaulted attributes to elements), but the DTD contents won't be
+made available to the XSLT processor. <span class="note">[A side-effect of this is that the XSLT processor cannot tell the
+difference between a defaulted attribute and an attribute declared with the
+same value.]</span> 
+            </p>
+
+            <p>
+If you were using an XML Schema rather than a DTD, then it would be
+possible to access that schema and check whether an attribute is (the
+equivalent of) #REQUIRED or #IMPLIED from there.  However, I think this is
+over-engineering the problem.
+</p>
+
+            <p>
+It is fairly easy to copy the value of an attribute when it is there, and
+not if it isn't, using an xsl:if element that tests on whether the
+attribute is there:
+</p>
+
+            <pre>
+&lt;xsl:template match="Link"&gt;	
+  &lt;h2&gt;
+    &lt;xsl:attribute name="name"&gt;
+      &lt;xsl:value-of select="./@linkid"/&gt;
+    &lt;/xsl:attribute&gt;
+    &lt;xsl:if test="@date"&gt;
+      &lt;xsl:attribute name="date"&gt;
+        &lt;xsl:value-of select="./@date"/&gt;
+      &lt;/xsl:attribute&gt;
+    &lt;/xsl:if&gt;
+    &lt;xsl:apply-templates/&gt;
+  &lt;/h2&gt;
+&lt;/xsl:template&gt; <span class="note">[Personally, I would shorten this template to:
+<span class="example">
+  &lt;xsl:template match="Link"&gt;	
+    &lt;h2 name="{@linkid}"&gt;              &lt;!-- changed for brevity --&gt;
+      &lt;xsl:if test="@date"&gt;
+        &lt;xsl:copy-of select="@date" /&gt; &lt;!-- changed for brevity --&gt;
+      &lt;/xsl:if&gt;
+      &lt;xsl:value-of select="." /&gt;      &lt;!-- changed for performance --&gt;
+    &lt;/h2&gt;
+  &lt;/xsl:template&gt;
+</span>
+]</span> 
+
+            </pre>
+
+            <p>
+For a more generic solution, you can cycle through the attributes that are
+present and make copies of them.  Naturally, this will capture all
+#REQUIRED attributes (as they will be [*must* be] present) and any #IMPLIED
+attributes that are around.
+</p>
+
+            <pre>
+&lt;xsl:template match="Link"&gt;
+  &lt;h2&gt;
+    &lt;xsl:for-each select="@*"&gt;
+      &lt;xsl:copy /&gt;
+    &lt;/xsl:for-each&gt;
+    &lt;xsl:value-of select="." /&gt;
+  &lt;/h2&gt;
+&lt;/xsl:template&gt;
+</pre>
+
+            <p>
+The problem with this approach is that you cannot change the names of the
+attributes.  This involves using extra knowledge about the mapping between
+the old names and the new names, which you have to either embed in the
+template itself or make explicit elsewhere and reference from within the
+template.
+</p>
+
+         </div>
+
+      </div>
+
+      <div class="post">
+
+         <div class="question">
+            <p>
+               <img src="/resources/icons/click-question.gif" height="28" width="28" border="0"/> I would like to dynamically specify attribute sets (defined in different xsl files) to
+include.</p>
+            <p>So I thought I'd do something like:</p>
+            <pre>
+&lt;xsl:variable name"styles"&gt;defaultstyles.xsl&lt;/xsl:variable&gt;
+
+&lt;xsl:include href="&lt;xsl:value-of select={$styles}&gt;"/&gt;
+</pre>
+            <p>But, that didn't work (not terribly surprising).</p>
+            <p>Nor did:</p>
+            <pre>
+&gt;&lt;xsl:include href=&lt;xsl:value-of select="{$style}"/&gt;/&gt;
+</pre>
+         </div>
+
+         <div class="response">
+
+            <p>There are about three gaps in your understanding to tackle before looking
+at how to dynamically specify attribute sets.</p>
+
+            <p>The first is to understand what a well-formed XML document looks like.
+XSLT stylesheets have to be well-formed XML documents.  You cannot have
+elements as attribute values; the thing that is giving you the error with
+your statements is the XML parser, not the XSLT processor.
+</p>
+
+            <p>
+The second minor thing is to point out that you don't have to rely on
+double quotes (") all the time: you can use single ones (') as well -
+alternate between them when you want to quote something within quotes.
+Attribute values always have to be quoted.
+</p>
+
+            <p>
+The third is to understand that the 'select' attribute on the xsl:value-of
+element takes an XPath expression as a value.  That means that you
+shouldn't place the XPath within {...}.  The {...} syntax indicates the use
+of an attribute value template - this is used when the XSLT processor is
+expecting a literal value for an attribute on a literal result element, but
+you want it to compute it instead.
+</p>
+
+            <p>
+However, to answer your question: I'm afraid you cannot dynamically include
+a stylesheet in another stylesheet.  To work within this, perhaps you could
+try specifying multiple attribute sets and dynamically choosing which
+attribute set to use on a particular element.  Alternatively, since the
+names and values of the attributes in an attribute set are interpreted as
+attribute value templates (i.e. you can put an XPath in {...} to give
+dynamic names and values), you could try that approach.
+</p>
+
+         </div>
+
+      </div>
+
+      <div class="post">
+
+         <div class="question">
+            <p>
+               <img src="/resources/icons/click-question.gif" height="28" width="28" border="0"/> I tried this, and it doesn't produce any output:</p>
+            <pre>
+   &lt;xsl:key name="namekey" match="*" use="concat(generate-id(..), '/', 
+name())"/&gt;
+   &lt;xsl:template match="*"&gt;
+     &lt;xsl:apply-templates 
+select="*[generate-id()=generate-id(key('namekey', concat(generate-id(..), 
+'/', name ())))]"/&gt;
+   &lt;/xsl:template&gt;
+</pre>
+         </div>
+
+         <div class="response">
+
+            <p>
+xsl:apply-templates will try to find a template matching (in your second
+example) an 'A' element - there are none, so the default template is used,
+which basically does nothing.  Try using xsl:copy-of instead of the
+xsl:apply-templates, i.e.:
+</p>
+
+            <pre>
+   &lt;xsl:key name="namekey" match="*" use="concat(generate-id(..), '/',
+name())"/&gt;
+   &lt;xsl:template match="*"&gt;
+     &lt;xsl:copy-of select="*[generate-id()=generate-id(key('namekey',
+concat(generate-id(..), '/', name ())))]"/&gt;
+   &lt;/xsl:template&gt;
+</pre>
+
+         </div>
+
+      </div>
+
+      <div class="post">
+
+         <div class="question">
+            <p>
+               <img src="/resources/icons/click-question.gif" height="28" width="28" border="0"/> The following example (from W3C, at <a href="http://www.w3.org/TR/xslt#key" class="offsite">http://www.w3.org/TR/xslt#key</a>)
+doesn't run on my PC (WinNT4, MIE5). Anybody can help me ?</p>
+            <pre>
+XML Doc:
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;hyperlien&gt;
+  &lt;prototype name="key" return-type="node-set"&gt;
+    &lt;arg type="string"/&gt;
+    &lt;arg type="object"/&gt;
+  &lt;/prototype&gt;
+  &lt;function&gt;cle&lt;/function&gt;
+&lt;/hyperlien&gt;
+</pre>
+         </div>
+
+         <div class="response">
+
+            <p>
+I notice that you have changed the content of the 'function' element to
+"cle" rather than "key".  That would be fine, but for the example to work
+properly, you have to be consistent between the content of the 'function'
+element and the 'name' attribute of the 'prototype' element, which is still
+"key".
+</p>
+
+            <p>
+More importantly, in order for IE5 to identify the stylesheet to use when
+you view the XML document and to recognise it as XSLT, you have to add the
+following processing instruction near the top of your XML (just under the
+XML Declaration [the first line]):
+</p>
+
+            <pre>
+  &lt;?xml-stylesheet type="text/xsl" href="stylesheet-name.xsl"?&gt;
+                                         ^^^^^^^^^^^^^^^^^^^
+                                 put the filename of the stylesheet here
+</pre>
+
+            <p>
+If you were not using MSXML, this should more accurately be:
+</p>
+
+            <pre>
+  &lt;?xml-stylesheet type="application/xslt+xml" href="stylesheet-name.xsl"?&gt;
+</pre>
+
+            <p>
+but MSXML does not recognise XSLT stylesheets declared in this way.
+</p>
+
+         </div>
+
+         <div class="question">
+            <p>
+               <img src="/resources/icons/click-question.gif" height="28" width="28" border="0"/> 
+XSLT :
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet xmlns:xsl="<A HREF="http://www.w3.org/XSL/Transform/1.0">http://www.w3.org/XSL/Transform/1.0</A>"&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;Hyperlinks vwith XSLT&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;xsl:key match="prototype" name="func" use="@name"/&gt;
+      &lt;xsl:template match="function"&gt;
+        &lt;b&gt;
+          &lt;a href="{generate-id(key('func',.))}"&gt;
+            &lt;xsl:apply-templates/&gt;
+          &lt;/a&gt;
+        &lt;/b&gt;
+      &lt;/xsl:template&gt;
+      &lt;xsl:template match="prototype"&gt;
+        &lt;p&gt;
+          &lt;a name="{generate-id()}"&gt;
+            &lt;b&gt;function:&lt;/b&gt;
+          &lt;/a&gt;
+        &lt;/p&gt;
+      &lt;/xsl:template&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+&lt;/xsl:stylesheet&gt;
+</p>
+         </div>
+
+         <div class="response">
+
+            <p>
+You have been confused by the lack of context within that particular
+example, but how you have constructed the stylesheet around the example
+indicates that you are confused about how stylesheets work generally.
+</p>
+
+            <p>
+Stylesheets work by going through the input document and matching what they
+find with 'templates' in the stylesheet.  Templates usually match against
+some node (an element, for example) and output some XML (or HTML).  The
+only way that you get output from a stylesheet is by having a template that
+matches something in your input and actually gives some output.
+</p>
+
+            <p>
+You are trying to output some HTML to wrap around the stuff that is
+generated by the templates that you lifted from the Recommendation.  To
+output that HTML, you have to place it in a template.  The usual way that
+you would do this is to generate a template that matches against a
+high-level node in your input, either the 'root node' (the node that
+represents the document as a whole) or the 'document element' node (the
+node that represents the highest-level element in your input, 'hyperlien'
+in your case).  You usually use these because that means that applying
+templates (through a basic xsl:apply-templates) will move the processor on
+to look at the rest of the content of the document, rather than limit it to
+a particular little bit.
+</p>
+
+            <p>
+So, you want a template that looks like:
+</p>
+
+            <pre>
+&lt;xsl:template match="/"&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;Hyperlinks with XSLT&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;xsl:apply-templates /&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+&lt;/xsl:template&gt;
+</pre>
+
+            <p>
+This template matches the root node in your input, and outputs the HTML,
+filling the body with the results of applying templates to all the children
+of that root node.  This includes the document element, 'hyperlien' in your
+case, which is matched by the default template that basically says 'process
+the children of this element'.  The two other templates, which are then
+matched, are the ones that you've used from the XSLT Recommendation.
+xsl:template elements (and xsl:key elements) have to be top-level elements,
+which means that they are direct children of the xsl:stylesheet element
+(see stylesheet at end of message).
+</p>
+
+            <p>
+Now, having said all that, you will not be able to use the stylesheet you
+have created with IE5 because MSXML does not support xsl:key.  If you are
+learning and experimenting with XSL, I recommend that you get your hands on
+an XSLT processor that supports the majority of XSLT features and sticks
+closely to the XSLT Recommendation, such as SAXON (from
+<a href="http://users.iclway.co.uk/mhkay/saxon/" class="offsite">http://users.iclway.co.uk/mhkay/saxon/</a>).
+</p>
+
+            <pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet version="1.0"
+xmlns:xsl="<A HREF="http://www.w3.org/1999/XSL/Transform">http://www.w3.org/1999/XSL/Transform</A>"&gt;
+
+&lt;xsl:key match="prototype" name="func" use="@name"/&gt;
+
+&lt;xsl:template match="/"&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;Hyperlinks with XSLT&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;xsl:apply-templates /&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+&lt;/xsl:template&gt;
+
+&lt;xsl:template match="function"&gt;
+  &lt;b&gt;
+    &lt;a href="#{generate-id(key('func',.))}"&gt;
+      &lt;xsl:apply-templates/&gt;
+    &lt;/a&gt;
+  &lt;/b&gt;
+&lt;/xsl:template&gt;
+      
+&lt;xsl:template match="prototype"&gt;
+  &lt;p&gt;
+    &lt;a name="{generate-id()}"&gt;
+      &lt;b&gt;function:&lt;/b&gt;
+    &lt;/a&gt;
+  &lt;/p&gt;
+&lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;
+</pre>
+
+         </div>
+
+      </div>
+
+      <div class="post">
+
+         <div class="question">
+            <p>
+               <img src="/resources/icons/click-question.gif" height="28" width="28" border="0"/> Building on David Carlisles stylesheet, to make it a *bit* more
+obvious what's going on :-)</p>
+         </div>
+
+         <div class="response">
+
+            <p>
+Now I'm confused! :)  I think that David Carlisle's stylesheet was meant to
+do two things:
+</p>
+
+            <ol>
+
+               <li>
+demonstrate how extension elements (the ones in the doc namespace) could
+be used to hold documentation that would be ignored by the processor, with
+an *empty* xsl:fallback being used to stop processors complaining that they
+don't recognise the extension element (it gives them something to do instead)
+</li>
+
+               <li>
+demonstrate the effect of exclude-result-prefixes on the appearance of
+namespace nodes (and elements within that namespace) within the output
+that's generated
+</li>
+
+            </ol>
+
+            <p>
+I'm going to try to clear up my confusion by going through David's example
+step by step.  I'm afraid this is going to be another one of my long emails
+- please someone shout at me if I'm using up too much bandwidth here.
+</p>
+
+            <p>
+David used:
+</p>
+
+            <pre>
+&lt;xxx xmlns="<A HREF="http://a/b/c">http://a/b/c</A>"&gt;
+  &lt;b a="2"&gt;
+    &lt;x:c xmlns:x="http:/x/y/z"/&gt;
+  &lt;c&gt;text&lt;/c&gt;
+  &lt;/b&gt;
+&lt;/xxx&gt;
+</pre>
+
+            <p>
+as the example of a fairly complex, but nevertheless short, XML document
+that used a couple of namespaces and:
+</p>
+
+            <pre>
+&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;x xmlns:y="http:/x/y/z"&gt;[xxx]&lt;/x&gt;
+&lt;x:c xmlns:x="http:/x/y/z" xmlns="<A HREF="http://a/b/c">http://a/b/c</A>"/&gt;
+</pre>
+
+            <p>
+as the (non-well-formed) output that he was after.
+</p>
+
+            <p>
+The stylesheet included:
+</p>
+
+            <pre>
+&lt;xsl:stylesheet xmlns:xsl="<A HREF="http://www.w3.org/1999/XSL/Transform">http://www.w3.org/1999/XSL/Transform</A>"
+                version="1.0"
+                extension-element-prefixes="doc"
+                exclude-result-prefixes="main"
+                xmlns:doc="<A HREF="http://doc.com">http://doc.com</A>"
+                xmlns:main="<A HREF="http://a/b/c">http://a/b/c</A>"
+                xmlns:y="http:/x/y/z"&gt;
+</pre>
+
+            <p>
+Here he declared three namespaces (in addition to the standard 'xsl'):
+</p>
+
+            <dl>
+	
+               <dt>doc</dt>
+	
+               <dd>the documentation namespace</dd>
+	
+               <dt>main</dt>
+	
+               <dd>the primary namespace, the default namespace throughout the input 
+       document</dd>
+  
+               <dt>y</dt>
+  
+               <dd>the namespace equivalent to 'x' for the x:c element in the input</dd>
+
+            </dl>
+
+            <p>Mapping those namespace declarations so that the same prefixes are used in
+the input gives helps make the XSLT stylesheet more understandable:</p>
+
+            <pre>
+&lt;main:xxx xmlns:main="<A HREF="http://a/b/c">http://a/b/c</A>"&gt;
+  &lt;main:b a="2"&gt;
+    &lt;y:c xmlns:y="http:/x/y/z"/&gt;
+    &lt;main:c&gt;text&lt;/main:c&gt;
+  &lt;/main:b&gt;
+&lt;/main:xxx&gt;
+</pre>
+
+            <p>
+The 'main' namespace is specified as a namespace to be excluded from the
+result.  This means that the 'main' namespace will be declared as being the
+default namespace in the output (so wherever the result elements are in the
+'main' namespace within the stylesheet, they will be included in the output
+without a prefix).
+</p>
+
+            <p>
+The 'doc' namespace is specified as a namespace for extension elements.
+You'd normally expect those elements to do something in terms of altering
+what the XSLT processor does (like saxon:output).  Here, we're declaring
+the 'doc' namespace to be a namespace for extension elements so that the
+XSLT processor doesn't treat them as result elements, to be outputted.
+</p>
+
+            <p>
+David's 'doc' namespace included two elements: 'template' to give
+documentation on templates and 'select' to give documentation on select
+expressions within templates.  He didn't have any particular structure
+within those, though you can easily imagine having structured documentation
+within the documentation on a template, commenting on, say, each of the
+parameters that it takes.  In fact I'm sure someone will straightway
+volunteer an XML dialect for documentation of XSLT stylesheets...
+</p>
+
+            <p>
+Anyway, within the stylesheet, then, he used the following 'design pattern'
+for including documentation within a template:
+</p>
+
+            <pre>
+&lt;xsl:template match="..."&gt;
+  &lt;doc:template&gt;&lt;xsl:fallback /&gt;
+    &lt;!-- documentation on the template --&gt;
+  &lt;/doc:template&gt;
+  &lt;!-- body of the template --&gt;
+&lt;/xsl:template&gt;
+</pre>
+
+            <p>
+When an extension-element-aware (and XSLT-Recommendation-compliant)
+processor comes across this, it knows (because it's been told in the
+xsl:stylesheet) that the 'doc:template' element, being in the 'doc'
+namespace, is an extension element.  It does a bit of introspection and
+finds out that it doesn't know how to support these extensions, so it gets
+ready to complain that it can't process the stylesheet, but first checks
+whether there is an xsl:fallback element within the extension element.
+When it finds one, it operates on the content of the xsl:fallback as if it
+were just a normal part of the template (here it's empty, so it does
+nothing), and ignores the rest of the content of the extension element.
+Hence the documentation is not included in the output.
+</p>
+
+            <p>
+The fact that an XSLT processor ignores the content of extension elements
+like this is important because it means that you can put anything you like
+in it and it won't be processed.  This includes any XSLT elements that you
+include in it.  There is no point in doing:
+</p>
+
+            <pre>
+  &lt;doc:template&gt;&lt;xsl:fallback /&gt;
+    This template matches &lt;xsl:value-of select="name()" /&gt;.
+  &lt;/doc:template&gt;
+</pre>
+
+            <p>
+because the xsl:value-of element is never processed (by an XSLT processor
+that doesn't understand doc:template).
+</p>
+
+            <p>
+David points out that the fact that an XSLT processor does process the
+content of the xsl:fallback element is important because it means you could
+use it to contain the stuff that you're actually commenting on.  So, you
+could use:
+</p>
+
+            <pre>
+  &lt;xsl:template match="..."&gt;
+    &lt;doc:template&gt;
+      &lt;!-- documentation on the template --&gt;
+      &lt;xsl:fallback&gt;
+        &lt;!-- body of the template --&gt;
+      &lt;/xsl:fallback&gt;
+    &lt;/doc:template&gt;
+  &lt;/xsl:template&gt;
+</pre>
+
+            <p>
+as the design pattern for including documentation instead.  In a previous
+email, I've pointed out that this probably isn't a good idea just in case
+some XSLT processor comes along that *does* understand the 'doc:template'
+extension element, because then the content of the xsl:fallback element
+(which is the content of the template) will not be processed, and your
+legacy stylesheet won't work. 
+</p>
+
+            <p>
+The point, of course, of using XML to represent the documentation within
+the stylesheet is that you can get at it with things that understand XML,
+most importantly XSLT.  So, you can then have another XSLT stylesheet that
+takes our documented XSLT stylesheet as input and produces a nice HTML
+frameset that explain what the stylesheet does and how it works.  I'm sure
+whoever volunteers the XML dialect for documentation will include such a
+stylesheet in their contribution...
+</p>
+
+            <p>
+What the documentation included in this way *doesn't* do, cannot do, and
+isn't really designed to do, is perform any run-time evaluation of the
+performance of the stylesheet.  To do that, the documentation would need to
+be understandable by an XSLT processor.  It would be possible to extend an
+XSLT processor so that it understood the extension elements in a particular
+namespace that was used for documentation (in this case "http://doc.com"),
+and did something clever with them.  I'm not exactly sure what it could do
+other than generate messages in a similar way to xsl:message, but I'm sure
+there are plenty of ideas out there.  And I'm sure that someone will
+volunteer to write extensions for SAXON that will carry them through...
+</p>
+
+         </div>
+
+      </div>
+
+      <div class="post">
+
+         <div class="question">
+            <p>
+               <img src="/resources/icons/click-question.gif" height="28" width="28" border="0"/> 
+the xml:space attribute has no effect on leading or 
+trailing whitespace, eg.<br/>
+&lt;schedule&gt;<br/>
+&lt;scheduleNumber xml:space="default"&gt;    123456789&lt;/scheduleNumber&gt;<br/>
+&lt;/schedule&gt;
+</p>
+         </div>
+
+         <div class="response">
+
+            <p>
+Erm, I dunno about this, but I may be interpreting Paul's "has no effect"
+in a different way from Mike.  The XML Spec says:
+</p>
+
+            <blockquote uri="http://www.w3.org/TR/REC-xml#sec-white-space">
+  "The value "default" signals that applications' default white-space 
+   processing modes are acceptable for this element; the value "preserve" 
+   indicates the intent that applications preserve all the white space."
+</blockquote>
+            <p class="byline">[From <a href="http://www.w3.org/TR/REC-xml#sec-white-space" class="offsite">http://www.w3.org/TR/REC-xml#sec-white-space</a>]</p>
+
+            <p>
+That makes me think that it is up to the application to decide what to do
+with leading and trailing whitespace, so it *can* have an effect, depending
+on the application.  An application *could* treat the above example as if
+the value of scheduleNumber were '123456789' or ' 123456789 ' if it wanted.
+</p>
+
+            <p>
+So for example browsers that are given a paragraph like:
+</p>
+
+            <pre>
+  &lt;p xml:space="default"&gt;
+    here is my paragraph
+    indented and split over
+    many lines
+  &lt;/p&gt;
+</pre>
+
+            <p>
+can (and indeed do) display it in the same way as:
+</p>
+
+            <pre>
+  &lt;p&gt;here is my paragraph indented and split over many lines&lt;/p&gt;
+</pre>
+
+            <p>
+Whereas if it was:
+</p>
+
+            <pre>
+  &lt;p xml:space="preserve"&gt;
+    here is my paragraph
+    indented and split over
+    many lines
+  &lt;/p&gt;
+</pre>
+
+            <p>
+then they 'are intended to' display the extra whitespace and line breaks.
+</p>
+
+            <p>
+But browsers are one thing and XSLT processors are another: I think that
+most/all XSLT processors preserve leading/trailing/middling whitespace
+whether they're told to or not, such that Paul's example is correct, as
+Mike says.
+</p>
+
+         </div>
+
+      </div>
+
+      <h2 id="links">Links</h2>
+
+      <table>
+         <colgroup span="1"/>
+         <tr>
+            <td>
+               <p class="link">
+                  <a href="http://www.w3.org/TR/xslt#section-Embedding-Stylesheets" class="img offsite">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="http://www.w3.org/TR/xslt#section-Embedding-Stylesheets" class="offsite">XSLT Recommendation: Embedding Stylesheets</a>
+               </p>
+            </td>
+         </tr>
+      </table>
+
+      <div id="colophon">
+         <hr class="final"/>
+         <p>
+            <a href="/xslt/processing.html">/xslt/processing.xml</a> last modified 2000-08-07 by <br/>Generated using <a href="http://users.iclway.co.uk/mhkay/saxon/index.html" class="offsite">SAXON 5.4 from Michael Kay of ICL</a> [supports document()] [supports key()]</p>
+      </div>
+   </body>
+</html>

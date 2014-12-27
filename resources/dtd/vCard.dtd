@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+   <!-- ******************************************** -->
+   <!-- Entity declarations and references -->
+   <!-- ******************************************** -->
+
+   <!ENTITY % attr.lang "
+        xml.lang NMTOKEN #IMPLIED
+   ">
+   <!-- lang value is a valid RFC 1766 language string -->
+
+   <!ENTITY % attr.del "
+        del.type NMTOKENS 'INTL POSTAL PARCEL WORK'
+   ">
+   <!-- Valid name tokens are "INTL", "DOM", "POSTAL", "PARCEL"
+        "WORK", "HOME" -->
+
+   <!ENTITY % attr.tel "
+        tel.type NMTOKENS 'VOICE'
+   ">
+   <!-- Valid name tokens are "HOME", "WORK", "MSG", "PREF"
+        "VOICE", "FAX", "CELL", "VIDEO", "PAGER", "BBS", "MODEM"
+        "CAR", "ISDN", "PCS" -->
+
+   <!ENTITY % attr.email "
+        email.type NMTOKENS 'INTERNET'
+   ">
+   <!-- Valid name tokens are "INTERNET", "X.400", "PREF" -->
+
+   <!ENTITY % attr.img "
+        img.type CDATA #REQUIRED
+   ">
+   <!-- img.type value is an IANA registered image type -->
+
+   <!ENTITY % attr.aud "
+        aud.type CDATA #REQUIRED
+   ">
+   <!-- aud.type value is an IANA registered audio type -->
+
+   <!-- The mandatory properties in any vCard -->
+   <!ENTITY % prop.man "
+        (fn, n)
+   ">
+
+   <!-- Identification properties -->
+   <!ENTITY % prop.id "
+        (nickname | photo | bday)
+   ">
+
+   <!-- Delivery addressing properties -->
+   <!ENTITY % prop.del "
+        (adr | label)
+   ">
+
+   <!-- Telecommunications addressing properties -->
+   <!ENTITY % prop.tel "
+        (tel | email | mailer)
+   ">
+
+   <!-- Geographical properties -->
+   <!ENTITY % prop.geo "
+        (tz | geo)
+   ">
+
+   <!-- Organizational properties -->
+   <!ENTITY % prop.org "
+        (title | role | logo | agent | org)
+   ">
+
+   <!-- Explanatory propeties -->
+   <!ENTITY % prop.exp "
+        (categories | note | sort | sound | url)
+   ">
+
+   <!-- Security properties -->
+   <!ENTITY % prop.sec "
+        (key)
+   ">
+
+   <!-- ******************************************** -->
+   <!-- vCard value type notation declarations -->
+   <!-- ******************************************** -->
+
+   <!NOTATION URI PUBLIC "-//IETF//NOTATION VCARDXML/Value Type
+   URI//EN">
+
+   <!NOTATION TEXT PUBLIC "-//IETF//NOTATION VCARDXML/Value Type
+   Text//EN">
+
+   <!NOTATION DATE PUBLIC "-//IETF//NOTATION VCARDXML/Value Type
+   Date//EN">
+
+   <!NOTATION TIME PUBLIC "-//IETF//NOTATION VCARDXML/Value Type
+   Time//EN">
+
+   <!NOTATION DATE-TIME PUBLIC "-//IETF//NOTATION VCARDXML/Value Type
+   Date-Time//EN">
+
+   <!NOTATION INTEGER PUBLIC "-//IETF//NOTATION VCARDXML/Value Type
+   Integer//EN">
+
+   <!NOTATION BOOLEAN PUBLIC "-//IETF//NOTATION VCARDXML/Value Type
+   Boolean//EN">
+
+   <!NOTATION FLOAT PUBLIC "-//IETF//NOTATION VCARDXML/Value Type
+   Float//EN">
+
+   <!NOTATION X-NAME PUBLIC "-//IETF//NOTATION VCARDXML/Value Type X-
+   Name//EN">
+
+   <!NOTATION BINARY PUBLIC "-//IETF//NOTATION VCARDXML/Value Type
+   Binary//EN">
+
+   <!NOTATION VCARD PUBLIC "-//IETF//NOTATION VCARDXML/Value Type
+   vCard//EN">
+
+   <!NOTATION PHONE-NUMBER PUBLIC "-//IETF//NOTATION VCARDXML/Value Type
+
+   Phone-Number//EN">
+
+   <!NOTATION UTC-OFFSET PUBLIC "-//IETF//NOTATION VCARDXML/Value Type
+   UTC-Offset//EN">
+
+   <!-- ******************************************** -->
+   <!-- vCard element and attribute declarations -->
+   <!-- ******************************************** -->
+
+   <!ELEMENT vCardSet (vCard*)>
+   <!ATTLIST vCardSet name CDATA #IMPLIED>
+
+   <!ELEMENT vCard      (%prop.man;+, %prop.id;?, %prop.del;*,
+%prop.tel;*,  %prop.geo;*,
+        %prop.org;*, %prop.exp;?, %prop.sec;?)>
+
+   <!ATTLIST vCard
+        %attr.lang;
+        xmlns CDATA #FIXED 'http://www.ietf.org/internet-drafts/draft-
+   dawson-vcard-xml-dtd-03.txt'
+        xmlns:vcf CDATA #FIXED 'http://www.ietf.org/internet-
+   drafts/draft-dawson-vcard-xml-dtd-03.txt'
+        version CDATA #REQUIRED
+        rev CDATA #IMPLIED
+        uid CDATA #IMPLIED
+        prodid CDATA #IMPLIED
+        class (PUBLIC | PRIVATE | CONFIDENTIAL) "PUBLIC"
+        value NOTATION (VCARD) #IMPLIED>
+   <!-- version - Must be "3.0" if document conforms to this spec -->
+   <!-- rev - ISO 8601 formatted date or date/time string -->
+   <!-- uid - UID associated with the object described by the vCard -->
+   <!-- prodid - ISO 9070 FPI for product that generated vCard -->
+   <!-- class - Security classification for vCard information -->
+
+   <!-- Identification properties -->
+   <!-- Element and attribute declarations -->
+   <!ELEMENT fn (#PCDATA)>
+   <!ATTLIST fn
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT n (family?, given?, other*, prefix*, suffix*)>
+   <!ATTLIST n
+        %attr.lang;>
+
+   <!ELEMENT family (#PCDATA)>
+   <!ATTLIST family
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT given (#PCDATA)>
+   <!ATTLIST given
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT other (#PCDATA)>
+   <!ATTLIST other
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT prefix (#PCDATA)>
+   <!ATTLIST prefix
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT suffix (#PCDATA)>
+   <!ATTLIST suffix
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT nickname (#PCDATA)>
+   <!ATTLIST nickname
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT photo (extref | b64bin)>
+   <!ATTLIST photo
+        %attr.img;>
+
+   <!-- extref holds a reference to an external entity that -->
+   <!-- has the photo. b64bin holds the inline BASE64 encoded -->
+   <!-- binary data for the photo as defined in RFC 2045. -->
+
+   <!ELEMENT extref EMPTY>
+   <!ATTLIST extref
+        uri ENTITY #REQUIRED>
+
+   <!ELEMENT b64bin (#PCDATA)>
+   <!ATTLIST b64bin value NOTATION (BINARY) #IMPLIED>
+
+   <!ELEMENT bday (#PCDATA)>
+   <!ATTLIST bday value NOTATION (DATE | DATE-TIME) #IMPLIED>
+
+   <!-- bday holds a ISO 8601 formatted date or date/time string -->
+   <!-- value MUST be "DATE" for a date string and "DATE-TIME" for -->
+   <!--   date/time string. -->
+
+   <!-- Delivery addressing properties -->
+   <!-- Element and attribute declarations -->
+
+   <!ELEMENT adr (pobox?, extadd*, street?, locality*, region?,
+                pcode?, country?)>
+   <!ATTLIST adr
+        %attr.del; >
+
+   <!ELEMENT pobox (#PCDATA)>
+   <!ATTLIST pobox
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT extadd (#PCDATA)>
+
+   <!ATTLIST extadd
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT street (#PCDATA)>
+   <!ATTLIST street
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT locality (#PCDATA)>
+   <!ATTLIST locality
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT region (#PCDATA)>
+   <!ATTLIST region
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT pcode (#PCDATA)>
+   <!ATTLIST pcode
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT country (#PCDATA)>
+   <!ATTLIST country
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT label (#PCDATA)*>
+   <!ATTLIST label
+        %attr.del;
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!-- Telecommunications addressing properties -->
+   <!-- Element and attribute declarations -->
+
+   <!ELEMENT tel (#PCDATA)>
+   <!-- A valid ITU standard telephone numbers string. -->
+   <!ATTLIST tel
+        %attr.tel;
+        value NOTATION (PHONE-NUMBER) #IMPLIED>
+
+   <!ELEMENT email (#PCDATA)>
+   <!ATTLIST email
+        %attr.email;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT mailer (#PCDATA)>
+   <!ATTLIST mailer
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!-- Geographical properties -->
+   <!-- Element and attribute declarations -->
+
+   <!ELEMENT tz (#PCDATA)>
+   <!ATTLIST tz value NOTATION (UTC-OFFSET) #IMPLIED>
+   <!-- tz holds an ISO 8601 formatted time zone offset. -->
+
+   <!ELEMENT geo (lat, lon)>
+
+   <!ELEMENT lat (#PCDATA)>
+   <!ATTLIST lat value NOTATION (FLOAT) #IMPLIED>
+   <!-- A decimal degree float number to 6 decimal places -->
+
+   <!ELEMENT lon (#PCDATA)>
+   <!ATTLIST lon value NOTATION (FLOAT) #IMPLIED>
+   <!-- A decimal degree float number to 6 decimal places -->
+
+   <!-- Organizational properties -->
+   <!-- Element and attribute declarations -->
+
+   <!ELEMENT title (#PCDATA)>
+   <!ATTLIST title
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT role (#PCDATA)>
+   <!ATTLIST role
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT logo (extref | b64bin)>
+   <!ATTLIST logo
+        %attr.img;>
+
+   <!-- extref holds a reference to an external entity that -->
+   <!-- has the logo. b64bin holds the inline BASE64 encoded -->
+   <!-- binary data for the logo as defined in RFC 2045. -->
+
+   <!ELEMENT agent (vCard | extref)>
+
+   <!-- value MUST be "VCARD" for a "vCard" content model and -->
+   <!--   "URI" for a "extref" content model. -->
+
+   <!ELEMENT org (orgnam, orgunit*)>
+
+   <!ELEMENT orgnam (#PCDATA)>
+   <!ATTLIST orgnam
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+   <!ELEMENT orgunit (#PCDATA)>
+   <!ATTLIST orgunit
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!-- Explanatory properties -->
+   <!-- Element and attribute declarations -->
+
+   <!ELEMENT categories (item)*>
+
+   <!ELEMENT item (#PCDATA)>
+   <!ATTLIST item
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT note (#PCDATA)*>
+   <!ATTLIST note
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT sort (#PCDATA)>
+   <!ATTLIST sort
+        %attr.lang;
+        value NOTATION (TEXT) #IMPLIED>
+
+   <!ELEMENT sound (extref | b64bin)>
+   <!ATTLIST sound
+        %attr.aud;>
+
+   <!-- extref holds a reference to an external entity that -->
+   <!-- has the sound. b64bin holds the inline BASE64 encoded -->
+   <!-- binary data for the sound as defined in RFC 2045. -->
+
+   <!ELEMENT url EMPTY>
+   <!ATTLIST url
+        uri ENTITY #REQUIRED>
+   <!-- url holds a RFC 1738 formatted Uniform Resource Locator -->
+
+   <!-- Security properties -->
+   <!-- Element and attribute declarations -->
+
+   <!ELEMENT key (extref | b64bin)>
+
+   <!-- extref holds a reference to an external entity that -->
+   <!--   has the key or cert. base64-data has the actual data for -->
+   <!--   the key or cert, encoded with Base64 as defined in the -->
+   <!--   MIME spec. -->

@@ -1,0 +1,51 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=PowerPoint.Slide>
+<meta name=Generator content="Microsoft PowerPoint 9">
+
+<script>
+<!--
+if( window.name != "PPTNts" )
+  parent.location.href = "../Typing%20in%20Transformations.html";
+//-->
+</script>
+</head>
+
+<body bgcolor=white text=black>
+
+<table border=0 width="100%">
+ <tr>
+  <td width=5 nowrap></td>
+  <td width="100%"></td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>The first example
+  demonstrates that subtracting an xs:date from a node casts the node to an
+  xs:double, despite the fact that it's always illegal to subtract a date from
+  a number.</font><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>The second example
+  demonstrates that the result of any arithmetic that involves a node is an
+  xs:double, which isn't a legal type for functions and operators that require
+  xs:integer, such as the 'to' operator. Whereas &quot;1 to @length&quot; is
+  absolutely fine, &quot;1 to (@length + 1)&quot; is not because &quot;@length
+  + 1&quot; returns an xs:double, which can't be cast automatically to an
+  xs:integer.</font><br>
+  </td>
+ </tr>
+</table>
+
+</body>
+
+</html>

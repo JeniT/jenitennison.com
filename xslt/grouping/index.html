@@ -1,0 +1,174 @@
+
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "/resources/dtd/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>Jeni's XSLT Pages: Grouping</title>
+      <link rel="stylesheet" href="/resources/style/base.css"/>
+      <link rel="alternate" type="text/xml" href="/xslt/grouping/index.xml"/>
+   </head>
+   <body>
+      <p id="xml-link">
+					Try the <a href="/xslt/grouping/index.xml">XML version</a> of this page.
+					If you have problems with it, consult the
+					<a href="/compatibility.html">compatibility page</a>.
+				</p>
+   
+   
+      <h1>Grouping<span id="link-top">
+            <a class="img" href="/index.html">
+               <img src="/resources/icons/top.gif" width="29" height="29"/>
+            </a>
+         </span>
+         <span id="link-up">
+            <a class="img" href="../index.html">
+               <img src="/resources/icons/up.gif" width="29" height="29"/>
+            </a>
+         </span>
+      </h1>
+   
+      <p>
+  Grouping is a common problem in XSLT stylesheets: how do you take a list of elements and
+  arrange them into groups.  There are two main situations in which you need to do this:
+</p>
+   
+      <ul>
+      
+         <li>
+         
+            <a href="#by-content" class="local">grouping by content</a> (e.g. group all the people from Nottingham together)</li>
+      
+         <li>
+         
+            <a href="#by-position" class="local">grouping by position</a> (e.g. group 10 items per list)</li>
+   
+      </ul>
+   
+      <h2 id="by-content">Grouping By Content</h2>
+   
+      <p>
+  The most efficient method for grouping large numbers of elements according to their content,
+  be it the value of
+  an attribute, of a subelement, or its textual content, is the Muenchian Method (after
+  <a href="http://www.geocities.com/~smuench/" class="offsite">Steve Muench</a>, who
+  discovered/developed it).
+</p>
+   
+      <table>
+         <colgroup span="1"/>
+         <tr>
+            <td>
+               <p class="link">
+                  <a href="muenchian.html" class="img ">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="muenchian.html">Grouping Using the Muenchian Method</a>
+               </p>
+            </td>
+         </tr>
+      </table>
+   
+      <p>
+  Here are some posts that give more examples of grouping by content:
+</p>
+   
+      <table>
+         <colgroup span="2"/>
+         <tr>
+            <td>
+               <p class="link">
+                  <a href="http://sources.redhat.com/ml/xsl-list/2000-07/msg00059.html" class="img offsite">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="http://sources.redhat.com/ml/xsl-list/2000-07/msg00059.html" class="offsite">Grouping
+	Using the Muenchian Method</a>
+               </p>
+               <p class="link">
+                  <a href="http://sources.redhat.com/ml/xsl-list/2000-07/msg00458.html" class="img offsite">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="http://sources.redhat.com/ml/xsl-list/2000-07/msg00458.html" class="offsite">Grouping
+	Using the Muenchian Method #2</a>
+               </p>
+               <p class="link">
+                  <a href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00200.html" class="img offsite">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00200.html" class="offsite">Grouping Using the Muenchian Method #3</a>
+               </p>
+            </td>
+            <td>
+               <p class="link">
+                  <a href="http://www.biglist.com/lists/xsl-list/archives/200012/msg00354.html" class="img offsite">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="http://www.biglist.com/lists/xsl-list/archives/200012/msg00354.html" class="offsite">Grouping into a Table</a>
+               </p>
+               <p class="link">
+                  <a href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00070.html" class="img offsite">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00070.html" class="offsite">Multiple Level Grouping</a>
+               </p>
+            </td>
+         </tr>
+      </table>
+   
+      <h2 id="by-position">Grouping By Position</h2>
+   
+      <p>
+  Here are a couple of posts that illustrate grouping by position:
+</p>
+   
+      <table>
+         <colgroup span="1"/>
+         <tr>
+            <td>
+               <p class="link">
+                  <a href="http://sources.redhat.com/ml/xsl-list/2000-08/msg00058.html" class="img offsite">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="http://sources.redhat.com/ml/xsl-list/2000-08/msg00058.html" class="offsite">Adding
+	Something Only at the End of a Group</a>
+               </p>
+               <p class="link">
+                  <a href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00202.html" class="img offsite">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00202.html" class="offsite">Creating a Calendar</a>
+               </p>
+            </td>
+         </tr>
+      </table>
+   
+      <h2 id="links">Links</h2>
+   
+      <table>
+         <colgroup span="1"/>
+         <tr>
+            <td>
+               <p class="link">
+                  <a href="http://www.w3.org/TR/xslt#misc-func" class="img offsite">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="http://www.w3.org/TR/xslt#misc-func" class="offsite">XSLT Recommendation: Miscellaneous Extra Functions</a>
+               </p>
+               <p class="link">
+                  <a href="http://www.w3.org/TR/xslt#key" class="img offsite">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="http://www.w3.org/TR/xslt#key" class="offsite">XSLT Recommendation: Keys</a>
+               </p>
+            </td>
+         </tr>
+      </table>
+
+      <div id="colophon">
+         <hr class="final"/>
+         <p>
+            <a href="/xslt/grouping/index.html">/xslt/grouping/index.xml</a> by <a href="mailto:mail@jenitennison.com" class="mailto">Jeni Tennison</a>; generated using <a href="http://saxon.sf.net/" class="offsite">SAXON 6.5 from Michael Kay</a>
+         </p>
+      </div>
+   </body>
+</html>

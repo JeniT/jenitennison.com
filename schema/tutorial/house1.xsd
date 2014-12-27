@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="house" />
+
+<xs:element name="askingPrice" />
+
+<xs:element name="address" />
+
+<xs:element name="line" />
+
+<xs:element name="number" type="xs:string" />
+
+<xs:element name="street" type="xs:string" />
+
+<xs:element name="city" type="xs:string" />
+
+<xs:element name="postcode" type="xs:string" />
+
+<xs:element name="features" />
+
+<xs:element name="feature" />
+
+<xs:element name="description" />
+
+<xs:element name="layout" />
+
+<xs:element name="floor" />
+
+<xs:element name="name" type="xs:string" />
+
+<xs:element name="room" />
+
+<xs:element name="dimensions" />
+
+<xs:element name="dimension" />
+
+<xs:element name="measurement" />
+
+<xs:element name="exits" />
+
+<xs:element name="door">
+  <xs:complexType />
+</xs:element>
+
+<xs:element name="window">
+  <xs:complexType />
+</xs:element>
+
+<xs:element name="stairs" />
+
+<xs:element name="access" />
+
+<xs:element name="ceiling">
+  <xs:complexType />
+</xs:element>
+
+<xs:element name="walls">
+  <xs:complexType />
+</xs:element>
+
+<xs:element name="fittings" />
+
+<xs:element name="radiator">
+  <xs:complexType />
+</xs:element>
+
+<xs:element name="cupboard" />
+
+<xs:element name="wardrobe" />
+
+<xs:element name="telephonePoint">
+  <xs:complexType />
+</xs:element>
+
+<xs:element name="aerialPoint">
+  <xs:complexType />
+</xs:element>
+
+<xs:element name="shaverPoint">
+  <xs:complexType />
+</xs:element>
+
+<xs:element name="suite" />
+
+<xs:element name="wc" type="xs:string" />
+
+<xs:element name="bath" type="xs:string" />
+
+<xs:element name="basin" />
+
+<xs:element name="shower" type="xs:string" />
+
+<xs:element name="bidet" type="xs:string" />
+
+<xs:element name="fire" />
+
+<xs:element name="surround" type="xs:string" />
+
+<xs:element name="hearth" type="xs:string" />
+
+<xs:element name="extractor" type="xs:string" />
+
+<xs:element name="units" type="xs:string" />
+
+<xs:element name="sink" />
+
+<xs:element name="oven" />
+
+<xs:element name="plumbing" type="xs:string" />
+
+<xs:element name="extra" type="xs:string" />
+
+<xs:element name="exterior" />
+
+<xs:element name="garage" />
+
+<xs:element name="front" />
+
+<xs:element name="rear" />
+
+<xs:element name="side" />
+
+<xs:element name="lawn" type="xs:string" />
+
+<xs:element name="driveway" type="xs:string" />
+
+<xs:element name="flowerBeds" type="xs:string" />
+
+<xs:element name="rockery" type="xs:string" />
+
+<xs:element name="pond" type="xs:string" />
+
+<xs:element name="shed" type="xs:string" />
+
+<xs:element name="directions" />
+
+<xs:element name="town" type="xs:string" />
+
+<xs:element name="village" type="xs:string" />
+
+<xs:element name="road" type="xs:string" />
+
+<xs:element name="landmark" type="xs:string" />
+
+</xs:schema>

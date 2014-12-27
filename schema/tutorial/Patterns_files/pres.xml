@@ -1,0 +1,81 @@
+<xml xmlns:v="urn:schemas-microsoft-com:vml"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:p="urn:schemas-microsoft-com:office:powerpoint">
+ <p:presentation firstslidenumber="0">
+  <p:master id="3" type="main" href="master03.htm" xmlhref="master03.xml"
+   template="Jeni Tennison Consulting" layout="title_body"
+   slots="title,body,dateTime,footer,slideNumber">
+   <p:schemes>
+    <p:colorscheme
+     colors="#0000FF,#FFFFFF,#000000,#FFFF00,#FF9900,#00FFFF,#FF0000,#969696"/>
+    <p:colorscheme
+     colors="#FFFFFF,#000000,#808080,#000000,#00CC99,#3333CC,#CCCCFF,#B2B2B2"/>
+    <p:colorscheme
+     colors="#FFFFFF,#000000,#333333,#000000,#DDDDDD,#808080,#4D4D4D,#EAEAEA"/>
+    <p:colorscheme
+     colors="#FFFFCC,#000000,#666633,#808000,#339933,#800000,#0033CC,#FFCC66"/>
+    <p:colorscheme
+     colors="#FFFFFF,#000000,#808080,#000000,#FFCC66,#0000FF,#CC00CC,#C0C0C0"/>
+    <p:colorscheme
+     colors="#FFFFFF,#000000,#808080,#000000,#C0C0C0,#0066FF,#FF0000,#009900"/>
+    <p:colorscheme
+     colors="#FFFFFF,#000000,#808080,#000000,#3399FF,#99FFCC,#CC00CC,#B2B2B2"/>
+    <p:colorscheme
+     colors="#FFFFFF,#000000,#808080,#66FF66,#CCFFCC,#660066,#006600,#CC66CC"/>
+   </p:schemes>
+  </p:master>
+  <p:master id="4" type="title" href="master04.htm" xmlhref="master04.xml"
+   layout="title_subtitle"
+   slots="centerTitle,subTitle,dateTime,footer,slideNumber"/>
+  <p:master id="1" type="notes" href="master01.htm" layout="notes"
+   slots="header,dateTime,slideImage,body,footer,slideNumber"/>
+  <p:master id="2" type="handout" href="master02.htm" layout="handout"
+   slots="header,dateTime,footer,slideNumber"/>
+  <p:slide id="1" href="slide0001.htm" masterhref="master04.htm"
+   layout="title_subtitle" slots="centerTitle,subTitle"/>
+  <p:slide id="2" href="slide0002.htm" layout="title_body" slots="title,body"/>
+  <p:slide id="88" href="slide0088.htm" masterhref="master04.htm"
+   layout="title_subtitle" slots="centerTitle,subTitle"/>
+  <p:slide id="89" href="slide0089.htm" layout="title_body" slots="title,body"/>
+  <p:slide id="90" href="slide0090.htm" layout="title_only" slots="title"/>
+  <p:slide id="91" href="slide0091.htm" layout="title_body" slots="title,body"/>
+  <p:slide id="92" href="slide0092.htm" layout="title_only" slots="title"/>
+  <p:slide id="93" href="slide0093.htm" layout="title_body" slots="title,body"/>
+  <p:slide id="94" href="slide0094.htm" masterhref="master04.htm"
+   layout="title_subtitle" slots="centerTitle,subTitle"/>
+  <p:slide id="95" href="slide0095.htm" layout="title_body" slots="title,body"/>
+  <p:slide id="96" href="slide0096.htm" layout="title_body" slots="title,table"/>
+  <p:slide id="98" href="slide0098.htm" layout="title_only" slots="title"/>
+  <p:slide id="97" href="slide0097.htm" layout="title_body" slots="title,body"/>
+  <p:slide id="99" href="slide0099.htm" layout="title_only" slots="title"/>
+  <p:slide id="100" href="slide0100.htm" layout="title_body" slots="title,body"/>
+  <p:slide id="101" href="slide0101.htm" layout="title_only" slots="title"/>
+  <p:slide id="102" href="slide0102.htm" layout="title_body" slots="title,body"/>
+  <p:slide id="107" href="slide0107.htm" masterhref="master04.htm"
+   layout="title_subtitle" slots="centerTitle,subTitle"/>
+  <p:slide id="103" href="slide0103.htm" layout="title_body" slots="title,body"/>
+  <p:slide id="104" href="slide0104.htm" layout="title_only" slots="title"/>
+  <p:slide id="108" href="slide0108.htm" masterhref="master04.htm"
+   layout="title_subtitle" slots="centerTitle,subTitle"/>
+  <p:slide id="105" href="slide0105.htm" layout="title_body" slots="title,body"/>
+  <p:slide id="106" href="slide0106.htm" layout="title_only" slots="title"/>
+  <p:slide id="33" href="slide0033.htm" layout="title_body" slots="title,body"/>
+  <p:slide id="35" href="slide0035.htm" layout="title_body" slots="title,body"/>
+  <p:viewstate type="slideView" vertbarstate="0" horizbarstate="2"/>
+  <p:font name="Verdana" charset="0" type="6" family="34"/>
+  <p:font name="Trebuchet MS" charset="0" type="6" family="34"/>
+  <p:font name="Courier New" charset="0" type="6" family="49"/>
+  <p:headersfooters slidenumber="t" footerstr="XML Schema: Design Patterns"
+   formatid="4" nouserdate="t" noheader="t" todaydate="t"/>
+  <p:headersfooters notes="t" slidenumber="t"
+   headerstr="XML Schema: Design Patterns" formatid="4" nouserdate="t"
+   nofooter="t" todaydate="t"/>
+  <p:pptdocumentsettings framecolors="PresentationSchemeAccentColor"
+   hideslideanimation="t"/>
+  <p:htmlpublishsettings browsersupport="v4"
+   href="D:\Work\XML Schema Tutorial\Patterns.htm" hidespeakernote="t"
+   noloadinbrowser="t"/>
+ </p:presentation>
+ <o:shapedefaults v:ext="edit" spidmax="167938">
+  <o:colormenu v:ext="edit" fillcolor="none [0]" strokecolor="none [5]"/>
+ </o:shapedefaults></xml>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../resources/style/page.xsl"?><my:doc xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/xslt/elements.xml">
+         <dc:title>Jeni's XSLT Pages: Creating Elements &amp; Attributes</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-07"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2001-01-16"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>Creating Elements &amp; Attributes</h1>
+   <p>
+	This page will hold information about how to create elements and attributes for your
+	output.  For now, there's just the following post:
+   <my:links>
+      <my:link href="http://www.biglist.com/lists/xsl-list/archives/200012/msg00425.html">Getting a Default Attribute from a Parent</my:link>
+   </my:links>
+</p>
+   <h2 id="links">Links</h2>
+   <my:links>
+      <my:link href="http://www.w3.org/TR/xslt#section-Creating-Elements-and-Attributes">XSLT Recommendation: Creating Elements and Attributes</my:link>
+   </my:links>
+</my:doc>

@@ -1,0 +1,221 @@
+<!ELEMENT house (askingPrice, address, features?, description, layout?, directions?)>
+<!-- version attribute must be present in the document -->
+<!-- house ref must be a 7-digit number -->
+<!-- house status can be "For Sale", "Under Offer", or "Sold" -->
+<!ATTLIST house 
+  version NMTOKEN  #FIXED '1.0'
+  ref	  NMTOKEN  #REQUIRED
+  status  CDATA    'For Sale'>
+
+<!-- askingPrice is always a whole number of hundreds of pounds -->
+<!ELEMENT askingPrice (#PCDATA)>
+<!ATTLIST askingPrice
+  currency (GBP|EUR) 'GBP'>
+
+<!-- an address can contain between two and five lines -->
+<!ELEMENT address (line, line, (line, (line, line?)?)?, postcode)>
+
+<!-- a line can either consist of a number followed by a street, or a city, or 
+     just some text. The first line in an address should be a number and street, and the last line a city -->
+<!ELEMENT line (#PCDATA | number | street | city)*>
+
+<!-- a number should be an integer or an integer followed by a letter (e.g. 
+     211b) -->
+<!ELEMENT number (#PCDATA)>
+
+<!ELEMENT street (#PCDATA)>
+
+<!ELEMENT city (#PCDATA)>
+
+<!-- a postcode is a capital letter to indicate the city, followed by one or two      numbers, followed by a space, followed by another one or two numbers, 
+     followed by two capital letters -->
+<!ELEMENT postcode (#PCDATA)>
+
+<!ELEMENT features (feature+)>
+
+<!-- if a feature has a code, then its content should match that code:
+     UPVC = "UPVC double glazed"
+     GCH  = "gas central heating" -->
+<!ELEMENT feature (#PCDATA)>
+<!ATTLIST feature
+  code (UPVC | GCH) #IMPLIED>
+
+<!-- a description of a house should be plain text. A description of a room   
+     should follow the content model:
+       ((ceiling | walls)*, fittings, extra?)
+     except that it should only contain one of each of ceiling or walls -->
+<!ELEMENT description (#PCDATA | ceiling | walls | fittings | extra)*>
+
+<!ELEMENT layout (floor+, exterior?)>
+
+<!ELEMENT floor (name, room+)>
+
+<!ELEMENT name (#PCDATA)>
+
+<!ELEMENT room (name, dimensions?, exits, description)>
+<!ATTLIST room
+  id   ID   #REQUIRED>
+
+<!ELEMENT dimensions (dimension, dimension)>
+
+<!-- one of the measurements contained by the dimension should have a unit of 
+     feet while the other has a unit of metres -->
+<!ELEMENT dimension (measurement, measurement)>
+
+<!-- the format of the value of the measurement depends on the value of the unit
+     attribute:
+       feet   -> N' M" where N and M are both integers
+       metres -> a decimal number with two decimal places -->
+<!ELEMENT measurement (#PCDATA)>
+<!ATTLIST measurement
+  unit   (feet|metres) #REQUIRED>
+
+<!-- door, window, stairs and access elements can occur in any order but there 
+     must be at least one door -->
+<!ELEMENT exits (door | window | stairs | access)+>
+
+<!-- door, window, stairs and access elements all have a to attribute that 
+     either points to the ID of a room or has one of the special values 'front', 'rear', 'side', or 'loft' -->
+
+<!ELEMENT door EMPTY>
+<!-- a door's type can include the tokens 'opaque', 'UPVC' and 'patio' or 
+     'french' -->
+<!ATTLIST door
+  to   NMTOKEN  #REQUIRED
+  type NMTOKENS #IMPLIED>
+
+<!ELEMENT window EMPTY>
+<!-- a window's type can include the tokens 'opaque' and 'UPVC' -->
+<!ATTLIST window
+  to   NMTOKEN  #REQUIRED
+  type NMTOKENS #IMPLIED>
+
+<!ELEMENT stairs (#PCDATA)>
+<!ATTLIST stairs
+  to   NMTOKEN  #REQUIRED>
+
+<!ELEMENT access (#PCDATA)>
+<!ATTLIST access
+  to   NMTOKEN  #REQUIRED>
+
+<!ELEMENT ceiling EMPTY>
+<!-- a ceiling's type can include the tokens 'textured' and 'coved' -->
+<!ATTLIST ceiling
+  type NMTOKENS  #REQUIRED>
+
+<!ELEMENT walls EMPTY>
+<!-- a wall's type can include the tokens 'half-tiled' and 'dado-rail' -->
+<!ATTLIST walls
+  type NMTOKENS  #REQUIRED>
+
+<!ELEMENT fittings (radiator | cupboard | wardrobe | telephonePoint | aerialPoint | shaverPoint | suite | basin | shower | wc | bath | fire | extractor | units | sink | oven | plumbing)*>
+
+<!-- radiator, cupboard, wardrobe, telephonePoint, aerialPoint, shaverPoint, 
+     and basin all have a 'no' attribute, which must be an integer -->
+
+<!ELEMENT radiator EMPTY>
+<!ATTLIST radiator
+  type  (single|double) 'single'
+  no    NMTOKEN         '1'>
+
+<!ELEMENT cupboard (#PCDATA)>
+<!ATTLIST cupboard
+  no    NMTOKEN       '1'>
+
+<!ELEMENT wardrobe (#PCDATA)>
+<!ATTLIST wardrobe
+  type  (single|double) 'single'
+  no    NMTOKEN         '1'>
+
+<!ELEMENT telephonePoint EMPTY>
+<!-- the 'line' attribute must be an integer -->
+<!ATTLIST telephonePoint
+  line  NMTOKEN       '1'
+  no    NMTOKEN       '1'>
+
+<!ELEMENT aerialPoint EMPTY>
+<!ATTLIST aerialPoint
+  no    NMTOKEN       '1'>
+
+<!ELEMENT shaverPoint EMPTY>
+<!ATTLIST shaverPoint
+  no    NMTOKEN       '1'>
+
+<!-- suite must contain wc, bath and basin, and may contain a shower/bidet, in 
+     any order -->
+<!ELEMENT suite (wc | bath | basin | shower | bidet)*>
+<!ATTLIST suite
+  colour  NMTOKEN  #REQUIRED>
+
+<!ELEMENT wc (#PCDATA)>
+
+<!ELEMENT bath (#PCDATA)>
+
+<!ELEMENT basin (#PCDATA)>
+<!ATTLIST basin
+  no    NMTOKEN       '1'>
+
+<!ELEMENT shower (#PCDATA)>
+
+<!ELEMENT bidet (#PCDATA)>
+
+<!-- fire can contain a surround or a hearth, or neither, in either order -->
+<!ELEMENT fire (hearth | surround)*>
+<!ATTLIST fire
+  type   (living-flame|coal|gas)  #IMPLIED>
+
+<!ELEMENT surround (#PCDATA)>
+
+<!ELEMENT hearth (#PCDATA)>
+
+<!ELEMENT extractor (#PCDATA)>
+
+<!ELEMENT units (#PCDATA)>
+
+<!ELEMENT sink (#PCDATA)>
+<!ATTLIST sink
+  type   (single|double|one-and-a-half|one-and-a-quarter) 'single'>
+
+<!ELEMENT oven (#PCDATA)>
+<!ATTLIST oven 
+  type   (integrated)  #IMPLIED>
+
+<!-- plumbing should hold a number at least one token, which can include 
+     'washing-machine', 'dish-washer' and 'tumble-dryer' -->
+<!ELEMENT plumbing (#PCDATA)>
+
+<!ELEMENT extra (#PCDATA)>
+
+<!-- there can only be one front, rear or side element in the exterior element, 
+     but they can appear in any order -->
+<!ELEMENT exterior (garage?, (front | rear | side)*)>
+
+<!ELEMENT garage (dimensions?, exits, description)>
+
+<!ELEMENT front (lawn | driveway | flowerBeds | rockery | pond | shed)+>
+
+<!ELEMENT rear (lawn | driveway | flowerBeds | rockery | pond | shed)+>
+
+<!ELEMENT side (lawn | driveway | flowerBeds | rockery | pond | shed)+>
+
+<!ELEMENT lawn (#PCDATA)>
+
+<!ELEMENT driveway (#PCDATA)>
+
+<!ELEMENT flowerBeds (#PCDATA)>
+
+<!ELEMENT rockery (#PCDATA)>
+
+<!ELEMENT pond (#PCDATA)>
+
+<!ELEMENT shed (#PCDATA)>
+
+<!ELEMENT directions (#PCDATA | city | town | village | road | landmark)*>
+
+<!ELEMENT town (#PCDATA)>
+
+<!ELEMENT village (#PCDATA)>
+
+<!ELEMENT road (#PCDATA)>
+
+<!ELEMENT landmark (#PCDATA)>

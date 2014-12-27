@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../../resources/style/page.xsl"?>
+<my:doc xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
+        xsi:schemaLocation="http://www.jenitennison.com/  
+                            ../../resources/schemas/doc.xsd"
+        xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/xslt/utilities/svg-utils.xml">
+         <dc:title>Jeni's XSLT Utilities: SVG Utility</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2001-05-14"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2000-05-14"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <dc:rights>
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    </dc:rights>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>SVG Utility</h1>
+   <p>
+      The SVG utility is designed to help you to embed the SVG images that you generate using XSLT into an HTML page.
+   </p>
+   <p>
+      Creating SVG with XSLT is very cool.  Unfortunately, it's difficult to generate HTML pages that use SVG because the <code>embed</code> elements that are used to host SVG refer to separate files rather than allowing SVG within them.  However, you can get around this by loading the SVG into the embed through a script, using <a href="mailto:chris@bayes.co.uk">Chris Bayes'</a> <a href="http://www.bayes.co.uk/xml">domtodom.js</a>.
+   </p>
+   <p>
+      The crucial insight of this utility was the fact that the loading of the SVG images into the <code>embed</code> elements can be triggered by a script in a static SVG image.  This utility creates the script and the <code>embed</code> elements for the page.
+   </p>
+   <h2>Instructions</h2>
+   <ol>
+      <li>Download <my:link href="svg-utils.zip"/> and unzip it into the same directory as your stylesheet.  It contains three files:
+         <ul>
+            <li><code>svg-utils.xsl</code> - the utility stylesheet</li>
+            <li><code>domtodom.js</code> - Chris Bayes' script</li>
+            <li><code>blank.svg</code> - a blank SVG set up to trigger the loading of the images into the page</li>
+         </ul>
+      </li>
+      <li>
+         <p>Import the <code>svg-utils.xsl</code> stylesheet into your stylesheet:</p>
+         <my:example>&lt;xsl:import href="svg-utils.xsl" /&gt;</my:example>
+      </li>
+      <li>
+         <p>
+            Create a variable holding a node set within which each node represents a separate image to be placed in the document (I call these <em>image nodes</em>).
+         </p>
+         <my:example>&lt;xsl:variable name="images" select="document('')/*/my:diagrams/my:diagram" /></my:example>
+      </li>
+      <li>
+         <p>
+            Within the <code>head</code> element of the HTML, call the template 'insertSVGScript' with the <code>images</code> parameter being the node set of image nodes:</p>
+         <my:example><![CDATA[<head>
+   <title>SVG Chart Demonstration</title>
+   <xsl:call-template name="insertSVGScript">
+      <xsl:with-param name="images" select="$images" />
+   </xsl:call-template>
+</head>]]></my:example>
+      </li>
+      <li>
+         <p>
+            Add templates in 'getSVG' mode that match the image nodes.  These templates should return SVG images.
+         </p>
+         <my:example><![CDATA[
+<xsl:template match="my:diagram" mode="getSVG">
+   ...
+   <svg width="100%" viewBox="0 0 {$width} {$height}" preserveAspectRatio="xMinYMin meet">
+      ...
+   </svg>
+</xsl:template>
+]]></my:example>
+      </li>
+      <li>
+         <p>
+            Apply templates to the image nodes in 'createEmbed' mode to create <code>embed</code> elements for the at the relevant points in the HTML.
+         </p>
+         <my:example><![CDATA[
+<xsl:apply-templates select="$images" mode="createEmbed" />
+]]></my:example>
+      </li>
+   </ol>
+   <p>
+      There are a few extra options that you can set as parameters for the 'createEmbed' template, namely:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>src</my:name>
+         <my:default type="string">blank.svg</my:default>
+         <my:desc>
+            The name of the blank SVG file to be used in place while the SVG images are loaded.  These should all contain a call to the function <code>triggerSVGLoading()</code>.  Have a look at the source of <a href="blank.svg"><code>blank.svg</code></a> for an example.
+         </my:desc>
+      </my:var>
+      <my:var>
+         <my:name>width</my:name>
+         <my:desc>
+            The desired width of the embed.
+         </my:desc>
+      </my:var>
+      <my:var>
+         <my:name>height</my:name>
+         <my:desc>
+            The desired height of the embed.
+         </my:desc>
+      </my:var>
+   </my:vars>
+   <h2>More Information</h2>
+   <my:links>
+      <my:link href="svg-example.xml">A Simple Example</my:link>
+   </my:links>
+</my:doc>

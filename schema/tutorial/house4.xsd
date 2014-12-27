@@ -1,0 +1,451 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.example.com/HouseML"
+           xmlns:house="http://www.example.com/HouseML">
+
+<xs:element name="house">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="house:askingPrice" />
+      <xs:element ref="house:address" />
+      <xs:element ref="house:features" minOccurs="0" />
+      <xs:element ref="house:description" />
+      <xs:element ref="house:layout" minOccurs="0" />
+      <xs:element ref="house:directions" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string" use="required" fixed="1.0" />
+    <xs:attribute name="ref" type="xs:string" use="required" />
+    <xs:attribute name="status" type="xs:string" default="For Sale" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="askingPrice">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="currency" type="xs:string" default="GBP" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="address">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="house:line" minOccurs="2" maxOccurs="5" />
+      <xs:element ref="house:postcode" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="line">
+  <xs:complexType mixed="true">
+    <xs:choice minOccurs="0">
+      <xs:sequence>
+        <xs:element ref="house:number" />
+        <xs:element ref="house:street" />
+      </xs:sequence>
+      <xs:element ref="house:city" />
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="number" type="xs:string" />
+
+<xs:element name="street" type="xs:string" />
+
+<xs:element name="city" type="xs:string" />
+
+<xs:element name="postcode" type="xs:string" />
+
+<xs:element name="features">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="house:feature" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="feature">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="code" type="xs:string" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="description">
+  <xs:complexType mixed="true">
+    <xs:sequence minOccurs="0">
+      <xs:choice minOccurs="0">
+        <xs:sequence>
+          <xs:element ref="house:ceiling" />
+          <xs:element ref="house:walls" minOccurs="0" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="house:walls" />
+          <xs:element ref="house:ceiling" minOccurs="0" />
+        </xs:sequence>
+      </xs:choice>
+      <xs:element ref="house:fittings" />
+      <xs:element ref="house:extra" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="layout">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="house:floor" maxOccurs="5" />
+      <xs:element ref="house:exterior" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="floor">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="house:name" />
+      <xs:element ref="house:room" maxOccurs="10" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="name" type="xs:string" />
+
+<xs:element name="room">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="house:name" />
+      <xs:element ref="house:dimensions" minOccurs="0" />
+      <xs:element ref="house:exits" />
+      <xs:element ref="house:description" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="dimensions">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="house:dimension" maxOccurs="2" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="dimension">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="house:measurement" maxOccurs="2" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="measurement">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="unit" type="xs:string" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="exits">
+  <xs:complexType>
+    <xs:choice maxOccurs="unbounded">
+      <xs:element ref="house:door" />
+      <xs:element ref="house:window" />
+      <xs:element ref="house:stairs" />
+      <xs:element ref="house:access" />
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="door">
+  <xs:complexType>
+    <xs:attribute name="to" type="xs:string" use="required" />
+    <xs:attribute name="type" type="xs:string" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="window">
+  <xs:complexType>
+    <xs:attribute name="to" type="xs:string" use="required" />
+    <xs:attribute name="type" type="xs:string" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="stairs">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="to" type="xs:string" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="access">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="to" type="xs:string" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="ceiling">
+  <xs:complexType>
+    <xs:attribute name="type" type="xs:string" use="required" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="walls">
+  <xs:complexType>
+    <xs:attribute name="type" type="xs:string" use="required" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="fittings">
+  <xs:complexType>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="house:radiator" />
+      <xs:element ref="house:cupboard" />
+      <xs:element ref="house:wardrobe" />
+      <xs:element ref="house:telephonePoint" />
+      <xs:element ref="house:aerialPoint" />
+      <xs:element ref="house:shaverPoint" />
+      <xs:element ref="house:suite" />
+      <xs:element ref="house:basin" />
+      <xs:element ref="house:shower" />
+      <xs:element ref="house:wc" />
+      <xs:element ref="house:bath" />
+      <xs:element ref="house:fire" />
+      <xs:element ref="house:extractor" />
+      <xs:element ref="house:units" />
+      <xs:element ref="house:sink" />
+      <xs:element ref="house:oven" />
+      <xs:element ref="house:plumbing" />
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="radiator">
+  <xs:complexType>
+    <xs:attribute name="type" type="xs:string" default="single" />
+    <xs:attribute name="no" type="xs:string" default="1" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="cupboard">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="no" type="xs:string" default="1" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="wardrobe">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="type" type="xs:string" default="single" />
+        <xs:attribute name="no" type="xs:string" default="1" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="telephonePoint">
+  <xs:complexType>
+    <xs:attribute name="line" type="xs:string" default="1" />
+    <xs:attribute name="no" type="xs:string" default="1" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="aerialPoint">
+  <xs:complexType>
+    <xs:attribute name="no" type="xs:string" default="1" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="shaverPoint">
+  <xs:complexType>
+    <xs:attribute name="no" type="xs:string" default="1" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="suite">
+  <xs:complexType>
+    <xs:all>
+      <xs:element ref="house:wc" />
+      <xs:element ref="house:bath" />
+      <xs:element ref="house:basin" />
+      <xs:element ref="house:shower" minOccurs="0" />
+      <xs:element ref="house:bidet" minOccurs="0" />
+    </xs:all>
+    <xs:attribute name="colour" type="xs:string" use="required" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="wc" type="xs:string" />
+
+<xs:element name="bath" type="xs:string" />
+
+<xs:element name="basin">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="no" type="xs:string" default="1" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="shower" type="xs:string" />
+
+<xs:element name="bidet" type="xs:string" />
+
+<xs:element name="fire">
+  <xs:complexType>
+    <xs:all>
+      <xs:element ref="house:hearth" minOccurs="0" />
+      <xs:element ref="house:surround" minOccurs="0" />
+    </xs:all>
+    <xs:attribute name="type" type="xs:string" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="surround" type="xs:string" />
+
+<xs:element name="hearth" type="xs:string" />
+
+<xs:element name="extractor" type="xs:string" />
+
+<xs:element name="units" type="xs:string" />
+
+<xs:element name="sink">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="type" type="xs:string" default="single" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="oven">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="type" type="xs:string" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="plumbing" type="xs:string" />
+
+<xs:element name="extra" type="xs:string" />
+
+<xs:element name="exterior">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="house:garage" />
+      <xs:choice minOccurs="0" maxOccurs="3">
+        <xs:element ref="house:front" />
+        <xs:element ref="house:rear" />
+        <xs:element ref="house:side" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="garage">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element ref="house:dimensions" minOccurs="0" />
+      <xs:element ref="house:exits" />
+      <xs:element ref="house:description" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="front">
+  <xs:complexType>
+    <xs:choice maxOccurs="unbounded">
+      <xs:element ref="house:lawn" />
+      <xs:element ref="house:driveway" />
+      <xs:element ref="house:flowerBeds" />
+      <xs:element ref="house:rockery" />
+      <xs:element ref="house:pond" />
+      <xs:element ref="house:shed" />
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="rear">
+  <xs:complexType>
+    <xs:choice maxOccurs="unbounded">
+      <xs:element ref="house:lawn" />
+      <xs:element ref="house:driveway" />
+      <xs:element ref="house:flowerBeds" />
+      <xs:element ref="house:rockery" />
+      <xs:element ref="house:pond" />
+      <xs:element ref="house:shed" />
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="side">
+  <xs:complexType>
+    <xs:choice maxOccurs="unbounded">
+      <xs:element ref="house:lawn" />
+      <xs:element ref="house:driveway" />
+      <xs:element ref="house:flowerBeds" />
+      <xs:element ref="house:rockery" />
+      <xs:element ref="house:pond" />
+      <xs:element ref="house:shed" />
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="lawn" type="xs:string" />
+
+<xs:element name="driveway" type="xs:string" />
+
+<xs:element name="flowerBeds" type="xs:string" />
+
+<xs:element name="rockery" type="xs:string" />
+
+<xs:element name="pond" type="xs:string" />
+
+<xs:element name="shed" type="xs:string" />
+
+<xs:element name="directions">
+  <xs:complexType mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="house:city" />
+      <xs:element ref="house:town" />
+      <xs:element ref="house:village" />
+      <xs:element ref="house:road" />
+      <xs:element ref="house:landmark" />
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="town" type="xs:string" />
+
+<xs:element name="village" type="xs:string" />
+
+<xs:element name="road" type="xs:string" />
+
+<xs:element name="landmark" type="xs:string" />
+
+</xs:schema>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../resources/style/page.xsl"?>
+<my:doc xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:my="http://www.jenitennison.com/">
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+	<rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/"
+                   xmlns:dcq="http://purl.org/dc/qualifiers/1.0/"
+                   about="/xslt/grouping.xml">
+		<dc:title>Jeni's XSLT Pages: Grouping</dc:title>
+		<dc:date dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-07" />
+		<dc:date dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-07" />
+		<dc:creator rdf:resource="mail@jenitennison.com"/>
+		<link rel="stylesheet" href="/resources/style/base.css" />
+	</rdf:Description>
+</rdf:RDF>
+
+<h1>Grouping</h1>
+<p>
+	This page will hold information about how to group information in your XML source for
+	output (closely tied to <my:link href="sorting.xml">sorting</my:link> and <my:link
+	href="unique.xml">identifying unique nodes</my:link>).  For now, there's just the following posts:
+</p>
+<my:links>
+	<my:link href="http://www.mulberrytech.com/xsl/xsl-list/archive/msg14064.html">Grouping
+	By Position</my:link>
+	<my:link href="http://www.mulberrytech.com/xsl/xsl-list/archive/msg14069.html">Grouping
+	Using the Muenchian Method</my:link>
+	<my:link href="http://sources.redhat.com/ml/xsl-list/2000-07/msg00059.html">Grouping
+	Using the Muenchian Method #2</my:link>
+	<my:link href="http://sources.redhat.com/ml/xsl-list/2000-07/msg00458.html">Grouping
+	Using the Muenchian Method #3</my:link>
+	<my:link href="http://www.mulberrytech.com/xsl/xsl-list/archive/msg13389.html">Using
+	Grouping To Flatten Source</my:link>
+	<my:link href="http://www.mulberrytech.com/xsl/xsl-list/archive/msg13964.html">Using
+	Grouping To Remove Duplicates</my:link>
+	<my:link href="http://sources.redhat.com/ml/xsl-list/2000-08/msg00058.html">Adding
+	Something Only at the End of a Group</my:link>
+</my:links>
+<h2 id="links">Links</h2>
+<my:links>
+	<my:link href="http://www.w3.org/TR/xslt#misc-func">XSLT Recommendation: Miscellaneous Extra Functions</my:link>
+	<my:link href="http://www.w3.org/TR/xslt#key">XSLT Recommendation: Keys</my:link>
+</my:links>
+</my:doc>

@@ -1,0 +1,21 @@
+<!ENTITY % xhtml-rdfa.dtd
+     PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"          
+            "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+%xhtml-rdfa.dtd;
+<!ATTLIST %html.qname;
+  xml:base CDATA #IMPLIED
+  xmlns:rdf CDATA #FIXED "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs CDATA #FIXED "http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:dc CDATA #FIXED "http://purl.org/dc/elements/1.1/"
+  xmlns:dcterms CDATA #FIXED "http://purl.org/dc/terms/"
+  xmlns:dcam CDATA #FIXED "http://purl.org/dc/dcam/"
+  xmlns:egms CDATA #FIXED "http://www.esd.org.uk/standards/egms/3.0/egms-schema#"
+  xmlns:ipsv CDATA #FIXED "http://www.esd.org.uk/standards/ipsv/2.00/ipsv-schema#"
+  xmlns:g CDATA #FIXED "http://www.gazettes-online.co.uk/ontology#"
+  xmlns:xsd CDATA #FIXED "http://www.w3.org/2001/XMLSchema#"
+  xmlns:c CDATA #FIXED "http://www.gazettes-online.co.uk/ontology/councils#"
+  xmlns:org CDATA #FIXED "http://www.gazettes-online.co.uk/ontology/organisation#"
+  xmlns:leg CDATA #FIXED "http://www.gazettes-online.co.uk/ontology/legislation#"
+  xmlns:p CDATA #FIXED "http://www.gazettes-online.co.uk/ontology/person#"
+  xmlns:os CDATA #FIXED "http://www.ordnancesurvey.co.uk/ontology/v1/AdministrativeGeography.rdf#"
+>

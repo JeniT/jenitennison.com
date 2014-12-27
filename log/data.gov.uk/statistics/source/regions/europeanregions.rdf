@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf      = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+          xmlns:rdfs     = "http://www.w3.org/2000/01/rdf-schema#"
+          xmlns:owl      = "http://www.w3.org/2002/07/owl#"
+          xmlns:dc       = "http://purl.org/dc/elements/1.1/"
+	  xmlns:cc       = "http://creativecommons.org/ns#"
+          xmlns:foaf     = "http://xmlns.com/foaf/0.1/"
+          xmlns:admingeo = "http://data.ordnancesurvey.co.uk/ontology/admingeo/"
+>
+
+    <rdf:Description rdf:about="">
+        <dc:date>2009-09-28</dc:date>
+        <dc:creator>John Goodwin</dc:creator>
+        <dc:rights>Crown Copyright 2009</dc:rights>
+	<dc:rights>This data is issued under a Creative Commons 
+                    Attribution 2.0 UK: England &amp; Wales License. Attribution should be made to Ordnance Survey.
+        </dc:rights>
+        <dc:publisher>Ordnance Survey</dc:publisher>
+        <dc:title>Ordnance Survey Administrative Geography RDF</dc:title>
+	<cc:license rdf:resource="http://creativecommons.org/licenses/by/2.0/uk/"/>
+    </rdf:Description>
+
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041421">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion"/>
+<rdfs:label>South East</rdfs:label>
+<foaf:name>South East</foaf:name>
+<admingeo:hasUnitID>41421</admingeo:hasUnitID>
+<admingeo:hasAreaCode>EUR</admingeo:hasAreaCode>
+<admingeo:hasArea>1940520.749</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041422">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion"/>
+<rdfs:label>North East</rdfs:label>
+<foaf:name>North East</foaf:name>
+<admingeo:hasUnitID>41422</admingeo:hasUnitID>
+<admingeo:hasAreaCode>EUR</admingeo:hasAreaCode>
+<admingeo:hasArea>867639.55</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041423">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion"/>
+<rdfs:label>East Midlands</rdfs:label>
+<foaf:name>East Midlands</foaf:name>
+<admingeo:hasUnitID>41423</admingeo:hasUnitID>
+<admingeo:hasAreaCode>EUR</admingeo:hasAreaCode>
+<admingeo:hasArea>1581075.985</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041424">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion"/>
+<rdfs:label>Wales</rdfs:label>
+<foaf:name>Wales</foaf:name>
+<admingeo:hasUnitID>41424</admingeo:hasUnitID>
+<admingeo:hasAreaCode>EUR</admingeo:hasAreaCode>
+<admingeo:hasArea>2122465.567</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041425">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion"/>
+<rdfs:label>Eastern</rdfs:label>
+<foaf:name>Eastern</foaf:name>
+<admingeo:hasUnitID>41425</admingeo:hasUnitID>
+<admingeo:hasAreaCode>EUR</admingeo:hasAreaCode>
+<admingeo:hasArea>1957481.491</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041426">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion"/>
+<rdfs:label>West Midlands</rdfs:label>
+<foaf:name>West Midlands</foaf:name>
+<admingeo:hasUnitID>41426</admingeo:hasUnitID>
+<admingeo:hasAreaCode>EUR</admingeo:hasAreaCode>
+<admingeo:hasArea>1300380.468</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041427">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion"/>
+<rdfs:label>South West</rdfs:label>
+<foaf:name>South West</foaf:name>
+<admingeo:hasUnitID>41427</admingeo:hasUnitID>
+<admingeo:hasAreaCode>EUR</admingeo:hasAreaCode>
+<admingeo:hasArea>2438853.805</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041428">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion"/>
+<rdfs:label>London</rdfs:label>
+<foaf:name>London</foaf:name>
+<admingeo:hasUnitID>41428</admingeo:hasUnitID>
+<admingeo:hasAreaCode>EUR</admingeo:hasAreaCode>
+<admingeo:hasArea>159470.133</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041429">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion"/>
+<rdfs:label>Scotland</rdfs:label>
+<foaf:name>Scotland</foaf:name>
+<admingeo:hasUnitID>41429</admingeo:hasUnitID>
+<admingeo:hasAreaCode>EUR</admingeo:hasAreaCode>
+<admingeo:hasArea>8023861.843</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041430">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion"/>
+<rdfs:label>Yorkshire &amp; the Humber</rdfs:label>
+<foaf:name>Yorkshire &amp; the Humber</foaf:name>
+<admingeo:hasUnitID>41430</admingeo:hasUnitID>
+<admingeo:hasAreaCode>EUR</admingeo:hasAreaCode>
+<admingeo:hasArea>1556402.849</admingeo:hasArea>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://data.ordnancesurvey.co.uk/id/7000000000041431">
+<rdf:type rdf:resource="http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion"/>
+<rdfs:label>North West</rdfs:label>
+<foaf:name>North West</foaf:name>
+<admingeo:hasUnitID>41431</admingeo:hasUnitID>
+<admingeo:hasAreaCode>EUR</admingeo:hasAreaCode>
+<admingeo:hasArea>1491948.212</admingeo:hasArea>
+</rdf:Description>
+
+
+</rdf:RDF>

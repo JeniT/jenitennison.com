@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../../resources/style/page.xsl"?><my:doc xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/xslt/utilities/selectParameters-explanation.xml">
+         <dc:title>Jeni's XSLT Utilities: Select Parameters Utility: Explanation</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2000-11-01"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2000-11-02"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <dc:rights>
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    </dc:rights>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>Select Parameters Utility: Explanation</h1>
+   <p>
+  The <my:link href="selectParameters.xml">Select Parameters Utility</my:link> helps you create dynamic web pages.  You can use it to let users of your webpages select the parameters that they want to apply within the stylesheet.
+</p>
+   <p>
+  This page explains how the Select Parameters Utility works by going step by step through the stylesheet.  It is intended for those interested in learning more about how XSLT works with real problems rather than as instructions on how to use the utility.
+</p>
+   <h2 id="parameters">Stylesheet parameters</h2>
+   <p>
+   The parameters that I define within the selectParameters.xsl stylesheet are those that are needed to pass information from one transformation to the next.  These parameters won't be set the first time that the transformation occurs, so their values have to be derived that first time.  After the first time, the parameters are passed into the stylesheet directly.
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>selectParameters-xsl-file</my:name>
+         <my:desc>
+            <p>
+         $selectParameters-xsl-file contains the name of the XSLT stylesheet file that's being used to transform the source XML.  The default value for this parameter is derived from the href pseudo-attribute on the xml-stylesheet processing instruction.
+      </p>
+         </my:desc>
+         <my:defn>
+&lt;xsl:param name="selectParameters-xsl-file"&gt;
+  &lt;xsl:variable name="pi" select="//processing-instruction()[name() = 'xml-stylesheet']" /&gt;
+  &lt;xsl:variable name="after" select="substring-after($pi, ' href=')" /&gt;
+  &lt;xsl:variable name="quote" select="substring($after, 1, 1)" /&gt;
+  &lt;xsl:value-of select="substring-before(substring-after($after, $quote), $quote)" /&gt;
+&lt;/xsl:param&gt;
+</my:defn>
+      </my:var>
+      <my:var>
+         <my:name>selectParameters-xml-file</my:name>
+         <my:desc>
+            <p>
+        $selectParameters-xml-file holds the file name for the XML file that is being processed.  Since there is no automated way of getting hold of this file name, the selectParameters stylesheet uses the 'base' attribute on the document element to identify the name of the file.
+      </p>
+         </my:desc>
+         <my:defn>
+&lt;xsl:param name="selectParameters-xml-file" select="/*/@base" /&gt;
+</my:defn>
+      </my:var>
+      <my:var>
+         <my:name>stylesheetParams</my:name>
+         <my:desc>
+            <p>
+         $stylesheetParams holds a string giving the names and values of all the parameters that are passed from one run of the stylesheet to the next.  These have to be kept in a string in this way because you cannot access the value of a parameter given its name as a string in XSLT1.0 (saxon:evaluate() would grant this functionality).
+      </p>
+            <p>
+         The $stylesheetParams string is made up of <var>name</var>=<var>value</var> pairs separated by the $param-separator (a unique string).  To construct the default value, the parameter definitions (xsl:param elements) in the importing stylesheet are accessed and their 'select' attribute used to give the value for the parameter.  The selectParameters stylesheet assumes that the parameters are given string values.
+      </p>
+         </my:desc>
+         <my:defn>
+&lt;xsl:param name="stylesheetParams"&gt;
+  &lt;xsl:for-each select="$params"&gt;
+    &lt;xsl:value-of select="@name" /&gt;=&lt;xsl:value-of select="substring(@select, 2, string-length(@select) - 2)" /&gt;&lt;xsl:value-of select="$param-separator" /&gt;&lt;xsl:text /&gt;
+  &lt;/xsl:for-each&gt;
+&lt;/xsl:param&gt;
+</my:defn>
+      </my:var>
+   </my:vars>
+   <h2 id="parameters">Stylesheet variables</h2>
+   <p>
+   There are two global variables defined within the selectParameters stylesheet.
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>params</my:name>
+         <my:desc>
+            <p>
+         $params holds a node set containing all the parameter definitions (xsl:param elements) within the importing stylesheet (as specified within the source XML by an xml-stylesheet processing instruction).
+      </p>
+         </my:desc>
+         <my:defn>
+&lt;xsl:variable name="params" select="document($selectParameters-xsl-file, /)/*/xsl:param" /&gt;
+    </my:defn>
+      </my:var>
+      <my:var>
+         <my:name>param-separator</my:name>
+         <my:desc>
+            <p>
+        $param-separator is a unique string that is used to separate the name/value pairs within the $stylesheetParams parameter.  This is a long unique string to ensure that the separator does not occur in the names or values of the parameters themselves.
+      </p>
+         </my:desc>
+         <my:value type="string">---uniqueParamSeparator---</my:value>
+         <my:defn>
+&lt;xsl:variable name="param-separator" select="'---uniqueParamSeparator---'" /&gt;
+    </my:defn>
+      </my:var>
+   </my:vars>
+   <h2 id="param-doc">The 'param-doc' key</h2>
+   <p>
+   The 'param-doc' key is used to index into parameter documentation within the importing stylesheet, based on the name of the parameter.  This allows the stylesheet to access documented information about a parameter, such as the options and default value, quickly and easily.
+</p>
+   <my:example>
+&lt;xsl:key name="param-doc" match="/*/doc:param" use="@name" /&gt;
+</my:example>
+   <h2 id="markup">The 'insert-selectParameters-form' template</h2>
+   <p>
+  The 'insert-selectParameters-form' template is the main template in the stylesheet, which inserts into the output tree an HTML form that, when submitted, runs a stylesheet over an XML document with the parameters specified within the form.  I use a named template because the identity of the current node isn't important.
+</p>
+   <my:example>
+&lt;xsl:template name="insert-selectParameters-form"&gt;
+  ...
+&lt;/xsl:template&gt;
+</my:example>
+   <p>
+  The first thing is to identify the parameters and their default values.  There are five parameters:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>xml-file</my:name>
+         <my:default type="var">$selectParameters-xml-file</my:default>
+         <my:desc>the XML file to be transformed: it's safest to pass this value in directly within the importing stylesheet - if it isn't, the $selectParameters-xml-file, derived from the 'base' attribute of the document element, will be used instead</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>xsl-file</my:name>
+         <my:default type="var">$selectParameters-xsl-file</my:default>
+         <my:desc>the XSLT stylesheet to be used to transform the XML; again, it's safest to pass this value in to the template, and $selectParameters-xsl-file will be used if it isn't</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>choose-xml-file</my:name>
+         <my:default type="boolean">false</my:default>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>the user should be able to enter an XML file to be processed</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>the user should not be able to enter an XML file to be processed</my:desc>
+         </my:option>
+      </my:var>
+      <my:var>
+         <my:name>choose-xsl-file</my:name>
+         <my:default type="boolean">false</my:default>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>the user should be able to enter an XSLT stylesheet to be used to process the file</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>the user should be not be able to enter an XSLT stylesheet to be used to process the file</my:desc>
+         </my:option>
+      </my:var>
+      <my:var>
+         <my:name>lang</my:name>
+         <my:default type="string">en</my:default>
+         <my:desc>the language that should be used within the form</my:desc>
+      </my:var>
+   </my:vars>
+   <my:example>
+&lt;xsl:param name="xml-file" select="$selectParameters-xml-file" /&gt;
+&lt;xsl:param name="xsl-file" select="$selectParameters-xsl-file" /&gt;
+&lt;xsl:param name="choose-xml-file" select="false()" /&gt;
+&lt;xsl:param name="choose-xsl-file" select="false()" /&gt;
+&lt;xsl:param name="lang" select="'en'" /&gt;
+</my:example>
+   <p>
+   The next part of the stylesheet inserts some javascript into the output within a 'script' element:
+</p>
+   <my:example>
+&lt;script type="text/javascript"&gt;
+   ...
+&lt;/script&gt;
+</my:example>
+   <p>
+   The javascript holds two functions.  The first function is explainParseError, which takes an parseError generated while parsing an XML file and gives an explanation of the error and a pointer to the location in the file that the error occurs.
+</p>
+   <my:example>
+function explainParseError(error) {
+   return error.reason + '[' + error.url + ': line ' + error.line + ', col ' + error.linepos + ']';
+}
+</my:example>
+   <p>
+   The second function is the function that is called when the form is submitted.  The purpose of the function is to replace the current content of the window with the result of transforming the XML file with the XSLT stylesheet based on the parameters given within the form.
+</p>
+   <my:example>
+function formLoadXML() {
+  ...
+}
+</my:example>
+   <p>
+  The first part of the function creates a DOM object to hold the result of parsing the XML file.  If the user is allowed to choose the XML file to be processed, then the file that they specify is used; if not, the XML file that is passed as a parameter into the template is used instead.  If this XML filename is blank (i.e. the user didn't enter a name or a filename wasn't passed in) then the document URL is used.  Any errors in the parsing of the XML are reported in an alert box.
+</p>
+   <p>
+   This piece of the stylesheet shows a mix between javascript that will be output into the resulting file and XSLT that governs <em>what</em> javascript will be output into the resulting file.  For example, the xsl:choose element actually changes what javascript line is added to the script.
+</p>
+   <my:example>
+XMLDOM = new ActiveXObject('Msxml2.FreeThreadedDOMDocument');
+XMLDOM.async = false;
+
+&lt;xsl:choose&gt;
+   &lt;xsl:when test="$choose-xml-file"&gt;
+      XMLfile = stylesheetParams.all('selectParameters-xml-file').value;
+   &lt;/xsl:when&gt;
+   &lt;xsl:otherwise&gt;
+      XMLfile = '&lt;xsl:value-of select="$xml-file" /&gt;';
+   &lt;/xsl:otherwise&gt;
+&lt;/xsl:choose&gt;
+if (XMLfile == '') {
+   XMLfile = document.URL;
+}
+XMLDOM.load(XMLfile);
+
+if (XMLDOM.parseError.errorCode != 0) {
+   alert('Error parsing XML file:\n' + explainParseError(XMLDOM.parseError));
+   return;
+}
+</my:example>
+   <p>
+  The next piece of the javascript function does the same for the XSLT stylesheet: sets up a DOM, finds out what file should be used, loads it into the DOM and alerts the user to any parse errors that occur.
+</p>
+   <my:example>
+XSLTDOM = new ActiveXObject('Msxml2.FreeThreadedDOMDocument');
+XSLTDOM.async = false;
+
+&lt;xsl:choose&gt;
+   &lt;xsl:when test="$choose-xsl-file"&gt;
+      XSLfile = stylesheetParams.all('selectParameters-xsl-file').value;
+   &lt;/xsl:when&gt;
+   &lt;xsl:otherwise&gt;
+      XSLfile = '&lt;xsl:value-of select="$xsl-file" /&gt;';
+   &lt;/xsl:otherwise&gt;
+&lt;/xsl:choose&gt;
+
+if (XSLfile == '') {
+   XSLfile = '&lt;xsl:value-of select="$xsl-file" /&gt;';
+}
+XSLTDOM.load(XSLfile);
+
+if (XSLTDOM.parseError.errorCode != 0) {
+   alert('Error parsing stylesheet:\n' + explainParseError(XSLTDOM.parseError));
+   return;
+}
+</my:example>
+   <p>
+  The final part of the script sets up the XSLT processor to be used to transform the XML.  For each of the parameters in the importing stylesheet (identified within the $params variable), the value for that parameter given in the relevant field within the form is set for the XSLT processor.  While cycling through these, the javascript is also created to construct the $stylesheetParams string to be passed into the next run of the stylesheet.  This, and the names of the XML and XSLT files are also set as parameters, to be used within the selectParameters stylesheet.  The result of the transformation is written to the document.
+</p>
+   <my:example>
+XSLStylesheet = new ActiveXObject('Msxml2.XSLTemplate');
+XSLStylesheet.stylesheet = XSLTDOM;
+XSLTProcessor = XSLStylesheet.createProcessor();
+
+XSLTProcessor.input = XMLDOM;
+stylesheetParamString = '';
+&lt;xsl:for-each select="$params"&gt;
+   XSLTProcessor.addParameter('&lt;xsl:value-of select="@name" /&gt;', stylesheetParams.all('&lt;xsl:value-of select="@name" /&gt;').value);
+   stylesheetParamString = stylesheetParamString + '&lt;xsl:value-of select="@name" /&gt;=' + stylesheetParams.all('&lt;xsl:value-of select="@name" /&gt;').value + '&lt;xsl:value-of select="$param-separator" /&gt;';
+&lt;/xsl:for-each&gt;
+
+XSLTProcessor.addParameter('selectParameters-xml-file', XMLfile);
+XSLTProcessor.addParameter('selectParameters-xsl-file', XSLfile);
+
+if (stylesheetParamString != '') {
+   XSLTProcessor.addParameter('stylesheetParams', stylesheetParamString);
+}
+XSLTProcessor.transform();
+
+document.open();
+document.write(XSLTProcessor.output);
+document.close();
+</my:example>
+   <p>
+   The next part of the template deals with adding the form with which the user can select the values for the parameters to be used during processing.
+</p>
+   <my:example> 
+&lt;form name="stylesheetParams" action="javascript:formLoadXML()"&gt;
+   ...
+&lt;/form&gt;
+</my:example>
+   <p>
+   The first thing to do is add any fields that are needed to store/set the XML and XSLT file names.  This is done in a big ugly choose statement because the combination of which of the files can be selected determines how a 'table' should be wrapped around them.
+</p>
+   <my:example>
+&lt;xsl:choose&gt;
+   &lt;xsl:when test="$choose-xml-file and $choose-xsl-file"&gt;
+      &lt;table&gt;
+         &lt;xsl:call-template name="insert-selectParameters-xml-file"&gt;
+            &lt;xsl:with-param name="xml-file" select="$xml-file" /&gt;
+            &lt;xsl:with-param name="lang" select="$lang" /&gt;
+         &lt;/xsl:call-template&gt;
+         &lt;xsl:call-template name="insert-selectParameters-xsl-file"&gt;
+            &lt;xsl:with-param name="xsl-file" select="$xsl-file" /&gt;
+            &lt;xsl:with-param name="lang" select="$lang" /&gt;
+         &lt;/xsl:call-template&gt;
+      &lt;/table&gt;
+   &lt;/xsl:when&gt;
+   &lt;xsl:when test="$choose-xml-file"&gt;
+      &lt;table&gt;
+         &lt;xsl:call-template name="insert-selectParameters-xml-file"&gt;
+            &lt;xsl:with-param name="xml-file" select="$xml-file" /&gt;
+            &lt;xsl:with-param name="lang" select="$lang" /&gt;
+         &lt;/xsl:call-template&gt;
+      &lt;/table&gt;
+      &lt;xsl:call-template name="insert-selectParameters-xsl-file"&gt;
+         &lt;xsl:with-param name="xsl-file" select="$xsl-file" /&gt;
+         &lt;xsl:with-param name="choose" select="false()" /&gt;
+         &lt;xsl:with-param name="lang" select="$lang" /&gt;
+      &lt;/xsl:call-template&gt;        
+   &lt;/xsl:when&gt;
+   &lt;xsl:when test="$choose-xsl-file"&gt;
+      &lt;table&gt;
+         &lt;xsl:call-template name="insert-selectParameters-xsl-file"&gt;
+            &lt;xsl:with-param name="xsl-file" select="$xsl-file" /&gt;
+            &lt;xsl:with-param name="lang" select="$lang" /&gt;
+         &lt;/xsl:call-template&gt;
+      &lt;/table&gt;
+      &lt;xsl:call-template name="insert-selectParameters-xml-file"&gt;
+            &lt;xsl:with-param name="xml-file" select="$xml-file" /&gt;
+            &lt;xsl:with-param name="choose" select="false()" /&gt;
+            &lt;xsl:with-param name="lang" select="$lang" /&gt;
+      &lt;/xsl:call-template&gt;        
+   &lt;/xsl:when&gt;
+   &lt;xsl:otherwise&gt;
+      &lt;xsl:call-template name="insert-selectParameters-xml-file"&gt;
+         &lt;xsl:with-param name="xml-file" select="$xml-file" /&gt;
+         &lt;xsl:with-param name="choose" select="false()" /&gt;
+         &lt;xsl:with-param name="lang" select="$lang" /&gt;
+      &lt;/xsl:call-template&gt;
+      &lt;xsl:call-template name="insert-selectParameters-xsl-file"&gt;
+         &lt;xsl:with-param name="xsl-file" select="$xsl-file" /&gt;
+         &lt;xsl:with-param name="choose" select="false()" /&gt;
+         &lt;xsl:with-param name="lang" select="$lang" /&gt;
+      &lt;/xsl:call-template&gt;        
+   &lt;/xsl:otherwise&gt;
+&lt;/xsl:choose&gt;
+</my:example>
+   <p>
+  Finally, I call two templates the 'insert-selectParameters-entries' template that inserts the main fields of the form with which the user can edit the values of the parameters to be passed into the next transformation; and the 'insert-selectParameters-button' template that inserts a button that the user can press to submit the form and enact the transform.
+</p>
+   <my:example>
+    &lt;xsl:call-template name="insert-selectParameters-entries" /&gt;
+    &lt;xsl:call-template name="insert-selectParameters-button" /&gt;
+</my:example>
+   <h2 id="insert-selectParameters-xml-file">The 'insert-selectParmaeters-xml-file' and 'insert-selectParameters-xsl-file' template</h2>
+   <p>
+   The two named templates 'insert-selectParameters-xml-file' and 'insert-selectParameters-xsl-file' are very similar.  They are both used to insert either a field into the form that allows the user to give the names of the files to be used or a hidden field that holds the same value to be carried through to the next run.
+</p>
+   <p>
+   The templates are passed three parameters:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>xml-file/xsl-file</my:name>
+         <my:desc>the name of the file (the default value for the field)</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>choose</my:name>
+         <my:default type="boolean">true</my:default>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>the user can choose the name of the file</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>the user cannot choose the name of the file</my:desc>
+         </my:option>
+      </my:var>
+      <my:var>
+         <my:name>lang</my:name>
+         <my:default type="string">en</my:default>
+         <my:desc>the language to be used in the naming of the file</my:desc>
+      </my:var>
+   </my:vars>
+   <p>
+   If $choose is true, then a table row is constructed in which the first cell holds the label for the field (i.e. 'XML File:' or 'XSL File:') and the second cell holds a text input field with the default value being the value of the $xml-file/$xsl-file parameter.  If $choose is false, then a hidden input field is given instead.
+</p>
+   <my:example>
+&lt;xsl:template name="insert-selectParameters-xml-file"&gt;
+  &lt;xsl:param name="xml-file" /&gt;
+  &lt;xsl:param name="choose" select="true()" /&gt;
+  &lt;xsl:param name="lang" select="'en'" /&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when test="$choose"&gt;
+      &lt;tr&gt;
+        &lt;th&gt;&lt;label for="stylesheetParamselectParameters-xml-file"&gt;XML File:&lt;/label&gt;&lt;/th&gt;
+        &lt;td&gt;
+          &lt;input id="stylesheetParamselectParameters-xml-file"
+                 name="selectParameters-xml-file"
+                 value="{$xml-file}"
+                 type="text" /&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:otherwise&gt;
+      &lt;input id="stylesheetParamselectParameters-xml-file"
+             name="selectParameters-xml-file"
+             value="{$xml-file}"
+             type="hidden" /&gt;
+    &lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;
+&lt;/xsl:template&gt;
+
+&lt;xsl:template name="insert-selectParameters-xsl-file"&gt;
+  &lt;xsl:param name="xsl-file" /&gt;
+  &lt;xsl:param name="choose" select="true()" /&gt;
+  &lt;xsl:param name="lang" select="'en'" /&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when test="$choose"&gt;
+      &lt;tr&gt;
+        &lt;th&gt;&lt;label for="stylesheetParamselectParameters-xsl-file"&gt;XSL File:&lt;/label&gt;&lt;/th&gt;
+        &lt;td&gt;
+          &lt;input id="stylesheetParamselectParameters-xsl-file"
+                 name="selectParameters-xsl-file"
+                 value="{$xsl-file}"
+                 type="text" /&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:otherwise&gt;
+      &lt;input id="stylesheetParamselectParameters-xsl-file"
+             name="selectParameters-xsl-file"
+             value="{$xsl-file}"
+             type="hidden" /&gt;
+    &lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;
+&lt;/xsl:template&gt;
+</my:example>
+   <h2 id="insert-selectParameters-entries">The 'insert-selectParameters-entries' template</h2>
+   <p>
+  The 'insert-selectParameters-entries' template takes one parameter:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>lang</my:name>
+         <my:default type="string">en</my:default>
+         <my:desc>the language to be used in the form fields</my:desc>
+      </my:var>
+   </my:vars>
+   <p>
+   It creates a table and then applies templates to the parameters definitions (xsl:param elements) in the importing stylesheet in 'entry' mode, passing the $lang parameter along.  This template, along with the <a href="#entry-mode">entry template</a> could be overridden within your importing stylesheet to give a different layout to the form, or to select only some parameters as selectable within it.
+</p>
+   <my:example>
+&lt;xsl:template name="insert-selectParameters-entries"&gt;
+   &lt;xsl:param name="lang" select="'en'" /&gt;
+   &lt;table&gt;
+      &lt;xsl:apply-templates select="$params" mode="entry"&gt;
+         &lt;xsl:with-param name="lang" select="$lang" /&gt;
+      &lt;/xsl:apply-templates&gt;
+   &lt;/table&gt;
+&lt;/xsl:template&gt;
+</my:example>
+   <h2 id="entry-mode">The entry template</h2>
+   <p>
+  The entry template is a template that matches a parameter definition (xsl:param element) in 'entry' mode.  It's applied by the <my:link href="#insert-selectParameters-entries">'insert-selectParameters-entries' template</my:link>.  This template adds the entries for a particular parameter.  It takes one parameter:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>lang</my:name>
+         <my:default type="string">en</my:default>
+         <my:desc>the language to be used in the form fields</my:desc>
+      </my:var>
+   </my:vars>
+   <p>
+  This template creates a table row that contains two cells: a label cell that contains the result of applying templates to the parameter definition in 'label' mode; and an input cell that contains the result of applying templates to the parameter definition in 'input' mode.
+</p>
+   <p>
+   This template, along with the <a href="#insert-selectParameters-entries">'insert-selectParameters-entries' template</a> could be overridden in your importing stylesheet if you want a different way of laying out each of the parameters, such as not using a table for them, for example.
+</p>
+   <my:example>
+&lt;xsl:template match="xsl:param" mode="entry"&gt;
+   &lt;xsl:param name="lang" select="'en'" /&gt;
+   &lt;tr&gt;
+      &lt;th&gt;
+         &lt;xsl:apply-templates select="." mode="label"&gt;
+            &lt;xsl:with-param name="lang" select="$lang" /&gt;
+         &lt;/xsl:apply-templates&gt;
+      &lt;/th&gt;
+      &lt;td&gt;
+         &lt;xsl:apply-templates select="." mode="input"&gt;
+            &lt;xsl:with-param name="lang" select="$lang" /&gt;
+         &lt;/xsl:apply-templates&gt;
+      &lt;/td&gt;
+   &lt;/tr&gt;
+&lt;/xsl:template&gt;
+</my:example>
+   <h2 id="label-mode">The label template</h2>
+   <p>
+   The label template generates a label for the input field for adding a value for the parameter.  It takes one parameter:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>lang</my:name>
+         <my:default type="string">en</my:default>
+         <my:desc>the language to be used in the form fields</my:desc>
+      </my:var>
+   </my:vars>
+   <p>
+   The template creates an HTML label for the input field associated with the parameter definition.  It idenfies the documentation associated with the particular parameter using the <a href="#param-doc">'param-doc' key</a>.  It then constructs a label that is, in order of preference:
+</p>
+   <ol>
+      <li>the doc:label given within parameter documentation that is in the language given by $lang</li>
+      <li>the first doc:label given within the parameter documentation</li>
+      <li>the name of the parameter</li>
+   </ol>
+   <p>
+   This template could be overridden within your importing stylesheet if you wanted to give a specific label to a particular parameter, or wanted to use another method of identifying what the text of the label should be.
+</p>
+   <my:example>
+&lt;xsl:template match="xsl:param" mode="label"&gt;
+   &lt;xsl:param name="lang" select="'en'" /&gt;
+   &lt;label for="stylesheetParam{@name}"&gt;
+      &lt;xsl:variable name="label" select="key('param-doc', @name)/doc:label" /&gt;
+      &lt;xsl:choose&gt;
+         &lt;xsl:when test="$label[lang($lang)]"&gt;&lt;xsl:value-of select="$label[lang($lang)]" /&gt;&lt;/xsl:when&gt;
+         &lt;xsl:when test="$label"&gt;&lt;xsl:value-of select="$label" /&gt;&lt;/xsl:when&gt;
+         &lt;xsl:otherwise&gt;&lt;xsl:value-of select="@name" /&gt;&lt;/xsl:otherwise&gt;
+      &lt;/xsl:choose&gt;
+   &lt;/label&gt;
+&lt;/xsl:template&gt;
+</my:example>
+   <h2 id="input-mode">The input template</h2>
+   <p>
+   The input template generates an input field based on a parameter definition and its documentation.  It takes one parameter:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>lang</my:name>
+         <my:default type="string">en</my:default>
+         <my:desc>the language to be used in the form fields</my:desc>
+      </my:var>
+   </my:vars>
+   <my:example>
+&lt;xsl:template match="xsl:param" mode="input"&gt;
+  &lt;xsl:param name="lang" select="'en'" /&gt;
+  ...
+&lt;/xsl:template&gt;
+</my:example>
+   <p>
+   The input template can be overridden within the importing stylesheet to create different types of input fields according to other sources of information about the parameters.  For example, if you wanted to have a parameter called 'text' be given a value using an HTML textarea, then you could create a template that matched that parameter and created a textarea for the user to complete:
+</p>
+   <my:example>
+&lt;xsl:template match="xsl:param[@name = 'text']" mode="input"&gt;
+   &lt;xsl:variable name="default" select="substring-before(substring-after(concat($param-separator, $stylesheetParams), concat($param-separator, @name, '=')), $param-separator)" /&gt;
+   &lt;textarea id="stylesheetParamtext" name="text"&gt;
+      &lt;xsl:value-of select="$default" /&gt;
+   &lt;/textarea&gt;
+&lt;/xsl:template&gt;
+</my:example>
+   <p>
+   The first thing the input template does is to set up a number of variables that contain information about the parameter:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>default</my:name>
+         <my:desc>the current value that the parameter is set to, retrieved from the $stylesheetParams global parameter</my:desc>
+         <my:defn>
+&lt;xsl:variable name="default" select="substring-before(substring-after(concat($param-separator, $stylesheetParams), concat($param-separator, @name, '=')), $param-separator)" /&gt;
+</my:defn>
+      </my:var>
+      <my:var>
+         <my:name>param-doc</my:name>
+         <my:desc>the documentation within the importing stylesheet that is associated with the parameter</my:desc>
+         <my:defn>
+&lt;xsl:variable name="param-doc" select="key('param-doc', @name)" /&gt;
+</my:defn>
+      </my:var>
+      <my:var>
+         <my:name>desc</my:name>
+         <my:desc>the description of the parameter given within the parameter documentation</my:desc>
+         <my:defn>
+&lt;xsl:variable name="desc" select="$param-doc/doc:desc" /&gt;
+</my:defn>
+      </my:var>
+      <my:var>
+         <my:name>choices</my:name>
+         <my:desc>the (mutually exclusive) values that the parameter can take, as defined within the parameter documentation</my:desc>
+         <my:defn>
+&lt;xsl:variable name="choices" select="$param-doc/doc:choice" /&gt;
+</my:defn>
+      </my:var>
+      <my:var>
+         <my:name>option</my:name>
+         <my:desc>the multiple values that the parameter can take, as defined within the parameter documentation</my:desc>
+         <my:defn>
+&lt;xsl:variable name="options" select="$param-doc/doc:option" /&gt;
+</my:defn>
+      </my:var>
+      <my:var>
+         <my:name>min</my:name>
+         <my:desc>the minimum value for the (numerical) parameter</my:desc>
+         <my:defn>
+&lt;xsl:variable name="min" select="$param-doc/doc:min" /&gt;
+</my:defn>
+      </my:var>
+      <my:var>
+         <my:name>max</my:name>
+         <my:desc>the maximum value for the (numerical) parameter</my:desc>
+         <my:defn>
+&lt;xsl:variable name="max" select="$param-doc/doc:max" /&gt;
+</my:defn>
+      </my:var>
+   </my:vars>
+   <p>
+   The template then has a big choose statement the generates different input fields depending on the type of parameter value that should be given.  The three types are:
+</p>
+   <ul>
+      <li>a drop down list of choices (if $choices are specified)</li>
+      <li>a set of checkboxes (if $options are specified)</li>
+      <li>a text input field (otherwise)</li>
+   </ul>
+   <my:example>
+&lt;xsl:choose&gt;
+   &lt;xsl:when test="$choices"&gt;
+      ...
+   &lt;/xsl:when&gt;
+   &lt;xsl:when test="$options"&gt;
+      ...
+   &lt;/xsl:when&gt;
+   &lt;xsl:otherwise&gt;
+      ...
+   &lt;/xsl:otherwise&gt;
+&lt;/xsl:choose&gt;
+</my:example>
+   <p>
+   When a number of mutually exclusive choices are specified, these are given within a drop-down list: an HTML 'select' element with a number of 'option' elements giving each option.  Each option has a value and a label - again these are specified by the parameter documentation.
+</p>
+   <my:example>
+&lt;select id="stylesheetParam{@name}" name="{@name}"&gt;
+   &lt;xsl:for-each select="$choices"&gt;
+      &lt;xsl:variable name="label"&gt;
+         &lt;xsl:choose&gt;
+            &lt;xsl:when test="doc:label[lang($lang)]"&gt;
+               &lt;xsl:value-of select="doc:label[lang($lang)]" /&gt;
+            &lt;/xsl:when&gt;
+            &lt;xsl:otherwise&gt;
+               &lt;xsl:value-of select="doc:label" /&gt;
+            &lt;/xsl:otherwise&gt;
+         &lt;/xsl:choose&gt;
+      &lt;/xsl:variable&gt;
+      &lt;option value="{doc:value}"&gt;
+         &lt;xsl:if test="string($label)"&gt;
+            &lt;xsl:attribute name="label"&gt;&lt;xsl:value-of select="$label" /&gt;&lt;/xsl:attribute&gt;
+         &lt;/xsl:if&gt;
+         &lt;xsl:if test="doc:value = $default"&gt;
+            &lt;xsl:attribute name="selected"&gt;selected&lt;/xsl:attribute&gt;
+         &lt;/xsl:if&gt;
+         &lt;xsl:choose&gt;
+            &lt;xsl:when test="string($label)"&gt;
+               &lt;xsl:value-of select="$label" /&gt;
+            &lt;/xsl:when&gt;
+            &lt;xsl:otherwise&gt;
+               &lt;xsl:value-of select="doc:value" /&gt;
+            &lt;/xsl:otherwise&gt;
+         &lt;/xsl:choose&gt;
+      &lt;/option&gt;
+   &lt;/xsl:for-each&gt;
+&lt;/select&gt;
+</my:example>
+   <p>
+   When a number of options can be specified, these are given as a number of labelled checkboxes, each of which can be checked and unchecked independently.  When a parameter takes this kind of value, the various checked options are combined using '::'s to give the parameter value that is passed to the stylesheet.
+</p>
+   <my:example>
+&lt;xsl:variable name="name" select="@name" /&gt;
+&lt;xsl:for-each select="$options"&gt;
+   &lt;input type="checkbox" name="{$name}" value="{doc:value}" id="stylesheetParam{$name}{doc:value}"&gt;
+      &lt;xsl:if test="contains(concat('::', $default, '::'), concat('::', doc:value, '::'))"&gt;
+         &lt;xsl:attribute name="checked"&gt;checked&lt;/xsl:attribute&gt;
+      &lt;/xsl:if&gt;
+   &lt;/input&gt;
+   &lt;label for="stylesheetParam{$name}{doc:value}"&gt;
+      &lt;xsl:choose&gt;
+         &lt;xsl:when test="doc:label[lang($lang)]"&gt;
+            &lt;xsl:value-of select="doc:label[lang($lang)]" /&gt;
+         &lt;/xsl:when&gt;
+         &lt;xsl:when test="doc:label"&gt;
+            &lt;xsl:value-of select="doc:label" /&gt;
+         &lt;/xsl:when&gt;
+         &lt;xsl:otherwise&gt;
+            &lt;xsl:value-of select="doc:value" /&gt;
+         &lt;/xsl:otherwise&gt;
+      &lt;/xsl:choose&gt;
+   &lt;/label&gt;
+&lt;/xsl:for-each&gt;
+</my:example>
+   <p>
+   Finally, other types of parameters can be specified through a text input field.  If a minimum/maximum for the value is given, then javascript is added to check that the entered value fulfils the conditions placed on it.
+</p>
+   <my:example>
+&lt;input id="stylesheetParam{@name}" name="{@name}"&gt;
+   &lt;xsl:if test="$default"&gt;
+      &lt;xsl:attribute name="value"&gt;&lt;xsl:value-of select="$default" /&gt;&lt;/xsl:attribute&gt;
+   &lt;/xsl:if&gt;
+   &lt;xsl:if test="$min or $max"&gt;
+      &lt;xsl:attribute name="onchange"&gt;
+         &lt;xsl:choose&gt;
+            &lt;xsl:when test="$min and $max"&gt;
+               javascript:
+                  if (this.value &amp;lt; &lt;xsl:value-of select="$min" /&gt; | this.value &gt; &lt;xsl:value-of select="$max" /&gt;) {
+                     alert("&lt;xsl:value-of select="@name" /&gt; must be between &lt;xsl:value-of select="$min" /&gt; and &lt;xsl:value-of select="$max" /&gt;")
+                  }
+            &lt;/xsl:when&gt;
+            &lt;xsl:when test="$min"&gt;
+               javascript:
+                  if (this.value &amp;lt; &lt;xsl:value-of select="$min" /&gt;) {
+                     alert("&lt;xsl:value-of select="@name" /&gt; must be greater than &lt;xsl:value-of select="$min" /&gt;")
+                  }
+            &lt;/xsl:when&gt;
+            &lt;xsl:otherwise&gt;
+               javascript:
+                  if (this.value &gt; &lt;xsl:value-of select="$max" /&gt;) {
+                     alert("&lt;xsl:value-of select="@name" /&gt; must be less than &lt;xsl:value-of select="$max" /&gt;")
+                  }
+            &lt;/xsl:otherwise&gt;
+         &lt;/xsl:choose&gt;
+      &lt;/xsl:attribute&gt;
+   &lt;/xsl:if&gt;
+&lt;/input&gt;
+</my:example>
+   <h2 id="insert-selectParameters-button">The 'insert-selectParameters-button' template</h2>
+   <p>
+   The 'insert-selectParameters-button' template inserts a button into the output tree that is used to submit the form.  It takes one parameter:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>lang</my:name>
+         <my:default type="string">en</my:default>
+         <my:desc>the language to be used in the form fields</my:desc>
+      </my:var>
+   </my:vars>
+   <p>
+   The template simply inserts an HTML button element with the text 'change'.  The template can be overridden within the importing stylesheet to give a different button for making the change to the form, such as an icon or a button with different text, a different look and feel, or other options.
+</p>
+   <my:example>
+&lt;xsl:template name="insert-selectParameters-button"&gt;
+   &lt;xsl:param name="lang" select="'en'" /&gt;
+   &lt;button type="submit"&gt;change&lt;/button&gt;
+&lt;/xsl:template&gt;
+</my:example>
+   <h2>More Information</h2>
+   <my:links>
+      <my:link href="selectParameters.xml">Instructions</my:link>
+      <my:link href="selectParameters-example.xml">A Simple Example</my:link>
+      <my:link href="paramDoc.xml">Parameter Documentation</my:link>
+   </my:links>
+</my:doc>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../resources/style/page.xsl"?><my:doc xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/xslt/processing.xml">
+         <dc:title>Jeni's XSLT Pages: General Processing</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-07"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2001-01-16"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>General Processing</h1>
+   <p>
+	This page will hold information about how stylesheets generally work, including
+	information on the built-in templates.  For now, here are some posts:
+</p>
+   <my:links>
+      <my:link href="http://sources.redhat.com/ml/xsl-list/2000-07/msg01140.html">XSLT is
+	XML</my:link>
+      <my:link href="http://sources.redhat.com/ml/xsl-list/2000-07/msg00816.html">Using DTD
+	Information</my:link>
+      <my:link href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00249.html">XSLT Can Produce Javascript</my:link>
+   </my:links>
+   <h2 id="links">Links</h2>
+   <my:links>
+      <my:link href="http://www.w3.org/TR/xslt#rules">XSLT Recommendation: Template Rules</my:link>
+      <my:link href="http://www.w3.org/TR/xslt#extension-element">XSLT Recommendation: Extension Elements</my:link>
+      <my:link href="http://www.w3.org/TR/xslt#fallback">XSLT Recommendation: Fallback</my:link>
+      <my:link href="http://www.w3.org/TR/xslt#strip">XSLT Recommendation: Whitespace Stripping</my:link>
+   </my:links>
+</my:doc>

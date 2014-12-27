@@ -1,0 +1,850 @@
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix prv: <http://purl.org/net/provenance/ns#> .
+@prefix prvTypes: <http://purl.org/net/provenance/types#> .
+@prefix http: <http://www.w3.org/2006/http#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@base <http://www.jenitennison.com/log/data.gov.uk/statistics/> .
+
+# Ontologies
+
+<http://statistics.data.gov.uk/def/electoral-geography> a void:Dataset ;
+  rdfs:label "Electoral Geography" ;
+  void:exampleResource <http://statistics.data.gov.uk/def/electoral-geography/region> ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/def/electoral-geography/.+" ;
+  void:vocabulary <http://www.w3.org/2000/01/rdf-schema#> ;
+  void:vocabulary <http://www.w3.org/2004/02/skos/core#> ;
+  void:subset [
+    void:dataDump <def/electoral-geography.ttl> ;
+  ] .
+
+<def/electoral-geography.ttl>
+  rdfs:label "electoral-geography.ttl" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-10-30T19:39:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+  ] .
+
+<http://statistics.data.gov.uk/def/administrative-geography> a void:Dataset ;
+  rdfs:label "Administrative Geography" ;
+  void:exampleResource <http://statistics.data.gov.uk/def/administrative-geography/Country> ;
+  void:exampleResource <http://statistics.data.gov.uk/def/administrative-geography/region> ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/def/administrative-geography/.+" ;
+  void:vocabulary <http://www.w3.org/2000/01/rdf-schema#> ;
+  void:vocabulary <http://www.w3.org/2004/02/skos/core#> ;
+  void:subset [
+    void:dataDump <def/administrative-geography.ttl> ;
+  ] .
+
+<def/administrative-geography.ttl>
+  rdfs:label "administrative-geography.ttl" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-10-30T19:39:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+  ] .
+
+# Datasets
+
+<http://statistics.data.gov.uk/set/local-authority> a void:Dataset ;
+  rdfs:label "Local Authorities" ;
+  dct:title "Local Authorities" ;
+  foaf:homepage <http://statistics.data.gov.uk/doc/local-authority> ;
+  void:exampleResource <http://statistics.data.gov.uk/id/local-authority/40UC> ;
+  void:exampleResource <http://statistics.data.gov.uk/id/local-authority?name=City%20of%20London> ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/id/local-authority\\?name=.+" ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/id/local-authority/[0-9]{2}[A-Z]{0,2}" ;
+  void:vocabulary <http://www.w3.org/2000/01/rdf-schema#> ;
+  void:vocabulary <http://www.w3.org/2004/02/skos/core#> ;
+  void:vocabulary <http://statistics.data.gov.uk/def/administrative-geography> ;
+  void:subset [
+    void:dataDump <data/local-authorities.rdf> ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/administrative-geography/coverage> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/local-authority> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/local-authority-district> ;
+    ] ;
+  ] .
+
+<http://statistics.data.gov.uk/set/eer> a void:Dataset ;
+  rdfs:label "European Electoral Regions" ;
+  dct:title "European Electoral Regions" ;
+  foaf:homepage <http://statistics.data.gov.uk/doc/eer> ;
+  void:exampleResource <http://statistics.data.gov.uk/id/eer/8> ;
+  void:exampleResource <http://statistics.data.gov.uk/id/eer?name=Scotland> ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/id/eer\\?name=.+" ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/id/eer/[0-9]{2}" ;
+  void:vocabulary <http://www.w3.org/2000/01/rdf-schema#> ;
+  void:vocabulary <http://www.w3.org/2004/02/skos/core#> ;
+  void:vocabulary <http://statistics.data.gov.uk/def/electoral-geography> ;
+  void:vocabulary <http://data.ordnancesurvey.co.uk/ontology/admingeo/> ;
+  void:vocabulary <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/> ;
+  void:subset [
+    void:dataDump <data/EER08.rdf> ;
+  ] ;
+  void:subset [
+    void:dataDump <data/europeanregions-EER.rdf> ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://www.w3.org/2002/07/owl#sameAs> ;
+      void:target <http://statistics.data.gov.uk/id/EER> ;
+      void:target <http://data.ordnancesurvey.co.uk/> ;
+    ] ;
+  ] .
+  
+
+<http://statistics.data.gov.uk/set/parliamentary-constituency> a void:Dataset ;
+  rdfs:label "Parliamentary Constituencies" ;
+  rdfs:label "Westminster Constituencies" ;
+  dct:title "Parliamentary Constituencies" ;
+  skos:altLabel "Westminster Constituencies" ;
+  foaf:homepage <http://statistics.data.gov.uk/doc/parliamentary-constituency> ;
+  void:exampleResource <http://statistics.data.gov.uk/id/parliamentary-constituency/30> ;
+  void:exampleResource <http://statistics.data.gov.uk/id/parliamentary-constituency?name=Birmingham%2C%20Hodge%20Hill> ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/id/parliamentary-constituency\\?name=.+" ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/id/parliamentary-constituency/[0-9]{3}" ;
+  void:vocabulary <http://www.w3.org/2000/01/rdf-schema#> ;
+  void:vocabulary <http://www.w3.org/2004/02/skos/core#> ;
+  void:vocabulary <http://statistics.data.gov.uk/def/electoral-geography> ;
+  void:vocabulary <http://data.ordnancesurvey.co.uk/ontology/admingeo/> ;
+  void:vocabulary <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/> ;
+  void:subset [
+    void:dataDump <data/PCON08.rdf> ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/electoral-geography/eer> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/parliamentary-constituency> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/eer> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/containedBy> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/parliamentary-constituency> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/eer> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/electoral-geography/parliamentary-constituency> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/eer> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/parliamentary-constituency> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/electoral-geography/constituency> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/eer> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/parliamentary-constituency> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/eer> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/parliamentary-constituency> ;
+    ] ;
+  ] .
+
+<http://statistics.data.gov.uk/set/country> a void:Dataset ;
+  rdfs:label "Countries" ;
+  dct:title "Countries" ;
+  foaf:homepage <http://statistics.data.gov.uk/doc/country> ;
+  void:exampleResource <http://statistics.data.gov.uk/id/country/921> ;
+  void:exampleResource <http://statistics.data.gov.uk/id/country?name=Northern%20Ireland> ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/id/country\\?name=.+" ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/id/country/[0-9]{3}" ;
+  void:vocabulary <http://www.w3.org/2000/01/rdf-schema#> ;
+  void:vocabulary <http://www.w3.org/2004/02/skos/core#> ;
+  void:vocabulary <http://statistics.data.gov.uk/def/administrative-geography> ;
+  void:vocabulary <http://data.ordnancesurvey.co.uk/ontology/admingeo/> ;
+  void:vocabulary <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/> ;
+  void:subset [
+    void:dataDump <data/CTRY08.rdf> ;
+  ] .
+
+<http://statistics.data.gov.uk/set/government-office-region> a void:Dataset ;
+  rdfs:label "Government Office Regions" ;
+  dct:title "Government Office Regions" ;
+  foaf:homepage <http://statistics.data.gov.uk/doc/government-office-region> ;
+  void:exampleResource <http://statistics.data.gov.uk/id/government-office-region/H> ;
+  void:exampleResource <http://statistics.data.gov.uk/id/government-office-region?name=North%20West> ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/id/government-office-region\\?name=.+" ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/id/government-office-region/[A-Z]" ;
+  void:vocabulary <http://www.w3.org/2000/01/rdf-schema#> ;
+  void:vocabulary <http://www.w3.org/2004/02/skos/core#> ;
+  void:vocabulary <http://statistics.data.gov.uk/def/administrative-geography> ;
+  void:vocabulary <http://data.ordnancesurvey.co.uk/ontology/admingeo/> ;
+  void:vocabulary <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/> ;
+  void:subset [
+    void:dataDump <data/GOR08.rdf> ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/administrative-geography/country> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/government-office-region> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/country> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/containedBy> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/government-office-region> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/country> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/administrative-geography/government-office-region> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/country> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/government-office-region> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/country> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/government-office-region> ;
+    ] ;
+  ] .
+
+<http://statistics.data.gov.uk/set/county> a void:Dataset ;
+  rdfs:label "Counties" ;
+  dct:title "Counties" ;
+  foaf:homepage <http://statistics.data.gov.uk/doc/county> ;
+  void:exampleResource <http://statistics.data.gov.uk/id/county/09> ;
+  void:exampleResource <http://statistics.data.gov.uk/id/county?name=Tyne%20and%20Wear> ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/id/county\\?name=.+" ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/id/county/[0-9]{2}" ;
+  void:vocabulary <http://www.w3.org/2000/01/rdf-schema#> ;
+  void:vocabulary <http://www.w3.org/2004/02/skos/core#> ;
+  void:vocabulary <http://statistics.data.gov.uk/def/administrative-geography> ;
+  void:vocabulary <http://data.ordnancesurvey.co.uk/ontology/admingeo/> ;
+  void:vocabulary <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/> ;
+  void:subset [
+    void:dataDump <data/CTY08.rdf> ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/administrative-geography/country> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/county> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/country> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/containedBy> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/county> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/country> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/administrative-geography/county> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/country> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/county> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/country> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/county> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/administrative-geography/government-office-region> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/county> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/government-office-region> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/containedBy> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/county> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/government-office-region> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/administrative-geography/county> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/government-office-region> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/county> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/government-office-region> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/county> ;
+    ] ;
+  ] ;
+  void:subset [
+    void:dataDump <data/admingeo-CTY.rdf> ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://www.w3.org/2002/07/owl#sameAs> ;
+      void:target <http://statistics.data.gov.uk/id/county> ;
+      void:target <http://data.ordnancesurvey.co.uk/> ;
+    ] ;
+  ] .
+
+<http://statistics.data.gov.uk/set/local-authority-district> a void:Dataset ;
+  rdfs:label "Local Authority Districts" ;
+  dct:title "Local Authority Districts" ;
+  foaf:homepage <http://statistics.data.gov.uk/doc/local-authority-district> ;
+  void:exampleResource <http://statistics.data.gov.uk/id/local-authority-district/37UC> ;
+  void:exampleResource <http://statistics.data.gov.uk/id/local-authority-district?name=Scottish%20Borders> ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/id/local-authority-district\\?name=.+" ;
+  void:uriRegexPattern "http://statistics.data.gov.uk/id/local-authority-district/[0-9]{2}[A-Z]{1,2}" ;
+  void:vocabulary <http://www.w3.org/2000/01/rdf-schema#> ;
+  void:vocabulary <http://www.w3.org/2004/02/skos/core#> ;
+  void:vocabulary <http://statistics.data.gov.uk/def/administrative-geography> ;
+  void:vocabulary <http://data.ordnancesurvey.co.uk/ontology/admingeo/> ;
+  void:vocabulary <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/> ;
+  void:subset [
+    void:dataDump <data/LAD08.rdf> ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/administrative-geography/country> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/local-authority-district> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/country> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/containedBy> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/local-authority-district> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/country> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/administrative-geography/local-authority-district> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/country> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/local-authority-district> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/country> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/local-authority-district> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/administrative-geography/government-office-region> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/local-authority-district> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/government-office-region> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/containedBy> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/local-authority-district> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/government-office-region> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/administrative-geography/local-authority-district> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/government-office-region> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/local-authority-district> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/government-office-region> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/local-authority-district> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/administrative-geography/county> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/local-authority-district> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/county> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/containedBy> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/local-authority-district> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/county> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://statistics.data.gov.uk/def/administrative-geography/local-authority-district> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/county> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/local-authority-district> ;
+    ] ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains> ;
+      void:subjectsTarget <http://statistics.data.gov.uk/id/county> ;
+      void:objectsTarget <http://statistics.data.gov.uk/id/local-authority-district> ;
+    ] ;
+  ] ;
+  void:subset [
+    void:dataDump <data/admingeo-LAD.rdf> ;
+    void:subset [
+      a void:Linkset ;
+      void:linkPredicate <http://www.w3.org/2002/07/owl#sameAs> ;
+      void:target <http://statistics.data.gov.uk/id/local-authority-district> ;
+      void:target <http://data.ordnancesurvey.co.uk/> ;
+    ] ;
+  ] .
+
+# RDF data
+
+<data/local-authorities.rdf>
+  rdfs:label "local-authorities.rdf" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T20:48:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+    prv:usedData <data/admingeo-CTY.rdf> ;
+    prv:usedData <data/admingeo-LAD.rdf> ;
+    prv:usedData <data/LAD08.rdf> ;
+    prv:usedData <data/CTY08.rdf> ;
+    prv:usedGuideline <scripts/local-authorities.xsl> ;
+  ] .
+
+<data/admingeo-CTY.rdf>
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  rdfs:label "admingeo-CTY.rdf" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T20:58:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+    prv:usedData <source/regions/admingeo.rdf> ;
+    prv:usedGuideline <scripts/admingeo-CTY.xsl> ;
+  ] .
+
+<data/admingeo-LAD.rdf>
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  rdfs:label "admingeo-LAD.rdf" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T20:51:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+    prv:usedData <source/regions/admingeo.rdf> ;
+    prv:usedGuideline <scripts/admingeo-LAD.xsl> ;
+  ] .
+
+<data/europeanregions-EER.rdf>
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  rdfs:label "europeanregions-EER.rdf" .
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T20:51:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+    prv:usedData <source/regions/europeanregions.rdf> ;
+    prv:usedGuideline <scripts/europeanregions-EER.xsl> ;
+  ] ;
+
+<data/EER08.rdf>
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  rdfs:label "EER08.rdf" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T20:50:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+    prv:usedData <source/SNAC2008_EXCEL/PCON08_EER08_UK_LU.csv> ;
+    prv:usedGuideline <scripts/EER08.xsl> ;
+  ] .
+
+<data/PCON08.rdf>
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  rdfs:label "PCON08.rdf" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T21:10:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+    prv:usedData <source/SNAC2008_EXCEL/PCON08_EER08_UK_LU.csv> ;
+    prv:usedGuideline <scripts/PCON08.xsl> ;
+  ] .
+
+<data/CTRY08.rdf>
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  rdfs:label "CTRY08.rdf" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T20:50:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+    prv:usedData <source/SNAC2008_EXCEL/CTRY08_GOR08_CTY08_OTH_UK_LU.csv> ;
+    prv:usedGuideline <scripts/CTRY08.xsl> ;
+  ] .
+
+<data/GOR08.rdf>
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  rdfs:label "GOR08.rdf" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T20:50:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+    prv:usedData <source/SNAC2008_EXCEL/CTRY08_GOR08_CTY08_OTH_UK_LU.csv> ;
+    prv:usedGuideline <scripts/GOR08.xsl> ;
+  ] .
+
+<data/CTY08.rdf>
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  rdfs:label "CTY08.rdf" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T20:50:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+    prv:usedData <source/SNAC2008_EXCEL/CTRY08_GOR08_CTY08_OTH_UK_LU.csv> ;
+    prv:usedGuideline <cache/CTY08.xsl> ;
+  ] .
+
+<data/LAD08.rdf>
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  rdfs:label "LAD08.rdf" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T20:50:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+    prv:usedData <source/SNAC2008_EXCEL/CTRY08_GOR08_CTY08_OTH_UK_LU.csv> ;
+    prv:usedGuideline <scripts/LAD08.xsl> ;
+  ] .
+
+# Scripts
+
+<scripts/local-authorities.xsl>
+  a prv:CreationGuideline ;
+  dct:format <http://www.iana.org/assignments/media-types/application/xslt+xml> ;
+  rdfs:label "local-authorities.xsl" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T20:46:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+  ] .
+
+<scripts/admingeo-CTY.xsl>
+  a prv:CreationGuideline ;
+  dct:format <http://www.iana.org/assignments/media-types/application/xslt+xml> ;
+  rdfs:label "admingeo-CTY.xsl" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T20:58:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+  ] .
+
+<scripts/admingeo-LAD.xsl>
+  a prv:CreationGuideline ;
+  dct:format <http://www.iana.org/assignments/media-types/application/xslt+xml> ;
+  rdfs:label "admingeo-LAD.xsl" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-10-30T22:45:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+  ] .
+
+<scripts/europeanregions-EER.xsl>
+  a prv:CreationGuideline ;
+  dct:format <http://www.iana.org/assignments/media-types/application/xslt+xml> ;
+  rdfs:label "europeanregions-EER.xsl" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-10-30T22:45:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+  ] .
+
+<scripts/EER08.xsl>
+  a prv:CreationGuideline ;
+  dct:format <http://www.iana.org/assignments/media-types/application/xslt+xml> ;
+  rdfs:label "EER08.xsl" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-10-30T21:38:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+  ] .
+
+<scripts/PCON08.xsl>
+  a prv:CreationGuideline ;
+  dct:format <http://www.iana.org/assignments/media-types/application/xslt+xml> ;
+  rdfs:label "PCON08.xsl" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T21:10:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+  ] .
+
+<scripts/CTRY08.xsl>
+  a prv:CreationGuideline ;
+  dct:format <http://www.iana.org/assignments/media-types/application/xslt+xml> ;
+  rdfs:label "CTRY08.xsl" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-10-30T21:16:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+  ] .
+
+<scripts/GOR08.xsl>
+  a prv:CreationGuideline ;
+  dct:format <http://www.iana.org/assignments/media-types/application/xslt+xml> ;
+  rdfs:label "GOR08.xsl" .
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-10-30T20:54:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+  ] .
+
+<scripts/CTY08.xsl>
+  a prv:CreationGuideline ;
+  dct:format <http://www.iana.org/assignments/media-types/application/xslt+xml> ;
+  rdfs:label "CTY08.xsl" .
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-10-30T21:17:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+  ] .
+
+<scripts/LAD08.xsl>
+  a prv:CreationGuideline ;
+  dct:format <http://www.iana.org/assignments/media-types/application/xslt+xml> ;
+  rdfs:label "LAD08.xsl" .
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T20:40:00Z"^^xsd:dateTime ;
+    prv:performedBy _:Jeni ;
+  ] .
+
+# Source data
+
+<source/regions.zip>
+  rdfs:label "regions.zip" ;
+  dct:format <http://www.iana.org/assignments/media-types/application/zip> ;
+  dct:hasPart <source/regions/admingeo.owl> ;
+  dct:hasPart <source/regions/admingeo.rdf> ;
+  dct:hasPart <source/regions/countyelectoraldivisions.rdf> ;
+  dct:hasPart <source/regions/europeanregions.rdf> ;
+  dct:hasPart <source/regions/greaterlondonconstituencies.rdf> ;
+  dct:hasPart <source/regions/scotlandandwales.rdf> ;
+  dct:hasPart <source/regions/spatialrelations.owl> ;
+  dct:hasPart <source/regions/topo1.rdf> ;
+  dct:hasPart <source/regions/topo2.rdf> ;
+  dct:hasPart <source/regions/topo3.rdf> ;
+  dct:hasPart <source/regions/topo4.rdf> ;
+  dct:hasPart <source/regions/topo5.rdf> ;
+  dct:hasPart <source/regions/wardsandunitaryelectoraldivision.rdf> ;
+  dct:hasPart <source/regions/westministerconstinuencies.rdf> ;
+  prv:containedBy [
+    rdfs:label "Mail message sent by John Goodwin" ;
+    prv:retrievedBy [
+      prv:performedAt "2009-10-20T18:09:28Z"^^xsd:dateTime ;
+    ]
+  ] .
+
+<source/regions/admingeo.owl>
+  rdfs:label "admingeo.owl" ;
+  prv:containedBy <source/regions.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> .
+
+<source/regions/admingeo.rdf>
+  rdfs:label "admingeo.rdf" ;
+  prv:containedBy <source/regions.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> .
+
+<source/regions/countyelectoraldivisions.rdf>
+  rdfs:label "countyelectoraldivisions.rdf" ;
+  prv:containedBy <source/regions.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> .
+
+<source/regions/europeanregions.rdf>
+  rdfs:label "europeanregions.rdf" ;
+  prv:containedBy <source/regions.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> .
+
+<source/regions/greaterlondonconstituencies.rdf>
+  rdfs:label "greaterlondonconstituencies.rdf" ;
+  prv:containedBy <source/regions.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> .
+
+<source/regions/scotlandandwales.rdf>
+  rdfs:label "scotlandandwales.rdf" ;
+  prv:containedBy <source/regions.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> .
+
+<source/regions/spatialrelations.owl>
+  rdfs:label "spatialrelations.owl" ;
+  prv:containedBy <source/regions.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> .
+
+<source/regions/topo1.rdf>
+  rdfs:label "topo1.rdf" ;
+  prv:containedBy <source/regions.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> .
+
+<source/regions/topo2.rdf>
+  rdfs:label "topo2.rdf" ;
+  prv:containedBy <source/regions.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> .
+
+<source/regions/topo3.rdf>
+  rdfs:label "topo3.rdf" ;
+  prv:containedBy <source/regions.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> .
+
+<source/regions/topo4.rdf>
+  rdfs:label "topo4.rdf" ;
+  prv:containedBy <source/regions.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> .
+
+<source/regions/topo5.rdf>
+  rdfs:label "topo5.rdf" ;
+  prv:containedBy <source/regions.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> .
+
+<source/regions/wardsandunitaryelectoraldivision.rdf>
+  rdfs:label "wardsandunitaryelectoraldivision.rdf" ;
+  prv:containedBy <source/regions.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> .
+
+<source/regions/westministerconstinuencies.rdf>
+  rdfs:label "westministerconstinuencies.rdf" ;
+  prv:containedBy <source/regions.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/rdf+xml> .
+
+
+
+<source/snac-excel-documents.zip>
+  rdfs:label "snac-excel-documents.zip" ;
+  dct:format <http://www.iana.org/assignments/media-types/application/zip> ;
+  dct:hasPart <source/SNAC2008_EXCEL.xls> ;
+  prv:containedBy [
+    prv:retrievedBy [ 
+      a prvTypes:HTTPBasedDataAccess ;
+      prv:performedAt "2009-10-25T21:30:00Z"^^xsd:dateTime ;
+      prvTypes:exchangedHTTPMessage [
+        a http:GetRequest ;
+        http:requestURI "http://www.ons.gov.uk/about-statistics/geography/products/geog-products-area/snac/snac-excel-documents.zip"^^xsd:anyURI .
+      ] ;
+    ] ;
+  ] .
+
+<source/SNAC2008_EXCEL.xls>
+  rdfs:label "SNAC2008_EXCEL.xls" ;
+  prv:containedBy <source/snac-excel-documents.zip> ;
+  dct:format <http://www.iana.org/assignments/media-types/application/vnd.ms-excel> .
+
+<source/SNAC2008_EXCEL/CTRY08_GOR08_CTY08_OTH_UK_LU.csv>
+  rdfs:label "CTRY08_GOR08_CTY08_OTH_UK_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+<source/SNAC2008_EXCEL/LAD08_LEA08_EW_LU.csv>
+  rdfs:label "LAD08_LEA08_EW_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+<source/SNAC2008_EXCEL/NAWC08_NAWER08_WA_LU.csv>
+  rdfs:label "NAWC08_NAWER08_WA_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+<source/SNAC2008_EXCEL/NUTS08_LAU07_WD07_EW_LU.csv>
+  rdfs:label "NUTS08_LAU07_WD07_EW_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+<source/SNAC2008_EXCEL/PAR08_WD08_EW_LU.csv>
+  rdfs:label "PAR08_WD08_EW_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+<source/SNAC2008_EXCEL/PCO08_SHA08_PSHA08_EN_LU.csv>
+  rdfs:label "PCO08_SHA08_PSHA08_EN_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+<source/SNAC2008_EXCEL/PCON08_EER08_UK_LU.csv>
+  rdfs:label "PCON08_EER08_UK_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+<source/SNAC2008_EXCEL/SPC08_SPR08_SC_LU.csv>
+  rdfs:label "SPC08_SPR08_SC_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+<source/SNAC2008_EXCEL/UA08_NAWER08_WA_LU.csv>
+  rdfs:label "UA08_NAWER08_WA_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+<source/SNAC2008_EXCEL/UA08_WD08_NARCA08_WA_LU.csv>
+  rdfs:label "UA08_WD08_NARCA08_WA_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+<source/SNAC2008_EXCEL/WD08_LAD08_LLSC08_EW_LU.csv>
+  rdfs:label "WD08_LAD08_LLSC08_EW_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+<source/SNAC2008_EXCEL/WD08_PCO08_EW_LU.csv>
+  rdfs:label "WD08_PCO08_EW_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+<source/SNAC2008_EXCEL/WD08_PCON08_UK_LU.csv>
+  rdfs:label "WD08_PCON08_UK_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+<source/SNAC2008_EXCEL/WD08_REGD08_EW_LU.csv>
+  rdfs:label "WD08_REGD08_EW_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+<source/SNAC2008_EXCEL/WDSTB03_WDCAS03_WDSTL03_EW_LU.csv>
+  rdfs:label "WDSTB03_WDCAS03_WDSTL03_EW_LU.csv" ;
+  prv:containedBy <source/SNAC2008_EXCEL.xls> ;
+  dct:format <http://www.iana.org/assignments/media-types/text/csv> .
+
+# About this log
+
+_:Jeni a foaf:Person ;
+  foaf:name "Jeni Tennison" ;
+  foaf:homepage <http://www.jenitennison.com/> .
+
+<http://www.jenitennison.com/log/> a void:Dataset ;
+  dct:title "Jeni's Activity Log" ;
+  foaf:homepage <http://www.jenitennison.com/log/> ;
+  void:uriRegexPattern "http://www.jenitennison.com/log/(.+)" ;
+  void:subset <http://www.jenitennison.com/log/data.gov.uk/> .
+
+<http://www.jenitennison.com/log/data.gov.uk/> a void:Dataset ;
+  dct:title "Jeni's Activity Log for data.gov.uk'" ;
+  foaf:homepage <http://www.jenitennison.com/log/data.gov.uk/> ;
+  void:uriRegexPattern "http://www.jenitennison.com/log/data.gov.uk/(.+)" ;
+  void:subset <> .
+
+<> a void:Dataset ;
+  dct:title "Jeni's log for statistics.data.gov.uk" ;
+  foaf:homepage <> ;
+  void:exampleResource <log.ttl> ;
+  void:uriRegexPattern "http://www.jenitennison.com/log/data.gov.uk/statistics/(.+)" ;
+  void:subset [
+    void:dataDump <log.ttl> ;
+  ] .
+
+<log.ttl> a prv:Document ;
+  dct:format <http://www.iana.org/assignments/media-types/text/turtle> ;
+  rdfs:label "log.ttl" ;
+  prv:createdBy [
+    a prv:DataCreation ;
+    prv:performedAt "2009-11-06T20:11:00"^^xsd:dateTime ;
+    prv:performedBy _:Jeni 
+  ] .
+
+# About mime types
+
+<http://www.iana.org/assignments/media-types/application/zip>
+  rdf:value "application/zip" ;
+  rdfs:label "Zip" .
+
+<http://www.iana.org/assignments/media-types/text/csv>
+  rdf:value "text/csv" ;
+  rdfs:label "CSV" .
+
+<http://www.iana.org/assignments/media-types/application/vnd.ms-excel>
+  rdf:value "application/vnd.ms-excel" ;
+  rdfs:label "Excel" .
+
+<http://www.iana.org/assignments/media-types/application/xslt+xml>
+  rdf:value "application/xslt+xml" ;
+  rdfs:label "XSLT" .
+
+<http://www.iana.org/assignments/media-types/application/rdf+xml>
+  rdf:value "application/rdf+xml" ;
+  rdfs:label "RDF/XML" .
+
+<http://www.iana.org/assignments/media-types/text/turtle>
+  rdf:value "text/turtle" ;
+  rdfs:label "Turtle" .

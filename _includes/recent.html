@@ -1,0 +1,16 @@
+<div>
+  <h2>Recent posts</h2>
+
+	<ul>
+	    {% for post in site.posts limit:5 %}
+	      <li>
+	      	<a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}<br><small>{{ post.date | date: "%b %-d, %Y" }}</small></a>
+	      </li>
+	    {% endfor %}
+	</ul>
+	<p class="pull-right">
+		subscribe <a href="{{ "/blog/feed.xml" | prepend: site.baseurl }}">via RSS</a>
+	</p>
+</div>
+
+

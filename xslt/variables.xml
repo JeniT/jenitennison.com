@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../resources/style/page.xsl"?><my:doc xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/xslt/variables.xml">
+         <dc:title>Jeni's XSLT Pages: Variables and Parameters</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-07"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2001-01-16"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>Variables and Parameters</h1>
+   <p>
+	This page will hold information about how to use variables and parameters, including
+	using variables to hold nodes and result tree fragments, and using parameters to pass
+	information into the stylesheet and to use templates like functions.  For now,
+	here are some posts:
+</p>
+   <my:links>
+      <my:link href="http://sources.redhat.com/ml/xsl-list/2000-07/msg00781.html">Using
+	Content vs. Using Select Attribute</my:link>
+      <my:link href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00114.html">Using Content vs. Using Select Attribute (Again)</my:link>
+      <my:link href="http://sources.redhat.com/ml/xsl-list/2000-07/msg00815.html">Passing
+	Parameters to Templates</my:link>
+      <my:link href="http://www.biglist.com/lists/xsl-list/archives/200012/msg00395.html">Testing Node Names against Variable Values</my:link>
+      <my:link href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00249.html">You Can't Use Javascript to Set XSLT Variables</my:link>
+   </my:links>
+   <h2 id="links">Links</h2>
+   <my:links>
+      <my:link href="http://www.w3.org/TR/xslt#variables">XSLT Recommendation: Variables and Parameters</my:link>
+   </my:links>
+</my:doc>

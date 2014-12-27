@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="http://www.jenitennison.com/datatypes" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="datatypes">
+      <optional>
+        <attribute name="ns">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="define"/>
+          <ref name="datatype"/>
+          <ref name="cast"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </start>
+  <define name="define">
+    <element name="define">
+      <attribute name="name">
+        <data type="QName"/>
+      </attribute>
+      <oneOrMore>
+        <ref name="regex"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="datatype">
+    <element name="datatype">
+      <attribute name="name">
+        <data type="QName"/>
+      </attribute>
+      <optional>
+        <attribute name="ns">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="supertype"/>
+      </optional>
+      <optional>
+        <ref name="parse"/>
+      </optional>
+      <optional>
+        <ref name="params"/>
+      </optional>
+      <optional>
+        <ref name="validate"/>
+      </optional>
+      <optional>
+        <ref name="normalize"/>
+      </optional>
+      <optional>
+        <ref name="compare"/>
+      </optional>
+    </element>
+  </define>
+  <define name="supertype">
+    <element name="supertype">
+      <attribute name="name">
+        <data type="QName"/>
+      </attribute>
+      <optional>
+        <attribute name="ns">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <element name="params">
+          <oneOrMore>
+            <element name="param">
+              <attribute name="name">
+                <data type="NCName"/>
+              </attribute>
+              <text/>
+            </element>
+          </oneOrMore>
+        </element>
+      </optional>
+      <optional>
+        <element name="cast">
+          <ref name="code"/>
+        </element>
+      </optional>
+    </element>
+  </define>
+  <define name="parse">
+    <element name="parse">
+      <optional>
+        <attribute name="whitespace">
+          <choice>
+            <value>preserve</value>
+            <value>replace</value>
+            <value>collapse</value>
+          </choice>
+        </attribute>
+      </optional>
+      <oneOrMore>
+        <ref name="regex"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="params">
+    <element name="params">
+      <oneOrMore>
+        <element name="param">
+          <attribute name="name">
+            <data type="NCName"/>
+          </attribute>
+          <optional>
+            <attribute name="test">
+              <choice>
+                <value>eq</value>
+                <value>ne</value>
+                <value>lt</value>
+                <value>le</value>
+                <value>gt</value>
+                <value>ge</value>
+              </choice>
+            </attribute>
+          </optional>
+          <optional>
+            <attribute name="select"/>
+          </optional>
+          <optional>
+            <attribute name="as">
+              <choice>
+                <value>string</value>
+                <value>number</value>
+              </choice>
+            </attribute>
+          </optional>
+        </element>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="validate">
+    <element name="validate">
+      <choice>
+        <optional>
+          <attribute name="as">
+            <data type="QName"/>
+          </attribute>
+        </optional>
+        <zeroOrMore>
+          <ref name="test"/>
+        </zeroOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="test">
+    <element>
+      <choice>
+        <name>report</name>
+        <name>assert</name>
+      </choice>
+      <attribute name="test"/>
+      <ref name="code"/>
+    </element>
+  </define>
+  <define name="normalize">
+    <element name="normalize">
+      <choice>
+        <optional>
+          <attribute name="as">
+            <data type="QName"/>
+          </attribute>
+        </optional>
+        <ref name="code"/>
+      </choice>
+    </element>
+  </define>
+  <define name="compare">
+    <element name="compare">
+      <choice>
+        <optional>
+          <attribute name="as">
+            <data type="QName"/>
+          </attribute>
+        </optional>
+        <oneOrMore>
+          <element name="compare">
+            <attribute name="path"/>
+            <optional>
+              <attribute name="as">
+                <choice>
+                  <value>string</value>
+                  <value>number</value>
+                </choice>
+              </attribute>
+            </optional>
+          </element>
+        </oneOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="cast">
+    <element name="cast">
+      <attribute name="from">
+        <data type="QName"/>
+      </attribute>
+      <attribute name="to">
+        <data type="QName"/>
+      </attribute>
+      <ref name="code"/>
+    </element>
+  </define>
+  <define name="code">
+    <mixed>
+      <zeroOrMore>
+        <element>
+          <anyName/>
+          <zeroOrMore>
+            <attribute>
+              <anyName/>
+            </attribute>
+          </zeroOrMore>
+          <ref name="code"/>
+        </element>
+      </zeroOrMore>
+    </mixed>
+  </define>
+  <define name="regex" combine="choice">
+    <element name="ref">
+      <attribute name="name">
+        <data type="QName"/>
+      </attribute>
+    </element>
+  </define>
+  <define name="regex" combine="choice">
+    <element name="data">
+      <attribute name="type">
+        <data type="QName"/>
+      </attribute>
+    </element>
+  </define>
+  <define name="regex" combine="choice">
+    <element name="choice">
+      <optional>
+        <ref name="ignore"/>
+      </optional>
+      <oneOrMore>
+        <ref name="regex"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="regex" combine="choice">
+    <element name="group">
+      <optional>
+        <attribute name="name">
+          <data type="QName"/>
+        </attribute>
+      </optional>
+      <optional>
+        <ref name="ignore"/>
+      </optional>
+      <oneOrMore>
+        <ref name="regex"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="regex" combine="choice">
+    <element name="repeat">
+      <choice>
+        <attribute name="exactly">
+          <data type="integer"/>
+        </attribute>
+        <group>
+          <attribute name="min">
+            <data type="integer"/>
+          </attribute>
+          <optional>
+            <attribute name="max">
+              <data type="integer"/>
+            </attribute>
+          </optional>
+        </group>
+        <attribute name="max">
+          <data type="integer"/>
+        </attribute>
+      </choice>
+      <optional>
+        <ref name="ignore"/>
+      </optional>
+      <oneOrMore>
+        <ref name="regex"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="regex" combine="choice">
+    <element>
+      <choice>
+        <name>oneOrMore</name>
+        <name>zeroOrMore</name>
+        <name>optional</name>
+      </choice>
+      <optional>
+        <ref name="ignore"/>
+      </optional>
+      <oneOrMore>
+        <ref name="regex"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="regex" combine="choice">
+    <element>
+      <choice>
+        <name>charGroup</name>
+        <name>notCharGroup</name>
+      </choice>
+      <optional>
+        <ref name="ignore"/>
+      </optional>
+      <oneOrMore>
+        <ref name="chars"/>
+      </oneOrMore>
+      <optional>
+        <element name="except">
+          <oneOrMore>
+            <ref name="chars"/>
+          </oneOrMore>
+        </element>
+      </optional>
+    </element>
+  </define>
+  <define name="regex" combine="choice">
+    <element name="string">
+      <optional>
+        <ref name="ignore"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="regex" combine="choice">
+    <element name="anyChar">
+      <optional>
+        <ref name="ignore"/>
+      </optional>
+      <empty/>
+    </element>
+  </define>
+  <define name="regex" combine="choice">
+    <ref name="charClass"/>
+  </define>
+  <define name="chars" combine="choice">
+    <element name="chars">
+      <text/>
+    </element>
+  </define>
+  <define name="chars" combine="choice">
+    <element name="range">
+      <choice>
+        <group>
+          <attribute name="from">
+            <data type="string">
+              <param name="length">1</param>
+            </data>
+          </attribute>
+          <attribute name="to">
+            <data type="string">
+              <param name="length">1</param>
+            </data>
+          </attribute>
+        </group>
+        <group>
+          <ref name="charClass"/>
+          <ref name="charClass"/>
+        </group>
+      </choice>
+    </element>
+  </define>
+  <define name="chars" combine="choice">
+    <ref name="charClass"/>
+  </define>
+  <define name="charClass" combine="choice">
+    <element>
+      <choice>
+        <name>newline</name>
+        <name>return</name>
+        <name>tab</name>
+        <name>space</name>
+        <name>notSpace</name>
+        <name>initialNameChar</name>
+        <name>notInitialNameChar</name>
+        <name>nameChar</name>
+        <name>notNameChar</name>
+        <name>wordChar</name>
+        <name>notWordChar</name>
+      </choice>
+      <optional>
+        <ref name="ignore"/>
+      </optional>
+      <empty/>
+    </element>
+  </define>
+  <define name="charClass" combine="choice">
+    <element>
+      <choice>
+        <name>category</name>
+        <name>notCategory</name>
+        <name>block</name>
+        <name>notBlock</name>
+      </choice>
+      <optional>
+        <ref name="ignore"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="ignore">
+    <attribute name="ignore">
+      <choice>
+        <value>yes</value>
+        <value>no</value>
+      </choice>
+    </attribute>
+  </define>
+</grammar>

@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.jenitennison.com/datatypes" xmlns:datatypes="http://www.jenitennison.com/datatypes">
+  <xs:element name="datatypes">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="datatypes:define"/>
+        <xs:element ref="datatypes:datatype"/>
+        <xs:element ref="datatypes:cast"/>
+      </xs:choice>
+      <xs:attribute name="ns" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="define">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="datatypes:regex"/>
+      </xs:sequence>
+      <xs:attribute name="name" use="required" type="xs:QName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="datatype">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="datatypes:supertype"/>
+        <xs:element minOccurs="0" ref="datatypes:parse"/>
+        <xs:element minOccurs="0" ref="datatypes:params"/>
+        <xs:element minOccurs="0" ref="datatypes:validate"/>
+        <xs:element minOccurs="0" ref="datatypes:normalize"/>
+        <xs:element minOccurs="0" ref="datatypes:compare"/>
+      </xs:sequence>
+      <xs:attribute name="name" use="required" type="xs:QName"/>
+      <xs:attribute name="ns" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="supertype">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="params">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="param">
+                <xs:complexType mixed="true">
+                  <xs:attribute name="name" use="required" type="xs:NCName"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" name="cast">
+          <xs:complexType mixed="true">
+            <xs:group ref="datatypes:code"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="name" use="required" type="xs:QName"/>
+      <xs:attribute name="ns" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="parse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="datatypes:regex"/>
+      </xs:sequence>
+      <xs:attribute name="whitespace">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="preserve"/>
+            <xs:enumeration value="replace"/>
+            <xs:enumeration value="collapse"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="params">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="param">
+          <xs:complexType>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+            <xs:attribute name="test">
+              <xs:simpleType>
+                <xs:restriction base="xs:token">
+                  <xs:enumeration value="eq"/>
+                  <xs:enumeration value="ne"/>
+                  <xs:enumeration value="lt"/>
+                  <xs:enumeration value="le"/>
+                  <xs:enumeration value="gt"/>
+                  <xs:enumeration value="ge"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="select"/>
+            <xs:attribute name="as">
+              <xs:simpleType>
+                <xs:restriction base="xs:token">
+                  <xs:enumeration value="string"/>
+                  <xs:enumeration value="number"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="validate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="datatypes:test"/>
+      </xs:sequence>
+      <xs:attribute name="as" type="xs:QName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="test" abstract="true">
+    <xs:complexType mixed="true">
+      <xs:group ref="datatypes:code"/>
+      <xs:attribute name="test" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="report" substitutionGroup="datatypes:test"/>
+  <xs:element name="assert" substitutionGroup="datatypes:test"/>
+  <xs:element name="normalize">
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" ref="datatypes:code"/>
+      <xs:attribute name="as" type="xs:QName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="compare">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" name="compare">
+          <xs:complexType>
+            <xs:attribute name="path" use="required"/>
+            <xs:attribute name="as">
+              <xs:simpleType>
+                <xs:restriction base="xs:token">
+                  <xs:enumeration value="string"/>
+                  <xs:enumeration value="number"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="as" type="xs:QName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cast">
+    <xs:complexType mixed="true">
+      <xs:group ref="datatypes:code"/>
+      <xs:attribute name="from" use="required" type="xs:QName"/>
+      <xs:attribute name="to" use="required" type="xs:QName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="code">
+    <xs:sequence>
+      <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="regex" abstract="true"/>
+  <xs:element name="ref" substitutionGroup="datatypes:regex">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="xs:QName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="data" substitutionGroup="datatypes:regex">
+    <xs:complexType>
+      <xs:attribute name="type" use="required" type="xs:QName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="choice" substitutionGroup="datatypes:regex">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="datatypes:regex"/>
+      </xs:sequence>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="group" substitutionGroup="datatypes:regex">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="datatypes:regex"/>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:QName"/>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="repeat" substitutionGroup="datatypes:regex">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="datatypes:regex"/>
+      </xs:sequence>
+      <xs:attribute name="exactly" type="xs:integer"/>
+      <xs:attribute name="min" type="xs:integer"/>
+      <xs:attribute name="max" type="xs:integer"/>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="oneOrMore" substitutionGroup="datatypes:regex">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="datatypes:regex"/>
+      </xs:sequence>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="zeroOrMore" substitutionGroup="datatypes:regex">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="datatypes:regex"/>
+      </xs:sequence>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="optional" substitutionGroup="datatypes:regex">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="datatypes:regex"/>
+      </xs:sequence>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="charGroup" substitutionGroup="datatypes:regex">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group maxOccurs="unbounded" ref="datatypes:chars"/>
+        <xs:element minOccurs="0" ref="datatypes:except"/>
+      </xs:sequence>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="except">
+    <xs:complexType>
+      <xs:group maxOccurs="unbounded" ref="datatypes:chars"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="notCharGroup" substitutionGroup="datatypes:regex">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group maxOccurs="unbounded" ref="datatypes:chars"/>
+        <xs:element minOccurs="0" ref="datatypes:except"/>
+      </xs:sequence>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="string" substitutionGroup="datatypes:regex">
+    <xs:complexType mixed="true">
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="anyChar" substitutionGroup="datatypes:regex">
+    <xs:complexType>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="chars">
+    <xs:choice>
+      <xs:element ref="datatypes:chars"/>
+      <xs:element ref="datatypes:range"/>
+      <xs:element ref="datatypes:charClass"/>
+    </xs:choice>
+  </xs:group>
+  <xs:element name="chars" type="xs:string"/>
+  <xs:element name="range">
+    <xs:complexType>
+      <xs:sequence minOccurs="0">
+        <xs:element ref="datatypes:charClass"/>
+        <xs:element ref="datatypes:charClass"/>
+      </xs:sequence>
+      <xs:attribute name="from">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:length value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="to">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:length value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="charClass" abstract="true" substitutionGroup="datatypes:regex"/>
+  <xs:element name="newline" substitutionGroup="datatypes:charClass">
+    <xs:complexType>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="return" substitutionGroup="datatypes:charClass">
+    <xs:complexType>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tab" substitutionGroup="datatypes:charClass">
+    <xs:complexType>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="space" substitutionGroup="datatypes:charClass">
+    <xs:complexType>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="notSpace" substitutionGroup="datatypes:charClass">
+    <xs:complexType>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="initialNameChar" substitutionGroup="datatypes:charClass">
+    <xs:complexType>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="notInitialNameChar" substitutionGroup="datatypes:charClass">
+    <xs:complexType>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="nameChar" substitutionGroup="datatypes:charClass">
+    <xs:complexType>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="notNameChar" substitutionGroup="datatypes:charClass">
+    <xs:complexType>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="wordChar" substitutionGroup="datatypes:charClass">
+    <xs:complexType>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="notWordChar" substitutionGroup="datatypes:charClass">
+    <xs:complexType>
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="category" substitutionGroup="datatypes:charClass">
+    <xs:complexType mixed="true">
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="notCategory" substitutionGroup="datatypes:charClass">
+    <xs:complexType mixed="true">
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="block" substitutionGroup="datatypes:charClass">
+    <xs:complexType mixed="true">
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="notBlock" substitutionGroup="datatypes:charClass">
+    <xs:complexType mixed="true">
+      <xs:attribute name="ignore">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="yes"/>
+            <xs:enumeration value="no"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="ignore">
+    <xs:attribute name="ignore" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="yes"/>
+          <xs:enumeration value="no"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+</xs:schema>

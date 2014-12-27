@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../../resources/style/page.xsl"?><my:doc xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/xslt/utilities/markup-example.xml">
+         <dc:title>Jeni's XSLT Utilities: Markup: Example</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-20"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-20"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <dc:rights>
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    </dc:rights>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>Markup Utility: Example</h1>
+   <p>
+  The <my:link href="markup.xml">Markup Utility</my:link> is a utility for finding and
+  changing words and phrases within some text. You can use it to:
+</p>
+   <ul>
+      <li>highlight important terms in your text</li>
+      <li>link phrases to other pages</li>
+      <li>search and replace words within some text</li>
+   </ul>
+   <p>
+  This page gives a simple example of using the Markup Utility to markup some text. Say
+  you had some text like:
+</p>
+   <my:example>
+&lt;p&gt;
+  A transformation expressed in XSLT describes rules for transforming a source tree into
+  a result tree. The transformation is achieved by associating patterns with templates. A
+  pattern is matched against elements in the source tree. A template is instantiated to
+  create part of the result tree. The result tree is separate from the source tree. The
+  structure of the result tree can be completely different from the structure of the source
+  tree. In constructing the result tree, elements from the source tree can be filtered and
+  reordered, and arbitrary structure can be added.
+&lt;/p&gt;
+</my:example>
+   <p>
+  And had some keywords that you wanted to emphasise within the text, defined in XML
+  within the same document:
+</p>
+   <my:example>
+&lt;keywords&gt;
+  &lt;keyword&gt;transformation&lt;/keyword&gt;
+  &lt;keyword&gt;XSLT&lt;/keyword&gt;
+  &lt;keyword&gt;source tree&lt;/keyword&gt;
+  &lt;keyword&gt;result tree&lt;/keyword&gt;
+  &lt;keyword&gt;template&lt;/keyword&gt;
+&lt;/keywords&gt;
+</my:example>
+   <p>
+  First, you need to import the markup stylesheet into your stylesheet: 
+</p>
+   <my:example>
+&lt;xsl:import href="markup.xsl" /&gt;
+</my:example>
+   <p>
+  Second, you need to call the 'markup' template on the text that you want to markup (i.e.
+  the content of the 'p' element. The phrases to be marked up are the keywords that are
+  specified within the text. You can change any of the options that you want to markup all
+  occurences of the keyword, for example:
+</p>
+   <my:example>
+&lt;xsl:template match="p"&gt;
+  &lt;p&gt;
+    &lt;xsl:call-template name="markup"&gt;
+      &lt;xsl:with-param name="text" select="." /&gt;
+      &lt;xsl:with-param name="phrases" select="/doc/keywords/keyword" /&gt;
+      &lt;xsl:with-param name="first-only" select="false()" /&gt;
+    &lt;/xsl:call-template&gt;
+  &lt;/p&gt;
+&lt;/xsl:template&gt;
+</my:example>
+   <p>
+  Finally, you need to declare a template with the 'markup' mode that matches the
+  'keyword' element and wraps the content of the 'word' parameter within an 'em' element:
+</p>
+   <my:example>
+&lt;xsl:template match="keyword" mode="markup"&gt;
+  &lt;xsl:param name="word" /&gt;
+  &lt;em&gt;
+    &lt;xsl:value-of select="$word" /&gt;
+  &lt;/em&gt;
+&lt;/xsl:template&gt;
+</my:example>
+   <p>
+This gives the result: 
+</p>
+   <my:example>
+&lt;p&gt;
+  A &lt;em&gt;transformation&lt;/em&gt; expressed in &lt;em&gt;XSLT&lt;/em&gt; describes rules for transforming a &lt;em&gt;source tree&lt;/em&gt; into
+  a &lt;em&gt;result tree&lt;/em&gt;. The &lt;em&gt;transformation&lt;/em&gt; is achieved by associating patterns with templates. A
+  pattern is matched against elements in the &lt;em&gt;source tree&lt;/em&gt;. A &lt;em&gt;template&lt;/em&gt; is instantiated to
+  create part of the &lt;em&gt;result tree&lt;/em&gt;. The &lt;em&gt;result tree&lt;/em&gt; is separate from the &lt;em&gt;source tree&lt;/em&gt;. The
+  structure of the &lt;em&gt;result tree&lt;/em&gt; can be completely different from the structure of the source
+  tree. In constructing the result tree, elements from the &lt;em&gt;source tree&lt;/em&gt; can be filtered and
+  reordered, and arbitrary structure can be added.
+&lt;/p&gt;
+</my:example>
+</my:doc>

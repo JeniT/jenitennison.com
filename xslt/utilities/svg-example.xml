@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../../resources/style/page.xsl"?><my:doc xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/xslt/utilities/svg-utils.xml">
+         <dc:title>Jeni's XSLT Utilities: SVG Utility: Example</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2001-05-14"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2000-05-14"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <dc:rights>
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    </dc:rights>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>SVG Utility: Example</h1>
+   <p>
+      The SVG utility is designed to help you to embed the SVG images that you generate using XSLT into an HTML page.
+   </p>
+   <p>
+      This page gives a simple example of using the SVG Utility to give a couple of charts based on some data within an HTML page.  Say you had some data like:
+   </p>
+   <my:example><![CDATA[
+<stats>
+   <item><label>Jan</label><value>642</value></item>
+   <item><label>Feb</label><value>527</value></item>
+   <item><label>Mar</label><value>364</value></item>
+   <item><label>Apr</label><value>843</value></item>
+   <item><label>May</label><value>295</value></item>
+   <item><label>Jun</label><value>250</value></item>
+   <item><label>Jul</label><value>654</value></item>
+   <item><label>Aug</label><value>828</value></item>
+   <item><label>Sep</label><value>454</value></item>
+   <item><label>Oct</label><value>732</value></item>
+   <item><label>Nov</label><value>236</value></item>
+   <item><label>Dec</label><value>546</value></item>
+</stats>
+]]></my:example>
+   <p>
+      You might want to generate a couple of SVG charts from this data - a bar chart and a line chart, for example.  In this example, I use <code>my:diagram</code> elements in my stylesheet to determine the types of charts that I want to create:
+   </p>
+   <my:example><![CDATA[
+<my:diagrams>
+   <my:diagram type="column" />
+   <my:diagram type="line" />
+</my:diagrams>
+]]></my:example>
+   <p>
+      First, I need to import the SVG utilities stylesheet into my stylesheet: 
+   </p>
+   <my:example>
+&lt;xsl:import href="svg-utils.xsl" /&gt;
+</my:example>
+   <p>
+      Second, I need to create a node-set variable within which there's one node per SVG image that I want to create.  The nodes in this case are the <code>my:diagram</code> elements within the stylesheet, so I access them:
+   </p>
+   <my:example><![CDATA[<xsl:variable name="images" select="document('')/*/my:diagrams/my:diagram" />]]></my:example>
+   <p>
+      Now I need to insert the script and the embed elements into my document.  I use the utility to insert the script into the head of my HTML, passing the <code>$images</code> variable as the value of the <code>$images</code> parameter:
+   </p>
+   <my:example><![CDATA[
+<html>
+   <head>
+      <title>SVG Chart Demonstration</title>
+      <xsl:call-template name="insertSVGScript">
+         <xsl:with-param name="images" select="$images" />
+      </xsl:call-template>
+   </head>
+   <body>
+      ...
+   </body>
+</html>
+]]></my:example>
+   <p>
+      In the body of the HTML page, I insert the embed elements by applying templates to the nodes held in the <code>$images</code> variable:
+   </p>
+   <my:example><![CDATA[
+<html>
+   <head>
+      ...
+   </head>
+   <body>
+      <h1>SVG Chart Demonstration</h1>
+      <p>The following charts are generated automatically using XSLT.</p>
+      <xsl:apply-templates select="$images" mode="createEmbed" />
+   </body>
+</html>
+]]></my:example>
+   <p>
+      Finally, I need to create the SVG for the two diagrams.  To use the SVG Utility, I need to do this within a template in <code>getSVG</code> mode:
+   </p>
+   <my:example><![CDATA[
+<xsl:template match="my:diagram" mode="getSVG">
+   <xsl:variable name="points" select="$stats/item" />
+   <xsl:variable name="type" select="@type" />
+   <xsl:variable name="space" select="30" />
+   <xsl:variable name="width-height-ratio" select="2 div 3" />
+   <xsl:variable name="col-width" select="20" />
+   <xsl:variable name="col-gap" select="10" />
+   <xsl:variable name="point-width" select="5" />
+   <xsl:variable name="xaxis-width" 
+                 select="count($points) * ($col-width + $col-gap)" />
+   <xsl:variable name="width" select="round($xaxis-width + (2 * $space))" />
+   <xsl:variable name="height" 
+                 select="round($xaxis-width * $width-height-ratio + 
+                               (2 * $space))" />
+   <xsl:variable name="max-value">
+      <xsl:for-each select="$points">
+         <xsl:sort select="value" order="descending" />
+         <xsl:if test="position() = 1"><xsl:value-of select="value" /></xsl:if>
+      </xsl:for-each>
+   </xsl:variable>
+   <xsl:variable name="unit-multiplier" 
+                 select="($xaxis-width * $width-height-ratio) div 
+                         ($max-value * 1.05)" />
+   <svg width="100%" viewBox="0 0 {$width} {$height}" 
+        preserveAspectRatio="xMinYMin meet">
+      <!-- border around chart -->
+      <rect width="{$width}" height="{$height}" 
+            style="fill: #CCC; stroke: black;" />
+      <!-- X Axis line -->
+      <line x1="{$space}" y1="{$height - $space}" 
+            x2="{$width - $space}" y2="{$height - $space}" 
+            style="stroke: black;" />
+      <!-- Y Axis line -->
+      <line x1="{$space}" y1="{$space}" 
+            x2="{$space}" y2="{$height - $space}" 
+            style="stroke: black;" />
+      <xsl:for-each select="$points">
+         <xsl:variable name="item-height" 
+                       select="round(value * $unit-multiplier)" />
+         <xsl:variable name="xMin" 
+                       select="$space + 
+                               (count(preceding-sibling::item) * 
+                                ($col-width + $col-gap))" />
+         <!-- Columns -->
+         <xsl:choose>
+            <xsl:when test="$type = 'column'">
+               <rect x="{$xMin + ($col-gap div 2)}" 
+                     y="{$height - $space - $item-height}" 
+                     width="{$col-width}" height="{$item-height}" 
+                     style="fill: blue; stroke: black;" />
+            </xsl:when>
+            <xsl:otherwise>
+               <xsl:variable name="x" 
+                             select="$xMin + ($col-gap div 2) + 
+                                     (($col-width - $point-width) div 2)" />
+               <xsl:variable name="y" 
+                             select="$height - $space - 
+                                     $item-height - ($point-width div 2)" />
+               <rect x="{$x}"
+                     y="{$y}"
+                     width="{$point-width}"
+                     height="{$point-width}"
+                     style="fill: blue; stroke: black;" />
+               <xsl:variable name="next" select="following-sibling::item" />
+               <xsl:if test="$next">
+                  <xsl:variable name="nextX" 
+                                select="$xMin + $col-width + $col-gap * 1.5 + 
+                                        (($col-width - $point-width) div 2)" />
+                  <xsl:variable name="nextY" 
+                                select="$height - $space - 
+                                        ($point-width div 2) - 
+                                        round($next/value * 
+                                              $unit-multiplier)" />
+                  <line x1="{$x + $point-width div 2}"
+                        y1="{$y + $point-width div 2}"
+                        x2="{$nextX + $point-width div 2}"
+                        y2="{$nextY + $point-width div 2}"
+                        style="stroke: blue;" />
+               </xsl:if>
+            </xsl:otherwise>
+         </xsl:choose>
+         <!-- Column captions -->
+         <text x="{$xMin}" y="{$height - $space div 3}" 
+               textLength="{$col-width}" style="font: Arial;">
+            <xsl:value-of select="label" />
+         </text>
+      </xsl:for-each>
+   </svg>
+</xsl:template>
+]]></my:example>
+   <p>
+      If you have an SVG Viewer plug-in installed, you can <a href="test-svg.xml">view this example</a>.  The full stylesheet is available at <my:link src="test-svg.xsl" />.
+   </p>
+   <h2>More Information</h2>
+   <my:links>
+      <my:link href="svg-utils.zip">Download</my:link>
+      <my:link href="svg-utils.xml">Instructions</my:link>
+   </my:links>
+</my:doc>

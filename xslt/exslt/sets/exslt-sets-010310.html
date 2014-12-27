@@ -1,0 +1,264 @@
+<?xml version="1.0">
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "/resources/dtd/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>Extensions to XSLT 1.0 (EXSLT 1.0) - Sets</title>
+      <link rel="stylesheet" href="/resources/style/base.css"/>
+      <link rel="alternate" type="text/xml" href="/index.xml"/>
+     <style>
+      .issue { margin-left: 5%; }
+      .error { color: red; }
+      .function { font-weight: bolder; }
+      .element { font: 'Courier New', Courier, monospace;
+                 font-size: 0.8em; }
+     </style>
+   </head>
+   <body>
+      <h1>Extensions to XSLT 1.0 (EXSLT 1.0) - Sets</h1>
+      <p>
+         This version: <a href="http://www.jenitennison.com/xslt/exslt/sets/exslt-sets-010310.html">exslt-sets-010310.html</a><br />
+         Most Recent version: <a href="http://www.jenitennison.com/xslt/exslt/sets/">http://www.jenitennison.com/xslt/exslt/sets/</a><br />
+         Previous version: <a href="http://www.jenitennison.com/xslt/exslt/sets/exslt-sets-010302.html">exslt-sets-010302.html</a><br />
+         Author: <a href="mailto:mail@jenitennison.com">Jeni Tennison</a>
+      </p>
+      <h3>Abstract</h3>
+      <p>
+         This document describes EXSLT 1.0 - Sets.  EXSLT 1.0 is a set of extension elements and functions that XSLT authors may find helpful when creating stylesheets.  EXSLT 1.0 - Sets covers those extension elements and functions that provide facilities to do with set manipulation.
+      </p>
+      <p>
+         Other parts of EXSLT 1.0 include:
+      </p>
+      <ul>
+         <li><a href="http://www.jenitennison.com/xslt/exslt/common/">EXSLT 1.0 - Common</a></li>
+         <li><a href="http://www.jenitennison.com/xslt/exslt/math/">EXSLT 1.0 - Math</a></li>
+         <li><a href="http://www.jenitennison.com/xslt/exslt/functions/">EXSLT 1.0 - Functions</a></li>
+      </ul>
+
+      <h3>Status of this Document</h3>
+
+      <p>
+         This document is a first draft for review by the implementers of XSLT processors and the XSLT stylesheet authors.  It is based on discussions on <a class="offsite" href="http://www.mulberrytech.com/xsl/xsl-list">XSL-List</a>.  Comments on this document should be sent to <a href="mailto:xsl-list@mulberrytech.com">XSL-List</a>.
+      </p>
+      <p>
+         This document has no official standing and has not been considered nor approved by any organization.
+      </p>
+
+      <h3>Contents</h3>
+      <p>
+         1. <a href="#introduction">Introduction</a><br />
+         2. <a href="#namespace">Namespace</a><br />
+         3. <a href="#functions">Set Functions</a><br />
+      </p>
+
+      <h4>Appendices</h4>
+      <p>
+         A. <a href="#references">References</a><br />
+         B. <a href="#samples">Implementations in EXSLT</a><br />
+         C. <a href="#acknowledgements">Acknowledgements</a><br />
+         D. <a href="#changes">Changes from Previous Version</a>
+      </p>
+
+      <h2 id="introduction">1. Introduction</h2>
+
+      <p>
+         This document describes EXSLT 1.0 - Sets.  EXSLT 1.0 is a set of extension elements and functions that XSLT authors may find helpful when creating stylesheets.  EXSLT 1.0 - Sets are those extension elements and functions that provide facilities to do with set manipulation.
+      </p>
+      <p>
+         The extension elements and functions defined within this document are governed by the general rules about extensions to XSLT covered in [<a class="offsite" href="http://www.w3.org/TR/xslt#extension">14. Extensions</a>] in [<a href="#reference-XSLT">XSLT 1.0</a>].
+      </p>
+      <p>
+         XSLT processors are free to support any number of the extension elements and functions described in this document.  However, an XSLT processor must not claim to support EXSLT 1.0 - Sets unless all the extensions described within this document are implemented by the processor.  An implementation of an extension element or function in an EXSLT namespace must conform to the behaviour described in this document.
+      </p>
+
+      <h2 id="namespace">2. Namespace</h2>
+
+      <p>
+         The namespace for the extension elements and functions described in this document is:
+      </p>
+      <pre>
+http://xmlns.opentechnology.org/xslt-extensions/sets
+      </pre>
+      <p>
+         Throughout this document, the prefix <code>set</code> is used to refer to this namespace. Any other prefix can be used within a particular stylesheet (though a prefix must be specified to enable the extension functions to be recognised as extensions).
+      </p>
+
+      <h2 id="functions">3. Set Functions</h2>
+
+      <p>
+         This section defines the extension functions in EXSLT 1.0 - Sets.
+      </p>
+
+      <p id="function-set:difference">
+         <b>Function:</b> <var>node-set</var> <b>set:difference</b>(<var>node-set</var>, <var>node-set</var>)
+      </p>
+      <p>
+         The <span class="function">set:difference</span> function returns the difference between two node sets - those nodes that are in the node set passed as the first argument that are not in the node set passed as the second argument.
+      </p>
+      <p id="function-set:has-same-node">
+         <b>Function:</b> <var>boolean</var> <b>set:has-same-node</b>(<var>node-set</var>, <var>node-set</var>)
+      </p>
+      <p>
+         The <span class="function">set:has-same-node</span> function returns true if the node set passed as the first argument shares any nodes with the node set passed as the second argument. If there are no nodes that are in both node sets, then it returns false.
+      </p>
+      <p id="function-set:intersection">
+         <b>Function:</b> <var>node-set</var> <b>set:intersection</b>(<var>node-set</var>, <var>node-set</var>)
+      </p>
+      <p>
+         The <span class="function">set:intersection</span> function returns a node set comprising the nodes that are within both the node sets passed as arguments to it.
+      </p>
+      <p id="function-set:distinct">
+         <b>Function:</b> <var>node-set</var> <b>set:distinct</b>(<var>node-set</var>)
+      </p>
+      <p>
+         The <span class="function">set:distinct</span> function returns the nodes within the node set passed as the first argument that are the first nodes in document order whose string value is their string value.
+      </p>
+      <p id="function-set:leading">
+         <b>Function:</b> <var>node-set</var> <b>set:leading</b>(<var>node-set</var>, <var>node-set</var>)
+      </p>
+      <p>
+         The <span class="function">set:leading</span> function returns the nodes in the node set passed as the first argument that precede, in document order, the first node in the node set passed as the second argument.  If the first node in the second node set is not contained in the first node set, then an empty node set is returned.  If the second node set is empty, then the first node set is returned.
+      </p>
+      <p id="function-set:trailing">
+         <b>Function:</b> <var>node-set</var> <b>set:trailing</b>(<var>node-set</var>, <var>node-set</var>)
+      </p>
+      <p>
+         The <span class="function">set:trailing</span> function returns the nodes in the node set passed as the first argument that follow, in document order, the first node in the node set passed as the second argument.  If the first node in the second node set is not contained in the first node set, then an empty node set is returned.  If the second node set is empty, then the first node set is returned.
+      </p>
+
+      <h2 id="references">A. References</h2>
+      
+      <dl>
+         <dt id="reference-exslt-common"><b>EXSLT Common</b></dt>
+         <dd>Jeni Tennison. <i>Extensions to XSLT 1.0 (EXSLT 1.0) - Common</i>.  See <a href="http://www.jenitennison.com/xslt/exslt/common">http://www.jenitennison.com/xslt/exslt/common</a></dd>
+         <dt id="reference-XSLT"><b>XSLT</b></dt>
+         <dd>World Wide Web Consortium. <i>XSL Transformations (XSLT)</i>. W3C Recommendation. See <a class="offsite" href="http://www.w3.org/TR/xslt">http://www.w3.org/TR/xslt</a></dd>
+         <dt id="reference-XPath"><b>XPath</b></dt>
+         <dd>World Wide Web Consortium. <i>XML Path Language</i>. W3C Recommendation. See <a class="offsite" href="http://www.w3.org/TR/xpath">http://www.w3.org/TR/xpath</a></dd>
+      </dl>
+      
+      <h2 id="samples">B. Sample Extension Functions</h2>
+
+      <p>
+         This appendix holds example implementations of the functions defined in this document, using <a href="http://www.jenitennison.com/xslt/exslt/common/#element-function"><code>exsl:function</code></a> as described in [<a href="#reference-exslt-common">EXSLT Common</a>].
+      </p>
+
+      <p>
+         <b>Function:</b> <var>node-set</var> <b>set:difference</b>(<var>node-set</var>, <var>node-set</var>)
+      </p>
+      <pre>
+&lt;exsl:function name="set:difference">
+   &lt;xsl:param name="node-set1" select="/.." />
+   &lt;xsl:param name="node-set2" select="/.." />
+   &lt;exsl:result select="$node-set1[count(.|$node-set2) != count($node-set2)]" />
+&lt;/exsl:function>
+      </pre>
+      <p>
+         <b>Function:</b> <var>boolean</var> <b>set:has-same-node</b>(<var>node-set</var>, <var>node-set</var>)
+      </p>
+      <pre>
+&lt;exsl:function name="set:has-same-node">
+   &lt;xsl:param name="node-set1" select="/.." />
+   &lt;xsl:param name="node-set2" select="/.." />
+   &lt;exsl:result
+      select="boolean($node-set1[count(.|$node-set2) = count($node-set2)])" />
+&lt;/exsl:function>
+      </pre>
+      <p>
+         <b>Function:</b> <var>node-set</var> <b>set:intersection</b>(<var>node-set</var>, <var>node-set</var>)
+      </p>
+      <pre>
+&lt;exsl:function name="set:intersection">
+   &lt;xsl:param name="node-set1" select="/.." />
+   &lt;xsl:param name="node-set2" select="/.." />
+   &lt;exsl:result select="$node-set1[count(.|$node-set2) = count($node-set2)]" />
+&lt;/exsl:function>
+      </pre>
+      <p>
+         <b>Function:</b> <var>node-set</var> <b>set:distinct</b>(<var>node-set</var>)
+      </p>
+      <pre>
+&lt;exsl:function name="set:distinct">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="distinct" select="/.." />
+   &lt;xsl:choose>
+      &lt;xsl:when test="not($node-set)">
+         &lt;exsl:result select="/.." />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;xsl:variable name="distinct" 
+                       select="set:distinct($node-set[position() > 1])" />
+         &lt;exsl:result select="$distinct | $node-set[1][. != $distinct]" />
+      &lt;/xsl:otherwise>
+   &lt;/xsl:choose>
+&lt;/exsl:function>
+      </pre>
+      <p>
+         <b>Function:</b> <var>node-set</var> <b>set:leading</b>(<var>node-set</var>, <var>node-set</var>)
+      </p>
+      <pre>
+&lt;exsl:function name="set:leading">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="end-node-set" select="/.." />
+   &lt;xsl:variable name="end-node" select="$end-node-set[1]" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="not($end-node) or not($node-set)">
+         &lt;exsl:result select="$node-set" />
+      &lt;/xsl:when>
+      &lt;xsl:when test="not(set:has-same-node($node-set, $end-node)) or 
+                      count($node-set[1] | $end-node) = 1">
+         &lt;exsl:result select="/.." />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;exsl:result select="$node-set[1] | 
+                              set:leading($node-set[position() > 1], $end-node)" />
+      &lt;/xsl:otherwise>
+   &lt;/xsl:choose>
+&lt;/exsl:function>
+      </pre>
+      <p>
+         <b>Function:</b> <var>node-set</var> <b>set:trailing</b>(<var>node-set</var>, <var>node-set</var>)
+      </p>
+      <pre>
+&lt;exsl:function name="set:trailing">
+   &lt;xsl:param name="node-set" select="/.." />
+   &lt;xsl:param name="end-node-set" select="/.." />
+   &lt;xsl:variable name="end-node" select="$end-node-set[1]" />
+   &lt;xsl:choose>
+      &lt;xsl:when test="not($end-node) or not($node-set)">
+         &lt;exsl:result select="$node-set" />
+      &lt;/xsl:when>
+      &lt;xsl:when test="not(set:has-same-node($node-set, $end-node))">
+         &lt;exsl:result select="/.." />
+      &lt;/xsl:when>
+      &lt;xsl:when test="count($node-set[1] | $end-node) = 1">
+         &lt;exsl:result select="$node-set[position() > 1]" />
+      &lt;/xsl:when>
+      &lt;xsl:otherwise>
+         &lt;exsl:result select="set:trailing($node-set[position() > 1], $end-node)" />
+      &lt;/xsl:otherwise>
+   &lt;/xsl:choose>
+&lt;/exsl:function>
+      </pre>
+
+      <h2 id="acknowledgements">C. Acknowledgements</h2>
+
+      <p>
+         This document describes many functions that are currently in use in <a href="http://users.iclway.co.uk/mhkay/saxon" class="offsite">Saxon</a> by Mike Kay.  It has also been informed and inspired by discussions on <a class="offsite" href="http://www.mulberrytech.com/xsl/xsl-list">XSL-List</a>.
+      </p>
+      <p>
+         Also many thanks to Uche Ogbuji for his comments following implementation of these functions in <a href="http://www.fourthought.com" class="offsite">4XSLT</a>.
+      </p>
+
+      <h2 id="changes">D. Changes from Previous Version</h2>
+
+      <ul>
+         <li>Changed wording on conformance in the <a href="#introduction">Introduction</a>.</li>
+         <li>Removed arguments that require dynamic evaluation.</li>
+         <li>Changed the name of <span class="function">set:following</span> to <a href="#function-set:trailing" class="function">set:trailing</a>.</li>
+         <li>Changed the second argument for <a href="#function-set:leading" class="function">set:leading</a> and <a href="#function-set:trailing" class="function">set:trailing</a> to a node set.</li>
+         <li>Removed <span class="function">set:exists</span> and <span class="function">set:forall</span> as they are fairly pointless without dynamic evaluation.</li>
+      </ul>
+
+   </body>
+</html>

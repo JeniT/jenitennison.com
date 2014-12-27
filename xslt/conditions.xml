@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../resources/style/page.xsl"?><my:doc xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/xslt/copying.xml">
+         <dc:title>Jeni's XSLT Pages: Conditional Processing</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-07"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2001-01-16"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>Conditional Processing</h1>
+   <p>
+	This page will hold information about how to do different things depending on your XML
+	source, including using if and choose statements, and selecting only those nodes that
+	you want to process.  For now, there's just the following posts:
+</p>
+   <my:links>
+      <my:link href="http://sources.redhat.com/ml/xsl-list/2000-07/msg00593.html">xsl:choose
+	vs. xsl:if</my:link>
+      <my:link href="http://sources.redhat.com/ml/xsl-list/2000-07/msg00369.html">Ignoring
+	Elements</my:link>
+      <my:link href="http://sources.redhat.com/ml/xsl-list/2000-08/msg00053.html">Selecting Nodes
+	in a Hierarchy</my:link>
+      <my:link href="http://sources.redhat.com/ml/xsl-list/2000-07/msg00816.html">Conditional
+	Addition of Attributes</my:link>
+      <my:link href="http://sources.redhat.com/ml/xsl-list/2000-08/msg00058.html">Adding
+	Something Only at the End of a Group</my:link>
+      <my:link href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00218.html">Empty xsl:when Means an xsl:if</my:link>
+      <my:link href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00215.html">Selecting Different Node Sets Conditionally</my:link>
+      <my:link href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00174.html">Different Tests; Using xsl:for-each vs. xsl:apply-templates</my:link>
+      <my:link href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00115.html">Adding Commas Between List Items</my:link>
+   </my:links>
+   <h2 id="links">Links</h2>
+   <my:links>
+      <my:link href="http://www.w3.org/TR/xslt#section-Conditional-Processing">XSLT Recommendation: Conditional Processing</my:link>
+      <my:link href="http://www.w3.org/TR/xslt#rules">XSLT Recommendation: Templates</my:link>
+   </my:links>
+</my:doc>

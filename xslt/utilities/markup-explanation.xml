@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../../resources/style/page.xsl"?><my:doc xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/xslt/utilities/markup-explanation.xml">
+         <dc:title>Jeni's XSLT Utilities: Markup Utility: Explanation</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-19"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-20"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <dc:rights>
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    </dc:rights>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>Markup Utility: Explanation</h1>
+   <p>
+  The <my:link href="markup.xml">Markup Utility</my:link> is a utility for finding and
+  changing words and phrases within some text.  You can use it to:
+</p>
+   <ul>
+      <li>highlight important terms in your text</li>
+      <li>link phrases to other pages</li>
+      <li>search and replace words within some text</li>
+   </ul>
+   <p>
+  This page explains how the Markup Utility works by going step by step through the
+  stylesheet.  It is intended for those interested in learning more about how XSLT works
+  with real problems rather than as instructions on how to use the utility.
+</p>
+   <h2 id="variables">Global variables</h2>
+   <p>
+  For this kind of string manipulation there are a number of variables that are useful to
+  have around.  The way I've set up these variables means that they're highly
+  English-centric.  However, it would easy to add any extra punctuation, lowercase or
+  uppercase letters to the variables to make it more applicable to other languages.
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>punctuation</my:name>
+         <my:desc>
+            <p>
+        $punctuation holds punctuation characters to identify the starts and ends of words.
+        These have to be declared within the content of the variable declaration because I
+        want to include whitespace characters like ends of lines and tabs, all of which are
+        converted automatically to spaces if they are held within attribute values.
+      </p>
+         </my:desc>
+         <my:value type="rtf">.,:;!?&amp;tab;&amp;cr;&amp;lf;&amp;nbsp; &amp;quot;'()[]&amp;lt;&gt;{}</my:value>
+         <my:defn>
+&lt;xsl:variable name="punctuation"&gt;
+  &lt;xsl:text&gt;.,:;!?&amp;tab;&amp;cr;&amp;lf;&amp;nbsp; &amp;quot;'()[]&amp;lt;&gt;{}&lt;/xsl:text&gt;
+&lt;/xsl:variable&gt;
+    </my:defn>
+      </my:var>
+      <my:var>
+         <my:name>lowercase</my:name>
+         <my:desc>
+            <p>
+        $lowercase holds a list of lowercase letters.  The alphabetical order is simply to
+        make it easier to make sure they're all there - it doesn't matter what order's used
+        as long as it matches $uppercase.
+      </p>
+         </my:desc>
+         <my:value type="string">abcdefghijklmnopqrstuvwxyz</my:value>
+         <my:defn>
+&lt;xsl:variable name="lowercase" select="'abcdefghijklmnopqrstuvwxyz'" /&gt;
+    </my:defn>
+      </my:var>
+      <my:var>
+         <my:name>uppercase</my:name>
+         <my:desc>
+            <p>
+        $uppercase holds a list of uppercase letters.  Again, the ordering doesn't matter as
+        long as it matches $lowercase.
+      </p>
+         </my:desc>
+         <my:value type="string">ABCDEFGHIJKLMNOPQRSTUVWXYZ</my:value>
+         <my:defn>
+&lt;xsl:variable name="uppercase" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'" /&gt;
+    </my:defn>
+      </my:var>
+   </my:vars>
+   <h2 id="markup">The 'markup' template</h2>
+   <p>
+  The 'markup' template is the main template of importance in the stylesheet.  I use a
+  named template because the identity of the current node isn't important.
+</p>
+   <my:example>
+&lt;xsl:template name="markup"&gt;
+  ...
+&lt;/xsl:template&gt;
+</my:example>
+   <p>
+  The first thing is to identify the parameters and their default values.  There are five
+  parameters:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>text</my:name>
+         <my:desc>the text to be marked up - a string</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>phrases</my:name>
+         <my:desc>a node set of nodes whose value gives the word(s) that should be marked
+    up</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>words-only</my:name>
+         <my:default type="boolean">true</my:default>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>only whole words should be marked up (separated by
+      punctuation)</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>any matching occurrence should be marked up, whether whole word or not.</my:desc>
+         </my:option>
+      </my:var>
+      <my:var>
+         <my:name>first-only</my:name>
+         <my:default type="boolean">false</my:default>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>only the first occurence of a word in a piece of text should be marked up</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>all occurrences of a word in a piece of text should be marked up</my:desc>
+         </my:option>
+      </my:var>
+      <my:var>
+         <my:name>match-case</my:name>
+         <my:default type="boolean">false</my:default>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>only occurences where the case matches exactly should be marked up</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>all occurences of the word should be marked up, regardless of case</my:desc>
+         </my:option>
+      </my:var>
+   </my:vars>
+   <my:example>
+&lt;xsl:param name="text" /&gt;
+&lt;xsl:param name="phrases" /&gt;
+&lt;xsl:param name="words-only" select="true()" /&gt;
+&lt;xsl:param name="first-only" select="false()" /&gt;
+&lt;xsl:param name="match-case" select="false()" /&gt;
+</my:example>
+   <p>
+  The next job is to identify those phrases that are actually included within the text, so
+  that I can cycle through them and mark them up within it.  Selecting only those phrases
+  that are included at this point saves on processing.  Since I sometimes have to check
+  for matches where the case doesn't matter, it's worth setting a variable to hold the
+  value of the all-lowercase text.  This again saves on processing because the lowercase
+  text is not generated for every phrase that is being looked at within the XPath.
+</p>
+   <my:example>
+&lt;xsl:variable name="lcase-text" select="translate($text, $uppercase, $lowercase)" /&gt;
+&lt;xsl:variable name="included-phrases"
+              select="$phrases[($match-case and contains($text, .)) or
+                               (not($match-case) and contains($lcase-text,
+                                                              translate(., $uppercase, $lowercase)))]" /&gt;
+</my:example>
+   <p>
+  Now a big choice: are there any phrases included in this text or not?  If there are,
+  then I need to work on the text; if there aren't, then the text can be returned just as
+  it is:
+</p>
+   <my:example>
+&lt;xsl:choose&gt;
+  &lt;xsl:when test="$included-phrases"&gt;
+    ...
+  &lt;/xsl:when&gt;
+  &lt;xsl:otherwise&gt;&lt;xsl:value-of select="$text" /&gt;&lt;/xsl:otherwise&gt;
+&lt;/xsl:choose&gt;
+</my:example>
+   <p>
+  When the text does include the phrases, I need to mark up the text with those phrases.
+  There might be cases where there are two phrases that overlap each other: "ginger cat"
+  and "cat", for example.  To prevent "ginger cat" being missed and "cat" being marked up
+  instead, I sort the phrases according to their length, and then process only the first
+  one on the particular piece of text:
+</p>
+   <my:example>
+&lt;xsl:for-each select="$included-phrases"&gt;
+  &lt;xsl:sort select="string-length(.)" data-type="number" order="descending" /&gt;
+  &lt;xsl:if test="position() = 1"&gt;
+    ...
+  &lt;/xsl:if&gt;
+&lt;/xsl:for-each&gt;
+</my:example>
+   <p>
+  Now we're getting down to it.  First some variable declarations:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>phrase</my:name>
+         <my:desc>the node representing the phrase to be marked up</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>word</my:name>
+         <my:desc>the content of that node, the actual word(s) to be marked up in the
+    text</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>remaining</my:name>
+         <my:desc>a node set of the rest of the phrases that are contained within the text</my:desc>
+      </my:var>
+   </my:vars>
+   <my:example>
+&lt;xsl:variable name="phrase" select="." /&gt;
+&lt;xsl:variable name="word" select="string($phrase)" /&gt;
+&lt;xsl:variable name="remaining" select="$included-phrases[. != $word]" /&gt;
+</my:example>
+   <p>
+  This next variable declaration is a little complicated.  I allowed various options at
+  the beginning of the 'markup' template, including whether the whole word needed to be
+  matched, to prevent "cat" being marked up within "categories" for example.  I know the
+  word that we're looking for, but if I'm after whole words only, then I need something a
+  bit more sophisticated than just contains(), string-before() and string-after() to find
+  that word for me.
+</p>
+   <p>
+  The $match variable contains the actual string that I'm going to
+  search for in the text, whether it be " cat " or " cat." or "'cat'".  If
+  the $words-only option is false(), then I don't have to worry about it.  But when it's true()
+  I have another template, '<my:link href="#get-first-word">get-first-word</my:link>',
+  which takes the text we're looking at, the word we want
+  to match, and an option indicating whether the match should be case-sensitive or not, and
+  gives me the string that I should be matching on.
+</p>
+   <my:example>
+&lt;xsl:variable name="match"&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when test="$words-only"&gt;
+      &lt;xsl:call-template name="get-first-word"&gt;
+        &lt;xsl:with-param name="text" select="$text" /&gt;
+        &lt;xsl:with-param name="word" select="$word" /&gt;
+        &lt;xsl:with-param name="match-case" select="$match-case" /&gt;
+      &lt;/xsl:call-template&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:otherwise&gt;&lt;xsl:value-of select="$word" /&gt;&lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;
+&lt;/xsl:variable&gt;
+</my:example>
+   <p>
+  There are now two situations to worry about.  Firstly, I could have found an actual
+  occurence of the word within the text (in which case $match holds a string indicating
+  that occurence).  Or I could have found that actually the text didn't hold the string at
+  all.  I want to do different things in the two cases, so again I need a xsl:choose to do
+  the conditional processing.  If it's turned out that the word isn't actually in the text
+  that I have, then I just need to call this template recursively on the text with the
+  rest of the phrases that I identified as possibly being in it (and the same options
+  set):
+</p>
+   <my:example>
+&lt;xsl:choose&gt;
+  &lt;xsl:when test="string($match)"&gt;
+    ...
+  &lt;/xsl:when&gt;
+  &lt;xsl:otherwise&gt;
+    &lt;xsl:choose&gt;
+      &lt;xsl:when test="$remaining"&gt;
+        &lt;xsl:call-template name="markup"&gt;
+          &lt;xsl:with-param name="text" select="$text" /&gt;
+          &lt;xsl:with-param name="phrases" select="$remaining" /&gt;
+          &lt;xsl:with-param name="words-only" select="$words-only" /&gt;
+          &lt;xsl:with-param name="first-only" select="$first-only" /&gt;
+          &lt;xsl:with-param name="match-case" select="$match-case" /&gt;
+        &lt;/xsl:call-template&gt;
+      &lt;/xsl:when&gt;
+      &lt;xsl:otherwise&gt;&lt;xsl:value-of select="$text" /&gt;&lt;/xsl:otherwise&gt;
+    &lt;/xsl:choose&gt;
+  &lt;/xsl:otherwise&gt;
+&lt;/xsl:choose&gt;
+</my:example>
+   <p>
+  Now I'm in the situation where I know what the actual string is within the text that
+  I need to substitute.  The trouble is that this string may have punctuation either
+  side (or may not).  I need to match the whole string (to make sure I'm matching whole
+  words), but when it comes to marking it up, I only actually want to mark up the word
+  itself (which may be in a different case from the original $word).  So, I set three
+  variables:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>first</my:name>
+         <my:desc>the first character in the match string, if it's punctuation</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>last</my:name>
+         <my:desc>the last character in the match string, if it's punctuation</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>replace</my:name>
+         <my:desc>the word itself</my:desc>
+      </my:var>
+   </my:vars>
+   <my:example> 
+&lt;xsl:variable name="first"&gt;
+  &lt;xsl:if test="contains($punctuation, substring($match, 1, 1))"&gt;&lt;xsl:value-of select="substring($match, 1, 1)" /&gt;&lt;/xsl:if&gt;
+&lt;/xsl:variable&gt;
+&lt;xsl:variable name="last"&gt;
+  &lt;xsl:if test="contains($punctuation, substring($match, string-length($match)))"&gt;&lt;xsl:value-of select="substring($match, string-length($match))" /&gt;&lt;/xsl:if&gt;                
+&lt;/xsl:variable&gt;
+&lt;xsl:variable name="replace" select="substring($match, string-length($first) + 1,
+                                                       string-length($match) - (string-length($first) + string-length($last)))" /&gt;
+</my:example>
+   <p>
+  Again I'm faced with two possibilities: either there are more phrases that are left to
+  be marked up (held in $remaining), or there aren't.  If there aren't, the result
+  consists of:
+</p>
+   <ol>
+      <li>the text before the matched word (plus that extra punctuation character if there is
+  one)</li>
+      <li>the marked-up word</li>
+      <li>the text after the matched word (plus that extra punctuation character if there is
+  one)</li>
+   </ol>
+   <my:example>
+&lt;xsl:choose&gt;
+  &lt;xsl:when test="$remaining"&gt;
+    ...
+  &lt;/xsl:when&gt;
+  &lt;xsl:otherwise&gt;
+    &lt;xsl:value-of select="concat(substring-before($text, $match), $first)" /&gt;
+    &lt;xsl:apply-templates select="$phrase" mode="markup"&gt;
+      &lt;xsl:with-param name="word" select="$replace" /&gt;
+    &lt;/xsl:apply-templates&gt;
+    &lt;xsl:value-of select="concat($last, substring-after($text, $match))" /&gt;
+  &lt;/xsl:otherwise&gt;
+&lt;/xsl:choose&gt;
+</my:example>
+   <p>
+  If there <em>are</em> more phrases left to markup, then the result consists of:
+</p>
+   <ol>
+      <li>the text before the matched word (plus any extra punctuation), marked up with the
+  remaining phrases</li>
+      <li>the marked-up word</li>
+      <li>the text after the matched word (plus any extra punctuation), either:
+    <ol>
+            <li>marked up with the remaining phrases, if I was only marking up the first
+      occurence of the word or</li>
+            <li>marked up with <em>all</em> the phrases, if I was marking up all occurences of
+      the word</li>
+         </ol>
+      </li>
+   </ol>
+   <my:example>
+&lt;xsl:call-template name="markup"&gt;
+  &lt;xsl:with-param name="text" select="concat(substring-before($text, $match), $first)" /&gt;
+  &lt;xsl:with-param name="phrases" select="$remaining" /&gt;
+  &lt;xsl:with-param name="words-only" select="$words-only" /&gt;
+  &lt;xsl:with-param name="first-only" select="$first-only" /&gt;
+  &lt;xsl:with-param name="match-case" select="$match-case" /&gt;
+&lt;/xsl:call-template&gt;
+&lt;xsl:apply-templates select="$phrase" mode="markup"&gt;
+  &lt;xsl:with-param name="word" select="$replace" /&gt;
+&lt;/xsl:apply-templates&gt;
+&lt;xsl:choose&gt;
+  &lt;xsl:when test="$first-only"&gt;
+    &lt;xsl:call-template name="markup"&gt;
+      &lt;xsl:with-param name="text" select="concat($last, substring-after($text, $match))" /&gt;
+      &lt;xsl:with-param name="phrases" select="$remaining" /&gt;
+      &lt;xsl:with-param name="words-only" select="$words-only" /&gt;
+      &lt;xsl:with-param name="first-only" select="$first-only" /&gt;
+      &lt;xsl:with-param name="match-case" select="$match-case" /&gt;
+    &lt;/xsl:call-template&gt;
+  &lt;/xsl:when&gt;
+  &lt;xsl:otherwise&gt;
+    &lt;xsl:call-template name="markup"&gt;
+      &lt;xsl:with-param name="text" select="concat($last, substring-after($text, $match))" /&gt;
+      &lt;xsl:with-param name="phrases" select="$included-phrases" /&gt;
+      &lt;xsl:with-param name="words-only" select="$words-only" /&gt;
+      &lt;xsl:with-param name="first-only" select="$first-only" /&gt;
+      &lt;xsl:with-param name="match-case" select="$match-case" /&gt;
+    &lt;/xsl:call-template&gt;
+  &lt;/xsl:otherwise&gt;
+&lt;/xsl:choose&gt;
+</my:example>
+   <h2 id="get-first-word">The 'get-first-word' template</h2>
+   <p>
+  The aim of the get-first-word template is to retrieve a string that will match the first
+  occurence of a whole word within the text.  This string will most likely have
+  punctuation either side that delimit it at a word - the punctuation gets returned as
+  well.
+</p>
+   <p>
+  In fact the 'get-first-word' template itself is very simple.  It is passed three
+  parameters:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>text</my:name>
+         <my:desc>the text to be searched for the word - a string</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>word</my:name>
+         <my:desc>the word to be identified within the text</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>match-case</my:name>
+         <my:default type="boolean">false</my:default>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>only identify occurences where the case matches exactly</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>identify any occurences of the word, regardless of case</my:desc>
+         </my:option>
+      </my:var>
+   </my:vars>
+   <p>
+  It then farms out the work to two other named templates,
+  <my:link href="#get-first-word-matching-case">get-first-word-matching-case</my:link>
+  if the case should be marched, and
+  <my:link href="#get-first-word-non-matching-case">get-first-word-non-matching-case</my:link>
+  if it shouldn't.
+</p>
+   <my:example>
+&lt;xsl:template name="get-first-word"&gt;
+  &lt;xsl:param name="text" /&gt;
+  &lt;xsl:param name="word" /&gt;
+  &lt;xsl:param name="match-case" select="false()" /&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when test="$match-case"&gt;
+      &lt;xsl:call-template name="get-first-word-matching-case"&gt;
+        &lt;xsl:with-param name="text" select="$text" /&gt;
+        &lt;xsl:with-param name="word" select="$word" /&gt;
+      &lt;/xsl:call-template&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:otherwise&gt;
+      &lt;xsl:call-template name="get-first-word-non-matching-case"&gt;
+        &lt;xsl:with-param name="text" select="$text" /&gt;
+        &lt;xsl:with-param name="word" select="$word" /&gt;
+      &lt;/xsl:call-template&gt;
+    &lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;
+&lt;/xsl:template&gt;
+</my:example>
+   <h2 id="get-first-word-matching-case">The 'get-first-word-matching-case' templates</h2>
+   <p>
+  The 'get-first-word-matching-case' template takes two parameters:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>text</my:name>
+         <my:desc>the text to be searched for the word - a string</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>word</my:name>
+         <my:desc>the word to be identified within the text</my:desc>
+      </my:var>
+   </my:vars>
+   <p/>
+   <my:example>
+&lt;xsl:template name="get-first-word-matching-case"&gt;
+  &lt;xsl:param name="text" /&gt;
+  &lt;xsl:param name="word" /&gt;
+  ...
+&lt;/xsl:template&gt;
+</my:example>
+   <p>
+  It then sets four variables:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>before</my:name>
+         <my:desc>the string before the first occurence of the word in the text</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>after</my:name>
+         <my:desc>the string after the first occurence of the word in the text</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>punc-before</my:name>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>the last character of $before (i.e. the character just before the word) is
+      a punctuation character</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>the last character of $before (i.e. the character just before the word) is
+      <em>not</em> a punctuation character</my:desc>
+         </my:option>
+      </my:var>
+      <my:var>
+         <my:name>punc-after</my:name>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>the first character of $after (i.e. the character just after the word) is
+      a punctuation character</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>the first character of $after (i.e. the character just after the word) is
+      <em>not</em> a punctuation character</my:desc>
+         </my:option>
+      </my:var>
+   </my:vars>
+   <my:example>
+&lt;xsl:variable name="before" select="substring-before($text, $word)" /&gt;
+&lt;xsl:variable name="after" select="substring-after($text, $word)" /&gt;
+&lt;xsl:variable name="punc-before" select="contains($punctuation, substring($before, string-length($before), 1))" /&gt;
+&lt;xsl:variable name="punc-after" select="contains($punctuation, substring($after, 1, 1))" /&gt;
+</my:example>
+   <p>
+  Now a big choose statement to decide what to do.  There are six possible situations:
+</p>
+   <ul>
+      <li>the text does not contain the word - return nothing</li>
+      <li>there punctuation before and after the word - return the word with the punctuation
+  either side so that the word can be identified</li>
+      <li>the text is equal to the word on its own - return the word itself</li>
+      <li>there is punctuation after the word and the text begins with the word - return the
+  text and the following character of punctuation</li>
+      <li>there is punctuation before the word and the text ends with the word - return the
+  text and the preceding character of punctuation</li>
+      <li>none of the above conditions occur, which means that the word is contained in the
+  text but not as a whole word - if the string after the word contains the word again,
+  then return the first occurence of the word in that text (recursively call this template
+  again)</li>
+   </ul>
+   <my:example>
+&lt;xsl:choose&gt;
+  &lt;xsl:when test="not(contains($text, $word))" /&gt;
+  &lt;xsl:when test="$punc-before and $punc-after"&gt;
+    &lt;xsl:value-of select="substring($text, string-length($before), string-length($word) + 2)" /&gt;
+  &lt;/xsl:when&gt;
+  &lt;xsl:when test="$text = $word"&gt;
+    &lt;xsl:value-of select="$word" /&gt;
+  &lt;/xsl:when&gt;
+  &lt;xsl:when test="$punc-after and starts-with($text, $word)"&gt;
+    &lt;xsl:value-of select="substring($text, 1, string-length($word) + 1)" /&gt;
+  &lt;/xsl:when&gt;
+  &lt;xsl:when test="$punc-before and not(substring-after($text, $word))"&gt;
+    &lt;xsl:value-of select="substring($text, string-length($text) - string-length($word))" /&gt;
+  &lt;/xsl:when&gt;
+  &lt;xsl:when test="contains($after, $word)"&gt;
+    &lt;xsl:call-template name="get-first-word-matching-case"&gt;
+      &lt;xsl:with-param name="text" select="$after" /&gt;
+      &lt;xsl:with-param name="word" select="$word" /&gt;
+    &lt;/xsl:call-template&gt;
+  &lt;/xsl:when&gt;
+&lt;/xsl:choose&gt;  
+</my:example>
+   <h2 id="get-first-word-non-matching-case">The 'get-first-word-non-matching-case' templates</h2>
+   <p>
+  The 'get-first-word-non-matching-case' template is very similar to the
+  <my:link href="#get-first-word-matching-case">get-first-word-matching-case</my:link>
+  template, but is a little more complex because the case doesn't matter.  It takes two parameters:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>text</my:name>
+         <my:desc>the text to be searched for the word - a string</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>word</my:name>
+         <my:desc>the word to be identified within the text</my:desc>
+      </my:var>
+   </my:vars>
+   <my:example>
+&lt;xsl:template name="get-first-word-non-matching-case"&gt;
+  &lt;xsl:param name="text" /&gt;
+  &lt;xsl:param name="word" /&gt;
+  ...
+&lt;/xsl:template&gt;
+</my:example>
+   <p>
+  It then sets four variables:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>lcase-text</my:name>
+         <my:desc>the text, translated into all lowercase letters</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>lcase-word</my:name>
+         <my:desc>the word, translated into all lowercase letters</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>before</my:name>
+         <my:desc>the string before the first occurence of the (lowercase) word in the (lowercase) text</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>after</my:name>
+         <my:desc>the string after the first occurence of the (lowercase) word in the (lowercase) text</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>punc-before</my:name>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>the last character of $before (i.e. the character just before the word) is
+      a punctuation character</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>the last character of $before (i.e. the character just before the word) is
+      <em>not</em> a punctuation character</my:desc>
+         </my:option>
+      </my:var>
+      <my:var>
+         <my:name>punc-after</my:name>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>the first character of $after (i.e. the character just after the word) is
+      a punctuation character</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>the first character of $after (i.e. the character just after the word) is
+      <em>not</em> a punctuation character</my:desc>
+         </my:option>
+      </my:var>
+   </my:vars>
+   <my:example>
+&lt;xsl:variable name="lcase-text" select="translate($text, $uppercase, $lowercase)" /&gt;
+&lt;xsl:variable name="lcase-word" select="translate($word, $uppercase, $lowercase)" /&gt;
+&lt;xsl:variable name="before" select="substring($text, 1, string-length(substring-before($lcase-text, $lcase-word)))" /&gt;
+&lt;xsl:variable name="after" select="substring($text, string-length($before) + string-length($word) + 1)" /&gt;
+&lt;xsl:variable name="punc-before" select="contains($punctuation, substring($before, string-length($before), 1))" /&gt;
+&lt;xsl:variable name="punc-after" select="contains($punctuation, substring($after, 1, 1))" /&gt;
+</my:example>
+   <p>
+  Now a big choose statement to decide what to do.  There are six possible situations:
+</p>
+   <ul>
+      <li>the text does not contain the word - return nothing</li>
+      <li>there punctuation before and after the word - return the word with the punctuation
+  either side so that the word can be identified</li>
+      <li>the text is equal to the word on its own - return the word itself</li>
+      <li>there is punctuation after the word and the text begins with the word - return the
+  text and the following character of punctuation</li>
+      <li>there is punctuation before the word and the text ends with the word - return the
+  text and the preceding character of punctuation</li>
+      <li>none of the above conditions occur, which means that the word is contained in the
+  text but not as a whole word - if the string after the word contains the word again,
+  then return the first occurence of the word in that text (recursively call this template
+  again)</li>
+   </ul>
+   <my:example>
+&lt;xsl:choose&gt;
+  &lt;xsl:when test="not(contains($lcase-text, $lcase-word))" /&gt;
+  &lt;xsl:when test="$punc-before and $punc-after"&gt;
+    &lt;xsl:value-of select="substring($text, string-length($before), string-length($word) + 2)" /&gt;
+  &lt;/xsl:when&gt;
+  &lt;xsl:when test="$lcase-text = $lcase-word"&gt;
+    &lt;xsl:value-of select="$text" /&gt;
+  &lt;/xsl:when&gt;
+  &lt;xsl:when test="$punc-after and starts-with($lcase-text, $lcase-word)"&gt;
+    &lt;xsl:value-of select="substring($text, 1, string-length($word) + 1)" /&gt;
+  &lt;/xsl:when&gt;
+  &lt;xsl:when test="$punc-before and not(substring-after($lcase-text, $lcase-word))"&gt;
+    &lt;xsl:value-of select="substring($text, string-length($text) - string-length($word))" /&gt;
+  &lt;/xsl:when&gt;
+  &lt;xsl:when test="contains(translate($after, $uppercase, $lowercase), $lcase-word)"&gt;
+    &lt;xsl:call-template name="get-first-word-non-matching-case"&gt;
+      &lt;xsl:with-param name="text" select="$after" /&gt;
+      &lt;xsl:with-param name="word" select="$word" /&gt;
+    &lt;/xsl:call-template&gt;
+  &lt;/xsl:when&gt;
+&lt;/xsl:choose&gt;
+</my:example>
+   <h2 id="markup-mode">The generic markup template</h2>
+   <p>
+  The generic markup template is a template that matches any element in 'markup' mode.
+  It's called by the <my:link href="#markup">markup template</my:link>.
+  This is the template that actually does the marking up of the phrase that has been
+  identified within the text.  It takes one parameter:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>word</my:name>
+         <my:desc>the word that is being marked up</my:desc>
+      </my:var>
+   </my:vars>
+   <p>
+  This template simply makes an HTML 'a' link around the word, linking it to the page
+  identified by the 'id' attribute on the element that's being matched.  So if you have a
+  phrase that was:
+</p>
+   <my:example>
+  &lt;phrase id="cat"&gt;cat&lt;/phrase&gt;
+</my:example>
+   <p>
+  then this template would produce:
+</p>
+   <my:example>
+  &lt;a href="cat.html"&gt;cat&lt;/a&gt;
+</my:example>
+   <p>
+  The code for the template is:
+</p>
+   <my:example>
+&lt;xsl:template match="*" mode="markup"&gt;
+  &lt;xsl:param name="word" /&gt;
+  &lt;a href="{@id}.html"&gt;
+    &lt;xsl:value-of select="$word" /&gt;
+  &lt;/a&gt;
+&lt;/xsl:template&gt;
+</my:example>
+   <p>
+  You should create other templates in 'markup' mode to match the phrase nodes that
+  you're using and create links to them, or highlight them, or do whatever you want to do
+  with the marked up text.
+</p>
+</my:doc>

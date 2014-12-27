@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<prefs>
+   <tree>
+      <indent>1em</indent>
+      <body background="Window" color="WindowText" font="menu" />
+      <selected background="Highlight" color="HighlightText" />
+   </tree>
+   <summary>
+      <body background="Window" color="WindowText" />
+      <table border-collapse="collapse" table-layout="auto" width="100%" margin-top="0.8em" />
+      <headers background="Menu" color="MenuText" border="1px solid WindowFrame" font="menu" />
+      <rows border="1px solid WindowFrame" padding-left="0.5em" padding-right="0.5em" font="menu" cursor="help" />
+      <selected background="Highlight" color="HighlightText" cursor="default"/>
+      <overridden font-style="italic" />
+   </summary>
+   <source>
+      <indent>2em</indent>
+      <body font-family="'Lucida Console', 'Courier New', monospace"        
+            font-size="0.8em"
+            background="Window"
+            color="WindowText" />
+      <element-name color="#600" cursor="help" />
+      <attribute-name color="#060" />
+      <attribute-value color="#006" />
+      <xsl-element-name color="#C00" cursor="help" />
+      <xsl-attribute-name color="#0C0" />
+      <xsl-attribute-value color="#00C" />
+      <entity color="magenta" />
+      <comment color="#999" />
+      <selected background="#DDD" />
+   </source>
+   <notes>
+      <body background="Window" color="WindowText" />
+      <join font-style="italic" />
+      <link font-weight="bold" cursor="help" />
+   </notes>
+</prefs>

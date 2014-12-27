@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../../temp/source.xsl"?><sources xmlns:doc="http://www.jenitennison.com/xslt/doc"><source href="#source"><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt" xmlns:msxsl="urn:schemas-microsoft-com:xslt" doc:id="ab1" version="1.0" exclude-result-prefixes="rdf dc dcq my html vcf msxsl">
+
+<xsl:output doc:id="ab1b1" doctype-system="/resources/dtd/xhtml1-strict.dtd" doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN" cdata-section-elements="script" indent="yes" method="xml"/>
+
+<xsl:param doc:id="ab1b3" name="dynamic" select="'true'"/>
+<xsl:param doc:id="ab1b5" name="base" select="'/'"/>
+
+<xsl:variable doc:id="ab1b7" name="supports-document" select="function-available('document')"/>
+<xsl:variable doc:id="ab1b9" name="supports-keys" select="function-available('key')"/>
+
+<xsl:variable doc:id="ab1c11" name="default-title" select="&#34;Jeni's XML Site&#34;"/>
+
+<xsl:template doc:id="ab1c13" match="my:doc">
+  <xsl:variable doc:id="ab1c13b1" name="metadata" select="/*/rdf:RDF"/>
+  <xsl:variable doc:id="ab1c13b3" name="uri" select="$metadata/rdf:Description[1]/@about"/>
+	<html doc:id="ab1c13b5">
+		<head doc:id="ab1c13b5b1">
+			<title doc:id="ab1c13b5b1b1">
+				<xsl:call-template doc:id="ab1c13b5b1b1b1" name="get-metadata">
+					<xsl:with-param doc:id="ab1c13b5b1b1b1b1" name="what" select="'title'"/>
+				  <xsl:with-param doc:id="ab1c13b5b1b1b1b3" name="about" select="$uri"/>
+				</xsl:call-template>
+			</title>
+			<xsl:call-template doc:id="ab1c13b5b1b3" name="get-metadata">
+				<xsl:with-param doc:id="ab1c13b5b1b3b1" name="what" select="'link'"/>
+				<xsl:with-param doc:id="ab1c13b5b1b3b3" name="about" select="$uri"/>
+			</xsl:call-template>
+			<link doc:id="ab1c13b5b1b5" rel="alternate" type="text/xml" href="{$uri}"/>
+			<xsl:call-template doc:id="ab1c13b5b1b7" name="get-metadata">
+			  <xsl:with-param doc:id="ab1c13b5b1b7b1" name="what" select="'rights'"/>
+			  <xsl:with-param doc:id="ab1c13b5b1b7b3" name="about" select="$uri"/>
+			</xsl:call-template>
+		</head>
+		<body doc:id="ab1c13b5b3">
+			<xsl:if doc:id="ab1c13b5b3b1" test="$dynamic = 'false'">
+				<p doc:id="ab1c13b5b3b1b1" id="xml-link">
+					Try the <a doc:id="ab1c13b5b3b1b1b1" href="{$uri}">XML version</a> of this page.
+					If you have problems with it, consult the
+					<a doc:id="ab1c13b5b3b1b1b3" href="/compatibility.html">compatibility page</a>.
+				</p>
+			</xsl:if>
+			<xsl:apply-templates doc:id="ab1c13b5b3b3"/>
+			<xsl:apply-templates doc:id="ab1c13b5b3b5" select="." mode="colophon"/>
+		</body>
+	</html>
+</xsl:template>
+
+<xsl:template doc:id="ab1c15" match="html:h1">
+  <h1 doc:id="ab1c15b1">
+    <xsl:apply-templates doc:id="ab1c15b1b1"/>
+    <xsl:call-template doc:id="ab1c15b1b3" name="insert-navigation"/>
+  </h1>
+</xsl:template>
+
+<xsl:template doc:id="ab1c17" name="insert-navigation">
+  <xsl:variable doc:id="ab1c17b1" name="metadata" select="/*/rdf:RDF"/>
+  <xsl:variable doc:id="ab1c17b3" name="uri" select="$metadata/rdf:Description[1]/@about"/>
+	<xsl:if doc:id="ab1c17b5" test="$uri != concat($base, 'index.xml')">
+	<span doc:id="ab1c17b5b1" id="link-top">
+		<a doc:id="ab1c17b5b1b1" class="img">
+		  <xsl:attribute doc:id="ab1c17b5b1b1b1" name="href">
+			  <xsl:choose doc:id="ab1c17b5b1b1b1b1">
+			    <xsl:when doc:id="ab1c17b5b1b1b1b1b1" test="$dynamic = 'true'">/index.xml</xsl:when>
+			    <xsl:otherwise doc:id="ab1c17b5b1b1b1b1b3">/index.html</xsl:otherwise>
+			  </xsl:choose>
+		  </xsl:attribute>
+			<img doc:id="ab1c17b5b1b1b3" src="{$base}resources/icons/top.gif" width="29" height="29"/>
+		</a>
+	</span>
+  <span doc:id="ab1c17b5b3" id="link-up">
+		<a doc:id="ab1c17b5b3b1" class="img">
+			<xsl:attribute doc:id="ab1c17b5b3b1b1" name="href">
+				<xsl:choose doc:id="ab1c17b5b3b1b1b1">
+					<xsl:when doc:id="ab1c17b5b3b1b1b1b1" test="contains($uri, 'index.xml')">
+					  <xsl:choose doc:id="ab1c17b5b3b1b1b1b1b1">
+					    <xsl:when doc:id="ab1c17b5b3b1b1b1b1b1b1" test="$dynamic = 'true'">../index.xml</xsl:when>
+					    <xsl:otherwise doc:id="ab1c17b5b3b1b1b1b1b1b3">../index.html</xsl:otherwise>
+					  </xsl:choose>						  
+					</xsl:when>
+					<xsl:otherwise doc:id="ab1c17b5b3b1b1b1b3">
+					  <xsl:choose doc:id="ab1c17b5b3b1b1b1b3b1">
+					    <xsl:when doc:id="ab1c17b5b3b1b1b1b3b1b1" test="$dynamic = 'true'">index.xml</xsl:when>
+					    <xsl:otherwise doc:id="ab1c17b5b3b1b1b1b3b1b3">index.html</xsl:otherwise>
+					  </xsl:choose>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:attribute>
+			<img doc:id="ab1c17b5b3b1b3" src="{$base}resources/icons/up.gif" width="29" height="29"/>
+		</a>
+  </span>
+</xsl:if>
+</xsl:template>
+
+
+<xsl:template doc:id="ab1c19" match="rdf:RDF"/>
+
+<xsl:template doc:id="ab1c21" name="get-metadata">
+	<xsl:param doc:id="ab1c21b1" name="what"/>
+	<xsl:param doc:id="ab1c21b3" name="about" select="/*/rdf:RDF/rdf:Description/@about"/>
+  <xsl:variable doc:id="ab1c21b5" name="metadata" select="/*/rdf:RDF"/>
+	<xsl:variable doc:id="ab1c21b7" name="type">
+		<xsl:choose doc:id="ab1c21b7b1">
+			<xsl:when doc:id="ab1c21b7b1b1" test="contains($what, '::')">
+				<xsl:value-of doc:id="ab1c21b7b1b1b1" select="substring-before($what, '::')"/>
+			</xsl:when>
+			<xsl:otherwise doc:id="ab1c21b7b1b3"><xsl:value-of doc:id="ab1c21b7b1b3a" select="$what"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:variable doc:id="ab1c21b9" name="mode">
+		<xsl:choose doc:id="ab1c21b9b1">
+			<xsl:when doc:id="ab1c21b9b1b1" test="contains($what, '::')">
+				<xsl:value-of doc:id="ab1c21b9b1b1b1" select="substring-after($what, '::')"/>
+			</xsl:when>
+			<xsl:otherwise doc:id="ab1c21b9b1b3"/>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:apply-templates doc:id="ab1c21c11" select="$metadata/rdf:Description[@about = $about or                                                         (@aboutEachPrefix != '' and starts-with($about, @aboutEachPrefix))]/*[local-name() = $type]">
+		<xsl:with-param doc:id="ab1c21c11b1" name="mode" select="$mode"/>
+	</xsl:apply-templates>
+</xsl:template>
+
+<xsl:template doc:id="ab1c23" match="rdf:Description/*">
+	<xsl:param doc:id="ab1c23b1" name="mode"/>
+	<xsl:choose doc:id="ab1c23b3">
+		<xsl:when doc:id="ab1c23b3b1" test="@rdf:resource != ''">
+			<xsl:call-template doc:id="ab1c23b3b1b1" name="get-metadata">
+				<xsl:with-param doc:id="ab1c23b3b1b1b1" name="about" select="@rdf:resource"/>
+				<xsl:with-param doc:id="ab1c23b3b1b1b3" name="what" select="$mode"/>
+			</xsl:call-template>
+		</xsl:when>
+		<xsl:when doc:id="ab1c23b3b3" test="$mode = '' and @rdf:value != ''">
+			<xsl:value-of doc:id="ab1c23b3b3b1" select="@rdf:value"/>
+		</xsl:when>
+		<xsl:when doc:id="ab1c23b3b5" test="$mode = '' and *">
+			<xsl:apply-templates doc:id="ab1c23b3b5b1"/>
+		</xsl:when>
+		<xsl:otherwise doc:id="ab1c23b3b7">
+			<xsl:apply-templates doc:id="ab1c23b3b7b1" select="." mode="get-metadata">
+				<xsl:with-param doc:id="ab1c23b3b7b1b1" name="mode" select="$mode"/>
+			</xsl:apply-templates>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
+
+<xsl:template doc:id="ab1c25" match="html:link" mode="get-metadata">
+	<link doc:id="ab1c25b1">
+		<xsl:copy-of doc:id="ab1c25b1b1" select="@*"/>
+	</link>
+</xsl:template>
+
+<xsl:template doc:id="ab1c27" match="dc:rights" mode="get-metadata">
+  <xsl:comment doc:id="ab1c27b1">
+    <xsl:value-of doc:id="ab1c27b1b1" select="."/>
+  </xsl:comment>
+</xsl:template>
+
+<xsl:template doc:id="ab1c29" match="dc:date" mode="get-metadata">
+	<xsl:param doc:id="ab1c29b1" name="mode" select="''"/>
+	<xsl:if doc:id="ab1c29b3" test="$mode = @dcq:dateType">
+		<xsl:value-of doc:id="ab1c29b3b1" select="@rdf:value"/>
+	</xsl:if>
+</xsl:template>
+
+<xsl:template doc:id="ab1c31" match="vcf:vCard" mode="get-metadata">
+	<xsl:param doc:id="ab1c31b1" name="mode" select="''"/>
+	<xsl:choose doc:id="ab1c31b3">
+		<xsl:when doc:id="ab1c31b3b1" test="$mode = 'mailto-link'">
+			<xsl:call-template doc:id="ab1c31b3b1b1" name="link">
+				<xsl:with-param doc:id="ab1c31b3b1b1b1" name="link">
+					<xsl:choose doc:id="ab1c31b3b1b1b1b1">
+						<xsl:when doc:id="ab1c31b3b1b1b1b1b1" test="vcf:email[contains(@email.type, 'PREF')]">
+							<xsl:value-of doc:id="ab1c31b3b1b1b1b1b1b1" select="vcf:email[contains(@email.type, 'PREF')]"/>
+						</xsl:when>
+						<xsl:otherwise doc:id="ab1c31b3b1b1b1b1b3"><xsl:value-of doc:id="ab1c31b3b1b1b1b1b3a" select="vcf:email[1]"/></xsl:otherwise>
+					</xsl:choose>
+				</xsl:with-param>
+				<xsl:with-param doc:id="ab1c31b3b1b1b3" name="value">
+					<xsl:apply-templates doc:id="ab1c31b3b1b1b3b1" select="vcf:n" mode="full"/>
+				</xsl:with-param>
+			</xsl:call-template>
+		</xsl:when>
+		<xsl:when doc:id="ab1c31b3b3" test="$mode = 'name'">
+			<xsl:apply-templates doc:id="ab1c31b3b3b1" select="vcf:n" mode="full"/>
+		</xsl:when>
+		<xsl:otherwise doc:id="ab1c31b3b5"/>
+	</xsl:choose>
+</xsl:template>
+
+<xsl:template doc:id="ab1c33" match="vcf:n" mode="full">
+	<xsl:if doc:id="ab1c33b1" test="vcf:prefix">
+		<xsl:value-of doc:id="ab1c33b1b1" select="vcf:prefix"/><xsl:text doc:id="ab1c33b1b2"> </xsl:text>
+	</xsl:if>
+	<xsl:choose doc:id="ab1c33b3">
+		<xsl:when doc:id="ab1c33b3b1" test="../vcf:nickname">
+			<xsl:value-of doc:id="ab1c33b3b1b1" select="../vcf:nickname"/>
+		</xsl:when>
+		<xsl:otherwise doc:id="ab1c33b3b3">
+			<xsl:value-of doc:id="ab1c33b3b3b1" select="vcf:given"/>
+		</xsl:otherwise>
+	</xsl:choose>
+	<xsl:text doc:id="ab1c33b5"> </xsl:text>
+	<xsl:value-of doc:id="ab1c33b7" select="vcf:family"/>
+</xsl:template>
+
+<xsl:template doc:id="ab1c35" match="html:*">
+	<xsl:element doc:id="ab1c35b1" name="{local-name()}">
+		<xsl:copy-of doc:id="ab1c35b1b1" select="@*"/>
+		<xsl:apply-templates doc:id="ab1c35b1b3"/>
+	</xsl:element>
+</xsl:template>
+
+<xsl:template doc:id="ab1c37" match="my:vars">
+  <dl doc:id="ab1c37b1">
+    <xsl:apply-templates doc:id="ab1c37b1b1"/>
+  </dl>
+</xsl:template>
+
+<xsl:template doc:id="ab1c39" match="my:var">
+  <dt doc:id="ab1c39b1" id="{translate(my:name, ' ', '-')}">
+    <xsl:text doc:id="ab1c39b1b1"/>$<xsl:value-of doc:id="ab1c39b1b3" select="my:name"/>
+    <xsl:choose doc:id="ab1c39b1b5">
+      <xsl:when doc:id="ab1c39b1b5b1" test="my:value">
+        <xsl:text doc:id="ab1c39b1b5b1b1"/> = <xsl:apply-templates doc:id="ab1c39b1b5b1b3" select="my:value"/>
+      </xsl:when>
+      <xsl:when doc:id="ab1c39b1b5b3" test="my:default">
+        <xsl:text doc:id="ab1c39b1b5b3b1"/> [= <xsl:apply-templates doc:id="ab1c39b1b5b3b3" select="my:default"/>]<xsl:text doc:id="ab1c39b1b5b3b5"/>
+      </xsl:when>
+    </xsl:choose>
+  </dt>
+  <dd doc:id="ab1c39b3">
+    <xsl:if doc:id="ab1c39b3b1" test="my:desc"><xsl:apply-templates doc:id="ab1c39b3b1a" select="my:desc"/></xsl:if>
+    <xsl:if doc:id="ab1c39b3b3" test="my:option">
+      <ul doc:id="ab1c39b3b3b1">
+        <xsl:apply-templates doc:id="ab1c39b3b3b1b1" select="my:option"/>
+      </ul>
+    </xsl:if>
+    <xsl:apply-templates doc:id="ab1c39b3b5" select="my:defn"/>
+  </dd>
+</xsl:template>
+
+<xsl:template doc:id="ab1c41" match="my:option">
+  <li doc:id="ab1c41b1"><xsl:apply-templates doc:id="ab1c41b1a" select="my:value"/>: <xsl:apply-templates doc:id="ab1c41b1b2" select="my:desc"/></li>
+</xsl:template>
+
+<xsl:template doc:id="ab1c43" match="my:value | my:default">
+  <xsl:choose doc:id="ab1c43b1">
+    <xsl:when doc:id="ab1c43b1b1" test="@type">
+      <span doc:id="ab1c43b1b1b1" class="{@type}">
+        <xsl:choose doc:id="ab1c43b1b1b1b1">
+          <xsl:when doc:id="ab1c43b1b1b1b1b1" test="@type = 'string'">'<xsl:value-of doc:id="ab1c43b1b1b1b1b1b1" select="."/>'</xsl:when>
+          <xsl:when doc:id="ab1c43b1b1b1b1b3" test="@type = 'rtf'">"<xsl:value-of doc:id="ab1c43b1b1b1b1b3b1" select="."/>"</xsl:when>
+          <xsl:otherwise doc:id="ab1c43b1b1b1b1b5"><xsl:value-of doc:id="ab1c43b1b1b1b1b5a" select="."/></xsl:otherwise>
+        </xsl:choose>
+      </span>
+    </xsl:when>
+    <xsl:otherwise doc:id="ab1c43b1b3">
+      <xsl:value-of doc:id="ab1c43b1b3b1" select="."/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template doc:id="ab1c45" match="my:post">
+	<div doc:id="ab1c45b1" class="post">
+		<xsl:apply-templates doc:id="ab1c45b1b1"/>
+	</div>
+</xsl:template>
+
+<xsl:template doc:id="ab1c47" match="my:response">
+	<div doc:id="ab1c47b1" class="response">
+		<xsl:apply-templates doc:id="ab1c47b1b1"/>
+	</div>
+</xsl:template>
+
+<xsl:template doc:id="ab1c49" match="my:question">
+	<div doc:id="ab1c49b1" class="question">
+		<p doc:id="ab1c49b1b1">
+			<xsl:call-template doc:id="ab1c49b1b1b1" name="insert-icon">
+				<xsl:with-param doc:id="ab1c49b1b1b1b1" name="icon" select="'question'"/>
+				<xsl:with-param doc:id="ab1c49b1b1b1b3" name="active" select="false()"/>
+			</xsl:call-template>
+			<xsl:text doc:id="ab1c49b1b1b3"> </xsl:text>
+			<xsl:apply-templates doc:id="ab1c49b1b1b5" select="*[1]/node()"/>
+		</p>
+		<xsl:apply-templates doc:id="ab1c49b1b3" select="*[position() &gt; 1]"/>
+	</div>
+</xsl:template>
+
+<xsl:template doc:id="ab1c51" match="my:example | my:defn">
+	<pre doc:id="ab1c51b1">
+		<xsl:apply-templates doc:id="ab1c51b1b1"/>
+	</pre>
+</xsl:template>
+
+<xsl:template doc:id="ab1c53" match="my:example[parent::my:aside and ancestor::my:example]">
+  <xsl:choose doc:id="ab1c53b1">
+    <xsl:when doc:id="ab1c53b1b1" test="$dynamic = 'true'">
+      <pre doc:id="ab1c53b1b1b1">
+        <xsl:apply-templates doc:id="ab1c53b1b1b1b1"/>
+      </pre>
+    </xsl:when>
+    <xsl:otherwise doc:id="ab1c53b1b3">
+      <span doc:id="ab1c53b1b3b1" class="example">
+        <xsl:apply-templates doc:id="ab1c53b1b3b1b1"/>
+      </span>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template doc:id="ab1c55" match="my:example[parent::my:aside and not(ancestor::my:example)]">
+  <xsl:call-template doc:id="ab1c55b1" name="split-and-code">
+    <xsl:with-param doc:id="ab1c55b1b1" name="text" select="string(.)"/>
+  </xsl:call-template>
+</xsl:template>
+
+<xsl:template doc:id="ab1c57" name="split-and-code">
+  <xsl:param doc:id="ab1c57b1" name="text"/>
+  <br doc:id="ab1c57b3"/>
+  <xsl:choose doc:id="ab1c57b5">
+    <xsl:when doc:id="ab1c57b5b1" test="contains($text, '&#xA;')">
+      <code doc:id="ab1c57b5b1b1"><xsl:value-of doc:id="ab1c57b5b1b1a" select="substring-before($text, '&#xA;')"/></code>
+      <xsl:call-template doc:id="ab1c57b5b1b3" name="split-and-code">
+        <xsl:with-param doc:id="ab1c57b5b1b3b1" name="text" select="substring-after($text, '&#xA;')"/>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise doc:id="ab1c57b5b3">
+      <code doc:id="ab1c57b5b3b1"><xsl:value-of doc:id="ab1c57b5b3b1a" select="$text"/></code>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template doc:id="ab1c59" match="my:aside">
+  <xsl:choose doc:id="ab1c59b1">
+    <xsl:when doc:id="ab1c59b1b1" test="$dynamic = 'true'">
+    	<span doc:id="ab1c59b1b1b1" class="note"><img doc:id="ab1c59b1b1b1a" src="{$base}resources/icons/note.gif" height="17" width="13" border="0" style="z-index: 2;" onmouseover="javascript:{generate-id()}.style.visibility='visible';" onmouseout="javascript:{generate-id()}.style.visibility='hidden';"/><span doc:id="ab1c59b1b1b1b1" class="popup" id="{generate-id()}" onmouseover="javascript:{generate-id()}.style.visibility='visible';" onmouseout="javascript:{generate-id()}.style.visibility='hidden';">
+    			<xsl:apply-templates doc:id="ab1c59b1b1b1b1b1"/>
+    		</span></span>
+    </xsl:when>
+    <xsl:otherwise doc:id="ab1c59b1b3">
+      <xsl:text doc:id="ab1c59b1b3b1"> </xsl:text>
+      <span doc:id="ab1c59b1b3b3" class="note">[<xsl:apply-templates doc:id="ab1c59b1b3b3b1"/>]</span>
+      <xsl:text doc:id="ab1c59b1b3b5"> </xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template doc:id="ab1c61" match="my:quote">
+  <blockquote doc:id="ab1c61b1" uri="{@href}">
+    <xsl:apply-templates doc:id="ab1c61b1b1"/>
+  </blockquote>
+  <p doc:id="ab1c61b3" class="byline">
+    <xsl:text doc:id="ab1c61b3b1">[From </xsl:text>
+    <xsl:call-template doc:id="ab1c61b3b3" name="link">
+      <xsl:with-param doc:id="ab1c61b3b3b1" name="link" select="@href"/>
+      <xsl:with-param doc:id="ab1c61b3b3b3" name="value">
+        <xsl:value-of doc:id="ab1c61b3b3b3b1" select="@href"/>
+      </xsl:with-param>
+    </xsl:call-template>
+    <xsl:text doc:id="ab1c61b3b5">]</xsl:text>
+  </p>
+</xsl:template>
+
+<xsl:template doc:id="ab1c63" match="my:icon">
+	<xsl:call-template doc:id="ab1c63b1" name="insert-icon">
+		<xsl:with-param doc:id="ab1c63b1b1" name="icon" select="@name"/>
+	</xsl:call-template>
+</xsl:template>
+
+<xsl:template doc:id="ab1c65" name="insert-icon">
+	<xsl:param doc:id="ab1c65b1" name="icon" select="'goto'"/>
+	<xsl:param doc:id="ab1c65b3" name="active" select="true()"/>
+	<img doc:id="ab1c65b5" src="{$base}resources/icons/{$icon}.gif" height="28" width="28" border="0">
+		<xsl:attribute doc:id="ab1c65b5b1" name="src">
+			<xsl:value-of doc:id="ab1c65b5b1b1" select="$base"/>
+			<xsl:text doc:id="ab1c65b5b1b3">resources/icons/</xsl:text>
+			<xsl:if doc:id="ab1c65b5b1b5" test="not($active)">click-</xsl:if>
+			<xsl:value-of doc:id="ab1c65b5b1b7" select="$icon"/>
+			<xsl:text doc:id="ab1c65b5b1b9">.gif</xsl:text>
+		</xsl:attribute>
+		<xsl:if doc:id="ab1c65b5b3" test="$active">
+			<xsl:attribute doc:id="ab1c65b5b3b1" name="onmouseover">javascript:this.src='<xsl:value-of doc:id="ab1c65b5b3b1b1" select="$base"/>resources/icons/over-<xsl:value-of doc:id="ab1c65b5b3b1b3" select="$icon"/>.gif'</xsl:attribute>
+			<xsl:attribute doc:id="ab1c65b5b3b3" name="onclick">javascript:this.src='<xsl:value-of doc:id="ab1c65b5b3b3b1" select="$base"/>resources/icons/click-<xsl:value-of doc:id="ab1c65b5b3b3b3" select="$icon"/>.gif'</xsl:attribute>
+			<xsl:attribute doc:id="ab1c65b5b3b5" name="onmouseout">javascript:this.src='<xsl:value-of doc:id="ab1c65b5b3b5b1" select="$base"/>resources/icons/<xsl:value-of doc:id="ab1c65b5b3b5b3" select="$icon"/>.gif'</xsl:attribute>
+		</xsl:if>
+	</img>
+</xsl:template>
+
+<xsl:template doc:id="ab1c67" match="my:links">
+	<xsl:choose doc:id="ab1c67b1">
+		<xsl:when doc:id="ab1c67b1b1" test="parent::html:dd">
+			<xsl:apply-templates doc:id="ab1c67b1b1b1" select="my:link" mode="list"/>			
+		</xsl:when>
+		<xsl:otherwise doc:id="ab1c67b1b3">
+			<xsl:call-template doc:id="ab1c67b1b3b1" name="columnise">
+				<xsl:with-param doc:id="ab1c67b1b3b1b1" name="max-height" select="3"/>
+			</xsl:call-template>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
+
+<xsl:template doc:id="ab1c69" name="columnise">
+	<xsl:param doc:id="ab1c69b1" name="max-height" select="5"/>
+	<xsl:param doc:id="ab1c69b3" name="max-width" select="3"/>
+	<xsl:variable doc:id="ab1c69b5" name="no-items" select="count(*)"/>
+	<xsl:variable doc:id="ab1c69b7" name="width">
+		<xsl:choose doc:id="ab1c69b7b1">
+			<xsl:when doc:id="ab1c69b7b1b1" test="$no-items &gt; $max-height * $max-width">
+				<xsl:value-of doc:id="ab1c69b7b1b1b1" select="$max-width"/>
+			</xsl:when>
+			<xsl:otherwise doc:id="ab1c69b7b1b3">
+				<xsl:value-of doc:id="ab1c69b7b1b3b1" select="ceiling($no-items div $max-height)"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:variable doc:id="ab1c69b9" name="height" select="ceiling($no-items div $width)"/>
+	<table doc:id="ab1c69c11">
+		<colgroup doc:id="ab1c69c11b1" span="{$width}"/>
+		<tr doc:id="ab1c69c11b3">
+			<xsl:for-each doc:id="ab1c69c11b3b1" select="*[position() = 1 or position() mod $height = 1]">
+				<td doc:id="ab1c69c11b3b1b1">
+					<xsl:apply-templates doc:id="ab1c69c11b3b1b1b1" select=". | following-sibling::*[position() &lt; $height]" mode="list"/>
+				</td>
+			</xsl:for-each>
+		</tr>
+	</table>
+</xsl:template>
+
+<xsl:template doc:id="ab1c71" match="my:link" mode="list">
+	<p doc:id="ab1c71b1" class="link">
+		<xsl:call-template doc:id="ab1c71b1b1" name="link">
+			<xsl:with-param doc:id="ab1c71b1b1b1" name="link" select="@href"/>
+			<xsl:with-param doc:id="ab1c71b1b1b3" name="value">
+				<xsl:value-of doc:id="ab1c71b1b1b3b1" select="."/>
+			</xsl:with-param>
+			<xsl:with-param doc:id="ab1c71b1b1b5" name="addicon" select="true()"/>
+		</xsl:call-template>
+	</p>
+</xsl:template>
+
+<xsl:template doc:id="ab1c73" match="my:link">
+	<xsl:apply-templates doc:id="ab1c73b1" select="." mode="link"/>
+</xsl:template>
+
+<xsl:template doc:id="ab1c75" match="*[@href][. != '']" mode="link">
+	<xsl:call-template doc:id="ab1c75b1" name="link">
+		<xsl:with-param doc:id="ab1c75b1b1" name="link" select="@href"/>
+		<xsl:with-param doc:id="ab1c75b1b3" name="value">
+			<xsl:apply-templates doc:id="ab1c75b1b3b1"/>
+		</xsl:with-param>
+		<xsl:with-param doc:id="ab1c75b1b5" name="addicon" select="@addicon"/>
+	</xsl:call-template>
+</xsl:template>
+
+<xsl:template doc:id="ab1c77" match="*[@href][. = '']" mode="link">
+	<xsl:call-template doc:id="ab1c77b1" name="link">
+		<xsl:with-param doc:id="ab1c77b1b1" name="link" select="@href"/>
+		<xsl:with-param doc:id="ab1c77b1b3" name="value">
+			<xsl:value-of doc:id="ab1c77b1b3b1" select="@href"/>
+		</xsl:with-param>
+		<xsl:with-param doc:id="ab1c77b1b5" name="addicon" select="@addicon"/>
+	</xsl:call-template>
+</xsl:template>
+
+<xsl:template doc:id="ab1c79" match="text()|@*" mode="link">
+	<xsl:call-template doc:id="ab1c79b1" name="link">
+		<xsl:with-param doc:id="ab1c79b1b1" name="link" select="."/>
+		<xsl:with-param doc:id="ab1c79b1b3" name="value">
+			<xsl:value-of doc:id="ab1c79b1b3b1" select="."/>
+		</xsl:with-param>
+	</xsl:call-template>
+</xsl:template>
+
+<xsl:template doc:id="ab1c81" name="link">
+	<xsl:param doc:id="ab1c81b1" name="link"/>
+	<xsl:param doc:id="ab1c81b3" name="value"/>
+	<xsl:param doc:id="ab1c81b5" name="addicon" select="''"/>
+	<xsl:variable doc:id="ab1c81b7" name="uri">
+		<xsl:call-template doc:id="ab1c81b7b1" name="full-uri">
+			<xsl:with-param doc:id="ab1c81b7b1b1" name="uri" select="$link"/>
+		</xsl:call-template>
+	</xsl:variable>
+	<xsl:variable doc:id="ab1c81b9" name="class">
+		<xsl:call-template doc:id="ab1c81b9b1" name="uri-class">
+			<xsl:with-param doc:id="ab1c81b9b1b1" name="uri" select="$uri"/>
+		</xsl:call-template>
+	</xsl:variable>
+	<xsl:if doc:id="ab1c81c11" test="$addicon">
+		<a doc:id="ab1c81c11b1" href="{$uri}">
+			<xsl:attribute doc:id="ab1c81c11b1b1" name="class">
+				<xsl:text doc:id="ab1c81c11b1b1b1">img </xsl:text>
+				<xsl:value-of doc:id="ab1c81c11b1b1b3" select="$class"/>
+			</xsl:attribute>
+			<xsl:call-template doc:id="ab1c81c11b1b3" name="insert-icon">
+				<xsl:with-param doc:id="ab1c81c11b1b3b1" name="icon">
+					<xsl:call-template doc:id="ab1c81c11b1b3b1b1" name="icon-type">
+						<xsl:with-param doc:id="ab1c81c11b1b3b1b1b1" name="uri" select="$uri"/>
+					</xsl:call-template>
+				</xsl:with-param>
+			</xsl:call-template>
+		</a>
+		<xsl:text doc:id="ab1c81c11b3"> </xsl:text>
+	</xsl:if>
+	<a doc:id="ab1c81c13" href="{$uri}">
+		<xsl:if doc:id="ab1c81c13b1" test="$class != ''">
+			<xsl:attribute doc:id="ab1c81c13b1b1" name="class">
+				<xsl:value-of doc:id="ab1c81c13b1b1b1" select="$class"/>
+			</xsl:attribute>
+		</xsl:if>
+		<xsl:copy-of doc:id="ab1c81c13b3" select="$value"/>
+	</a>
+</xsl:template>
+
+<xsl:template doc:id="ab1c83" name="full-uri">
+	<xsl:param doc:id="ab1c83b1" name="uri"/>
+	<xsl:variable doc:id="ab1c83b3" name="partial-uri">
+		<xsl:choose doc:id="ab1c83b3b1">
+			<xsl:when doc:id="ab1c83b3b1b1" test="$dynamic='false' and                    substring($uri, string-length($uri) - 3, 4) = '.xml'">
+				<xsl:value-of doc:id="ab1c83b3b1b1b1" select="concat(substring($uri, 1, string-length($uri) - 4), '.html')"/>
+			</xsl:when>
+			<xsl:otherwise doc:id="ab1c83b3b1b3"><xsl:value-of doc:id="ab1c83b3b1b3a" select="$uri"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:choose doc:id="ab1c83b5">
+		<xsl:when doc:id="ab1c83b5b1" test="starts-with($partial-uri, 'www')">
+			<xsl:text doc:id="ab1c83b5b1b1">http://</xsl:text><xsl:value-of doc:id="ab1c83b5b1b2" select="$partial-uri"/>
+		</xsl:when>
+		<xsl:when doc:id="ab1c83b5b3" test="contains($partial-uri, '@') and not(starts-with($partial-uri, 'mailto:'))">
+			<xsl:text doc:id="ab1c83b5b3b1">mailto:</xsl:text><xsl:value-of doc:id="ab1c83b5b3b2" select="$partial-uri"/>
+		</xsl:when>
+		<xsl:otherwise doc:id="ab1c83b5b5"><xsl:value-of doc:id="ab1c83b5b5a" select="$partial-uri"/></xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
+
+<xsl:template doc:id="ab1c85" name="uri-class">
+	<xsl:param doc:id="ab1c85b1" name="uri"/>
+	<xsl:choose doc:id="ab1c85b3">
+		<xsl:when doc:id="ab1c85b3b1" test="starts-with($uri, 'http://') and not(starts-with($uri, $base))">offsite</xsl:when>
+		<xsl:when doc:id="ab1c85b3b3" test="starts-with($uri, 'mailto:')">mailto</xsl:when>
+		<xsl:when doc:id="ab1c85b3b5" test="starts-with($uri, '#')">local</xsl:when>
+	</xsl:choose>
+</xsl:template>
+
+<xsl:template doc:id="ab1c87" name="icon-type">
+	<xsl:param doc:id="ab1c87b1" name="uri"/>
+	<xsl:variable doc:id="ab1c87b3" name="url">
+	  <xsl:choose doc:id="ab1c87b3b1">
+	    <xsl:when doc:id="ab1c87b3b1b1" test="starts-with($uri, 'http://')"><xsl:value-of doc:id="ab1c87b3b1b1a" select="substring-after($uri, 'http://')"/></xsl:when>
+	    <xsl:otherwise doc:id="ab1c87b3b1b3"><xsl:value-of doc:id="ab1c87b3b1b3a" select="$uri"/></xsl:otherwise>
+	  </xsl:choose>
+	</xsl:variable>
+	<xsl:choose doc:id="ab1c87b5">
+		<xsl:when doc:id="ab1c87b5b1" test="(not(contains($url, '/')) and starts-with($url, 'www.')) or (contains($url, '/') and not(substring-after($url, '/')))">home</xsl:when>
+		<xsl:when doc:id="ab1c87b5b3" test="contains($url, '@')">mail</xsl:when>
+		<xsl:otherwise doc:id="ab1c87b5b5">goto</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
+
+<xsl:template doc:id="ab1c89" match="/*" mode="colophon">
+  <xsl:variable doc:id="ab1c89b1" name="metadata" select="/*/rdf:RDF"/>
+  <xsl:variable doc:id="ab1c89b3" name="uri" select="$metadata/rdf:Description[1]/@about"/>
+	<div doc:id="ab1c89b5" id="colophon">
+		<hr doc:id="ab1c89b5b1" class="final"/>
+		<p doc:id="ab1c89b5b3">
+			<xsl:apply-templates doc:id="ab1c89b5b3b1" select="$uri" mode="link"/>
+			<xsl:variable doc:id="ab1c89b5b3b3" name="modified">
+				<xsl:call-template doc:id="ab1c89b5b3b3b1" name="get-metadata">
+					<xsl:with-param doc:id="ab1c89b5b3b3b1b1" name="what" select="'date::modified'"/>
+				</xsl:call-template>
+			</xsl:variable>
+			<xsl:if doc:id="ab1c89b5b3b5" test="string($modified)">
+				<xsl:text doc:id="ab1c89b5b3b5b1"> last modified </xsl:text>
+				<xsl:copy-of doc:id="ab1c89b5b3b5b3" select="$modified"/>
+			</xsl:if>
+			<xsl:variable doc:id="ab1c89b5b3b7" name="creator">
+				<xsl:call-template doc:id="ab1c89b5b3b7b1" name="get-metadata">
+					<xsl:with-param doc:id="ab1c89b5b3b7b1b1" name="what" select="'creator::vCard::mailto-link'"/>
+				</xsl:call-template>
+			</xsl:variable>
+			<xsl:text doc:id="ab1c89b5b3b9"> by </xsl:text>
+			<xsl:choose doc:id="ab1c89b5b3c11">
+  			<xsl:when doc:id="ab1c89b5b3c11b1" test="string($creator)">
+  				<xsl:copy-of doc:id="ab1c89b5b3c11b1b1" select="$creator"/>
+  			</xsl:when>
+  			<xsl:otherwise doc:id="ab1c89b5b3c11b3">
+  			  <a doc:id="ab1c89b5b3c11b3b1" href="mailto:mail@jenitennison.com" class="mailto">Jeni Tennison</a>
+  			</xsl:otherwise>
+  		</xsl:choose>
+		  <xsl:text doc:id="ab1c89b5b3c13">; generated using </xsl:text>
+		  <xsl:call-template doc:id="ab1c89b5b3c15" name="link">
+		    <xsl:with-param doc:id="ab1c89b5b3c15b1" name="link" select="system-property('xsl:vendor-url')"/>
+		    <xsl:with-param doc:id="ab1c89b5b3c15b3" name="value" select="system-property('xsl:vendor')"/>
+		  </xsl:call-template>
+		  <xsl:if doc:id="ab1c89b5b3c17" test="system-property('xsl:vendor') = 'Microsoft'">
+		    <xsl:text doc:id="ab1c89b5b3c17b1">'s MSXML version </xsl:text>
+		    <xsl:value-of doc:id="ab1c89b5b3c17b3" select="system-property('msxsl:version')"/>
+		  </xsl:if>
+		</p>
+	</div>
+</xsl:template>
+
+</xsl:stylesheet></source></sources>

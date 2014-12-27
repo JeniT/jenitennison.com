@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {'packages': ['barchart']});
+      google.setOnLoadCallback(drawVisualisations);
+      function drawVisualisations() {        
+        var libQuery = new google.visualization.Query('http://www.jenitennison.com/visualisation/data/mp-travel');
+        libQuery.setQuery('select mp, additionalCosts, totalTravel, totalBasic where rParty = <http://dbpedia.org/resource/Liberal_Democrats> order by totalBasic desc limit 25');
+        libQuery.send(handleLibQueryResponse);
+        
+        var labQuery = new google.visualization.Query('http://www.jenitennison.com/visualisation/data/mp-travel');
+        labQuery.setQuery('select mp, additionalCosts, totalTravel, totalBasic where rParty = <http://dbpedia.org/resource/Labour_Party_(UK)> order by totalBasic desc limit 25');
+        labQuery.send(handleLabQueryResponse);
+        
+        var conQuery = new google.visualization.Query('http://www.jenitennison.com/visualisation/data/mp-travel');
+        conQuery.setQuery('select mp, additionalCosts, totalTravel, totalBasic where rParty = <http://dbpedia.org/resource/Conservative_Party_(UK)> order by totalBasic desc limit 25');
+        conQuery.send(handleConQueryResponse);
+      };
+      function handleLabQueryResponse(response) {
+        handleQueryResponse(response, 'lab_barchart', 'Labour', ['#890C0C', '#D02323', '#E85757']);
+      };
+      function handleConQueryResponse(response) {
+        handleQueryResponse(response, 'con_barchart', 'Conservative', ['#0D155E', '#283290', '#5C66C7']);
+      };
+      function handleLibQueryResponse(response) {
+        handleQueryResponse(response, 'lib_barchart', 'Lib Dem', ['#9D963A', '#D0C523', '#E8DE57']);
+      };
+      function handleQueryResponse(response, target, title, colours) {
+        if (response.isError()) {
+          alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+          return;
+        }
+
+        var data = response.getDataTable();
+        data.setColumnLabel(1, 'Additional Costs Allowance');
+        data.setColumnLabel(2, 'Total Travel Claim');
+        data.setColumnLabel(3, 'Basic Claim');
+        data.sort([{ column: 3, desc: true }, { column: 2, desc: true }, { column: 1, desc: true }]);
+        var chart = new google.visualization.BarChart(document.getElementById(target));
+        chart.draw(data, {
+          width: 300,
+          height: 400,
+          title: title,
+          legend: 'bottom',
+          isStacked: true,
+          axisFontSize: 9,
+          colors: colours,
+          min: 0
+        });
+      };
+    </script>
+    <title>MPs Expenses</title>
+  </head>
+  <body>
+    <h1>MPs Expenses</h1>
+    <p>These charts show the highest 25 expense claims in the three main parties.</p>
+    <table>
+      <tr>
+        <td id="lab_barchart">
+        </td>
+        <td id="con_barchart">
+        </td>
+        <td id="lib_barchart">
+        </td>
+      </tr>
+  </body>
+</html>

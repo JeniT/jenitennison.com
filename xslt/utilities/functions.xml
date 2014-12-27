@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="functions.xsl" ?>
+<functions>
+  <function>
+    <defn>string concat(string, string, string*)</defn>
+    <desc>The concat function returns the concatenation of its arguments.</desc>
+  </function>
+  <function>
+    <defn>boolean starts-with(string, string)</defn>
+    <desc>The starts-with function returns true if the first argument string starts with
+    the second argument string, and otherwise returns false.</desc>
+  </function>
+  <function>
+    <defn>boolean contains(string, string)</defn>
+    <desc>The contains function returns true if the first argument string contains the
+    second argument string, and otherwise returns false.</desc>
+  </function>
+  <function>
+    <defn>string substring-before(string, string)</defn>
+    <desc>The substring-before function returns the substring of the first argument string
+    that precedes the first occurrence of the second argument string in the first argument
+    string, or the empty string if the first argument string does not contain the second
+    argument string. For example, substring-before("1999/04/01","/") returns 1999.</desc>
+  </function>
+  <function>
+    <defn>string substring-after(string, string)</defn>
+    <desc>The substring-after function returns the substring of the first argument string
+    that follows the first occurrence of the second argument string in the first argument
+    string, or the empty string if the first argument string does not contain the second
+    argument string. For example, substring-after("1999/04/01","/") returns 04/01, and
+    substring-after("1999/04/01","19") returns 99/04/01.</desc>
+  </function>
+</functions>

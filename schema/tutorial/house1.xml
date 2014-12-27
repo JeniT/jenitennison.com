@@ -1,0 +1,348 @@
+<?xml version="1.0"?>
+<house version="1.0" ref="1043754" status="For Sale"
+       xmlns="http://www.example.com/HouseML"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.example.com/HouseML
+                           house4.xsd">
+  <askingPrice currency="GBP">225000</askingPrice>
+  <address>
+    <line><number>26</number> <street>Woodlea Grove</street></line>
+    <line>Little Eaton</line>
+    <line><city>Derby</city></line>
+    <postcode>DE21 5EN</postcode>
+  </address>
+  <features>
+    <feature>Ecclesbourne School catchment</feature>
+    <feature>backing onto fields with mature trees, sheep pasture, next to common land</feature>
+    <feature>cul-de-sac location</feature>
+    <feature>handsome, modern detached residence</feature>
+    <feature>family accommodation</feature>
+    <feature code="UPVC">UPVC double glazed</feature>
+    <feature code="GCH">gas centrally heated</feature>
+  </features>
+  <description>
+    Situated in this popular residential location and convenient for schools and local facilities this well appointed and attractively presented detached family home being gas centrally heated and upvc double glazed tastefully decorated interior comprising canopy porch, entrance hallway, lounge, dining room, breakfast kitchen, cloakroom, landing, three bedrooms (two with fitted wardrobes), bathroom, attractive front garden and good sized rear garden with shed and green house, attached single garage. There are views over open space to the side. Internal inspection highly recommended to appreciate.
+  </description>
+  <layout>
+    <floor>
+      <name>lower ground floor</name>
+      <room id="reception">
+        <name>reception entrance hall</name>
+        <exits>
+          <door to="front" type="UPVC" />
+          <door to="garage" />
+          <door to="shower" />
+          <window to="side" type="UPVC" />
+          <stairs to="landing0" />
+        </exits>
+        <description>
+          <ceiling type="textured coved" />
+          <fittings>
+            <radiator type="double" />
+            <cupboard>storage</cupboard>
+            <telephonePoint />
+          </fittings>
+          <extra>space for computer desk</extra>
+        </description>
+      </room>
+      <room id="shower">
+        <name>shower room</name>
+        <exits>
+          <door to="reception" />
+          <window to="front" type="opaque UPVC" />
+        </exits>
+        <description>
+          <walls type="half-tiled" />
+          <fittings>
+            <radiator />
+            <basin>hand</basin>
+            <wc>low-level</wc>
+            <shower />
+            <extractor />
+          </fittings>
+        </description>
+      </room>
+    </floor>
+    <floor>
+      <name>upper ground floor</name>
+      <room id="landing0">
+        <name>landing</name>
+        <exits>
+          <door to="lounge" />
+          <door to="dining" />
+          <door to="kitchen" />
+          <door to="study" />
+          <window to="side" type="UPVC" />
+          <stairs to="reception" />
+          <stairs to="landing1" />
+        </exits>
+        <description>
+          <ceiling type="textured coved" />
+          <fittings />
+        </description>
+      </room>
+      <room id="lounge">
+        <name>lounge</name>
+        <dimensions>
+          <dimension>
+            <measurement unit="feet">16' 8"</measurement>
+            <measurement unit="metres">5.08</measurement>
+          </dimension>
+          <dimension>
+            <measurement unit="feet">12' 3"</measurement>
+            <measurement unit="metres">3.73</measurement>
+          </dimension>
+        </dimensions>
+        <exits>
+          <door to="landing0" />
+          <window to="front" type="UPVC" />
+        </exits>
+        <description>
+          <ceiling type="textured coved" />
+          <fittings>
+            <fire type="living-flame">
+              <surround>pine</surround>
+              <hearth>marble</hearth>
+            </fire>
+            <aerialPoint />
+            <radiator />
+            <radiator type="double" />
+          </fittings>
+        </description>
+      </room>
+      <room id="dining">
+        <name>dining room</name>
+        <dimensions>
+          <dimension>
+            <measurement unit="feet">9' 10"</measurement>
+            <measurement unit="metres">3.00</measurement>
+          </dimension>
+          <dimension>
+            <measurement unit="feet">9' 7"</measurement>
+            <measurement unit="metres">2.92</measurement>
+          </dimension>
+        </dimensions>
+        <exits>
+          <door to="landing0" />
+          <door to="rear" type="double-glazed sliding patio" />
+        </exits>
+        <description>
+          <ceiling type="textured coved" />
+          <walls type="dado-rail" />
+          <fittings>
+            <radiator />
+            <telephonePoint />
+          </fittings>
+        </description>
+      </room>
+      <room id="kitchen">
+        <name>kitchen</name>
+        <dimensions>
+          <dimension>
+            <measurement unit="feet">12' 6"</measurement>
+            <measurement unit="metres">3.81</measurement>
+          </dimension>
+          <dimension>
+            <measurement unit="feet">9' 7"</measurement>
+            <measurement unit="metres">2.92</measurement>
+          </dimension>
+        </dimensions>
+        <exits>
+          <door to="landing0" />
+          <door to="rear" />
+          <window to="rear" type="UPVC" />
+        </exits>
+        <description>
+          <ceiling type="textured spotlights" />
+          <fittings>
+            <radiator type="double" />
+            <units>wall and base units with hardtop work surface over</units>
+            <sink />
+            <oven type="integrated" />
+            <extractor />
+            <plumbing>washing-machine dish-washer</plumbing>
+          </fittings>
+        </description>
+      </room>
+      <room id="study">
+        <name>study</name>
+        <dimensions>
+          <dimension>
+            <measurement unit="feet">13' 2"</measurement>
+            <measurement unit="metres">4.01</measurement>
+          </dimension>
+          <dimension>
+            <measurement unit="feet">10' 3"</measurement>
+            <measurement unit="metres">3.12</measurement>
+          </dimension>
+        </dimensions>
+        <exits>
+          <door to="landing0" />
+          <door to="front" type="UPVC French" />
+        </exits>
+        <description>
+          <ceiling type="textured coved" />
+          <fittings>
+            <radiator />
+            <aerialPoint />
+          </fittings>
+        </description>
+      </room>
+    </floor>
+    <floor>
+      <name>first floor</name>
+      <room id="landing1">
+        <name>landing</name>
+        <exits>
+          <door to="frontBedroom" />
+          <door to="rearBedroom" />
+          <door to="bathroom" />
+          <stairs to="landing0" />
+          <access to="loft" />
+        </exits>
+        <description>
+          <fittings>
+            <radiator />
+          </fittings>
+        </description>
+      </room>
+      <room id="frontBedroom">
+        <name>front bedroom</name>
+        <dimensions>
+          <dimension>
+            <measurement unit="feet">23' 0"</measurement>
+            <measurement unit="metres">7.01</measurement>
+          </dimension>
+          <dimension>
+            <measurement unit="feet">10' 1"</measurement>
+            <measurement unit="metres">3.07</measurement>
+          </dimension>
+        </dimensions>
+        <exits>
+          <door to="landing1" />
+          <door to="cupboard" />
+          <window to="front" type="UPVC" />
+          <window to="side" type="UPVC" />
+        </exits>
+        <description>
+          <ceiling type="textured coved" />
+          <fittings>
+            <radiator no="2" />
+            <aerialPoint />
+            <telephonePoint line="2" />
+          </fittings>
+        </description>
+      </room>
+      <room id="cupboard">
+        <name>cupboard</name>
+        <dimensions>
+          <dimension>
+            <measurement unit="feet">10' 3"</measurement>
+            <measurement unit="metres">3.12</measurement>
+          </dimension>
+          <dimension>
+            <measurement unit="feet">5' 2"</measurement>
+            <measurement unit="metres">1.57</measurement>
+          </dimension>
+        </dimensions>
+        <exits>
+          <door to="landing1" />
+          <door to="cupboard" />
+          <window to="front" type="UPVC" />
+          <window to="side" type="UPVC" />
+        </exits>
+        <description>
+          <ceiling type="textured" />
+          <fittings />
+        </description>
+      </room>
+      <room id="rearBedroom">
+        <name>rear bedroom</name>
+        <dimensions>
+          <dimension>
+            <measurement unit="feet">10' 4"</measurement>
+            <measurement unit="metres">3.15</measurement>
+          </dimension>
+          <dimension>
+            <measurement unit="feet">9' 10"</measurement>
+            <measurement unit="metres">3.00</measurement>
+          </dimension>
+        </dimensions>
+        <exits>
+          <door to="landing1" />
+          <window to="rear" type="UPVC" />
+        </exits>
+        <description>
+          <fittings>
+            <radiator />
+            <wardrobe type="double" no="3">hanging and shelving in beech</wardrobe>
+          </fittings>
+        </description>
+      </room>
+      <room id="bathroom">
+        <name>bathroom</name>
+        <dimensions>
+          <dimension>
+            <measurement unit="feet">8' 11"</measurement>
+            <measurement unit="metres">2.72</measurement>
+          </dimension>
+          <dimension>
+            <measurement unit="feet">6' 5"</measurement>
+            <measurement unit="metres">1.96</measurement>
+          </dimension>
+        </dimensions>
+        <exits>
+          <door to="landing1" />
+          <window to="side" type="opaque UPVC" />
+        </exits>
+        <description>
+          <ceiling type="textured coved" />
+          <fittings>
+            <suite colour="white">
+              <wc>low-level</wc>
+              <basin>pedestal hand</basin>
+              <bath>panneled</bath>
+              <shower />
+            </suite>
+            <radiator />
+            <extractor />
+            <shaverPoint />
+          </fittings>
+        </description>
+      </room>
+    </floor>
+    <exterior>
+      <garage>
+        <dimensions>
+          <dimension>
+            <measurement unit="feet">16' 6"</measurement>
+            <measurement unit="metres">5.03</measurement>
+          </dimension>
+          <dimension>
+            <measurement unit="feet">11' 9"</measurement>
+            <measurement unit="metres">3.58</measurement>
+          </dimension>
+        </dimensions>
+        <exits>
+          <door to="front" type="up-and-over" />
+          <window to="side" type="opaque UPVC" />
+        </exits>
+        <description />
+      </garage>
+      <front>
+        <lawn />
+        <driveway />
+      </front>
+      <rear>
+        <lawn>raised</lawn>
+        <flowerBeds>attractive well-stocked</flowerBeds>
+        <rockery />
+        <pond>lined</pond>
+        <shed>timber</shed>
+      </rear>
+    </exterior>
+  </layout>
+  <directions>
+    Proceed out of <city>Derby</city> along the <road>Sir Frank Whittle Road</road>, at the first traffic island proceed straight over, continuing along this road for some distance, at the second island continue straight over, at the roundabout with <landmark>The Little Chef</landmark> and <road>A38</road> continue ahead into <village>Little Eaton</village> along the <road>Alfreton Road</road>, turning left into The Town and right into <road>Barley Close</road>, left into <road>Crabtree Hill</road> and right into <road>Woodlea Grove</road>. The property is situated on the left hand side as denoted by our For Sale board.
+  </directions>
+</house>

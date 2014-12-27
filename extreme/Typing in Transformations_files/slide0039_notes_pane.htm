@@ -1,0 +1,89 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=PowerPoint.Slide>
+<meta name=Generator content="Microsoft PowerPoint 9">
+
+<script>
+<!--
+if( window.name != "PPTNts" )
+  parent.location.href = "../Typing%20in%20Transformations.html";
+//-->
+</script>
+</head>
+
+<body bgcolor=white text=black>
+
+<table border=0 width="100%">
+ <tr>
+  <td width=5 nowrap></td>
+  <td width="100%"></td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>The next few slides show
+  examples of code that does and doesn't work. The pink examples are ones that
+  give errors; the green ones are those that work.</font><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>The concat() example shows
+  the result of the fact that the string-manipulation functions expect
+  arguments of type xs:string. Since there's no implicit conversion to
+  xs:string (despite the fact that every cast to xs:string, except from
+  xs:QName and xs:NOTATION, will succeed), passing things like numbers to these
+  functions gives an error. Concatenation of numbers and strings is common in
+  XSLT 1.0, so the illustrated error is going to be fairly common when
+  converting XSLT 1.0 stylesheets to XSLT 2.0, and for authors who haven't yet
+  adapted to the new typing rules. Other examples are
+  string-length(number(@value)) in order to get the magnitude of a number, or
+  xs:gYearMonth(substring(current-date(), 1, 7)) to convert a date to a
+  gYearMonth.</font><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>The first set of
+  arithmetic shown is something from a real stylesheet, used to get the quarter
+  in which a month (expressed in the form CCYY-MM in the Period attribute)
+  falls. It's an error in XPath 2.0 because you can't subtract a number from a
+  string (as returned by the substring() function). There are lots of
+  situations where the numbers that authors want to use for arithmetic are
+  created via string manipulation functions; for example, when the source is a
+  date or number in a non-WXS format (XSLT users generally don't have control
+  over the XML formats that they need to work with). Another situation where
+  this arises is where someone's used a DTD to validate their document, and an
+  attribute containing a number has been typed as NMTOKEN, which is a subtype
+  of xs:string; if they try to do arithmetic involving that attribute, it will
+  have to be cast manually to a number in order to be used.</font><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>The last example shows
+  something that isn't allowed in XPath 1.0, but that new XPath 2.0 users might
+  attempt.</font><br>
+  </td>
+ </tr>
+</table>
+
+</body>
+
+</html>

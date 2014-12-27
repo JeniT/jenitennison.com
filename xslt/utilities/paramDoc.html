@@ -1,0 +1,339 @@
+
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "/resources/dtd/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>Jeni's XSLT Utilities: Parameter Documentation</title>
+      <link rel="stylesheet" href="/resources/style/base.css"/>
+      <link rel="alternate" type="text/xml" href="/xslt/utilities/paramDoc.xml"/><!--
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    -->
+   </head>
+   <body>
+      <p id="xml-link">
+					Try the <a href="/xslt/utilities/paramDoc.xml">XML version</a> of this page.
+					If you have problems with it, consult the
+					<a href="/compatibility.html">compatibility page</a>.
+				</p>
+   
+   
+      <h1>Parameter Documentation<span id="link-top">
+            <a class="img" href="/index.html">
+               <img src="/resources/icons/top.gif" width="29" height="29"/>
+            </a>
+         </span>
+         <span id="link-up">
+            <a class="img" href="index.html">
+               <img src="/resources/icons/up.gif" width="29" height="29"/>
+            </a>
+         </span>
+      </h1>
+   
+      <p>
+   The Select Parameters Utility involves documenting the parameters in your stylesheet.  Naturally enough, this documentation is written in XML; this page describes the schema that is used for documenting parameters.
+</p>
+   
+      <ul>
+      
+         <li>
+         
+            <a href="#namespace">Namespace</a>
+      
+         </li>
+      
+         <li>
+         
+            <a href="#structure">Structure</a>
+      
+         </li>
+      
+         <li>
+         
+            <a href="#DTD">DTD</a>
+      
+         </li>
+      
+         <li>
+         
+            <a href="#schema">XML Schema</a>
+      
+         </li>
+   
+      </ul>
+   
+      <h2 id="namespace">Namespace</h2>
+   
+      <p>
+   The namespace for the parameter documentation is:
+</p>
+   
+      <pre>http://www.jenitennison.com/xslt/doc</pre>
+   
+      <p>
+   This namespace should be declared within your stylesheet, preferably on the xsl:stylesheet start tag, and you should make sure that the prefix you use is declared as being an extension-element prefix:
+</p>
+   
+      <pre>
+&lt;xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:doc="http://www.jenitennison.com/xslt/doc"
+                extension-element-prefixes="doc"&gt;
+   ...
+&lt;/xsl:stylesheet&gt;
+</pre>
+   
+      <h2 id="structure">Structure</h2>
+   
+      <p>
+   The top-most element for the parameter documentation is the 'doc:param' element.  The doc:param element takes a 'name' attribute that should be the same as the name of the parameter that it is documenting.  For example:
+</p>
+   
+      <pre>
+&lt;doc:param name="lang"&gt;
+   ...
+&lt;/doc:param&gt;
+&lt;xsl:param name="lang" select="'en'" /&gt;
+</pre>
+   
+      <p>
+   Within the 'doc:param' element, you can firstly give some general descriptors for the parameter.  These are:
+</p>
+   
+      <dl>
+      
+         <dt>doc:label</dt>
+      
+         <dd>A human-readable label for the parameter.  Multiple labels can be specified for the parameter, each of which may should have a different 'xml:lang' attribute to specify the language for the label.</dd>
+      
+         <dt>doc:desc</dt>
+      
+         <dd>A human-readable description of the parameter and the effect that its value has on the processing of the XML source.</dd>
+   
+      </dl>
+   
+      <p>
+   You can also specify various other constraints on the parameter value.  There are four types of parameter values that you can define:
+</p>
+   
+      <ul>
+      
+         <li>parameters that can take one of a number of values: specify doc:choice descriptors for each</li>
+      
+         <li>parameters that can take a list of values: specify doc:option descriptors for each</li>
+      
+         <li>numeric parameters: specify minimum and maximum values</li>
+      
+         <li>free parameters</li>
+   
+      </ul>
+   
+      <p>
+   Mutually exclusive values for parameters are specified within doc:choice elements.  Each doc:choice element should contain a doc:value and may contain any number of doc:label elements, each of which should have a different value for its xml:lang attribute.
+</p>
+   
+      <pre>
+&lt;doc:param name="lang" xml:lang="en"&gt;
+   &lt;doc:label&gt;Language&lt;/doc:label&gt;
+   &lt;doc:desc&gt;The language that the text within the page should be shown in.&lt;/doc:desc&gt;
+   &lt;doc:choice&gt;
+      &lt;doc:value&gt;en&lt;/doc:value&gt;
+      &lt;doc:label&gt;English&lt;/doc:label&gt;
+      &lt;doc:label xml:lang="fr"&gt;Anglais&lt;/doc:label&gt;
+   &lt;/doc:choice&gt;
+   &lt;doc:choice&gt;
+      &lt;doc:value&gt;fr&lt;/doc:value&gt;
+      &lt;doc:label&gt;French&lt;/doc:label&gt;
+      &lt;doc:label xml:lang="fr"&gt;Fran&amp;#231;ais&lt;/doc:label&gt;
+   &lt;/doc:choice&gt;
+   &lt;!-- and so on --&gt;
+&lt;/doc:param&gt;
+&lt;xsl:param name="lang" select="'en'" /&gt;
+</pre>
+   
+      <p>
+   Lists of values are specified within doc:option elements.  Within the parameter value, the selected options are separated with '::'s.  For each of the options, as with the choices, a value and any number of labels (in different languages) can be specified.
+</p>
+   
+      <pre>
+&lt;doc:param name="lang" xml:lang="en"&gt;
+   &lt;doc:label&gt;Language&lt;/doc:label&gt;
+   &lt;doc:desc&gt;The languages that the text within the page should be shown in, in order of preference.&lt;/doc:desc&gt;
+   &lt;doc:option&gt;
+      &lt;doc:value&gt;en&lt;/doc:value&gt;
+      &lt;doc:label&gt;English&lt;/doc:label&gt;
+      &lt;doc:label xml:lang="fr"&gt;Anglais&lt;/doc:label&gt;
+   &lt;/doc:option&gt;
+   &lt;doc:option&gt;
+      &lt;doc:value&gt;fr&lt;/doc:value&gt;
+      &lt;doc:label&gt;French&lt;/doc:label&gt;
+      &lt;doc:label xml:lang="fr"&gt;Fran&amp;#231;ais&lt;/doc:label&gt;
+   &lt;/doc:option&gt;
+   &lt;!-- and so on --&gt;
+&lt;/doc:param&gt;
+&lt;xsl:param name="lang" select="'en::fr'" /&gt;
+</pre>
+   
+      <p>
+   Numeric parameters can be constrained with doc:min and/or doc:max to give minimum and maximum values for the parameter.
+</p>
+   
+      <pre>
+&lt;doc:param name="rows"&gt;
+   &lt;doc:label&gt;Rows&lt;/doc:label&gt;
+   &lt;doc:desc&gt;The number of rows to show.&lt;/doc:desc&gt;
+   &lt;doc:min&gt;5&lt;/doc:min&gt;
+   &lt;doc:max&gt;50&lt;/doc:max&gt;
+   &lt;!-- and so on --&gt;
+&lt;/doc:param&gt;
+&lt;xsl:param name="rows" select="'15'" /&gt;
+</pre>
+   
+      <h2 id="DTD">DTD</h2>
+   
+      <p>
+   The DTD for the parameter documentation dialect is as follows:
+</p>
+   
+      <pre>
+&lt;!ELEMENT doc:param (doc:label*, doc:desc*, (doc:choice* | doc:option* | (doc:min?, doc:max?))&gt;
+
+&lt;!ELEMENT doc:label (#PCDATA)&gt;
+&lt;!ATTLIST doc:label
+   xml:lang    CDATA    #IMPLIED
+   &gt;
+
+&lt;!ELEMENT doc:desc ANY&gt;
+&lt;!ATTLIST doc:desc
+   xml:lang    CDATA    #IMPLIED
+   &gt;
+
+&lt;!ELEMENT doc:value (#PCDATA)&gt;
+
+&lt;!ELEMENT doc:choice (doc:value, doc:label*, doc:desc*)&gt;
+&lt;!ELEMENT doc:option (doc:value, doc:label*, doc:desc*)&gt;
+
+&lt;!ELEMENT doc:min (#PCDATA)&gt;
+&lt;!ELEMENT doc:max (#PCDATA)&gt;
+</pre>
+   
+      <h2 id="schema">XML Schema</h2>
+   
+      <p>
+   The XML Schema for the parameter documentation dialect is as follows:
+</p>
+   
+      <pre>
+&lt;schema xmlns="http://www.w3.org/2000/10/XMLSchema"
+        targetNamespace="http://www.jenitennison.com/xslt/doc"
+        xmlns:doc="http://www.jenitennison.com/xslt/doc"
+        elementFormDefault="qualified"&gt;
+
+&lt;complexType name="label"&gt;
+   &lt;simpleContent&gt;
+      &lt;extension base="string"&gt;
+         &lt;attribute ref="xml:lang" /&gt;
+      &lt;/extension&gt;
+   &lt;/simpleContent&gt;
+&lt;/complexType&gt;
+
+&lt;complexType name="desc" mixed="true"&gt;
+   &lt;choice&gt;
+      &lt;any namespace="http://www.w3.org/1999/xhtml" minOccurs="0" maxOccurs="unbounded" /&gt;
+   &lt;/choice&gt;
+   &lt;attribute ref="xml:lang" /&gt;
+&lt;/complexType&gt;
+
+&lt;complexType name="choice"&gt;
+   &lt;sequence&gt;
+      &lt;element name="value" type="string" /&gt;
+      &lt;element name="label" type="doc:label" minOccurs="0" maxOccurs="unbounded" /&gt;
+      &lt;element name="desc" type="doc:desc" minOccurs="0" maxOccurs="unbounded" /&gt;
+   &lt;/sequence&gt;
+&lt;/complexType&gt;
+
+&lt;complexType name="option-value"&gt;
+   &lt;simpleContent&gt;
+      &lt;restriction base="string"&gt;
+         &lt;annotation&gt;option values should not contain double '::'s&lt;/annotation&gt;
+         &lt;pattern value="([^:]:?)*" /&gt;
+      &lt;/restriction&gt;
+   &lt;/simpleContent&gt;
+&lt;/complexType&gt;
+
+&lt;complexType name="option"&gt;
+   &lt;sequence&gt;
+      &lt;element name="value" type="doc:value" /&gt;
+      &lt;element name="label" type="doc:label" minOccurs="0" maxOccurs="unbounded" /&gt;
+      &lt;element name="desc" type="doc:desc" minOccurs="0" maxOccurs="unbounded" /&gt;
+   &lt;/sequence&gt;
+&lt;/complexType&gt;
+
+&lt;simpleType name="positiveNumber"&gt;
+   &lt;restriction base="decimal"&gt;
+      &lt;minInclusive value="0" /&gt;
+   &lt;/restriction&gt;
+&lt;/simpleType&gt;
+
+&lt;complexType name="param"&gt;
+   &lt;sequence&gt;
+      &lt;element name="label" type="doc:label" minOccurs="0" maxOccurs="unbounded" /&gt;
+      &lt;element name="desc" type="doc:desc" minOccurs="0" maxOccurs="unbounded" /&gt;
+      &lt;choice&gt;
+         &lt;element name="choice" type="doc:choice" minOccurs="0" maxOccurs="unbounded" /&gt;
+         &lt;element name="option" type="doc:option" minOccurs="0" maxOccurs="unbounded" /&gt;
+         &lt;sequence&gt;
+            &lt;element name="min" type="doc:positiveNumber" minOccurs="0" /&gt;
+            &lt;element name="max" type="doc:positiveNumber" minOccurs="0" /&gt;
+         &lt;/sequence&gt;
+      &lt;/choice&gt;
+   &lt;/sequence&gt;
+&lt;/complexType&gt;
+
+&lt;element name="param" type="doc:param" /&gt;
+
+&lt;/schema&gt;
+</pre>
+   
+      <h2>More Information</h2>
+   
+      <table>
+         <colgroup span="1"/>
+         <tr>
+            <td>
+               <p class="link">
+                  <a href="selectParameters.html" class="img ">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="selectParameters.html">Instructions</a>
+               </p>
+               <p class="link">
+                  <a href="selectParameters-example.html" class="img ">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="selectParameters-example.html">A Simple Example</a>
+               </p>
+               <p class="link">
+                  <a href="selectParameters-explanation.html" class="img ">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="selectParameters-explanation.html">How it Works</a>
+               </p>
+            </td>
+         </tr>
+      </table>
+
+      <div id="colophon">
+         <hr class="final"/>
+         <p>
+            <a href="/xslt/utilities/paramDoc.html">/xslt/utilities/paramDoc.xml</a> by <a href="mailto:mail@jenitennison.com" class="mailto">Jeni Tennison</a>; generated using <a href="http://saxon.sf.net/" class="offsite">SAXON 6.5 from Michael Kay</a>
+         </p>
+      </div>
+   </body>
+</html>

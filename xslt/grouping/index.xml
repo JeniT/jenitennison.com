@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../../resources/style/page.xsl"?><my:doc xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/xslt/grouping/index.xml">
+         <dc:title>Jeni's XSLT Pages: Grouping</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-07"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2001-01-16"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>Grouping</h1>
+   <p>
+  Grouping is a common problem in XSLT stylesheets: how do you take a list of elements and
+  arrange them into groups.  There are two main situations in which you need to do this:
+</p>
+   <ul>
+      <li>
+         <my:link href="#by-content">grouping by content</my:link> (e.g. group all the people from Nottingham together)</li>
+      <li>
+         <my:link href="#by-position">grouping by position</my:link> (e.g. group 10 items per list)</li>
+   </ul>
+   <h2 id="by-content">Grouping By Content</h2>
+   <p>
+  The most efficient method for grouping large numbers of elements according to their content,
+  be it the value of
+  an attribute, of a subelement, or its textual content, is the Muenchian Method (after
+  <my:link href="http://www.geocities.com/~smuench/">Steve Muench</my:link>, who
+  discovered/developed it).
+</p>
+   <my:links>
+      <my:link href="muenchian.xml">Grouping Using the Muenchian Method</my:link>
+   </my:links>
+   <p>
+  Here are some posts that give more examples of grouping by content:
+</p>
+   <my:links>
+      <my:link href="http://sources.redhat.com/ml/xsl-list/2000-07/msg00059.html">Grouping
+	Using the Muenchian Method</my:link>
+      <my:link href="http://sources.redhat.com/ml/xsl-list/2000-07/msg00458.html">Grouping
+	Using the Muenchian Method #2</my:link>
+      <my:link href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00200.html">Grouping Using the Muenchian Method #3</my:link>
+      <my:link href="http://www.biglist.com/lists/xsl-list/archives/200012/msg00354.html">Grouping into a Table</my:link>
+      <my:link href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00070.html">Multiple Level Grouping</my:link>
+   </my:links>
+   <h2 id="by-position">Grouping By Position</h2>
+   <p>
+  Here are a couple of posts that illustrate grouping by position:
+</p>
+   <my:links>
+      <my:link href="http://sources.redhat.com/ml/xsl-list/2000-08/msg00058.html">Adding
+	Something Only at the End of a Group</my:link>
+      <my:link href="http://www.biglist.com/lists/xsl-list/archives/200101/msg00202.html">Creating a Calendar</my:link>
+   </my:links>
+   <h2 id="links">Links</h2>
+   <my:links>
+      <my:link href="http://www.w3.org/TR/xslt#misc-func">XSLT Recommendation: Miscellaneous Extra Functions</my:link>
+      <my:link href="http://www.w3.org/TR/xslt#key">XSLT Recommendation: Keys</my:link>
+   </my:links>
+</my:doc>

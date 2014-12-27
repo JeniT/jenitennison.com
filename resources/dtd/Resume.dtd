@@ -1,0 +1,516 @@
+<!--Copyright 1999 The HR-XML Consortium -->
+<!-- Resume Content Model -->
+<!ELEMENT Resume  (ResumeID? , ResumeProlog? , ResumeBody )>
+<!ATTLIST Resume  name       CDATA  #IMPLIED
+                  class      CDATA  #IMPLIED
+                  id         ID     #IMPLIED
+                  distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Link  (#PCDATA )>
+<!ATTLIST Link  name       CDATA  #IMPLIED
+                class      CDATA  #IMPLIED
+                mailTo     CDATA  #IMPLIED
+                linkEnd    CDATA  #IMPLIED
+                refId      ID     #IMPLIED
+                distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Img EMPTY>
+<!ATTLIST Img  name       CDATA  #IMPLIED
+               class      CDATA  #IMPLIED
+               id         ID     #IMPLIED
+               src        CDATA  #REQUIRED
+               width      CDATA  #IMPLIED
+               height     CDATA  #IMPLIED
+               alt        CDATA  #IMPLIED
+               distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Object EMPTY>
+<!ATTLIST Object  name       CDATA  #IMPLIED
+                  class      CDATA  #IMPLIED
+                  id         ID     #IMPLIED
+                  src        CDATA  #REQUIRED
+                  width      CDATA  #IMPLIED
+                  height     CDATA  #IMPLIED
+                  alt        CDATA  #IMPLIED
+                  mediaType  CDATA  #IMPLIED
+                  parm       CDATA  #IMPLIED
+                  distribute  (external | internal | restricted )  'external' >
+<!-- date markup, must include year -->
+<!ELEMENT Date  ( (Month , Day? , Year ) |  (Day , Month , Year ) |  (Year ) )>
+<!ATTLIST Date  name       CDATA  #IMPLIED
+                class      CDATA  #IMPLIED
+                id         ID     #IMPLIED
+                distribute  (external | internal | restricted )  'external' >
+<!--ATTLIST date  e-dtype NMTOKEN  #FIXED 'date' -->
+<!ELEMENT Month  (#PCDATA )>
+<!ATTLIST Month  name       CDATA  #IMPLIED
+                 class      CDATA  #IMPLIED
+                 id         ID     #IMPLIED
+                 distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Day  (#PCDATA )>
+<!ATTLIST Day  name       CDATA    #IMPLIED
+               class      CDATA    #IMPLIED
+               id         ID       #IMPLIED
+               distribute  (external | internal | restricted )  'external'
+               e-dtype    NMTOKEN  #FIXED 'int' >
+<!ELEMENT Year  (#PCDATA )>
+<!ATTLIST Year  name       CDATA    #IMPLIED
+                class      CDATA    #IMPLIED
+                id         ID       #IMPLIED
+                distribute  (external | internal | restricted )  'external'
+                e-dtype    NMTOKEN  #FIXED 'int' >
+<!ELEMENT StartDate  (Date , Comment? )>
+<!ATTLIST StartDate  name       CDATA  #IMPLIED
+                     class      CDATA  #IMPLIED
+                     id         ID     #IMPLIED
+                     distribute  (external | internal | restricted )  'external' >
+<!ELEMENT EndDate  ( (Date | CurrentPosition ) , Comment? )>
+<!ATTLIST EndDate  name       CDATA  #IMPLIED
+                   class      CDATA  #IMPLIED
+                   id         ID     #IMPLIED
+                   distribute  (external | internal | restricted )  'external' >
+<!ELEMENT CurrentPosition EMPTY>
+<!ATTLIST CurrentPosition  name       CDATA  #IMPLIED
+                           class      CDATA  #IMPLIED
+                           id         ID     #IMPLIED
+                           distribute  (external | internal | restricted )  'external' >
+<!-- Person name and jobtitle -->
+<!ELEMENT Name  (Prefix? , First , Middle? , Last , Suffix? , Nickname? )>
+<!ATTLIST Name  name       CDATA  #IMPLIED
+                class      CDATA  #IMPLIED
+                id         ID     #IMPLIED
+                distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Prefix  (#PCDATA )>
+<!ATTLIST Prefix  name       CDATA  #IMPLIED
+                  class      CDATA  #IMPLIED
+                  id         ID     #IMPLIED
+                  distribute  (external | internal | restricted )  'external' >
+<!ELEMENT First  (#PCDATA )>
+<!ATTLIST First  name       CDATA  #IMPLIED
+                 class      CDATA  #IMPLIED
+                 id         ID     #IMPLIED
+                 distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Middle  (#PCDATA )>
+<!ATTLIST Middle  name       CDATA  #IMPLIED
+                  class      CDATA  #IMPLIED
+                  id         ID     #IMPLIED
+                  distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Last  (#PCDATA )>
+<!ATTLIST Last  name       CDATA  #IMPLIED
+                class      CDATA  #IMPLIED
+                id         ID     #IMPLIED
+                distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Suffix  (#PCDATA )>
+<!ATTLIST Suffix  name       CDATA  #IMPLIED
+                  class      CDATA  #IMPLIED
+                  id         ID     #IMPLIED
+                  distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Nickname  (#PCDATA )>
+<!ATTLIST Nickname  name       CDATA  #IMPLIED
+                    class      CDATA  #IMPLIED
+                    id         ID     #IMPLIED
+                    distribute  (external | internal | restricted )  'external' >
+<!ELEMENT JobTitle  (#PCDATA )>
+<!ATTLIST JobTitle  name       CDATA  #IMPLIED
+                    class      CDATA  #IMPLIED
+                    id         ID     #IMPLIED
+                    distribute  (external | internal | restricted )  'external' >
+<!-- Contact Information -->
+<!ELEMENT Contact  (Name , JobTitle? , Address? , PhoneNumbers , Website? , Email* )>
+<!ATTLIST Contact  name       CDATA  #IMPLIED
+                   class      CDATA  #IMPLIED
+                   id         ID     #IMPLIED
+                   distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Email  (#PCDATA )>
+<!ATTLIST Email  name       CDATA  #IMPLIED
+                 class      CDATA  #IMPLIED
+                 id         ID     #IMPLIED
+                 distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Website  (#PCDATA )>
+<!ATTLIST Website  name       CDATA  #IMPLIED
+                   class      CDATA  #IMPLIED
+                   id         ID     #IMPLIED
+                   distribute  (external | internal | restricted )  'external' >
+<!-- Post Detail -->
+<!ELEMENT PostDetail  (StartDate , EndDate? , PostedBy? )>
+<!ATTLIST PostDetail  name       CDATA  #IMPLIED
+                      class      CDATA  #IMPLIED
+                      id         ID     #IMPLIED
+                      distribute  (external | internal | restricted )  'external' >
+<!ELEMENT PostedBy  (Contact )>
+<!ATTLIST PostedBy  name       CDATA  #IMPLIED
+                    class      CDATA  #IMPLIED
+                    id         ID     #IMPLIED
+                    distribute  (external | internal | restricted )  'external' >
+<!-- Emphasis -->
+<!ELEMENT Emph  (#PCDATA )>
+<!ATTLIST Emph  face        (b | i | bi | u | bu | iu )  'b'
+                name       CDATA  #IMPLIED
+                class      CDATA  #IMPLIED
+                id         ID     #IMPLIED
+                distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Comment  (#PCDATA )>
+<!ATTLIST Comment  name       CDATA  #IMPLIED
+                   class      CDATA  #IMPLIED
+                   id         ID     #IMPLIED
+                   distribute  (external | internal | restricted )  'external' >
+<!--Ordered List-->
+<!ELEMENT ol  (li+ )>
+<!ATTLIST ol  name       CDATA  #IMPLIED
+              class      CDATA  #IMPLIED
+              id         ID     #IMPLIED
+              distribute  (external | internal | restricted )  'external' >
+<!--Unodered List-->
+<!ELEMENT ul  (li+ )>
+<!ATTLIST ul  name       CDATA  #IMPLIED
+              class      CDATA  #IMPLIED
+              id         ID     #IMPLIED
+              distribute  (external | internal | restricted )  'external' >
+<!--List Item-->
+<!ELEMENT li  (#PCDATA | Emph | Link | StartDate | EndDate | Date | JobTitle | Address | Voice | Fax | Pager | Email | EmployerName | SkillsQualif | ExperienceQualif | SoftwareQualif | PrgmLangQualif | EducationQualif | LicenseQualif | CertificationQualif | EquipmntQualif | OtherQualif | HardwareQualif | OperatingSysQualif | Img | Object )*>
+<!ATTLIST li  name       CDATA  #IMPLIED
+              class      CDATA  #IMPLIED
+              id         ID     #IMPLIED
+              distribute  (external | internal | restricted )  'external' >
+<!--Definition List-->
+<!ELEMENT dl  (dt , dd )>
+<!ATTLIST dl  name       CDATA  #IMPLIED
+              class      CDATA  #IMPLIED
+              id         ID     #IMPLIED
+              distribute  (external | internal | restricted )  'external' >
+<!ELEMENT dt  (#PCDATA | Emph | Link | StartDate | EndDate | Date | JobTitle | Address | Voice | Fax | Pager | Email | EmployerName | SkillsQualif | ExperienceQualif | SoftwareQualif | PrgmLangQualif | EducationQualif | LicenseQualif | CertificationQualif | EquipmntQualif | OtherQualif | HardwareQualif | OperatingSysQualif | Img | Object )*>
+<!ATTLIST dt  name       CDATA  #IMPLIED
+              class      CDATA  #IMPLIED
+              id         ID     #IMPLIED
+              distribute  (external | internal | restricted )  'external' >
+<!ELEMENT dd  (#PCDATA | Emph | Link | StartDate | EndDate | Date | JobTitle | Address | Voice | Fax | Pager | Email | EmployerName | SkillsQualif | ExperienceQualif | SoftwareQualif | PrgmLangQualif | EducationQualif | LicenseQualif | CertificationQualif | EquipmntQualif | OtherQualif | HardwareQualif | OperatingSysQualif | Img | Object )*>
+<!ATTLIST dd  name       CDATA  #IMPLIED
+              class      CDATA  #IMPLIED
+              id         ID     #IMPLIED
+              distribute  (external | internal | restricted )  'external' >
+<!-- Paragraph -->
+<!ELEMENT p  (#PCDATA | Emph | Link | StartDate | EndDate | Date | JobTitle | Address | Voice | Fax | Pager | Email | EmployerName | SkillsQualif | ExperienceQualif | SoftwareQualif | PrgmLangQualif | EducationQualif | LicenseQualif | CertificationQualif | EquipmntQualif | OtherQualif | HardwareQualif | OperatingSysQualif | Img | Object )*>
+<!ATTLIST p  name       CDATA  #IMPLIED
+             class      CDATA  #IMPLIED
+             id         ID     #IMPLIED
+             distribute  (external | internal | restricted )  'external' >
+<!--Elements shared between candidate
+    profile and job posting
+		-->
+<!-- 
+      Mark up for information about the
+      hiring organization 
+		-->
+<!ELEMENT HiringOrg  (OrgName , Website? , BusType? , EmployerDesc? , Contact* )>
+<!ATTLIST HiringOrg  type        (agent | principal | unspecified )  'unspecified'
+                     distribute  (external | internal | restricted )  'external'
+                     name       CDATA  #IMPLIED
+                     class      CDATA  #IMPLIED
+                     id         ID     #IMPLIED >
+<!ELEMENT OrgName  (#PCDATA )>
+<!ATTLIST OrgName  distribute  (external | internal | restricted )  'external'
+                   name       CDATA  #IMPLIED
+                   class      CDATA  #IMPLIED
+                   id         ID     #IMPLIED >
+<!ELEMENT SIC  (#PCDATA )>
+<!ATTLIST SIC  distribute  (external | internal | restricted )  'external'
+               name       CDATA    #IMPLIED
+               class      CDATA    #IMPLIED
+               id         ID       #IMPLIED
+               e-dtype    NMTOKEN  #FIXED 'int' >
+<!ELEMENT BusType  (#PCDATA | SIC )*>
+<!ATTLIST BusType  distribute  (external | internal | restricted )  'external'
+                   name       CDATA  #IMPLIED
+                   class      CDATA  #IMPLIED
+                   id         ID     #IMPLIED >
+<!ELEMENT EmployerDesc  (#PCDATA | p | ol | ul | dl | Img | Object )*>
+<!ATTLIST EmployerDesc  distribute  (external | internal | restricted )  'external'
+                        name       CDATA  #IMPLIED
+                        class      CDATA  #IMPLIED
+                        id         ID     #IMPLIED >
+<!-- 
+     Mark up for telephone data. 
+		-->
+<!-- hr-phon.mod is module containing declarations
+      for elements used to markup telephone information.
+
+		-->
+<!ELEMENT PhoneNumbers  ( (Voice | Fax | Pager )+ )>
+<!ATTLIST PhoneNumbers  name       CDATA  #IMPLIED
+                        class      CDATA  #IMPLIED
+                        id         ID     #IMPLIED
+                        distribute  (external | internal | restricted )  'external' >
+<!ELEMENT IntlCode  (#PCDATA )>
+<!ATTLIST IntlCode  name       CDATA    #IMPLIED
+                    class      CDATA    #IMPLIED
+                    id         ID       #IMPLIED
+                    distribute  (external | internal | restricted )  'external'
+                    e-dtype    NMTOKEN  #FIXED 'int' >
+<!ELEMENT AreaCode  (#PCDATA )>
+<!ATTLIST AreaCode  name       CDATA    #IMPLIED
+                    class      CDATA    #IMPLIED
+                    id         ID       #IMPLIED
+                    distribute  (external | internal | restricted )  'external'
+                    e-dtype    NMTOKEN  #FIXED 'int' >
+<!ELEMENT TelNumber  (#PCDATA )>
+<!ATTLIST TelNumber  name       CDATA  #IMPLIED
+                     class      CDATA  #IMPLIED
+                     id         ID     #IMPLIED
+                     distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Extension  (#PCDATA )>
+<!ATTLIST Extension  name       CDATA    #IMPLIED
+                     class      CDATA    #IMPLIED
+                     id         ID       #IMPLIED
+                     distribute  (external | internal | restricted )  'external'
+                     e-dtype    NMTOKEN  #FIXED 'int' >
+<!ELEMENT Voice  ( (IntlCode? , AreaCode? , TelNumber , Extension? ) )>
+<!ATTLIST Voice  name       CDATA  #IMPLIED
+                 class      CDATA  #IMPLIED
+                 id         ID     #IMPLIED
+                 distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Fax  ( (IntlCode? , AreaCode? , TelNumber , Extension? ) )>
+<!ATTLIST Fax  name       CDATA  #IMPLIED
+               class      CDATA  #IMPLIED
+               id         ID     #IMPLIED
+               distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Pager  ( (IntlCode? , AreaCode? , TelNumber , Extension? ) )>
+<!ATTLIST Pager  name       CDATA  #IMPLIED
+                 class      CDATA  #IMPLIED
+                 id         ID     #IMPLIED
+                 distribute  (external | internal | restricted )  'external' >
+<!-- 
+     Mark up for address data. 
+		-->
+<!-- hr-addr.mod is module containing declarations
+      for elements used to markup address information.
+
+		-->
+<!ELEMENT Address  (AddressLine+ , City ,  (State | Province ) , PostalCode , Country? )>
+<!ATTLIST Address  name       CDATA  #IMPLIED
+                   class      CDATA  #IMPLIED
+                   id         ID     #IMPLIED
+                   distribute  (external | internal | restricted )  'external' >
+<!ELEMENT AddressLine  (#PCDATA )>
+<!ATTLIST AddressLine  name       CDATA  #IMPLIED
+                       class      CDATA  #IMPLIED
+                       id         ID     #IMPLIED
+                       distribute  (external | internal | restricted )  'external' >
+<!ELEMENT City  (#PCDATA )>
+<!ATTLIST City  name       CDATA  #IMPLIED
+                class      CDATA  #IMPLIED
+                id         ID     #IMPLIED
+                distribute  (external | internal | restricted )  'external' >
+<!ELEMENT State  (#PCDATA )>
+<!ATTLIST State  name       CDATA  #IMPLIED
+                 class      CDATA  #IMPLIED
+                 id         ID     #IMPLIED
+                 distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Province  (#PCDATA )>
+<!ATTLIST Province  name       CDATA  #IMPLIED
+                    class      CDATA  #IMPLIED
+                    id         ID     #IMPLIED
+                    distribute  (external | internal | restricted )  'external' >
+<!ELEMENT PostalCode  (#PCDATA )>
+<!ATTLIST PostalCode  name       CDATA  #IMPLIED
+                      class      CDATA  #IMPLIED
+                      id         ID     #IMPLIED
+                      distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Country  (#PCDATA )>
+<!ATTLIST Country  name       CDATA  #IMPLIED
+                   class      CDATA  #IMPLIED
+                   id         ID     #IMPLIED
+                   distribute  (external | internal | restricted )  'external' >
+<!ELEMENT SkillsQualif  (#PCDATA )>
+<!ATTLIST SkillsQualif  YearsOfExperience CDATA  #IMPLIED
+                        level              (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                        interest           (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                        name              CDATA  #IMPLIED
+                        class             CDATA  #IMPLIED
+                        id                ID     #IMPLIED
+                        distribute         (external | internal | restricted )  'external' >
+<!ELEMENT ExperienceQualif  (#PCDATA )>
+<!ATTLIST ExperienceQualif  YearsOfExperience CDATA  #IMPLIED
+                            level              (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                            interest           (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                            name              CDATA  #IMPLIED
+                            class             CDATA  #IMPLIED
+                            id                ID     #IMPLIED
+                            distribute         (external | internal | restricted )  'external' >
+<!ELEMENT OperatingSysQualif  (#PCDATA )>
+<!ATTLIST OperatingSysQualif  YearsOfExperience CDATA  #IMPLIED
+                              level              (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                              interest           (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                              name              CDATA  #IMPLIED
+                              class             CDATA  #IMPLIED
+                              id                ID     #IMPLIED
+                              distribute         (external | internal | restricted )  'external' >
+<!ELEMENT SoftwareQualif  (#PCDATA )>
+<!ATTLIST SoftwareQualif  YearsOfExperience CDATA  #IMPLIED
+                          level              (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                          interest           (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                          name              CDATA  #IMPLIED
+                          class             CDATA  #IMPLIED
+                          id                ID     #IMPLIED
+                          distribute         (external | internal | restricted )  'external' >
+<!ELEMENT PrgmLangQualif  (#PCDATA )>
+<!ATTLIST PrgmLangQualif  YearsOfExperience CDATA  #IMPLIED
+                          level              (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                          interest           (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                          name              CDATA  #IMPLIED
+                          class             CDATA  #IMPLIED
+                          id                ID     #IMPLIED
+                          distribute         (external | internal | restricted )  'external' >
+<!ELEMENT EducationQualif  (#PCDATA )>
+<!ATTLIST EducationQualif  YearsOfExperience CDATA  #IMPLIED
+                           level              (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                           interest           (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                           name              CDATA  #IMPLIED
+                           class             CDATA  #IMPLIED
+                           id                ID     #IMPLIED
+                           distribute         (external | internal | restricted )  'external' >
+<!ELEMENT LicenseQualif  (#PCDATA )>
+<!ATTLIST LicenseQualif  YearsOfExperience CDATA  #IMPLIED
+                         level              (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                         interest           (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                         name              CDATA  #IMPLIED
+                         class             CDATA  #IMPLIED
+                         id                ID     #IMPLIED
+                         distribute         (external | internal | restricted )  'external' >
+<!ELEMENT EquipmntQualif  (#PCDATA )>
+<!ATTLIST EquipmntQualif  YearsOfExperience CDATA  #IMPLIED
+                          level              (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                          interest           (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                          name              CDATA  #IMPLIED
+                          class             CDATA  #IMPLIED
+                          id                ID     #IMPLIED
+                          distribute         (external | internal | restricted )  'external' >
+<!ELEMENT CertificationQualif  (#PCDATA )>
+<!ATTLIST CertificationQualif  YearsOfExperience CDATA  #IMPLIED
+                               level              (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                               interest           (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                               name              CDATA  #IMPLIED
+                               class             CDATA  #IMPLIED
+                               id                ID     #IMPLIED
+                               distribute         (external | internal | restricted )  'external' >
+<!ELEMENT OtherQualif  (#PCDATA )>
+<!ATTLIST OtherQualif  YearsOfExperience CDATA  #IMPLIED
+                       level              (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                       interest           (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                       name              CDATA  #IMPLIED
+                       class             CDATA  #IMPLIED
+                       id                ID     #IMPLIED
+                       distribute         (external | internal | restricted )  'external' >
+<!ELEMENT HardwareQualif  (#PCDATA )>
+<!ATTLIST HardwareQualif  YearsOfExperience CDATA  #IMPLIED
+                          level              (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                          interest           (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                          name              CDATA  #IMPLIED
+                          class             CDATA  #IMPLIED
+                          id                ID     #IMPLIED
+                          distribute         (external | internal | restricted )  'external' >
+<!ELEMENT EmployerName  (#PCDATA )>
+<!ATTLIST EmployerName  YearsOfExperience CDATA  #IMPLIED
+                        level              (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                        interest           (1 | 2 | 3 | 4 | 5 )  #IMPLIED
+                        name              CDATA  #IMPLIED
+                        class             CDATA  #IMPLIED
+                        id                ID     #IMPLIED
+                        distribute         (external | internal | restricted )  'external' >
+<!ELEMENT ResumeProlog  (PostDetail? , RevisionDate? , AvailabilityDate? , CompensationDetail? , DistributionRestrictions? )>
+<!ATTLIST ResumeProlog  name       CDATA  #IMPLIED
+                        class      CDATA  #IMPLIED
+                        id         ID     #IMPLIED
+                        distribute  (external | internal | restricted )  'external' >
+<!ELEMENT RevisionDate  (Date )>
+<!ATTLIST RevisionDate  name       CDATA  #IMPLIED
+                        class      CDATA  #IMPLIED
+                        id         ID     #IMPLIED
+                        distribute  (external | internal | restricted )  'external' >
+<!ELEMENT AvailabilityDate  (#PCDATA | Comment | StartDate | EndDate | Date )*>
+<!ATTLIST AvailabilityDate  name       CDATA  #IMPLIED
+                            class      CDATA  #IMPLIED
+                            id         ID     #IMPLIED
+                            distribute  (external | internal | restricted )  'external' >
+<!ELEMENT CompensationDetail  (Salary? , Rate? , Benefits? )>
+<!ATTLIST CompensationDetail  name       CDATA  #IMPLIED
+                              class      CDATA  #IMPLIED
+                              id         ID     #IMPLIED
+                              distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Salary  (Current? , Required? )>
+<!ATTLIST Salary  name       CDATA  #IMPLIED
+                  class      CDATA  #IMPLIED
+                  id         ID     #IMPLIED
+                  distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Rate  (Current? , Required? )>
+<!ATTLIST Rate  name       CDATA  #IMPLIED
+                class      CDATA  #IMPLIED
+                id         ID     #IMPLIED
+                distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Benefits  (Current? , Required? )>
+<!ATTLIST Benefits  name       CDATA  #IMPLIED
+                    class      CDATA  #IMPLIED
+                    id         ID     #IMPLIED
+                    distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Current  (#PCDATA )>
+<!ATTLIST Current  name       CDATA  #IMPLIED
+                   class      CDATA  #IMPLIED
+                   id         ID     #IMPLIED
+                   distribute  (external | internal | restricted )  'external' >
+<!ELEMENT Required  (#PCDATA )>
+<!ATTLIST Required  name       CDATA  #IMPLIED
+                    class      CDATA  #IMPLIED
+                    id         ID     #IMPLIED
+                    distribute  (external | internal | restricted )  'external' >
+<!ELEMENT DistributionRestrictions  (Comment | DontDistributeTo )>
+<!ATTLIST DistributionRestrictions  name       CDATA  #IMPLIED
+                                    class      CDATA  #IMPLIED
+                                    id         ID     #IMPLIED
+                                    distribute  (external | internal | restricted )  'external' >
+<!ELEMENT DontDistributeTo  (#PCDATA | HiringOrg )*>
+<!ATTLIST DontDistributeTo  name       CDATA  #IMPLIED
+                            class      CDATA  #IMPLIED
+                            id         ID     #IMPLIED
+                            distribute  (external | internal | restricted )  'external' >
+<!ELEMENT ResumeBody  (PersonalData , ResumeSection+ )>
+<!ATTLIST ResumeBody  name       CDATA  #IMPLIED
+                      class      CDATA  #IMPLIED
+                      id         ID     #IMPLIED
+                      distribute  (external | internal | restricted )  'external' >
+<!ELEMENT PersonalData  (Name ,  (JobTitle | Address | Voice | Fax | Pager | Email | EmployerName | SkillsQualif | ExperienceQualif | SoftwareQualif | PrgmLangQualif | EducationQualif | LicenseQualif | CertificationQualif | EquipmntQualif | OtherQualif | HardwareQualif | OperatingSysQualif )* )>
+<!ATTLIST PersonalData  name       CDATA  #IMPLIED
+                        class      CDATA  #IMPLIED
+                        id         ID     #IMPLIED
+                        distribute  (external | internal | restricted )  'external' >
+<!ELEMENT ResumeSection  (SectionTitle? , SubTitle? , SecBody )>
+<!ATTLIST ResumeSection  SecType     (Objective | 
+                                      Experience | 
+                                      Personal | 
+                                      References | 
+                                      Education | 
+                                      Certifications | 
+                                      Licenses | 
+                                      QualifSummary | 
+                                      Skills | 
+                                      ProfAssociations | 
+                                      Unspecified )  'Unspecified'
+                         name       CDATA  #IMPLIED
+                         class      CDATA  #IMPLIED
+                         id         ID     #IMPLIED
+                         distribute  (external | internal | restricted )  'external' >
+<!ELEMENT SectionTitle  (#PCDATA | JobTitle | Address | Voice | Fax | Pager | Email | EmployerName | SkillsQualif | ExperienceQualif | SoftwareQualif | PrgmLangQualif | EducationQualif | LicenseQualif | CertificationQualif | EquipmntQualif | OtherQualif | HardwareQualif | OperatingSysQualif | StartDate | EndDate | Date )*>
+<!ATTLIST SectionTitle  name       CDATA  #IMPLIED
+                        class      CDATA  #IMPLIED
+                        id         ID     #IMPLIED
+                        distribute  (external | internal | restricted )  'external' >
+<!ELEMENT SubTitle  (#PCDATA | JobTitle | Address | Voice | Fax | Pager | Email | EmployerName | SkillsQualif | ExperienceQualif | SoftwareQualif | PrgmLangQualif | EducationQualif | LicenseQualif | CertificationQualif | EquipmntQualif | OtherQualif | HardwareQualif | OperatingSysQualif )*>
+<!ATTLIST SubTitle  name       CDATA  #IMPLIED
+                    class      CDATA  #IMPLIED
+                    id         ID     #IMPLIED
+                    distribute  (external | internal | restricted )  'external' >
+<!ELEMENT SecBody  ( (p | ol | ul | dl | Img | Object | ResumeSection )* )>
+<!ATTLIST SecBody  name       CDATA  #IMPLIED
+                   class      CDATA  #IMPLIED
+                   id         ID     #IMPLIED
+                   distribute  (external | internal | restricted )  'external' >
+<!ELEMENT ResumeID  (#PCDATA )>
+<!ATTLIST ResumeID  name       CDATA  #IMPLIED
+                    class      CDATA  #IMPLIED
+                    id         ID     #IMPLIED
+                    distribute  (external | internal | restricted )  'external' >

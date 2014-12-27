@@ -1,0 +1,372 @@
+body
+	{width:534px;
+	height:400px;}
+.TB
+	{mso-special-format:nobullet•;}
+.T
+	{text-align:left;
+	font-family:"Trebuchet MS";
+	font-weight:bold;
+	color:#99FF99;
+	mso-color-index:3;
+	font-size:190%;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.BB
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.B
+	{text-align:left;
+	font-family:Verdana;
+	color:black;
+	mso-color-index:1;
+	font-size:152%;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.B1B
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.B1
+	{text-align:left;
+	font-family:Verdana;
+	color:black;
+	mso-color-index:1;
+	font-size:133%;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.B2B
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.B2
+	{text-align:left;
+	font-family:Verdana;
+	color:black;
+	mso-color-index:1;
+	font-size:114%;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.B3B
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.B3
+	{text-align:left;
+	font-family:Verdana;
+	color:black;
+	mso-color-index:1;
+	font-size:95%;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.B4B
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.B4
+	{text-align:left;
+	font-family:Verdana;
+	color:black;
+	mso-color-index:1;
+	font-size:95%;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.NB
+	{mso-special-format:nobullet•;}
+.N
+	{text-align:left;
+	font-family:Verdana;
+	color:black;
+	mso-color-index:1;
+	font-size:57%;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.N1B
+	{mso-special-format:bullet•;
+	color:#660066;
+	mso-color-index:5;}
+.N1
+	{text-align:left;
+	font-family:Verdana;
+	color:black;
+	mso-color-index:1;
+	font-size:57%;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.N2B
+	{mso-special-format:bullet•;
+	color:#660066;
+	mso-color-index:5;}
+.N2
+	{text-align:left;
+	font-family:Verdana;
+	color:black;
+	mso-color-index:1;
+	font-size:57%;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.N3B
+	{mso-special-format:bullet•;
+	color:#660066;
+	mso-color-index:5;}
+.N3
+	{text-align:left;
+	font-family:Verdana;
+	color:black;
+	mso-color-index:1;
+	font-size:57%;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.N4N
+	{mso-special-format:bullet•;
+	color:#660066;
+	mso-color-index:5;}
+.N4
+	{text-align:left;
+	font-family:Verdana;
+	color:black;
+	mso-color-index:1;
+	font-size:57%;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.OB
+	{mso-special-format:nobullet•;}
+.O
+	{text-align:left;
+	font-family:Verdana;
+	color:black;
+	mso-color-index:1;
+	font-size:114%;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.O1B
+	{mso-special-format:nobullet•;}
+.O1
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.O2B
+	{mso-special-format:nobullet•;}
+.O2
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.O3B
+	{mso-special-format:nobullet•;}
+.O3
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.O4B
+	{mso-special-format:nobullet•;}
+.O4
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.CBB
+	{mso-special-format:nobullet•;
+	color:purple;
+	mso-color-index:5;}
+.CB
+	{text-align:center;
+	font-family:Verdana;
+	color:black;
+	mso-color-index:1;
+	font-size:152%;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.CB1B
+	{mso-special-format:nobullet•;
+	color:purple;
+	mso-color-index:5;}
+.CB1
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.CB2B
+	{mso-special-format:nobullet•;
+	color:purple;
+	mso-color-index:5;}
+.CB2
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.CB3B
+	{mso-special-format:nobullet•;
+	color:purple;
+	mso-color-index:5;}
+.CB3
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.CB4B
+	{mso-special-format:nobullet•;
+	color:purple;
+	mso-color-index:5;}
+.CB4
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.CTB
+	{mso-special-format:nobullet•;}
+.CT
+	{text-align:center;
+	font-family:"Trebuchet MS";
+	font-weight:bold;
+	color:#99FF99;
+	mso-color-index:3;
+	font-size:228%;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.HBB
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.HB
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.HB1B
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.HB1
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.HB2B
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.HB2
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.HB3B
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.HB3
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.HB4B
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.HB4
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.QBB
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.QB
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.QB1B
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.QB1
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.QB2B
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.QB2
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.QB3B
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.QB3
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.QB4B
+	{mso-special-format:bullet•;
+	color:purple;
+	mso-color-index:5;}
+.QB4
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.TblB
+	{mso-special-format:nobullet•;
+	color:purple;
+	mso-color-index:5;}
+.Tbl
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.Tbl1B
+	{mso-special-format:nobullet•;
+	color:purple;
+	mso-color-index:5;}
+.Tbl1
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.Tbl2B
+	{mso-special-format:nobullet•;
+	color:purple;
+	mso-color-index:5;}
+.Tbl2
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.Tbl3B
+	{mso-special-format:nobullet•;
+	color:purple;
+	mso-color-index:5;}
+.Tbl3
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.Tbl4B
+	{mso-special-format:nobullet•;
+	color:purple;
+	mso-color-index:5;}
+.Tbl4
+	{font-family:Verdana;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;}
+.defaultB
+	{mso-special-format:nobullet•;}
+.default
+	{text-align:center;
+	font-family:Verdana;
+	font-weight:normal;
+	font-style:normal;
+	text-decoration:none;
+	text-shadow:none;
+	text-effect:none;
+	mso-fareast-hint:no;
+	layout-flow:horizontal;
+	color:black;
+	mso-color-index:1;
+	font-size:114%;
+	mso-text-raise:0%;
+	mso-line-spacing:"100 0 0";
+	mso-margin-left-alt:0;
+	mso-text-indent-alt:0;
+	mso-char-wrap:1;
+	mso-kinsoku-overflow:1;
+	direction:ltr;
+	mso-word-wrap:1;
+	mso-vertical-align-special:baseline;
+	mso-ansi-language:EN-US;}
+a:link
+	{color:#006600 !important;}
+a:active
+	{color:purple !important;}
+a:visited
+	{color:#CC66CC !important;}

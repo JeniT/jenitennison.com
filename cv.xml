@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="resources/style/cv.xsl"?>
+<Resume xmlns="urn:schemas-biztalk-org:HR-XML-org/Resume" xmlns:my="http://www.jenitennison.com/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" 
+                xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" 
+                xmlns:html="http://www.w3.org/1999/xhtml" 
+                about="/cv.xml">
+      <dc:title>CV: Dr Jeni Tennison</dc:title>
+      <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+        <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2006-04-07"/>
+      </dc:date>
+      <dc:creator rdf:resource="jeni@jenitennison.com"/>
+      <html:link rel="stylesheet" href="/resources/style/base.css"/>
+    </rdf:Description>
+  </rdf:RDF>
+  <ResumeProlog>
+    <RevisionDate>
+      <Date>
+        <Month>June</Month>
+        <Day e-dtype="int">10</Day>
+        <Year e-dtype="int">2008</Year>
+      </Date>
+    </RevisionDate>
+  </ResumeProlog>
+  <ResumeBody>
+    <PersonalData>
+      <Name>
+        <Prefix>Dr</Prefix>
+        <First>Jenifer</First>
+        <Last>Tennison</Last>
+        <Nickname>Jeni</Nickname>
+      </Name>
+      <Address>
+        <Province>Surrey</Province>
+        <Country>United Kingdom</Country>
+      </Address>
+      <Voice>
+        <IntlCode e-dtype="int">44</IntlCode>
+        <AreaCode e-dtype="int">(0)208</AreaCode>
+        <TelNumber>224 0520</TelNumber>
+      </Voice>
+      <Voice>
+        <IntlCode e-dtype="int">44</IntlCode>
+        <AreaCode e-dtype="int">(0)7974</AreaCode>
+        <TelNumber>420 482</TelNumber>
+      </Voice>
+      <Email>jeni@jenitennison.com</Email>
+    </PersonalData>
+    <ResumeSection SecType="Personal">
+      <SectionTitle>Personal Information</SectionTitle>
+      <SecBody>
+        <dl>
+          <dt>Nationality</dt>
+          <dd>British</dd>
+          <dt>Age</dt>
+          <dd>36</dd>
+        </dl>
+      </SecBody>
+    </ResumeSection>
+    <ResumeSection SecType="Objective">
+      <SectionTitle>Objective</SectionTitle>
+      <SecBody>
+        <p>
+			    I am currently working freelance, and am particularly interested in 
+          part time or consultancy work in which I can apply my skills and 
+          interest in web-based technologies, particularly XML, XSLT and 
+          XML Schemas, and preferably take advantage of my academic background 
+          in knowledge management and the Semantic Web.  I particularly enjoy 
+          the challenge of expanding my knowledge and abilities to meet the 
+          demands of individual projects.  I like technical writing, tutoring, 
+          and working closely with customers to identify and satisfy their 
+          requirements,.
+		    </p>
+      </SecBody>
+    </ResumeSection>
+    <ResumeSection SecType="Experience">
+      <SectionTitle>Employment</SectionTitle>
+      <SecBody>
+        <ResumeSection SecType="Unspecified">
+          <SectionTitle>
+            <StartDate>
+              <Date>
+                <Month>October</Month>
+                <Year e-dtype="int">2000</Year>
+              </Date>
+            </StartDate>
+            <EndDate>
+              <CurrentPosition />
+            </EndDate>
+            <EmployerName>
+              <my:link href="../consulting/index.xml">Jeni Tennison Consulting Ltd</my:link>
+            </EmployerName>
+            <JobTitle>Director</JobTitle>
+          </SectionTitle>
+          <SecBody>
+            <ul>
+              <li>XML+XSLT application design and development</li>
+              <li>Linked Data and Semantic Web application design and development</li>
+              <li>Technical authoring</li>
+              <li>Tutoring and mentoring in XML, XSLT and XML Schemas</li>
+              <li>Training course development and delivery in:
+                <ul>
+                  <li>XSLT 1.0 and 2.0</li>
+                  <li>XML Schemas</li>
+                  <li>Data modelling</li>
+                  <li>XML Application Development</li>
+                </ul>
+              </li>
+            </ul>
+          </SecBody>
+        </ResumeSection>
+        <ResumeSection SecType="Unspecified">
+          <SectionTitle>
+            <StartDate>
+              <Date>
+                <Year e-dtype="int">1998</Year>
+              </Date>
+            </StartDate>
+            <EndDate>
+              <Date>
+                <Month>October</Month>
+                <Year e-dtype="int">2000</Year>
+              </Date>
+            </EndDate>
+            <EmployerName>
+              <my:link href="www.epistemics.co.uk">Epistemics Ltd</my:link>
+            </EmployerName>
+            <JobTitle>Senior Knowledge Engineer and Security Controller</JobTitle>
+          </SectionTitle>
+          <SecBody>
+            <ul>
+              <li>Knowledge acquisition, modelling and documentation</li>
+              <li>Project and team management</li>
+              <li>Research and development in knowledge engineering</li>
+            </ul>
+          </SecBody>
+        </ResumeSection>
+        <ResumeSection SecType="Unspecified">
+          <SectionTitle>
+            <StartDate>
+              <Date>
+                <Year e-dtype="int">1996</Year>
+              </Date>
+            </StartDate>
+            <EndDate>
+              <Date>
+                <Year e-dtype="int">1998</Year>
+              </Date>
+            </EndDate>
+            <JobTitle>IT Consultant</JobTitle>
+          </SectionTitle>
+          <SecBody>
+            <ul>
+              <li>Consultant on electronic conferences (<my:link href="www.vei.co.uk">Virtual Environments International, Oxford</my:link>)</li>
+              <li>Website design and HTML authoring (<my:link href="www.crg.cs.nott.ac.uk">Dept. of Computer Science, Nottingham</my:link>)</li>
+            </ul>
+          </SecBody>
+        </ResumeSection>
+        <ResumeSection SecType="Unspecified">
+          <SectionTitle>
+            <StartDate>
+              <Date>
+                <Year e-dtype="int">1994</Year>
+              </Date>
+            </StartDate>
+            <EndDate>
+              <Date>
+                <Year e-dtype="int">1998</Year>
+              </Date>
+            </EndDate>
+            <EmployerName>
+              <my:link href="www.nottingham.ac.uk">University of Nottingham</my:link>
+            </EmployerName>
+            <JobTitle>Graduate Teaching Assistant</JobTitle>
+          </SectionTitle>
+          <SecBody>
+            <ul>
+              <li>Training undergraduates and staff in HTML, expert systems, information technology and multivariate statistics</li>
+              <li>Design, development and coordination of departmental website</li>
+            </ul>
+          </SecBody>
+        </ResumeSection>
+        <ResumeSection SecType="Unspecified">
+          <SectionTitle>
+            <StartDate>
+              <Date>
+                <Year e-dtype="int">1992</Year>
+              </Date>
+            </StartDate>
+            <EndDate>
+              <Date>
+                <Year e-dtype="int">1993</Year>
+              </Date>
+            </EndDate>
+            <EmployerName>
+              <my:link href="www.rasnet.co.uk">Recruitment &amp; Assessment Services</my:link>
+            </EmployerName>
+            <JobTitle>Student Psychologist</JobTitle>
+          </SectionTitle>
+          <SecBody>
+            <ul>
+              <li>Computer-based aptitude test administration, scoring, interpretation and evaluation</li>
+              <li>Design, development and coordination of departmental website</li>
+            </ul>
+          </SecBody>
+        </ResumeSection>
+      </SecBody>
+    </ResumeSection>
+    <ResumeSection SecType="Education">
+      <SectionTitle>Education</SectionTitle>
+      <SecBody>
+        <ResumeSection SecType="Unspecified">
+          <SectionTitle>
+            <StartDate>
+              <Date>
+                <Year e-dtype="int">1994</Year>
+              </Date>
+            </StartDate>
+            <EndDate>
+              <Date>
+                <Year e-dtype="int">1999</Year>
+              </Date>
+            </EndDate>
+            <EmployerName>
+              <my:link href="www.nottingham.ac.uk">University of Nottingham</my:link>
+            </EmployerName>
+            <EducationQualif>PhD in Psychology/Artificial Intelligence</EducationQualif>
+          </SectionTitle>
+          <SecBody>
+            <ul>
+              <li>Thesis title: <my:link href="jeni-tennison-thesis.doc">"Living Ontologies: Collaborative Knowledge Structuring on the Internet"</my:link>
+              </li>
+              <li>Research on web communities and knowledge engineering, including the development of a MOO-based HTTP server that formed the basis of a collaborative knowledge server</li>
+            </ul>
+          </SecBody>
+        </ResumeSection>
+        <ResumeSection SecType="Unspecified">
+          <SectionTitle>
+            <StartDate>
+              <Date>
+                <Year e-dtype="int">1990</Year>
+              </Date>
+            </StartDate>
+            <EndDate>
+              <Date>
+                <Year e-dtype="int">1994</Year>
+              </Date>
+            </EndDate>
+            <EmployerName>
+              <my:link href="www.nottingham.ac.uk">University of Nottingham</my:link>
+            </EmployerName>
+            <EducationQualif>BSc (Hons) Psychology (First Class)</EducationQualif>
+          </SectionTitle>
+          <SecBody>
+            <ul>
+              <li>Focussing on artificial intelligence (expert systems, neural networks &amp; theories of cognition) and human-computer interface design &amp; evaluation</li>
+            </ul>
+          </SecBody>
+        </ResumeSection>
+        <ResumeSection SecType="Unspecified">
+          <SectionTitle>
+            <StartDate>
+              <Date>
+                <Year e-dtype="int">1990</Year>
+              </Date>
+            </StartDate>
+            <EndDate>
+              <Date>
+                <Year e-dtype="int">1994</Year>
+              </Date>
+            </EndDate>
+            <EmployerName>
+              <my:link href="www.nottingham.ac.uk">University of Nottingham</my:link>
+            </EmployerName>
+            <EducationQualif>Diploma in Applied Psychology</EducationQualif>
+          </SectionTitle>
+          <SecBody>
+            <ul>
+              <li>Occupational psychology, particularly selection &amp; recruitment</li>
+            </ul>
+          </SecBody>
+        </ResumeSection>
+        <ResumeSection SecType="Unspecified">
+          <SectionTitle>
+            <StartDate>
+              <Date>
+                <Year e-dtype="int">1986</Year>
+              </Date>
+            </StartDate>
+            <EndDate>
+              <Date>
+                <Year e-dtype="int">1990</Year>
+              </Date>
+            </EndDate>
+            <EmployerName>
+              <my:link href="www.netherhall.cambs.sch.uk">The Netherhall School</my:link>
+            </EmployerName>
+          </SectionTitle>
+          <SecBody>
+            <ul>
+              <li>A Levels in Chemistry, Physics, Maths, Further Maths and English</li>
+              <li>8 GCSEs; 1 O Level</li>
+            </ul>
+          </SecBody>
+        </ResumeSection>
+      </SecBody>
+    </ResumeSection>
+    <ResumeSection SecType="Skills">
+      <SectionTitle>Skills</SectionTitle>
+      <SecBody>
+        <ResumeSection SecType="Unspecified">
+          <SectionTitle>Web-oriented skills</SectionTitle>
+          <SecBody>
+            <ul>
+              <li>XML, XSLT, XML Schema &amp; other XML-related standards</li>
+              <li>RDF, RDFa, OWL &amp; other Semantic-Web-related standards</li>
+              <li>HTML and XHTML</li>
+              <li>CSS and XSL-FO</li>
+              <li>Atom and APP</li>
+              <li>RESTful web application design and development</li>
+              <li>Ruby on Rails</li>
+            </ul>
+          </SecBody>
+        </ResumeSection>
+        <ResumeSection SecType="Unspecified">
+          <SectionTitle>Programming skills</SectionTitle>
+          <SecBody>
+            <ul>
+              <li>XSLT 1.0 and 2.0</li>
+              <li>ECMAScript, JavaScript, JScript, VBScript</li>
+              <li>Ruby</li>
+              <li>Java</li>
+            </ul>
+          </SecBody>
+        </ResumeSection>
+        <ResumeSection SecType="Unspecified">
+          <SectionTitle>Instructional skills</SectionTitle>
+          <SecBody>
+            <ul>
+              <li>providing programming training</li>
+              <li>leading workshops</li>
+              <li>providing software training</li>
+              <li>technical writing</li>
+            </ul>
+          </SecBody>
+        </ResumeSection>
+        <ResumeSection SecType="Unspecified">
+          <SectionTitle>Knowledge-oriented skills</SectionTitle>
+          <SecBody>
+            <ul>
+              <li>knowledge management</li>
+              <li>
+                <my:link href="www.commonkads.uva.nl">CommonKADS</my:link>
+              </li>
+              <li>knowledge-acquisition techniques (structured interviews, repertory grids, card sorts, laddering, 20 questions, protocol analysis)</li>
+              <li>knowledge modelling</li>
+              <li>knowledge-based system development and implementation</li>
+            </ul>
+          </SecBody>
+        </ResumeSection>
+        <ResumeSection SecType="Unspecified">
+          <SectionTitle>Project-management skills</SectionTitle>
+          <SecBody>
+            <ul>
+              <li>customer liaison &amp; presentation</li>
+              <li>team working</li>
+            </ul>
+          </SecBody>
+        </ResumeSection>
+      </SecBody>
+    </ResumeSection>
+    <ResumeSection SecType="Unspecified">
+      <SectionTitle>Publications</SectionTitle>
+      <SecBody>
+        <ul>
+          <li>
+            <my:link href="http://www.amazon.com/gp/product/1590593243">"Beginning XSLT 2.0"</my:link> (July 2005)
+          </li>
+          <li>
+            Chapter on XSLT Best Practice in <my:link href="http://www.amazon.com/exec/obidos/ASIN/186100768X">"XML Design Handbook"</my:link>
+            by Scott Bonneau et al. (March 2003)
+          </li>
+          <li>
+            Appendix on XPath in <my:link href="http://www.amazon.com/exec/obidos/ASIN/1904347088">"SQL Server 2000 XML Distilled"</my:link>
+            by Kevin Williams et al. (October 2002)
+          </li>
+          <li>
+            <my:link href="http://www.amazon.com/exec/obidos/ASIN/1861005946">"Beginning XSLT"</my:link> (May 2002)
+          </li>
+          <li>
+            <my:link href="http://www.amazon.com/exec/obidos/ASIN/0764547763">"XSLT &amp; XPath On The Edge, Unlimited Edition"</my:link>;
+            see the <my:link href="http://www.unlimited-edition.com/">book's website</my:link> for more material (September 2001)
+          </li>
+          <li>
+            Chapter on XSLT and XML Schema in <my:link href="http://www.amazon.com/exec/obidos/ASIN/1861005474">"Professional XML Schemas"</my:link>
+            by Jon Duckett et al. (July 2001)
+          </li>
+          <li>
+            Appendix on Muenchian Grouping in <my:link href="http://www.amazon.com/exec/obidos/ASIN/0130404462">"XSLT and XPATH: A Guide to XML Transformations"</my:link>
+            by John Robert Gardner and Zarella L. Rendon (July 2001)
+          </li>
+          <li>
+            Description of <my:link href="http://www.jenitennison.com/xslt/utilities">XSLTDoc</my:link>
+            in <my:link href="http://www.amazon.com/exec/obidos/ASIN/1861003579">"Professional XSL"</my:link> 
+            by Kurt Cagle et al. (June 2001)
+          </li>
+        </ul>
+      </SecBody>
+    </ResumeSection>
+    <ResumeSection SecType="Unspecified">
+      <SectionTitle>Achievements</SectionTitle>
+      <SecBody>
+        <ul>
+          <li>Presented at <my:link href="http://2008.xtech.org/public/schedule/detail/528">XTech 2008</my:link> on SemWebbing the London Gazette</li>
+          <li>Presented at <my:link href="http://2007.xtech.org/public/schedule/detail/77">XTech 2007</my:link> on Creole: Validating Overlapping Markup</li>
+          <li>Presented at Extreme Markup Languages 2006 on <my:link href="http://www.idealliance.org/papers/extreme/proceedings/html/2006/Tennison01/EML2006Tennison01.html">Datatypes for XML: the Datatyping Library Language (DTLL)</my:link></li>
+          <li>Invited Expert on W3C's XML Processing WG</li>
+          <li>Presented at <my:link href="www.xmleurope.com">XTech 2005</my:link> on Managing Complex Document Generation Through Pipelining</li>
+          <li>Presented at <my:link href="www.xmlopen.org">XML Open 2004</my:link> on Datatypes in XML</li>
+          <li>Presented at <my:link href="www.extrememarkup.com">Extreme Markup Languages 2003</my:link> on <my:link href="http://www.idealliance.org/papers/extreme/proceedings/html/2003/Tennison01/EML2003Tennison01.html">Typing in transformations</my:link></li>
+          <li>Presented at <my:link href="www.xmleurope.com">XML Europe 2003</my:link> on What's New in XSLT 2.0</li>
+          <li>Invited Expert on W3C's XSL WG</li>
+          <li>Presented at <my:link href="www.extrememarkup.com">Extreme Markup Languages 2002</my:link> on automated comparisons of markup languages and on the Layered Markup and Annotation Language (LMNL)</li>
+          <li>Voted <my:link href="http://www.activestate.com/Corporate/Awards/ActiveAwards.html">ActiveState's 2002 Activator's Choice Programmer of the Year</my:link> for XSLT</li>
+          <li>Invited to speak at <my:link href="http://www.dpawson.co.uk/xsltuk">XSLT UK '01</my:link> on XSLT Design Patterns</li>
+          <li>
+            Regular contributor on <my:link href="http://www.mulberrytech.com/xsl/xsl-list/">XSL-List</my:link>
+            and <my:link href="http://lists.w3.org/Archives/Public/xmlschema-dev/">xmlschema-dev</my:link>
+          </li>
+          <li>Presented at <my:link href="http://www.ergonomics.org.uk/events/conference001.htm">Ergonomics Society Conference 2000</my:link> on knowledge-based system design, development and implementation</li>
+          <li>Presented at KAW'98 on knowledge servers</li>
+          <li>Led <my:link href="http://www5conf.inria.fr/fich_html/workshops/Tennison.html">workshop</my:link> at <my:link href="www5conf.inria.fr">WWW'96</my:link> on electronic conferences</li>
+        </ul>
+        <p>Details available on request</p>
+      </SecBody>
+    </ResumeSection>
+    <ResumeSection SecType="References">
+      <SectionTitle>References</SectionTitle>
+      <SecBody>
+        <p>Available on request</p>
+      </SecBody>
+    </ResumeSection>
+  </ResumeBody>
+</Resume>

@@ -1,0 +1,30 @@
+default namespace test = "http://www.jenitennison.com/xslt/unit-test"
+datatypes xs = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+start = tests
+
+tests = element tests { attribute id { xs:ID }?,
+                        title?, test+ }
+
+test = element test { attribute id { xs:ID }?, 
+                      title?, 
+                      context?, param*, 
+                      expect }
+
+title = element title { text }
+
+context = element context { select }
+                                                        
+fragment = attribute href { xs:anyURI } |
+           mixed { any-element* }
+select = fragment?, attribute select { XPath }?                            
+                            
+XPath = text
+                            
+param = element param { attribute name { xs:QName },
+                        select }
+                         
+expect = element expect { select }
+                         
+any-element = element * { attribute * { text }*,
+                          mixed { any-element* } }

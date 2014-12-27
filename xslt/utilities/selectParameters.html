@@ -1,0 +1,169 @@
+
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "/resources/dtd/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>Jeni's XSLT Utilities: Select Parameters</title>
+      <link rel="stylesheet" href="/resources/style/base.css"/>
+      <link rel="alternate" type="text/xml" href="/xslt/utilities/selectParameters.xml"/><!--
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    -->
+   </head>
+   <body>
+      <p id="xml-link">
+					Try the <a href="/xslt/utilities/selectParameters.xml">XML version</a> of this page.
+					If you have problems with it, consult the
+					<a href="/compatibility.html">compatibility page</a>.
+				</p>
+   
+   
+      <h1>Select Parameters Utility<span id="link-top">
+            <a class="img" href="/index.html">
+               <img src="/resources/icons/top.gif" width="29" height="29"/>
+            </a>
+         </span>
+         <span id="link-up">
+            <a class="img" href="index.html">
+               <img src="/resources/icons/up.gif" width="29" height="29"/>
+            </a>
+         </span>
+      </h1>
+   
+      <p>
+  The Select Parameters Utility helps you create dynamic web pages.  You can use it to let users of your webpages select the parameters that they want to apply within the stylesheet.
+</p>
+   
+      <h2>Instructions</h2>
+   
+      <ol>
+      
+         <li>Download the <a href="selectParameters.xsl">selectParameters.xsl</a> stylesheet into the same directory as your stylesheet.</li>
+      
+         <li>
+         
+            <p>Import the selectParameters.xsl stylesheet into your stylesheet:</p>
+         
+            <pre>&lt;xsl:import href="selectParameters.xsl" /&gt;</pre>
+      
+         </li>
+      
+         <li>
+         
+            <p>Call the template 'insert-selectParameters-form' at the point where you want to insert the form that allows the users to select parameter values:</p>
+         
+            <pre>&lt;xsl:call-template name="insert-selectParameters-form" /&gt;</pre>
+      
+         </li>
+      
+         <li>
+         
+            <p>Add the 'doc' namespace to your stylesheet as an extension prefix:</p>
+         
+            <pre>
+&lt;xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:doc="http://www.jenitennison.com/xslt/doc"
+                extension-element-prefixes="doc"&gt;
+</pre>
+      
+         </li>
+      
+         <li>
+         
+            <p>Add documentation to your stylesheet to limit the values that users can select for the parameters:</p>
+         
+            <pre>
+&lt;doc:param name="function"&gt;
+  &lt;doc:label&gt;Function: &lt;/doc:label&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;concat&lt;/doc:value&gt;&lt;doc:choice&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;starts-with&lt;/doc:value&gt;&lt;doc:choice&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;contains&lt;/doc:value&gt;&lt;doc:choice&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;substring-before&lt;/doc:value&gt;&lt;doc:choice&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;substring-after&lt;/doc:value&gt;&lt;doc:choice&gt;
+&lt;/doc:param&gt;
+</pre>
+      
+         </li>
+   
+      </ol>
+   
+      <p>
+  There are five options that you can set as parameters for the 'insert-selectParameters-form' template, namely:
+</p>
+   
+      <dl>
+      
+         <dt id="xml-file">$xml-file</dt>
+         <dd>the default xml file</dd>
+      
+         <dt id="xsl-file">$xsl-file</dt>
+         <dd>the default stylesheet</dd>
+      
+         <dt id="choose-xml-file">$choose-xml-file [= <span class="boolean">false</span>]</dt>
+         <dd>
+            <ul>
+               <li>
+                  <span class="boolean">true</span>: the user can select a different xml file</li>
+               <li>
+                  <span class="boolean">false</span>: the xml file is fixed</li>
+            </ul>
+         </dd>
+      
+         <dt id="choose-xsl-file">$choose-xsl-file [= <span class="boolean">false</span>]</dt>
+         <dd>
+            <ul>
+               <li>
+                  <span class="boolean">true</span>: the user can select a different stylesheet</li>
+               <li>
+                  <span class="boolean">false</span>: the stylesheet is fixed</li>
+            </ul>
+         </dd>
+      
+         <dt id="lang">$lang [= <span class="string">'en'</span>]</dt>
+         <dd>the language that the labels for the input fields should be shown in</dd>
+   
+      </dl>
+   
+      <h2>More Information</h2>
+   
+      <table>
+         <colgroup span="1"/>
+         <tr>
+            <td>
+               <p class="link">
+                  <a href="selectParameters-example.html" class="img ">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="selectParameters-example.html">A Simple Example</a>
+               </p>
+               <p class="link">
+                  <a href="paramDoc.html" class="img ">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="paramDoc.html">Parameter Documentation</a>
+               </p>
+               <p class="link">
+                  <a href="selectParameters-explanation.html" class="img ">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="selectParameters-explanation.html">How it Works</a>
+               </p>
+            </td>
+         </tr>
+      </table>
+
+      <div id="colophon">
+         <hr class="final"/>
+         <p>
+            <a href="/xslt/utilities/selectParameters.html">/xslt/utilities/selectParameters.xml</a> by <a href="mailto:mail@jenitennison.com" class="mailto">Jeni Tennison</a>; generated using <a href="http://saxon.sf.net/" class="offsite">SAXON 6.5 from Michael Kay</a>
+         </p>
+      </div>
+   </body>
+</html>

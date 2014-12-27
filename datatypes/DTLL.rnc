@@ -1,0 +1,261 @@
+
+datatypes xs = "http://www.w3.org/2001/XMLSchema-datatypes"
+default namespace dt = "http://www.jenitennison.com/datatypes"
+namespace local = ""
+
+start = \datatypes
+
+\datatypes = element datatypes {
+               attribute version { "0.4" },
+               ns?, 
+               extension-attribute*,
+               top-level-element*
+             }
+
+
+## Top-Level Elements
+div {
+
+top-level-element |= named-datatype
+top-level-element |= top-level-map
+top-level-element |= \include
+top-level-element |= \div
+top-level-element |= extension-top-level-element
+
+\include = element include {
+             attribute href { xs:anyURI },
+             extension-attribute*
+           }
+
+\div = element div {
+         ns?,
+         extension-attribute*,
+         top-level-element*
+       }
+
+extension-top-level-element = extension-element
+} #End Top-Level Elements
+
+## Datatype Definitions
+div {
+
+named-datatype = element datatype {
+                   attribute name { xs:QName }, ns?,
+                   extension-attribute*,
+                   datatype-definition-element*
+                 }
+
+anonymous-datatype = element datatype { 
+                       extension-attribute*,
+                       datatype-definition-element*
+                     }
+
+datatype-reference = xs:QName
+
+datatype-definition-element |= property
+datatype-definition-element |= parse
+datatype-definition-element |= condition
+datatype-definition-element |= except
+datatype-definition-element |= variable
+datatype-definition-element |= local-map
+datatype-definition-element |= extension-definition-element
+
+extension-definition-element = extension-element
+
+## Except
+div {
+
+except = element except {
+           extension-attribute*,
+           negative-test+
+         }
+         
+negative-test |= condition
+negative-test |= variable
+negative-test |= parse
+} #End Except
+} #End Datatype Definitions
+
+## Parsing
+div {
+
+parse = element parse {
+          name?, preprocess*,
+          extension-attribute*,
+          parsing-method+
+        }
+
+## Preprocessing
+div {
+
+preprocess |= attribute whitespace {
+                "preserve" | "replace" | "collapse"
+              }
+
+preprocess |= extension-preprocess-attribute
+extension-preprocess-attribute = extension-attribute
+} #End Preprocessing
+
+## Parsing Methods
+div {
+
+parsing-method |= regex
+parsing-method |= \list
+parsing-method |= extension-parsing-element
+
+## Regex Parsing
+div {
+
+regex = element regex {
+          regex-flags*,
+          extension-attribute*,
+          extended-regular-expression
+        }
+
+## Regular Expression Flags
+div {
+
+regex-flags |= attribute dot-all { boolean }
+
+regex-flags |= attribute multi-line { boolean }
+
+regex-flags |= attribute case-insensitive { boolean }
+
+regex-flags |= attribute ignore-whitespace { boolean }
+
+boolean = xs:boolean { pattern = "true|false" }
+} #End Regular Expression Flags
+} #End Regex Parsing
+
+## Lists
+div {
+
+\list = element list {
+          attribute separator { regular-expression }?,
+          extension-attribute*
+        }
+} #End Lists
+
+## Extension Parsing Elements
+div {
+
+extension-parsing-element = extension-element
+} #End Extension Parsing Elements
+} #End Parsing Methods
+} #End Parsing
+
+## Testing
+div {
+
+condition = element condition {
+               extension-attribute*,
+               test 
+             }
+
+test = attribute test { XPath }
+} #End Testing
+
+## Variable Binding
+div {
+
+## Properties
+div {
+
+property = element property {
+             name, type?, binding,
+             extension-attribute*
+           }
+} #End Properties
+
+## Variables
+div {
+
+variable = element variable {
+             name, type?, binding,
+             extension-attribute*
+           }
+} #End Variables
+
+## Type Specifiers
+div {
+
+type |= attribute type { datatype-reference }
+type |= anonymous-datatype
+} #End Type Specifiers
+
+## Value Specifiers
+div {
+
+binding = (literal-value | select), extension-binding-element*
+
+literal-value = attribute value { text }
+
+select = attribute select { XPath }
+
+extension-binding-element = extension-element
+} #End Value Specifiers
+} #End Variable Binding
+
+## Maps
+div {
+
+local-map = element map {
+              (from | to), kind?, mapping,
+              extension-attribute*
+            }
+      
+top-level-map = element map {
+                  from, to, kind?, mapping,
+                  extension-attribute*
+                }
+
+to = attribute to { datatype-reference | "*" }
+
+from = attribute from { datatype-reference | "*" }
+
+kind = attribute kind { "strong" | "weak" }
+
+mapping |= binding
+mapping |= attribute as { datatype-reference }
+} #End Maps
+
+## Common Constructs
+div {
+
+## Common Types
+div {
+
+XPath = text
+
+regular-expression = text
+
+extended-regular-expression = text
+} #End Common Types
+
+## Common Attributes
+div {
+
+name = attribute name { xs:NCName }
+dt-name = attribute dt:name { xs:NCName }
+ns = attribute ns { xs:anyURI }
+} #End Common Attributes
+
+## Extension Elements and Attributes
+div {
+
+extension-element = element * - dt:* { anything }
+
+extension-attribute = attribute * - (local:* | dt:*) { text }
+
+anything = attribute * { text }*,
+           mixed { element * { anything }* }
+} #End Extension Elements and Attributes
+} #End Common Constructs
+
+## Numbers
+div {
+} #End Numbers
+
+## Dates and Durations
+div {
+} #End Dates and Durations

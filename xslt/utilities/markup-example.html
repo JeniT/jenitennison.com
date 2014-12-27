@@ -1,0 +1,150 @@
+
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "/resources/dtd/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>Jeni's XSLT Utilities: Markup: Example</title>
+      <link rel="stylesheet" href="/resources/style/base.css"/>
+      <link rel="alternate" type="text/xml" href="/xslt/utilities/markup-example.xml"/><!--
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    -->
+   </head>
+   <body>
+      <p id="xml-link">
+					Try the <a href="/xslt/utilities/markup-example.xml">XML version</a> of this page.
+					If you have problems with it, consult the
+					<a href="/compatibility.html">compatibility page</a>.
+				</p>
+   
+   
+      <h1>Markup Utility: Example<span id="link-top">
+            <a class="img" href="/index.html">
+               <img src="/resources/icons/top.gif" width="29" height="29"/>
+            </a>
+         </span>
+         <span id="link-up">
+            <a class="img" href="index.html">
+               <img src="/resources/icons/up.gif" width="29" height="29"/>
+            </a>
+         </span>
+      </h1>
+   
+      <p>
+  The <a href="markup.html">Markup Utility</a> is a utility for finding and
+  changing words and phrases within some text. You can use it to:
+</p>
+   
+      <ul>
+      
+         <li>highlight important terms in your text</li>
+      
+         <li>link phrases to other pages</li>
+      
+         <li>search and replace words within some text</li>
+   
+      </ul>
+   
+      <p>
+  This page gives a simple example of using the Markup Utility to markup some text. Say
+  you had some text like:
+</p>
+   
+      <pre>
+&lt;p&gt;
+  A transformation expressed in XSLT describes rules for transforming a source tree into
+  a result tree. The transformation is achieved by associating patterns with templates. A
+  pattern is matched against elements in the source tree. A template is instantiated to
+  create part of the result tree. The result tree is separate from the source tree. The
+  structure of the result tree can be completely different from the structure of the source
+  tree. In constructing the result tree, elements from the source tree can be filtered and
+  reordered, and arbitrary structure can be added.
+&lt;/p&gt;
+</pre>
+   
+      <p>
+  And had some keywords that you wanted to emphasise within the text, defined in XML
+  within the same document:
+</p>
+   
+      <pre>
+&lt;keywords&gt;
+  &lt;keyword&gt;transformation&lt;/keyword&gt;
+  &lt;keyword&gt;XSLT&lt;/keyword&gt;
+  &lt;keyword&gt;source tree&lt;/keyword&gt;
+  &lt;keyword&gt;result tree&lt;/keyword&gt;
+  &lt;keyword&gt;template&lt;/keyword&gt;
+&lt;/keywords&gt;
+</pre>
+   
+      <p>
+  First, you need to import the markup stylesheet into your stylesheet: 
+</p>
+   
+      <pre>
+&lt;xsl:import href="markup.xsl" /&gt;
+</pre>
+   
+      <p>
+  Second, you need to call the 'markup' template on the text that you want to markup (i.e.
+  the content of the 'p' element. The phrases to be marked up are the keywords that are
+  specified within the text. You can change any of the options that you want to markup all
+  occurences of the keyword, for example:
+</p>
+   
+      <pre>
+&lt;xsl:template match="p"&gt;
+  &lt;p&gt;
+    &lt;xsl:call-template name="markup"&gt;
+      &lt;xsl:with-param name="text" select="." /&gt;
+      &lt;xsl:with-param name="phrases" select="/doc/keywords/keyword" /&gt;
+      &lt;xsl:with-param name="first-only" select="false()" /&gt;
+    &lt;/xsl:call-template&gt;
+  &lt;/p&gt;
+&lt;/xsl:template&gt;
+</pre>
+   
+      <p>
+  Finally, you need to declare a template with the 'markup' mode that matches the
+  'keyword' element and wraps the content of the 'word' parameter within an 'em' element:
+</p>
+   
+      <pre>
+&lt;xsl:template match="keyword" mode="markup"&gt;
+  &lt;xsl:param name="word" /&gt;
+  &lt;em&gt;
+    &lt;xsl:value-of select="$word" /&gt;
+  &lt;/em&gt;
+&lt;/xsl:template&gt;
+</pre>
+   
+      <p>
+This gives the result: 
+</p>
+   
+      <pre>
+&lt;p&gt;
+  A &lt;em&gt;transformation&lt;/em&gt; expressed in &lt;em&gt;XSLT&lt;/em&gt; describes rules for transforming a &lt;em&gt;source tree&lt;/em&gt; into
+  a &lt;em&gt;result tree&lt;/em&gt;. The &lt;em&gt;transformation&lt;/em&gt; is achieved by associating patterns with templates. A
+  pattern is matched against elements in the &lt;em&gt;source tree&lt;/em&gt;. A &lt;em&gt;template&lt;/em&gt; is instantiated to
+  create part of the &lt;em&gt;result tree&lt;/em&gt;. The &lt;em&gt;result tree&lt;/em&gt; is separate from the &lt;em&gt;source tree&lt;/em&gt;. The
+  structure of the &lt;em&gt;result tree&lt;/em&gt; can be completely different from the structure of the source
+  tree. In constructing the result tree, elements from the &lt;em&gt;source tree&lt;/em&gt; can be filtered and
+  reordered, and arbitrary structure can be added.
+&lt;/p&gt;
+</pre>
+
+      <div id="colophon">
+         <hr class="final"/>
+         <p>
+            <a href="/xslt/utilities/markup-example.html">/xslt/utilities/markup-example.xml</a> by <a href="mailto:mail@jenitennison.com" class="mailto">Jeni Tennison</a>; generated using <a href="http://saxon.sf.net/" class="offsite">SAXON 6.5 from Michael Kay</a>
+         </p>
+      </div>
+   </body>
+</html>

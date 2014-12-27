@@ -1,0 +1,477 @@
+<?xml version="1.0"?>
+<doc xmlns:html="http://www.w3.org/1999/xhtml">
+   <element name="apply-imports">
+      <doc>
+         <html:p>
+            The <el>xsl:apply-imports</el> element applies imported templates to the current node.
+         </html:p>
+      </doc>
+   </element>
+   <element name="apply-templates">
+      <doc>
+         <html:p>
+            The <el>xsl:apply-templates</el> element is used to apply matching templates to a set of nodes.
+         </html:p>
+         <html:p>
+            <if test="@select">
+               In this case, templates are applied to <ref select="@select" />
+            </if>
+            <if test="!@select">
+               In this case, no <at>select</at> attribute is specified, so templates are applied to the children of the current node.
+            </if>
+         </html:p>
+         <if test="xsl:sort">
+            <html:p>
+               These nodes that the templates are applied to will be sorted according to the contained <el>xsl:sort</el> elements.
+            </html:p>
+         </if>
+         <if test="@mode">
+            <html:p>
+               The only templates that are applied are those that have a <at>mode</at> attribute with a value of <ref select="@mode" />.
+            </html:p>
+         </if>
+         <if test="xsl:with-param">
+            <html:p>
+               The templates will be passed the parameters specified by the contained <el>xsl:with-param</el> elements.
+            </html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="attribute">
+      <doc>
+         <html:p>The <el>xsl:attribute</el> element generates an attribute on the element generated as a result of its parent element, either a <el>xsl:element</el> or a literal result element.</html:p>
+         <html:p>In this case, the attribute name is <ref select="@name" /></html:p>
+         <if test="@namespace">
+            <html:p>The attribute is created in the namespace denoted by the URI <ref select="@namespace" /></html:p>
+         </if>
+         <html:p>The attribute value is generated from processing the content.</html:p>
+      </doc>
+   </element>
+   <element name="attribute-set">
+      <doc>
+         <html:p>The <el>xsl:attribute-set</el> element declares a set of attributes that can then be included on any element using the <at>use-attribute-sets</at> attribute.</html:p>
+         <html:p>This attribute set is called <ref select="@name" />.</html:p>
+         <if test="@use-attribute-sets">
+            <html:p>It also imports (and overrides) the attributes declared in the attribute sets: <ref select="@use-attribute-sets" /></html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="call-template">
+      <doc>
+         <html:p>The <el>xsl:call-template</el> element calls a named template within the stylesheet.</html:p>
+         <html:p>In this case, the template called <ref select="@name" /> is being called.</html:p>
+         <if test="xsl:with-param">
+            <html:p>The template will be passed the parameters specified by the contained <el>xsl:with-param</el> elements.</html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="choose">
+      <doc>
+         <html:p>The <el>xsl:choose</el> element defines a piece of conditional processing.</html:p>
+         <html:p>If any of the tests defined in the <at>test</at> attributes on the contained <el>xsl:when</el> elements returns true, then the content of that <el>xsl:when</el> will be processed.</html:p>
+         <if test="xsl:otherwise">
+            <html:p>If none of the tests return true, then the content of the contained <el>xsl:otherwise</el> will be processed instead.</html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="comment">
+      <doc>
+         <html:p>The <el>xsl:comment</el> element adds a comment to the result tree.  The content of the comment is the content of the <el>xsl:comment</el> element.</html:p>
+      </doc>
+   </element>
+   <element name="copy">
+      <doc>
+         <html:p>The <el>xsl:copy</el> element copies the current node to the result tree, without any of its content or attributes, but with any relevant namespaces.</html:p>
+         <if test="@use-attribute-sets">
+            <html:p>The attributes declared in attribute sets named in the <at>use-attribute-sets</at> attribute will be added to the copied element.  In this case, these are: <ref select="@use-attribute-sets" /></html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="copy-of">
+      <doc>
+         <html:p>The <el>xsl:copy-of</el> element copies a set of nodes.</html:p>
+         <html:p>In this case, the instruction copies <ref select="@select" /></html:p>
+      </doc>
+   </element>
+   <element name="decimal-format">
+      <doc>
+         <html:p>The <el>xsl:decimal-format</el> element defines a method for formatting numbers.</html:p>
+         <if test="@name">
+            <html:p>In this case, the method is associated with the name <ref select="@name" />.  Under this method:</html:p>
+         </if>
+         <if test="!@name">
+            <html:p>In this case, the element defines the default method for formatting numbers.  By default:</html:p>
+         </if>
+         <html:ul>
+            <if test="@decimal-separator">
+               <html:li>the decimal point will be represented as <ref select="@decimal-separator" /></html:li>
+            </if>
+            <if test="@grouping-separator">
+               <html:li>groups within the number will be separated by <ref select="@grouping-separator" /></html:li>
+            </if>
+            <if test="@percent">
+               <html:li>the percent sign will be represented as <ref select="@percent" /></html:li>
+            </if>
+            <if test="@per-mille">
+               <html:li>the per-mille sign will be represented as <ref select="@per-mille" /></html:li>
+            </if>
+            <if test="@zero-digit">
+               <html:li>the digit zero will be represented as <ref select="@zero-digit" /></html:li>
+            </if>
+            <if test="@digit">
+               <html:li>the character <ref select="@digit" /> will be used to refer to digits in the format pattern</html:li>
+            </if>
+            <if test="@pattern-separator">
+               <html:li>the character <ref select="@pattern-separator" /> will be used to separate positive and negative patterns in the format pattern</html:li>
+            </if>
+            <if test="@infinity">
+               <html:li>the string <ref select="@infinity" /> will be used to represent infinity</html:li>
+            </if>
+            <if test="@NaN">
+               <html:li>the string <ref select="@NaN" /> will be used to represent things that are not numbers</html:li>
+            </if>
+            <if test="@minus-sign">
+               <html:li>the character <ref select="@minus-sign" /> will be used as the default minus sign</html:li>
+            </if>
+         </html:ul>
+      </doc>
+   </element>
+   <element name="element">
+      <doc>
+         <html:p>The <el>xsl:element</el> element creates a element in the result tree.</html:p>
+         <html:p>In this case, the name of the element created is <ref select="@name" /></html:p>
+         <if test="@namespace">
+            <html:p>The element is created in the namespace denoted by the URI <ref select="@namespace" /></html:p>
+         </if>
+         <if test="@use-attribute-sets">
+            <html:p>The element is given attributes according to the attribute sets <ref select="@use-attribute-sets" /></html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="fallback">
+      <doc>
+         <html:p>The <el>xsl:fallback</el> element is used to contain non-processor specific XSLT that can run if the extension element that contains it cannot be used by the XSLT processor.</html:p>
+      </doc>
+   </element>
+   <element name="for-each">
+      <doc>
+         <html:p>The <el>xsl:for-each</el> element is used to iterate over a number of nodes, processing each in the same way.</html:p>
+         <html:p>In this case, the nodes that are selected are <ref select="@select" /></html:p>
+         <if test="xsl:sort">
+            <html:p>The nodes that are selected are iterated over in the order determined by the contained <el>xsl:sort</el> elements.</html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="if">
+      <doc>
+         <html:p>The content of the <el>xsl:if</el> element is only processed if the <at>test</at> attribute evaluates as true.</html:p>
+         <html:p>In this case, the content of the <el>xsl:if</el> element will only be processed if <ref select="@test" /></html:p>
+      </doc>
+   </element>
+	<element name="import">
+      <doc>
+         <html:p>The <el>xsl:import</el> element imports a stylesheet so that its
+            templates can be used within the importing stylesheet, but those in the importing stylesheet are favoured over those that are imported.</html:p>
+         <html:p>In this case, the <el>xsl:import</el> element instructs the
+            XSLT processor to import <ref select="@href" />.</html:p>
+      </doc>
+   </element>
+	<element name="include">
+      <doc>
+         <html:p>The <el>xsl:include</el> element includes the content of a stylesheet as if it were part of the including stylesheet.</html:p>
+         <html:p>In this case, the <el>xsl:include</el> element instructs the
+            XSLT processor to include <ref select="@href" />.</html:p>
+      </doc>
+   </element>
+   <element name="key">
+      <doc>
+         <html:p>The <el>xsl:key</el> element declares a key space in which a set of nodes is each associated with one or more key values.</html:p>
+         <html:p>In this case, the <el>xsl:key</el> element defines a <ref select="@name" /> key space.</html:p>
+         <html:p>A key value is calculated for all nodes that are <ref select="@match" /></html:p>
+         <html:p>The key values for each node are calculated as the string values of <ref select="@use" /></html:p>
+      </doc>
+   </element>
+   <element name="message">
+      <doc>
+         <html:p>The <el>xsl:message</el> element describes a message that can be given when the processor encounters it.</html:p>
+         <if test="@terminate=yes">
+            <html:p>In this case, the processor will stop when it comes across this message.</html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="namespace-alias">
+      <doc>
+         <html:p>The <el>xsl:namespace-alias</el> element declares a correspondance between a namespace prefix used within the stylesheet and a namespace prefix to be used in the result.</html:p>
+         <html:p>In this case, the <if test="@stylesheet-prefix=#default">default</if><if test="@stylesheet-prefix!=#default"><ref select="@stylesheet-prefix" /></if> namespace in the stylesheet will be mapped to the <if test="@result-prefix=#default">default</if><if test="@result-prefix!=#default"><ref select="@result-prefix" /></if> namespace in the result.</html:p>
+      </doc>
+   </element>
+   <element name="number">
+      <doc>
+         <html:p>The <el>xsl:number</el> element inserts a number into the result tree.</html:p>
+         <if test="@value">
+            <html:p>In this case, the number is the numerical result of <ref select="@value" /></html:p>
+         </if>
+         <if test="!@value">
+            <html:p>
+               In this case, the number is based on
+               <if test="!@level">
+                  the number of preceding siblings of
+                    <if test="!@count">the current node</if>
+                    <if test="@count">the closest ancestor of the current node that matches <ref select="@count" /></if>
+                  <if test="@from"> starting from the closest ancestor of the current node that matches <ref select="@from" /></if>
+               </if>
+               <if test="@level=single">
+                  the number of preceding siblings of
+                    <if test="!@count">the current node</if>
+                    <if test="@count">the closest ancestor of the current node that matches <ref select="@count" /></if>
+                  <if test="@from"> starting from the closest ancestor of the current node that matches <ref select="@from" /></if>
+               </if>
+               <if test="@level=multiple">
+                  a list of numbers, each of which is given by the number of preceding siblings of
+                    <if test="!@count">the current node and any ancestors of the current node that have the same node type and name as the current node</if>
+                    <if test="@count">the ancestors of the current node that match <ref select="@count" /></if>
+                  <if test="@from"> starting from the closest ancestor of the current node that matches <ref select="@from" /></if>
+               </if>
+               <if test="@level=any">
+                  the number of preceding nodes in the source tree that
+                     <if test="!@count"> have the same node type and name as the current node</if>
+                     <if test="@count"> match <ref select="@count" /></if>
+                   <if test="@from"> starting from the closest preceding node of the current node that matches <ref select="@from" /></if>
+               </if>
+            </html:p>
+         </if>
+         <if test="@format">
+            <html:p>The number<if test="@level=multiple">s</if> are formatted according to the pattern <ref select="@format" /></html:p>
+         </if>
+         <if test="!@format">
+            <html:p>The numbers are formatted as numbers (rather than letters).</html:p>
+         </if>
+         <if test="@lang">
+            <html:p>The numbering scheme uses the language specified by <ref select="@lang" /></html:p>
+         </if>
+         <if test="@letter-value">
+            <html:p>The numbering scheme is <ref select="@letter-value" /></html:p>
+         </if>
+         <if test="@grouping-size">
+            <html:p>For large numbers, the size of the groups in the format is <ref select="@grouping-size" /></html:p>
+         </if>
+         <if test="@grouping-separator">
+            <html:p>The groups of numbers are separated by <ref select="@grouping-separator" /></html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="otherwise">
+      <doc>
+         <html:p>The <el>xsl:otherwise</el> element contains code that will run if none of the <at>test</at> attributes of the <el>xsl:when</el> elements within the containing <el>xsl:choose</el> evaluate as true.</html:p>
+      </doc>
+   </element>
+   <element name="output">
+      <doc>
+         <html:p>The <el>xsl:output</el> element holds information about how the result tree should be serialised into output.</html:p>
+         <if test="@method">
+            <html:p>In this case, the output will be serialised as <ref select="@method" />.</html:p>
+         </if>
+         <if test="!@method">
+            <html:p>In this case, the output will be serialised as XML unless the document element of the result tree is an 'html' element.</html:p>
+         </if>
+         <if test="@version">
+            <html:p>The processor should use version <ref select="@version" /> of the output method.</html:p>
+         </if>
+         <if test="@indent">
+            <html:p>The processor should <if test="@indent=no">not </if>indent the output.</html:p>
+         </if>
+         <if test="@encoding">
+            <html:p>The processor should use <ref select="@encoding" /> as the encoding scheme.</html:p>
+         </if>
+         <if test="@media-type">
+            <html:p>The content type of the output should be labelled as <ref select="@media-type" />.</html:p>
+         </if>
+         <if test="@doctype-system">
+            <html:p>The DTD for the output can be locally found at <ref select="@doctype-system" />.</html:p>
+         </if>
+         <if test="@doctype-public">
+            <html:p>The public document type the output is <ref select="@doctype-public" />.</html:p>
+         </if>
+         <if test="@omit-xml-declaration">
+            <html:p>The XML declaration will <if test="@omit-xml-declaration=no">not</if> be omitted from the output.</html:p>
+         </if>
+         <if test="@standalone">
+            <html:p>The processor will <if test="@standalone=no">not</if>generate a standalone declaration.</html:p>
+         </if>
+         <if test="@cdata-section-elements">
+            <html:p>The content of some elements will be wrapped within CDATA sections.  These elements are: <ref select="@cdata-section-elements" /></html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="param">
+      <doc>
+         <html:p>The <el>xsl:param</el> element is used to pass values into the stylesheet or into individual templates.</html:p>
+         <if test="#content">
+            <html:p>In this case, the parameter <ref select="@name" /> 
+               is declared with some content, so is given the
+               default value that results from processing that content.</html:p>
+         </if>
+         <if test="!#content">
+            <if test="@select">
+               <html:p>In this case, the parameter <ref select="@name" />
+                  is declared with a select expression, and is
+                  given the resulting value as a default.  The default value of the parameter is <ref select="@select" /></html:p>
+            </if>
+            <if test="!@select">
+               <html:p>In this case, the parameter <ref select="@name" />
+                  is declared without any content and without a
+                  select expression, so its default value is set as the empty string ('').</html:p>
+            </if>
+         </if>
+      </doc>
+   </element>
+   <element name="preserve-space">
+      <doc>
+         <html:p>The <el>xsl:preserve-space</el> element is used to specify elements in the source for which any whitespace should be preserved.</html:p>
+         <html:p>In this case, the elements are: <ref select="@elements" /></html:p>
+      </doc>
+   </element>
+   <element name="processing-instruction">
+      <doc>
+         <html:p>The <el>xsl:processing-instruction</el> element is used to generate a processing instruction in the result tree.</html:p>
+         <html:p>In this case, the processing instruction is called <ref select="@name" /></html:p>
+         <html:p>The content of the processing instruction is result of processing the content of the <el>xsl:processing-instruction</el> element.</html:p>
+      </doc>
+   </element>
+   <element name="sort">
+      <doc>
+         <html:p>The <el>xsl:sort</el> element is used to determine how the nodes that are iterated over by a <el>xsl:for-each</el> or have templates applied to them with a <el>xsl:apply-templates</el> are sorted.</html:p>
+         <if test="!@select">
+            <html:p>In this case, the nodes are sorted by their string value.</html:p>
+         </if>
+         <if test="@select">
+            <html:p>In this case, the nodes are sorted by the string value of <ref select="@select" /></html:p>
+         </if>
+         <html:p>
+            The nodes will be sorted in 
+              <if test="!@order">ascending</if>
+              <if test="@order"><ref select="@order" /></if>
+            order.
+         </html:p>
+         <if test="@lang">
+            <html:p>The nodes will be sorted according to the language <ref select="@lang" /></html:p>
+         </if>
+         <if test="@data-type">
+            <html:p>The sort strings will be interpreted as <ref select="@data-type" /></html:p>
+         </if>
+         <if test="@case-order">
+            <html:p>Case ordering is determined as <ref select="@case-order" /></html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="strip-space">
+      <doc>
+         <html:p>The <el>xsl:strip-space</el> element is used to specify elements in the source for which any whitespace should be preserved.</html:p>
+         <html:p>In this case, the elements are: <ref select="@elements" /></html:p>
+      </doc>
+   </element>
+   <element name="stylesheet">
+      <doc>
+         <html:p>The <el>xsl:stylesheet</el> element is the usual document element for the stylesheet.</html:p>
+         <html:p>This stylesheet uses version <ref select="@version" /> of XSLT.</html:p>
+         <if test="@extension-element-prefixes">
+            <html:p>The following prefixes designate the namespaces for extension elements within the stylesheet: <ref select="@extension-element-prefixes" /></html:p>
+         </if>
+         <if test="@exclude-result-prefixes">
+            <html:p>The following prefixes designate namespaces that will not be included in the result: <ref select="@exclude-result-prefixes" /></html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="template">
+      <doc>
+         <html:p>The <el>xsl:template</el> element is used to define a piece of XSLT code that will be run either when certain nodes are found within the source XML, or when the template is called by name.</html:p>
+         <if test="@match">
+            <html:p>In this case, the template matches any nodes to which templates are applied<if test="@mode"> in <ref select="@mode" /> mode</if> and that are <ref select="@match" /></html:p>
+            <if test="@priority">
+               <html:p>If there are multiple templates that match these nodes<if test="@mode"> in <ref select="@mode" /> mode</if> then this template will only run if no others have a priority greater than <ref select="@priority" /></html:p>
+            </if>
+         </if>
+         <if test="@name">
+            <html:p>In this case, the template can be called with the name <ref select="@name" />.</html:p>
+         </if>
+         <if test="xsl:param">
+            <html:p>The template will use the parameters passed to it that are defined by the contained <el>xsl:param</el> elements.</html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="text">
+      <doc>
+         <html:p>The <el>xsl:text</el> element is used to give a piece of text that should be included in the output.</html:p>
+         <if test="!#content">
+            <html:p>This <el>xsl:text</el> element is being used to prevent whitespace from being added to the result tree using the Allouche Method.</html:p>
+         </if>
+         <if test="#content">
+            <html:p>This <el>xsl:text</el> element is adding the string <ref select="#content" /> to the result.</html:p>
+            <if test="@disable-output-escaping">
+               <html:p>This text will <if test="@disable-output-escaping=yes">not</if> be escaped according to the normal XML rules.
+               </html:p>
+            </if>
+         </if>
+      </doc>
+   </element>
+   <element name="transform">
+      <doc>
+         <html:p>The <el>xsl:transform</el> element is an alternative document element for a stylesheet.</html:p>
+         <html:p>This stylesheet uses version <ref select="@version" /> of XSLT.</html:p>
+         <if test="@extension-element-prefixes">
+            <html:p>The following prefixes designate the namespaces for extension elements within the stylesheet: <ref select="@extension-element-prefixes" /></html:p>
+         </if>
+         <if test="@exclude-result-prefixes">
+            <html:p>The following prefixes designate namespaces that will not be included in the result: <ref select="@exclude-result-prefixes" /></html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="value-of">
+      <doc>
+         <html:p>The <el>xsl:value-of</el> element is used to insert a value into the result tree.</html:p>
+         <html:p>In this case, the value to be inserted is <ref select="@select" /></html:p>
+         <if test="@disable-output-escaping">
+            <html:p>This value will <if test="@disable-output-escaping=yes">not</if> be escaped according to the normal XML rules.</html:p>
+         </if>
+      </doc>
+   </element>
+   <element name="variable">
+      <doc>
+         <html:p>The <el>xsl:variable</el> element is used to assign a value to a name so that you can access that value more easily later on.</html:p>
+         <if test="#content">
+            <html:p>In this case, the variable <ref select="@name" /> is declared with some content, so is given the value that results from processing that content.</html:p>
+         </if>
+         <if test="!#content">
+            <if test="@select">
+               <html:p>In this case, the variable <ref select="@name" /> is declared with a select expression, and is given the resulting value.  The value of the variable is <ref select="@select" /></html:p>
+            </if>
+            <if test="!@select">
+               <html:p>In this case, the variable <ref select="@name" /> is declared without any content and without a select expression, so its value is set as the empty string ('').</html:p>
+            </if>
+         </if>
+      </doc>
+   </element>
+   <element name="when">
+      <doc>
+         <html:p>The <el>xsl:when</el> element holds some code that will only be processed if evaluating its <el>test</el> attribute returns true and if no preceding <el>xsl:when</el> elements in the same <el>xsl:choose</el> have been run.</html:p>
+         <html:p>In this case, the content will be processed if <ref select="@test" /></html:p>
+      </doc>
+   </element>
+   <element name="with-param">
+      <doc>
+         <html:p>The <el>xsl:with-param</el> element is used to pass a value into a template or the stylesheet as a whole.</html:p>
+         <if test="#content">
+            <html:p>In this case, the template is passed a value for the parameter <ref select="@name" /> that is declared with some content, so is given the value that results from processing that content.
+            </html:p>
+         </if>
+         <if test="!#content">
+            <if test="@select">
+               <html:p>In this case, the template is passed a value for the parameter <ref select="@name" /> that is declared with a select expression, and the parameter is given the resulting value.  The value of the parameter is <ref select="@select" /></html:p>
+            </if>
+            <if test="!@select">
+               <html:p>In this case, the template is passed a value for the parameter <ref select="@name" /> that is declared without any content and without a select expression, so its value is set as the empty string ('').</html:p>
+            </if>
+         </if>
+      </doc>
+   </element>
+</doc>

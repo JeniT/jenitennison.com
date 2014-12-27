@@ -1,0 +1,183 @@
+
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "/resources/dtd/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>Jeni's XSLT Utilities: SVG Utility</title>
+      <link rel="stylesheet" href="/resources/style/base.css"/>
+      <link rel="alternate" type="text/xml" href="/xslt/utilities/svg-utils.xml"/><!--
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    -->
+   </head>
+   <body>
+      <p id="xml-link">
+					Try the <a href="/xslt/utilities/svg-utils.xml">XML version</a> of this page.
+					If you have problems with it, consult the
+					<a href="/compatibility.html">compatibility page</a>.
+				</p>
+   
+   
+      <h1>SVG Utility<span id="link-top">
+            <a class="img" href="/index.html">
+               <img src="/resources/icons/top.gif" width="29" height="29"/>
+            </a>
+         </span>
+         <span id="link-up">
+            <a class="img" href="index.html">
+               <img src="/resources/icons/up.gif" width="29" height="29"/>
+            </a>
+         </span>
+      </h1>
+   
+      <p>
+      The SVG utility is designed to help you to embed the SVG images that you generate using XSLT into an HTML page.
+   </p>
+   
+      <p>
+      Creating SVG with XSLT is very cool.  Unfortunately, it's difficult to generate HTML pages that use SVG because the <code>embed</code> elements that are used to host SVG refer to separate files rather than allowing SVG within them.  However, you can get around this by loading the SVG into the embed through a script, using <a href="mailto:chris@bayes.co.uk">Chris Bayes'</a> 
+         <a href="http://www.bayes.co.uk/xml">domtodom.js</a>.
+   </p>
+   
+      <p>
+      The crucial insight of this utility was the fact that the loading of the SVG images into the <code>embed</code> elements can be triggered by a script in a static SVG image.  This utility creates the script and the <code>embed</code> elements for the page.
+   </p>
+   
+      <h2>Instructions</h2>
+   
+      <ol>
+      
+         <li>Download <a href="svg-utils.zip">svg-utils.zip</a> and unzip it into the same directory as your stylesheet.  It contains three files:
+         <ul>
+            
+               <li>
+                  <code>svg-utils.xsl</code> - the utility stylesheet</li>
+            
+               <li>
+                  <code>domtodom.js</code> - Chris Bayes' script</li>
+            
+               <li>
+                  <code>blank.svg</code> - a blank SVG set up to trigger the loading of the images into the page</li>
+         
+            </ul>
+      
+         </li>
+      
+         <li>
+         
+            <p>Import the <code>svg-utils.xsl</code> stylesheet into your stylesheet:</p>
+         
+            <pre>&lt;xsl:import href="svg-utils.xsl" /&gt;</pre>
+      
+         </li>
+      
+         <li>
+         
+            <p>
+            Create a variable holding a node set within which each node represents a separate image to be placed in the document (I call these <em>image nodes</em>).
+         </p>
+         
+            <pre>&lt;xsl:variable name="images" select="document('')/*/my:diagrams/my:diagram" /&gt;</pre>
+      
+         </li>
+      
+         <li>
+         
+            <p>
+            Within the <code>head</code> element of the HTML, call the template 'insertSVGScript' with the <code>images</code> parameter being the node set of image nodes:</p>
+         
+            <pre>&lt;head&gt;
+   &lt;title&gt;SVG Chart Demonstration&lt;/title&gt;
+   &lt;xsl:call-template name="insertSVGScript"&gt;
+      &lt;xsl:with-param name="images" select="$images" /&gt;
+   &lt;/xsl:call-template&gt;
+&lt;/head&gt;</pre>
+      
+         </li>
+      
+         <li>
+         
+            <p>
+            Add templates in 'getSVG' mode that match the image nodes.  These templates should return SVG images.
+         </p>
+         
+            <pre>
+&lt;xsl:template match="my:diagram" mode="getSVG"&gt;
+   ...
+   &lt;svg width="100%" viewBox="0 0 {$width} {$height}" preserveAspectRatio="xMinYMin meet"&gt;
+      ...
+   &lt;/svg&gt;
+&lt;/xsl:template&gt;
+</pre>
+      
+         </li>
+      
+         <li>
+         
+            <p>
+            Apply templates to the image nodes in 'createEmbed' mode to create <code>embed</code> elements for the at the relevant points in the HTML.
+         </p>
+         
+            <pre>
+&lt;xsl:apply-templates select="$images" mode="createEmbed" /&gt;
+</pre>
+      
+         </li>
+   
+      </ol>
+   
+      <p>
+      There are a few extra options that you can set as parameters for the 'createEmbed' template, namely:
+</p>
+   
+      <dl>
+      
+         <dt id="src">$src [= <span class="string">'blank.svg'</span>]</dt>
+         <dd>
+            The name of the blank SVG file to be used in place while the SVG images are loaded.  These should all contain a call to the function <code>triggerSVGLoading()</code>.  Have a look at the source of <a href="blank.svg">
+               <code>blank.svg</code>
+            </a> for an example.
+         </dd>
+      
+         <dt id="width">$width</dt>
+         <dd>
+            The desired width of the embed.
+         </dd>
+      
+         <dt id="height">$height</dt>
+         <dd>
+            The desired height of the embed.
+         </dd>
+   
+      </dl>
+   
+      <h2>More Information</h2>
+   
+      <table>
+         <colgroup span="1"/>
+         <tr>
+            <td>
+               <p class="link">
+                  <a href="svg-example.html" class="img ">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="svg-example.html">A Simple Example</a>
+               </p>
+            </td>
+         </tr>
+      </table>
+
+      <div id="colophon">
+         <hr class="final"/>
+         <p>
+            <a href="/xslt/utilities/svg-utils.html">/xslt/utilities/svg-utils.xml</a> by <a href="mailto:mail@jenitennison.com" class="mailto">Jeni Tennison</a>; generated using <a href="http://saxon.sf.net/" class="offsite">SAXON 6.5 from Michael Kay</a>
+         </p>
+      </div>
+   </body>
+</html>

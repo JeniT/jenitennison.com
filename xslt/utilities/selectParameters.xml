@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="../../resources/style/page.xsl"?><my:doc xmlns:my="http://www.jenitennison.com/" xmlns="http://www.w3.org/1999/xhtml">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcq="http://purl.org/dc/qualifiers/1.0/" about="/xslt/utilities/selectParameters.xml">
+         <dc:title>Jeni's XSLT Utilities: Select Parameters</dc:title>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="created" dcq:dateScheme="W3C-DTF" rdf:value="2000-08-26"/>
+         </dc:date>
+         <dc:date xmlns:vcf="http://www.ietf.org/internet-drafts/draft-dawson-vcard-xml-dtd-03.txt">
+            <rdf:Description dcq:dateType="modified" dcq:dateScheme="W3C-DTF" rdf:value="2000-11-02"/>
+         </dc:date>
+         <dc:creator rdf:resource="mail@jenitennison.com"/>
+         <dc:rights>
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    </dc:rights>
+         <link rel="stylesheet" href="/resources/style/base.css"/>
+      </rdf:Description>
+   </rdf:RDF>
+   <h1>Select Parameters Utility</h1>
+   <p>
+  The Select Parameters Utility helps you create dynamic web pages.  You can use it to let users of your webpages select the parameters that they want to apply within the stylesheet.
+</p>
+   <h2>Instructions</h2>
+   <ol>
+      <li>Download the <my:link href="selectParameters.xsl"/> stylesheet into the same directory as your stylesheet.</li>
+      <li>
+         <p>Import the selectParameters.xsl stylesheet into your stylesheet:</p>
+         <my:example>&lt;xsl:import href="selectParameters.xsl" /&gt;</my:example>
+      </li>
+      <li>
+         <p>Call the template 'insert-selectParameters-form' at the point where you want to insert the form that allows the users to select parameter values:</p>
+         <my:example>&lt;xsl:call-template name="insert-selectParameters-form" /&gt;</my:example>
+      </li>
+      <li>
+         <p>Add the 'doc' namespace to your stylesheet as an extension prefix:</p>
+         <my:example>
+&lt;xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:doc="http://www.jenitennison.com/xslt/doc"
+                extension-element-prefixes="doc"&gt;
+</my:example>
+      </li>
+      <li>
+         <p>Add documentation to your stylesheet to limit the values that users can select for the parameters:</p>
+         <my:example>
+&lt;doc:param name="function"&gt;
+  &lt;doc:label&gt;Function: &lt;/doc:label&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;concat&lt;/doc:value&gt;&lt;doc:choice&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;starts-with&lt;/doc:value&gt;&lt;doc:choice&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;contains&lt;/doc:value&gt;&lt;doc:choice&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;substring-before&lt;/doc:value&gt;&lt;doc:choice&gt;
+  &lt;doc:choice&gt;&lt;doc:value&gt;substring-after&lt;/doc:value&gt;&lt;doc:choice&gt;
+&lt;/doc:param&gt;
+</my:example>
+      </li>
+   </ol>
+   <p>
+  There are five options that you can set as parameters for the 'insert-selectParameters-form' template, namely:
+</p>
+   <my:vars>
+      <my:var>
+         <my:name>xml-file</my:name>
+         <my:desc>the default xml file</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>xsl-file</my:name>
+         <my:desc>the default stylesheet</my:desc>
+      </my:var>
+      <my:var>
+         <my:name>choose-xml-file</my:name>
+         <my:default type="boolean">false</my:default>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>the user can select a different xml file</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>the xml file is fixed</my:desc>
+         </my:option>
+      </my:var>
+      <my:var>
+         <my:name>choose-xsl-file</my:name>
+         <my:default type="boolean">false</my:default>
+         <my:option>
+            <my:value type="boolean">true</my:value>
+            <my:desc>the user can select a different stylesheet</my:desc>
+         </my:option>
+         <my:option>
+            <my:value type="boolean">false</my:value>
+            <my:desc>the stylesheet is fixed</my:desc>
+         </my:option>
+      </my:var>
+      <my:var>
+         <my:name>lang</my:name>
+         <my:default type="string">en</my:default>
+         <my:desc>the language that the labels for the input fields should be shown in</my:desc>
+      </my:var>
+   </my:vars>
+   <h2>More Information</h2>
+   <my:links>
+      <my:link href="selectParameters-example.xml">A Simple Example</my:link>
+      <my:link href="paramDoc.xml">Parameter Documentation</my:link>
+      <my:link href="selectParameters-explanation.xml">How it Works</my:link>
+   </my:links>
+</my:doc>

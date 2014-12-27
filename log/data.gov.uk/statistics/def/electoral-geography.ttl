@@ -1,0 +1,29 @@
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix admingeo: <http://data.ordnancesurvey.co.uk/ontology/admingeo/> .
+@base <http://statistics.data.gov.uk/def/electoral-geography/> .
+
+# Properties
+
+<region> a rdf:Property ;
+  rdfs:label "european electoral region" ;
+  skos:prefLabel "european electoral region" ;
+  rdfs:isDefinedIn <> ;
+  rdfs:domain admingeo:EuropeanRegion .
+
+<constituency> a rdf:Property ;
+  rdfs:label "constituency" ;
+  skos:prefLabel "constituency" ;
+  rdfs:isDefinedIn <> ;
+  rdfs:domain admingeo:Constituency .
+
+<parliamentaryConstituency> a rdf:Property ;
+  rdfs:label "parliamentary constituency" ;
+  skos:prefLabel "parliamentary constituency" ;
+  skos:altLabel "westminster constituency" ;
+  rdfs:isDefinedIn <> ;
+  rdfs:subPropertyOf <constituency> ;
+  rdfs:domain admingeo:WestminsterConstituency .

@@ -1,0 +1,128 @@
+default namespace = "http://www.jenitennison.com/datatypes"
+datatypes xs = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+start = element datatypes { 
+          attribute ns { xs:anyURI }?, 
+	  (define | datatype | cast)* 
+	}
+
+define = element define { 
+           attribute name { xs:QName },
+	   regex+ 
+	 }
+
+datatype = element datatype { 
+             attribute name { xs:QName },
+             attribute ns { xs:anyURI }?,
+             supertype?, parse?, params?, validate?, normalize?, compare? }
+
+supertype = element supertype {
+              attribute name { xs:QName },
+	      attribute ns { xs:anyURI }?,
+              element params {
+	        element param { attribute name { xs:NCName }, text }+
+	      }?,
+	      element cast { code }?
+	    }
+
+parse = element parse {
+          attribute whitespace { "preserve" | "replace" | "collapse" }?,
+          regex+ 
+	}
+
+params = element params {
+           element param {
+	     attribute name { xs:NCName },
+	     attribute test { "eq" | "ne" | "lt" | "le" | "gt" | "ge" }?,
+	     attribute select { text }?,
+	     attribute as { "string" | "number" }?
+	   }+
+	 }
+
+validate = element validate {
+             attribute as { xs:QName }? | test*
+           }
+
+test = element report | assert {
+         attribute test { text }, code
+       }
+
+normalize = element normalize {
+              attribute as { xs:QName }? | code
+            }
+
+compare = element compare {
+            attribute as { xs:QName }? |
+	    element compare {
+	      attribute path { text },
+	      attribute as { "string" | "number" }?
+	    }+
+	  }
+
+cast = element cast {
+         attribute from { xs:QName },
+	 attribute to { xs:QName },
+	 code
+       }
+
+code = mixed { 
+         element * {
+           attribute * { text }*,
+	   code
+         }*
+       }
+
+regex |= element ref {
+           attribute name { xs:QName }
+         }
+
+regex |= element data {
+           attribute type { xs:QName }
+         }
+
+regex |= element choice { ignore?, regex+ }
+
+regex |= element group {
+           attribute name { xs:QName }?,
+	   ignore?, regex+
+         }
+
+regex |= element repeat {
+           ( attribute exactly { xs:integer } |
+	     ( attribute min { xs:integer }, 
+	       attribute max { xs:integer }? ) |
+	     attribute max { xs:integer } ),
+	   ignore?, regex+
+	 }
+
+regex |= element oneOrMore | zeroOrMore | optional { ignore?, regex+ }
+
+regex |= element charGroup | notCharGroup {
+           ignore?, 
+	   chars+,
+	   element except { chars+ }?
+         }
+
+regex |= element string { ignore?, text }
+
+regex |= element anyChar { ignore?, empty }
+
+regex |= charClass
+
+chars |= element chars { text }
+
+chars |= element range {
+	   ( attribute from { xs:string { length = "1" } },
+	     attribute to { xs:string { length = "1" } } ) |
+	   ( charClass, charClass )
+	 }
+
+chars |= charClass
+
+charClass |= element newline | return | tab | space | notSpace |
+                     initialNameChar | notInitialNameChar |
+		     nameChar | notNameChar | wordChar | notWordChar { ignore?, empty }
+
+charClass |= element category | notCategory | block | notBlock { ignore?, text }
+
+ignore = attribute ignore { "yes" | "no" }

@@ -1,0 +1,125 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=PowerPoint.Slide>
+<meta name=Generator content="Microsoft PowerPoint 9">
+
+<script>
+<!--
+if( window.name != "PPTNts" )
+  parent.location.href = "../Typing%20in%20Transformations.html";
+//-->
+</script>
+</head>
+
+<body bgcolor=white text=black>
+
+<table border=0 width="100%">
+ <tr>
+  <td width=5 nowrap></td>
+  <td width="100%"></td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>There's a big mismatch
+  between the learning burden that users have to shoulder and the benefits that
+  they get from doing so. It's not quite &quot;all the pain with none of the
+  gain&quot;, but it's pretty close. The paper I wrote for this talk just
+  leaves open the question about what that means, but here I mention some of
+  the possibilities for how we might ease that burden. None of these are new
+  thoughts (so I'm not particularly optimistic that any of these changes will
+  actually happen).</font><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>There are four things that
+  might reduce the learning burden on users, either in isolation or
+  combination.</font><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>First, we could simplify
+  the type system, either by dropping the types that we don't think are
+  interesting or setting a basic level of conformance that only involves a
+  smaller set of types.</font><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>Second, we could add some
+  more implicit casting: perhaps when there's a single required type (i.e. not
+  for polymorphic operators) and a guaranteed successful cast (e.g. to an
+  xs:string), then it should be done implicitly; or perhaps we could treat
+  xs:string in the same way we do xdt:untypedAtomic -- this would help in many
+  of the cases where explicit casting is required; it would also help if any
+  value could be cast implicitly to a string, since this cast is always
+  successful.</font><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>Third, we could try to
+  simplify the casting rules at the three levels of &quot;which types can be
+  cast to which others?&quot;, &quot;how does a value of one type get converted
+  to another?&quot; and &quot;which type does an untyped value get converted
+  to?&quot;. Simplification would mean providing simpler rules (with minimal
+  special cases) and/or rules that have more intuitive results.</font><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>Fourth, XSLT 2.0 could, at
+  the Basic conformance level, support the typing of nodes, just with the
+  built-in types. This would mean that users could type their elements and
+  attributes once, and then use them without worrying about explicitly casting
+  them. It wouldn't solve the problem of having to cast typed values to the
+  required type for a function, but it could help with the problems that
+  surround the casting of untyped values.</font><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>The other thing we could
+  do is just encourage users to move up to the Schema-Aware level of
+  conformance. This doesn't alleviate the learning burden, but it does mean
+  that users get a lot more benefits to weigh against those disadvantages.</font><br>
+  </td>
+ </tr>
+</table>
+
+</body>
+
+</html>

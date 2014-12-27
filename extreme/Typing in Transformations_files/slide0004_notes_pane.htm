@@ -1,0 +1,58 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=PowerPoint.Slide>
+<meta name=Generator content="Microsoft PowerPoint 9">
+
+<script>
+<!--
+if( window.name != "PPTNts" )
+  parent.location.href = "../Typing%20in%20Transformations.html";
+//-->
+</script>
+</head>
+
+<body bgcolor=white text=black>
+
+<table border=0 width="100%">
+ <tr>
+  <td width=5 nowrap></td>
+  <td width="100%"></td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>Making the assumption of
+  using a Basic XSLT processor rules out most of the type-related benefits of
+  XPath 2.0 that get cited.</font><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><br>
+  </td>
+ </tr>
+ <tr>
+  <td colspan=1></td>
+  <td align=left colspan=1><font face=Verdana size=3>One of the type-related
+  benefits that is ruled out by this assumption is one of the most popular
+  arguments given in favour of the strong typing in XPath 2.0 (both Liam Quin
+  and C. Michael Sperberg-McQueen mentioned it in their talks at Extreme) --
+  that of making sure that you've included quotes around strings. The fact that
+  you've missed out quotes is only detectable by virtue of the fact that the
+  &quot;element name&quot; that remains isn't an element allowed to occur in
+  the current context node. If you don't have schema-awareness then you don't
+  know what elements are allowed within the context node, so it's assumed that
+  any element is allowed, and no error is reported. Note that even with a
+  Schema-Aware processor, if the &quot;element name&quot; is actually a legal
+  element name, you won't get an error either. (I'd argue that a better
+  solution to the problem is to use an editor that does syntax highlighting
+  within XPath expressions, such that string literals appear differently from
+  element names.)</font><br>
+  </td>
+ </tr>
+</table>
+
+</body>
+
+</html>

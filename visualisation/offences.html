@@ -1,0 +1,232 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Offences</title>
+	<style type="text/css">
+	  body {
+	    background-color: #1a1a1a;
+	    font-family: Optima, sans-serif;
+	  }
+	
+	  #offences {
+	    float: left;
+	  }
+	
+	  #mycanvas {
+	    margin-left: 25px;
+	    margin-right: 25px;
+	  }
+	
+  	#infovis {
+        position:relative;
+        width:600px;
+        height:600px;
+        margin:auto;
+    }
+    
+    .label {
+      color: #DDD;
+      cursor: pointer;
+      text-align: center;
+      width: auto;
+      padding: 0.5em;
+      margin: -0.5em;
+      font-size: 0.8em;
+    }
+    
+    .class {
+      font-weight: bold;
+      z-index: 50;
+    }
+    
+    .subclass {
+    }
+    
+    .offence {
+      font-size: 0.7em;
+      font-style: italic;
+      width: 33%;
+      color: #999;
+      height: 0.8em;
+      overflow: hidden;
+      cursor: default;
+    }
+    
+    .selected {
+      z-index: 100;
+      background-color: #1a1a1a;
+      color: white;
+      border: 1px #099 solid;
+      -webkit-border-radius: 15px;
+    	-moz-border-radius: 15px;
+    	height: auto;
+    }
+  </style>
+  <script type="text/javascript" src="scripts/jquery-1.3.2.min.js"></script>
+  <script type="text/javascript" src="scripts/rdfQuery/jquery.uri.js"></script>
+  <script type="text/javascript" src="scripts/rdfQuery/jquery.xmlns.js"></script>
+  <script type="text/javascript" src="scripts/rdfQuery/jquery.curie.js"></script>
+  <script type="text/javascript" src="scripts/rdfQuery/jquery.datatype.js"></script>
+  <script type="text/javascript" src="scripts/rdfQuery/jquery.rdf.js"></script>
+  <script language="javascript" type="text/javascript" src="scripts/Jit/jit.js"></script>
+  
+  <script type="text/javascript">//<![CDATA[
+    $(document).ready(function () {
+      var infovis = $('#infovis'), canvas, ht, view;
+      
+      view = $.uri.base().query ? decodeURIComponent($.uri.base().query.substring(9)) : undefined;
+      
+      //init canvas
+      //Create a new canvas instance.
+      canvas = new Canvas('mycanvas', {
+          'injectInto': 'infovis',
+          'width': infovis.width() - 50,
+          'height': infovis.height() - 50
+      });
+      //end
+      //init Hypertree
+      ht = new Hypertree(canvas, {
+          //Change node and edge styles such as
+          //color, width and dimensions.
+          Node: {
+              dim: 15,
+              color: "#066",
+              overridable: true
+          },
+
+          Edge: {
+              lineWidth: 2,
+              color: "#099"
+          },
+
+          onCreateLabel: function (domElement, node) {
+            $(domElement)
+              .text(node.name)
+              .addClass('label')
+              .addClass(node.data.type)
+              .bind('click', function () {
+                if (node.data.type !== 'offence') {
+                  ht.onClick(node.id);
+                }
+              })
+              .mouseover(function () {
+                $(this)
+                  .addClass('selected');
+                if (node.data.type === 'offence') {
+                  $(this)
+                    .html(node.name + '<br />maximum sentence: ' + node.data.sentence)
+                }
+              })
+              .mouseout(function () {
+                $(this)
+                  .text(node.name)
+                  .removeClass('selected');
+              });
+          },
+          //Change node styles when labels are placed
+          //or moved.
+          onPlaceLabel: function (domElement, node) {
+              var elem = $(domElement);
+              elem
+                .css('display', node._depth <= 2 ? '' : 'none')
+                .css('left', (parseInt(elem.css('left')) - elem.width() / 2) + 'px');
+          }
+      });
+
+      $.get('http://www.jenitennison.com/data/scheme/offence/', null, function (rdfXml) {
+        var classes, lastSelected;
+        $.rdf()
+          .load(rdfXml)
+          .prefix('skos', 'http://www.w3.org/2004/02/skos/core#')
+          .where('<http://www.jenitennison.com/data/scheme/offence/> skos:hasTopConcept ?klass')
+          .where('?klass skos:prefLabel ?label')
+          .each(function () {
+            $('#offences')
+              .append('<option value="' + this.klass.value + '"' + (view === this.klass.value ? ' selected="selected">' : '>') + this.label.value + '</option>')
+              .bind('change', function () {
+                var selected = $(this).find(':selected').attr('value');
+                if (selected !== lastSelected) {
+                  lastSelected = selected;                  
+                  $('form').submit();
+                }
+              });
+            $('#loading')
+              .text('Select a class of offence...');
+            $('#offences')
+              .attr('disabled', '');            
+          });
+      }, 'xml')
+      
+      if (view !== undefined) {
+        $.get(view, null, function (rdfXml) {
+          var rdf, offences = {};
+          rdf = $.rdf()
+            .load(rdfXml)
+            .prefix('skos', 'http://www.w3.org/2004/02/skos/core#')
+            .prefix('crime', 'http://www.jenitennison.com/data/ontology/crime#');
+          rdf
+            .where('<' + view + '> skos:prefLabel ?label')
+            .each(function () {
+              offences.id = view;
+              offences.name = this.label.value;
+              offences.data = {
+                '$color': '#0CC',
+                'type': 'class'
+              };
+              offences.children = rdf
+                .where('<' + view + '> skos:narrower ?subclass')
+                .where('?subclass skos:prefLabel ?label')
+                .map(function () {
+                  return {
+                    id: this.subclass.id,
+                    name: this.label.value,
+                    data: {
+                      'type': 'subclass'
+                    },
+                    children: rdf
+                      .where(this.subclass + ' skos:narrower ?offence')
+                      .where('?offence skos:prefLabel ?label')
+                      .where('?offence crime:maxSentence ?sentence')
+                      .map(function () {
+                        var sentence;
+                        if (this.sentence.datatype.toString() === 'http://www.w3.org/2001/XMLSchema#token') {
+                          sentence = this.sentence.value;
+                        } else if (this.sentence.value > 12) {
+                          sentence = this.sentence.value / 12 + ' years';
+                        } else {
+                          sentence = this.sentence.value + ' months';
+                        }
+                        return {
+                          id: this.offence.id,
+                          name: this.label.value,
+                          data: {
+                            'type': 'offence',
+                            'sentence': sentence
+                          },
+                          children: []
+                        };
+                      })
+                      .get()
+                  };
+                })
+                .get();
+            });
+          ht.loadJSON(offences);
+          ht.refresh();
+        }, 'xml');
+      }
+    });
+  //]]></script>
+</head>
+<body>
+  <form action="" method="get">
+    <p>
+      <select id="offences" name="offences">
+        <option id="loading">Loading...</option>
+      </select>
+    </p>
+  </form>
+  <div id="infovis">
+  </div>
+</body>
+</html>

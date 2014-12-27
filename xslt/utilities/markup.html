@@ -1,0 +1,169 @@
+
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "/resources/dtd/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>Jeni's XSLT Utilities: Markup</title>
+      <link rel="stylesheet" href="/resources/style/base.css"/>
+      <link rel="alternate" type="text/xml" href="/xslt/utilities/markup.xml"/><!--
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    -->
+   </head>
+   <body>
+      <p id="xml-link">
+					Try the <a href="/xslt/utilities/markup.xml">XML version</a> of this page.
+					If you have problems with it, consult the
+					<a href="/compatibility.html">compatibility page</a>.
+				</p>
+   
+   
+      <h1>Markup Utility<span id="link-top">
+            <a class="img" href="/index.html">
+               <img src="/resources/icons/top.gif" width="29" height="29"/>
+            </a>
+         </span>
+         <span id="link-up">
+            <a class="img" href="index.html">
+               <img src="/resources/icons/up.gif" width="29" height="29"/>
+            </a>
+         </span>
+      </h1>
+   
+      <p>
+  The Markup Utility is a utility for finding and
+  changing words and phrases within some text.  You can use it to:
+</p>
+   
+      <ul>
+      
+         <li>highlight important terms in your text</li>
+      
+         <li>link phrases to other pages</li>
+      
+         <li>search and replace words within some text</li>
+   
+      </ul>
+   
+      <h2>Instructions</h2>
+   
+      <ol>
+      
+         <li>Download the <a href="markup.xsl">markup.xsl</a> stylesheet into the same directory as your stylesheet.</li>
+      
+         <li>
+         
+            <p>Import the markup.xsl stylesheet into your stylesheet:</p>
+         
+            <pre>&lt;xsl:import href="markup.xsl" /&gt;</pre>
+      
+         </li>
+      
+         <li>
+         
+            <p>Call the template 'markup' with two parameters: text being the text to be marked
+  up, and phrases being the phrases to be marked up within it:</p>
+         
+            <pre>
+&lt;xsl:call-template name="markup"&gt;
+  &lt;xsl:with-param name="text" select="." /&gt;
+  &lt;xsl:with-param name="phrases" select="/doc/keywords/keyword" /&gt;
+&lt;/xsl:call-template&gt;
+</pre>
+      
+         </li>
+      
+         <li>
+         
+            <p>Create templates in 'markup' mode that match the keyword nodes and do the marking
+  up.  These can use the 'word' parameter to give the actual term that's being marked
+  up:</p>
+         
+            <pre>
+&lt;xsl:template match="*" mode="markup"&gt;
+  &lt;xsl:param name="word" /&gt;
+  &lt;a href="{@id}.html"&gt;
+    &lt;xsl:value-of select="$word" /&gt;
+  &lt;/a&gt;
+&lt;/xsl:template&gt;
+</pre>
+      
+         </li>
+   
+      </ol>
+   
+      <p>
+  There are a few extra options that you can set as parameters for the 'markup' template, namely:
+</p>
+   
+      <dl>
+      
+         <dt id="words-only">$words-only [= <span class="boolean">true</span>]</dt>
+         <dd>
+            <ul>
+               <li>
+                  <span class="boolean">true</span>: only whole words should be marked up (separated by
+      punctuation)</li>
+               <li>
+                  <span class="boolean">false</span>: any matching occurrence should be marked up, whether whole word or not.</li>
+            </ul>
+         </dd>
+      
+         <dt id="first-only">$first-only [= <span class="boolean">false</span>]</dt>
+         <dd>
+            <ul>
+               <li>
+                  <span class="boolean">true</span>: only the first occurence of a word in a piece of text should be marked up</li>
+               <li>
+                  <span class="boolean">false</span>: all occurrences of a word in a piece of text should be marked up</li>
+            </ul>
+         </dd>
+      
+         <dt id="match-case">$match-case [= <span class="boolean">false</span>]</dt>
+         <dd>
+            <ul>
+               <li>
+                  <span class="boolean">true</span>: only occurences where the case matches exactly should be marked up</li>
+               <li>
+                  <span class="boolean">false</span>: all occurences of the word should be marked up, regardless of case</li>
+            </ul>
+         </dd>
+   
+      </dl>
+   
+      <h2>More Information</h2>
+   
+      <table>
+         <colgroup span="1"/>
+         <tr>
+            <td>
+               <p class="link">
+                  <a href="markup-example.html" class="img ">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="markup-example.html">A Simple Example</a>
+               </p>
+               <p class="link">
+                  <a href="markup-explanation.html" class="img ">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="markup-explanation.html">How it Works</a>
+               </p>
+            </td>
+         </tr>
+      </table>
+
+      <div id="colophon">
+         <hr class="final"/>
+         <p>
+            <a href="/xslt/utilities/markup.html">/xslt/utilities/markup.xml</a> by <a href="mailto:mail@jenitennison.com" class="mailto">Jeni Tennison</a>; generated using <a href="http://saxon.sf.net/" class="offsite">SAXON 6.5 from Michael Kay</a>
+         </p>
+      </div>
+   </body>
+</html>

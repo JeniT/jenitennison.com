@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "/resources/dtd/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>Jeni's XSLT Utilities: SVG Utility: Example</title>
+      <link rel="stylesheet" href="/resources/style/base.css"/>
+      <link rel="alternate" type="text/xml" href="/xslt/utilities/svg-utils.xml"/><!--
+      Copyright (c) 2000  Dr Jeni Tennison.
+      Permission is granted to copy, distribute and/or modify this
+      document under the terms of the GNU Free Documentation License,
+      Version 1.1 or any later version published by the Free Software
+      Foundation; with no Invariant Sections, no Front-Cover Texts and
+      no Back-Cover Texts.  A copy of the license is included in the
+      section entitled "GNU Free Documentation License".
+    -->
+   </head>
+   <body>
+      <p id="xml-link">
+					Try the <a href="/xslt/utilities/svg-utils.xml">XML version</a> of this page.
+					If you have problems with it, consult the
+					<a href="/compatibility.html">compatibility page</a>.
+				</p>
+   
+   
+      <h1>SVG Utility: Example<span id="link-top">
+            <a class="img" href="/index.html">
+               <img src="/resources/icons/top.gif" width="29" height="29"/>
+            </a>
+         </span>
+         <span id="link-up">
+            <a class="img" href="index.html">
+               <img src="/resources/icons/up.gif" width="29" height="29"/>
+            </a>
+         </span>
+      </h1>
+   
+      <p>
+      The SVG utility is designed to help you to embed the SVG images that you generate using XSLT into an HTML page.
+   </p>
+   
+      <p>
+      This page gives a simple example of using the SVG Utility to give a couple of charts based on some data within an HTML page.  Say you had some data like:
+   </p>
+   
+      <pre>
+&lt;stats&gt;
+   &lt;item&gt;&lt;label&gt;Jan&lt;/label&gt;&lt;value&gt;642&lt;/value&gt;&lt;/item&gt;
+   &lt;item&gt;&lt;label&gt;Feb&lt;/label&gt;&lt;value&gt;527&lt;/value&gt;&lt;/item&gt;
+   &lt;item&gt;&lt;label&gt;Mar&lt;/label&gt;&lt;value&gt;364&lt;/value&gt;&lt;/item&gt;
+   &lt;item&gt;&lt;label&gt;Apr&lt;/label&gt;&lt;value&gt;843&lt;/value&gt;&lt;/item&gt;
+   &lt;item&gt;&lt;label&gt;May&lt;/label&gt;&lt;value&gt;295&lt;/value&gt;&lt;/item&gt;
+   &lt;item&gt;&lt;label&gt;Jun&lt;/label&gt;&lt;value&gt;250&lt;/value&gt;&lt;/item&gt;
+   &lt;item&gt;&lt;label&gt;Jul&lt;/label&gt;&lt;value&gt;654&lt;/value&gt;&lt;/item&gt;
+   &lt;item&gt;&lt;label&gt;Aug&lt;/label&gt;&lt;value&gt;828&lt;/value&gt;&lt;/item&gt;
+   &lt;item&gt;&lt;label&gt;Sep&lt;/label&gt;&lt;value&gt;454&lt;/value&gt;&lt;/item&gt;
+   &lt;item&gt;&lt;label&gt;Oct&lt;/label&gt;&lt;value&gt;732&lt;/value&gt;&lt;/item&gt;
+   &lt;item&gt;&lt;label&gt;Nov&lt;/label&gt;&lt;value&gt;236&lt;/value&gt;&lt;/item&gt;
+   &lt;item&gt;&lt;label&gt;Dec&lt;/label&gt;&lt;value&gt;546&lt;/value&gt;&lt;/item&gt;
+&lt;/stats&gt;
+</pre>
+   
+      <p>
+      You might want to generate a couple of SVG charts from this data - a bar chart and a line chart, for example.  In this example, I use <code>my:diagram</code> elements in my stylesheet to determine the types of charts that I want to create:
+   </p>
+   
+      <pre>
+&lt;my:diagrams&gt;
+   &lt;my:diagram type="column" /&gt;
+   &lt;my:diagram type="line" /&gt;
+&lt;/my:diagrams&gt;
+</pre>
+   
+      <p>
+      First, I need to import the SVG utilities stylesheet into my stylesheet: 
+   </p>
+   
+      <pre>
+&lt;xsl:import href="svg-utils.xsl" /&gt;
+</pre>
+   
+      <p>
+      Second, I need to create a node-set variable within which there's one node per SVG image that I want to create.  The nodes in this case are the <code>my:diagram</code> elements within the stylesheet, so I access them:
+   </p>
+   
+      <pre>&lt;xsl:variable name="images" select="document('')/*/my:diagrams/my:diagram" /&gt;</pre>
+   
+      <p>
+      Now I need to insert the script and the embed elements into my document.  I use the utility to insert the script into the head of my HTML, passing the <code>$images</code> variable as the value of the <code>$images</code> parameter:
+   </p>
+   
+      <pre>
+&lt;html&gt;
+   &lt;head&gt;
+      &lt;title&gt;SVG Chart Demonstration&lt;/title&gt;
+      &lt;xsl:call-template name="insertSVGScript"&gt;
+         &lt;xsl:with-param name="images" select="$images" /&gt;
+      &lt;/xsl:call-template&gt;
+   &lt;/head&gt;
+   &lt;body&gt;
+      ...
+   &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+   
+      <p>
+      In the body of the HTML page, I insert the embed elements by applying templates to the nodes held in the <code>$images</code> variable:
+   </p>
+   
+      <pre>
+&lt;html&gt;
+   &lt;head&gt;
+      ...
+   &lt;/head&gt;
+   &lt;body&gt;
+      &lt;h1&gt;SVG Chart Demonstration&lt;/h1&gt;
+      &lt;p&gt;The following charts are generated automatically using XSLT.&lt;/p&gt;
+      &lt;xsl:apply-templates select="$images" mode="createEmbed" /&gt;
+   &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+   
+      <p>
+      Finally, I need to create the SVG for the two diagrams.  To use the SVG Utility, I need to do this within a template in <code>getSVG</code> mode:
+   </p>
+   
+      <pre>
+&lt;xsl:template match="my:diagram" mode="getSVG"&gt;
+   &lt;xsl:variable name="points" select="$stats/item" /&gt;
+   &lt;xsl:variable name="type" select="@type" /&gt;
+   &lt;xsl:variable name="space" select="30" /&gt;
+   &lt;xsl:variable name="width-height-ratio" select="2 div 3" /&gt;
+   &lt;xsl:variable name="col-width" select="20" /&gt;
+   &lt;xsl:variable name="col-gap" select="10" /&gt;
+   &lt;xsl:variable name="point-width" select="5" /&gt;
+   &lt;xsl:variable name="xaxis-width" 
+                 select="count($points) * ($col-width + $col-gap)" /&gt;
+   &lt;xsl:variable name="width" select="round($xaxis-width + (2 * $space))" /&gt;
+   &lt;xsl:variable name="height" 
+                 select="round($xaxis-width * $width-height-ratio + 
+                               (2 * $space))" /&gt;
+   &lt;xsl:variable name="max-value"&gt;
+      &lt;xsl:for-each select="$points"&gt;
+         &lt;xsl:sort select="value" order="descending" /&gt;
+         &lt;xsl:if test="position() = 1"&gt;&lt;xsl:value-of select="value" /&gt;&lt;/xsl:if&gt;
+      &lt;/xsl:for-each&gt;
+   &lt;/xsl:variable&gt;
+   &lt;xsl:variable name="unit-multiplier" 
+                 select="($xaxis-width * $width-height-ratio) div 
+                         ($max-value * 1.05)" /&gt;
+   &lt;svg width="100%" viewBox="0 0 {$width} {$height}" 
+        preserveAspectRatio="xMinYMin meet"&gt;
+      &lt;!-- border around chart --&gt;
+      &lt;rect width="{$width}" height="{$height}" 
+            style="fill: #CCC; stroke: black;" /&gt;
+      &lt;!-- X Axis line --&gt;
+      &lt;line x1="{$space}" y1="{$height - $space}" 
+            x2="{$width - $space}" y2="{$height - $space}" 
+            style="stroke: black;" /&gt;
+      &lt;!-- Y Axis line --&gt;
+      &lt;line x1="{$space}" y1="{$space}" 
+            x2="{$space}" y2="{$height - $space}" 
+            style="stroke: black;" /&gt;
+      &lt;xsl:for-each select="$points"&gt;
+         &lt;xsl:variable name="item-height" 
+                       select="round(value * $unit-multiplier)" /&gt;
+         &lt;xsl:variable name="xMin" 
+                       select="$space + 
+                               (count(preceding-sibling::item) * 
+                                ($col-width + $col-gap))" /&gt;
+         &lt;!-- Columns --&gt;
+         &lt;xsl:choose&gt;
+            &lt;xsl:when test="$type = 'column'"&gt;
+               &lt;rect x="{$xMin + ($col-gap div 2)}" 
+                     y="{$height - $space - $item-height}" 
+                     width="{$col-width}" height="{$item-height}" 
+                     style="fill: blue; stroke: black;" /&gt;
+            &lt;/xsl:when&gt;
+            &lt;xsl:otherwise&gt;
+               &lt;xsl:variable name="x" 
+                             select="$xMin + ($col-gap div 2) + 
+                                     (($col-width - $point-width) div 2)" /&gt;
+               &lt;xsl:variable name="y" 
+                             select="$height - $space - 
+                                     $item-height - ($point-width div 2)" /&gt;
+               &lt;rect x="{$x}"
+                     y="{$y}"
+                     width="{$point-width}"
+                     height="{$point-width}"
+                     style="fill: blue; stroke: black;" /&gt;
+               &lt;xsl:variable name="next" select="following-sibling::item" /&gt;
+               &lt;xsl:if test="$next"&gt;
+                  &lt;xsl:variable name="nextX" 
+                                select="$xMin + $col-width + $col-gap * 1.5 + 
+                                        (($col-width - $point-width) div 2)" /&gt;
+                  &lt;xsl:variable name="nextY" 
+                                select="$height - $space - 
+                                        ($point-width div 2) - 
+                                        round($next/value * 
+                                              $unit-multiplier)" /&gt;
+                  &lt;line x1="{$x + $point-width div 2}"
+                        y1="{$y + $point-width div 2}"
+                        x2="{$nextX + $point-width div 2}"
+                        y2="{$nextY + $point-width div 2}"
+                        style="stroke: blue;" /&gt;
+               &lt;/xsl:if&gt;
+            &lt;/xsl:otherwise&gt;
+         &lt;/xsl:choose&gt;
+         &lt;!-- Column captions --&gt;
+         &lt;text x="{$xMin}" y="{$height - $space div 3}" 
+               textLength="{$col-width}" style="font: Arial;"&gt;
+            &lt;xsl:value-of select="label" /&gt;
+         &lt;/text&gt;
+      &lt;/xsl:for-each&gt;
+   &lt;/svg&gt;
+&lt;/xsl:template&gt;
+</pre>
+   
+      <p>
+      If you have an SVG Viewer plug-in installed, you can <a href="test-svg.xml">view this example</a>.  The full stylesheet is available at .
+   </p>
+   
+      <h2>More Information</h2>
+   
+      <table>
+         <colgroup span="1"/>
+         <tr>
+            <td>
+               <p class="link">
+                  <a href="svg-utils.zip" class="img ">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="svg-utils.zip">Download</a>
+               </p>
+               <p class="link">
+                  <a href="svg-utils.html" class="img ">
+                     <img src="/resources/icons/goto.gif" height="28" width="28" border="0" onmouseover="javascript:this.src='/resources/icons/over-goto.gif'" onclick="javascript:this.src='/resources/icons/click-goto.gif'" onmouseout="javascript:this.src='/resources/icons/goto.gif'"/>
+                  </a> 
+                  <a href="svg-utils.html">Instructions</a>
+               </p>
+            </td>
+         </tr>
+      </table>
+
+      <div id="colophon">
+         <hr class="final"/>
+         <p>
+            <a href="/xslt/utilities/svg-utils.html">/xslt/utilities/svg-utils.xml</a> by <a href="mailto:mail@jenitennison.com" class="mailto">Jeni Tennison</a>; generated using <a href="http://saxon.sf.net/" class="offsite">SAXON 6.5 from Michael Kay</a>
+         </p>
+      </div>
+   </body>
+</html>
