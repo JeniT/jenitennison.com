@@ -1,0 +1,293 @@
+@prefix dct: <http://purl.org/dc/terms/>
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix xs: <http://www.w3.org/2001/XMLSchema>
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>
+@prefix xml: <http://www.w3.org/XML/1998/namespace>
+
+<http://proxy.data.gov.uk/sdmx.org/def/sdmx/ObsStatus>
+  rdf:type <http://www.w3.org/2000/01/rdf-schema#Class> ;
+  rdfs:label "Observation Status Class" ;
+  rdfs:comment "This is the class of observation statuses, enabling properties to easily indicate that they have a range which is a member of the obs-status codelist." ;
+  rdfs:seeAlso <http://proxy.data.gov.uk/sdmx.org/id/obs-status> ;
+  rdfs:subClassOf <http://www.w3.org/2004/02/skos/core#Concept> .
+
+<http://proxy.data.gov.uk/sdmx.org/id/obs-status>
+  rdf:type <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+  skos:prefLabel "Observation Status Codelist" ;
+  skos:notation "CL_OBS_STATUS" ;
+  skos:note "This code list provides coded information about the \"status\" of an observation (with respect events such as the ones reflected in the codes composing the code list)." ;
+  skos:definition <http://sdmx.org/wp-content/uploads/2009/01/02_sdmx_cog_annex_2_cl_2009.pdf> ;
+  rdfs:seeAlso <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ObsStatus> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/obs-status/A> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/obs-status/B> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/obs-status/E> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/obs-status/F> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/obs-status/I> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/obs-status/M> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/obs-status/P> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/obs-status/S> .
+
+<http://proxy.data.gov.uk/sdmx.org/id/obs-status/A>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ObsStatus> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/obs-status> ;
+  skos:prefLabel "Normal" ;
+  skos:notation "A" ;
+  skos:definition "Normal: the default value (if no value is provided) is used when no special coded qualification is assumed. Usually, in this case, it can be assumed that the source agency assigns sufficient confidence to the provided observation and/or the value is not expected to be dramatically revised." .
+
+<http://proxy.data.gov.uk/sdmx.org/id/obs-status/B>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ObsStatus> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/obs-status> ;
+  skos:prefLabel "Break" ;
+  skos:notation "B" ;
+  skos:definition "Break observations are characterised as such when different content exist or a different methodology has been applied to this observation as compared with the preceding one (the one given for the previous period)." .
+
+<http://proxy.data.gov.uk/sdmx.org/id/obs-status/E>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ObsStatus> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/obs-status> ;
+  skos:prefLabel "Estimated value" ;
+  skos:notation "E" ;
+  skos:definition "Observation obtained through an estimation methodology (e.g. to produce back-casts) or based on the use of a limited amount of data or ad hoc sampling and through additional calculations (e.g. to produce a value at an early stage of the production stage while not all data are available). It may also be used in case of experimental data (e.g. in the context of a pilot ahead of a full scale production process) or in case of data of (anticipated/assessed) low quality. If needed, additional (uncoded) information can be provided through (free text) \"comments\" at the observation level or at a higher level." .
+
+<http://proxy.data.gov.uk/sdmx.org/id/obs-status/F>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ObsStatus> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/obs-status> ;
+  skos:prefLabel "Forecast value" ;
+  skos:notation "F" .
+
+<http://proxy.data.gov.uk/sdmx.org/id/obs-status/I>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ObsStatus> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/obs-status> ;
+  skos:prefLabel "Imputed value" ;
+  skos:notation "I" ;
+  skos:definition "Observation imputed by international organisations to replace or fill gaps in national data series, in line with the recommendations of the Committee for the Coordination of Statistical Activities (CCSA)" .
+
+<http://proxy.data.gov.uk/sdmx.org/id/obs-status/M>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ObsStatus> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/obs-status> ;
+  skos:prefLabel "Missing value" ;
+  skos:notation "M" ;
+  skos:definition "Data can be missing due to various reasons: data do not exist, are insignificant (or not collected because they are below a certain threshold), are unreliable, are not relevant for the period, or other reason not elsewhere specified." .
+
+<http://proxy.data.gov.uk/sdmx.org/id/obs-status/P>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ObsStatus> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/obs-status> ;
+  skos:prefLabel "Provisional value" ;
+  skos:notation "P" ;
+  skos:definition "An observation is characterised as \"provisional\" when the source agency – while it bases its calculations on its standard production methodology – considers that the data, almost certainly, are expected to be revised." .
+
+<http://proxy.data.gov.uk/sdmx.org/id/obs-status/S>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ObsStatus> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/obs-status> ;
+  skos:prefLabel "Strike" ;
+  skos:notation "S" ;
+  skos:definition "A known strike that occurred in the corresponding period that may have affected the observation or caused a missing value." .
+
+<http://proxy.data.gov.uk/sdmx.org/def/sdmx/ConfStatus>
+  rdf:type <http://www.w3.org/2000/01/rdf-schema#Class> ;
+  rdfs:label "Confidentiality Status Class" ;
+  rdfs:comment "This is the class of confidentiality statuses, enabling properties to easily indicate that they have a range which is a member of the conf-status codelist." ;
+  rdfs:seeAlso <http://proxy.data.gov.uk/sdmx.org/id/conf-status> ;
+  rdfs:subClassOf <http://www.w3.org/2004/02/skos/core#Concept> .
+
+<http://proxy.data.gov.uk/sdmx.org/id/conf-status>
+  rdf:type <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+  skos:prefLabel "Confidentiality Status Codelist" ;
+  skos:notation "CL_CONF_STATUS" ;
+  skos:note "This code list provides coded information about the sensitivity and confidentiality status of the data." ;
+  skos:definition <http://sdmx.org/wp-content/uploads/2009/01/02_sdmx_cog_annex_2_cl_2009.pdf> ;
+  rdfs:seeAlso <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ConfStatus> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/conf-status/F> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/conf-status/N> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/conf-status/C> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/conf-status/D> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/conf-status/S> .
+
+<http://proxy.data.gov.uk/sdmx.org/id/conf-status/F>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ConfStatus> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/conf-status> ;
+  skos:prefLabel "Free" ;
+  skos:notation "F" ;
+  skos:definition """It is used for observations for observations for which there are no special sensitivity considerations and which can be freely shared. Please note:
+
+In some institutional environments the term "unclassified" is used in a sense that still denotes implied restrictions in the circulation of information. If this is the case, this organisation may probably consider that "free" (value F) is not the appropriate corresponding tag for this kind of "unclassified" category and it may be that "non-publishable / restricted" (value N) may be more appropriate.
+
+The focus of this code is not to describe and anticipate all potential permissible uses (e.g. permission to re-disseminate). Thus, the use of "F" does not allow safe assumptions with respect to the permission to "re-disseminate" (freely or at a price) the received or accessed information (e.g. on web or paper), especially on a massive and regular basis (legal and copyright constraints may apply). Usually, source organisations provide information and guidance on re-dissemination issues, either on their websites or on their paper publications.""" .
+
+<http://proxy.data.gov.uk/sdmx.org/id/conf-status/N>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ConfStatus> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/conf-status> ;
+  skos:prefLabel "Not for publication, restricted for internal use only" ;
+  skos:notation "N" ;
+  skos:definition "Used to denote observations that are restricted for internal use only within organisations." .
+
+<http://proxy.data.gov.uk/sdmx.org/id/conf-status/C>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ConfStatus> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/conf-status> ;
+  skos:prefLabel "Confidential statistical information" ;
+  skos:notation "C" ;
+  skos:definition "Confidential statistical information (primary confidentiality) due to identifiable respondents. Measures also should be taken to prevent not only direct access, but also indirect deduction or calculation by other users and parties, probably by considering and treating additional observations as \"confidential\" (secondary confidentiality management)." .
+
+<http://proxy.data.gov.uk/sdmx.org/id/conf-status/D>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ConfStatus> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/conf-status> ;
+  skos:prefLabel "Secondary confidentiality set by the sender, not for publication" ;
+  skos:notation "D" ;
+  skos:definition "Used by the sender of the data to flag (beyond the confidential statistical information) one or more additional observations of the dataset so that the receiver knows that he/she should suppress these observations in subsequent stages of processing (especially, dissemination) in order to prevent third parties to indirectly deduct (e.g. through accounting identities or other formulas) the observations that are genuinely flagged with \"C\"." .
+
+<http://proxy.data.gov.uk/sdmx.org/id/conf-status/S>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/ConfStatus> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/conf-status> ;
+  skos:prefLabel "Secondary confidentiality set and managed by the receiver, not for publication" ;
+  skos:notation "S" ;
+  skos:definition "If senders do not manage the secondary confidentiality in their data and/or there are also other countries’ data involved (with the intention to eventually compile a regional-wide aggregate that is going to be published), the value \"S\" is used by the receiver to flag additional suppressed observations (within sender’s data and/or within the datasets of other senders) in subsequent stages of processing (especially, dissemination) in order to prevent third parties to indirectly deduct the observations that were genuinely flagged with \"C\" by the sender." .
+
+<http://proxy.data.gov.uk/sdmx.org/def/sdmx/Freq>
+  rdf:type <http://www.w3.org/2000/01/rdf-schema#Class> ;
+  rdfs:label "Frequency Class" ;
+  rdfs:comment "This is the class of frequencies, enabling properties to easily indicate that they have a range which is a member of the freq codelist." ;
+  rdfs:seeAlso <http://proxy.data.gov.uk/sdmx.org/id/freq> ;
+  rdfs:subClassOf <http://www.w3.org/2004/02/skos/core#Concept> .
+
+<http://proxy.data.gov.uk/sdmx.org/id/freq>
+  rdf:type <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+  skos:prefLabel "Frequency Codelist" ;
+  skos:notation "CL_FREQ" ;
+  skos:note "This code list provides a list of values indicating the \"frequency\" of the data (e.g. monthly) and, thus, indirectly, also implying the type of \"time reference\" that could be used for identifying the data with respect time." ;
+  skos:definition <http://sdmx.org/wp-content/uploads/2009/01/02_sdmx_cog_annex_2_cl_2009.pdf> ;
+  rdfs:seeAlso <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Freq> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/freq/A> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/freq/S> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/freq/Q> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/freq/M> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/freq/W> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/freq/D> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/freq/B> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/freq/N> .
+
+<http://proxy.data.gov.uk/sdmx.org/id/freq/A>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Freq> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/freq> ;
+  skos:prefLabel "Annual" ;
+  skos:notation "A" ;
+  skos:definition "It is typically used for annual data. This can also serve cases of multi-annual data (data that appear once every two, three or, possibly, five years). Descriptive information on the multiannual characteristics (e.g. frequency of the series in practice and other methodological information can be provided at the dataflow level, as long as these characteristics are applicable for the entire dataflow)." .
+
+<http://proxy.data.gov.uk/sdmx.org/id/freq/S>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Freq> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/freq> ;
+  skos:prefLabel "Half-yearly, semester" ;
+  skos:notation "S" .
+
+<http://proxy.data.gov.uk/sdmx.org/id/freq/Q>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Freq> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/freq> ;
+  skos:prefLabel "Quarterly" ;
+  skos:notation "Q" .
+
+<http://proxy.data.gov.uk/sdmx.org/id/freq/M>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Freq> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/freq> ;
+  skos:prefLabel "Monthly" ;
+  skos:notation "M" .
+
+<http://proxy.data.gov.uk/sdmx.org/id/freq/W>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Freq> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/freq> ;
+  skos:prefLabel "Weekly" ;
+  skos:notation "W" .
+
+<http://proxy.data.gov.uk/sdmx.org/id/freq/D>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Freq> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/freq> ;
+  skos:prefLabel "Daily" ;
+  skos:notation "D" .
+
+<http://proxy.data.gov.uk/sdmx.org/id/freq/B>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Freq> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/freq> ;
+  skos:prefLabel "Daily - business week" ;
+  skos:notation "B" ;
+  skos:definition "Similar to \"daily\", however there are no observations for Saturday and Sunday (so, neither \"missing values\" nor \"numeric values\" should be provided for Saturday and Sunday). This treatment (\"business\") is one way to deal with such cases, but it is not the only option. Such a time series could alternatively be considered daily (\"D\"), thus, with missing values in the weekend." .
+
+<http://proxy.data.gov.uk/sdmx.org/id/freq/N>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Freq> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/freq> ;
+  skos:prefLabel "Minutely" ;
+  skos:notation "N" ;
+  skos:definition "While N denotes \"minutely\", usually, there may be no observations every minute (for several series the frequency is usually \"irregular\" within a day/days). And though observations may be sparse (not collected every minute), missing values do not need to be given for the minutes when no observations exist: in any case the time stamp determines when an observation is observed." .
+
+<http://proxy.data.gov.uk/sdmx.org/def/sdmx/Sex>
+  rdf:type <http://www.w3.org/2000/01/rdf-schema#Class> ;
+  rdfs:label "Sex Class" ;
+  rdfs:comment "This is the class of sexes, enabling properties to easily indicate that they have a range which is a member of the sex codelist." ;
+  rdfs:seeAlso <http://proxy.data.gov.uk/sdmx.org/id/sex> ;
+  rdfs:subClassOf <http://www.w3.org/2004/02/skos/core#Concept> .
+
+<http://proxy.data.gov.uk/sdmx.org/id/sex>
+  rdf:type <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+  skos:prefLabel "Sex Codelist" ;
+  skos:notation "CL_SEX" ;
+  skos:note "This code list provides the gender." ;
+  skos:definition <http://sdmx.org/wp-content/uploads/2009/01/02_sdmx_cog_annex_2_cl_2009.pdf> ;
+  rdfs:seeAlso <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Sex> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/sex/F> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/sex/M> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/sex/U> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/sex/N> ;
+  skos:hasTopConcept <http://proxy.data.gov.uk/sdmx.org/id/sex/T> .
+
+<http://proxy.data.gov.uk/sdmx.org/id/sex/F>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Sex> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/sex> ;
+  skos:prefLabel "Female" ;
+  skos:notation "F" .
+
+<http://proxy.data.gov.uk/sdmx.org/id/sex/M>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Sex> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/sex> ;
+  skos:prefLabel "Male" ;
+  skos:notation "M" .
+
+<http://proxy.data.gov.uk/sdmx.org/id/sex/U>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Sex> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/sex> ;
+  skos:prefLabel "Not specified or unknown" ;
+  skos:notation "U" .
+
+<http://proxy.data.gov.uk/sdmx.org/id/sex/N>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Sex> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/sex> ;
+  skos:prefLabel "Not applicable" ;
+  skos:notation "N" .
+
+<http://proxy.data.gov.uk/sdmx.org/id/sex/T>
+  rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+  rdf:type <http://proxy.data.gov.uk/sdmx.org/def/sdmx/Sex> ;
+  skos:topConceptOf <http://proxy.data.gov.uk/sdmx.org/id/sex> ;
+  skos:prefLabel "Total" ;
+  skos:notation "T" .

@@ -1,0 +1,209 @@
+@base <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2_provenance> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix http: <http://www.w3.org/2006/http#> .
+@prefix opmv: <http://purl.org/net/opmv/ns#> .
+@prefix common: <http://purl.org/net/opmv/types/common#> .
+@prefix gridworks: <http://purl.org/net/opmv/types/gridworks#> .
+
+<#gridworks-export>
+  a gridworks:ExportUsingTemplate , opmv:Process ;
+  rdfs:label "Process for Exporting Windsor & Maidenhead data as Turtle" ;
+  gridworks:project <finance_supplier_payments_2010_q2_project.tar.gz> ;
+  gridworks:template <#gridworks-template> .
+
+  <finance_supplier_payments_2010_q2_project.tar.gz>
+    a gridworks:Project , opmv:Artifact ;
+    rdfs:label "Windsor & Maidenhead Supplier Payments April 2010 - June 2010 Gridworks Project"@en ;
+    gridworks:wasCreatedFrom <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2.xls> ;
+    opmv:wasGeneratedBy <#gridworks-processing> .
+  
+  <#gridworks-processing>
+    a gridworks:Process , opmv:Process ;
+    rdfs:label "Processing on the Gridworks Project"@en ;
+    common:usedData <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2.xls> ;
+    gridworks:ignore 1 ;
+    gridworks:operationDescription <finance_supplier_payments_2010_q2_operations.json> .
+  
+  <finance_supplier_payments_2010_q2_operations.json>
+    a gridworks:OperationDescription , opmv:Artifact ;
+    rdfs:label "Dump of the Processing carried out by Gridworks on Windsor &amp; Maidenhead Supplier Payments April 2010 - June 2010 data"@en ;
+    gridworks:wasExportedFrom <finance_supplier_payments_2010_q2_project.tar.gz> ;
+    gridworks:wasExportedBy <#gridworks-operation-description-extraction> .
+  
+  <#gridworks-operation-description-extraction>
+    a gridworks:ExtractOperationDescription , opmv:Process ;
+    rdfs:label "Extraction of the operation description from the Windsor &amp; Maidenhead Supplier Payments April 2010 - June 2010 Project from Gridworks"@en ;
+    gridworks:project <finance_supplier_payments_2010_q2_project.tar.gz> .
+
+<#gridworks-template>
+    a gridworks:Template ;
+    rdfs:label "Template for exporting data about Windsor & Maidenhead Supplier Payments April 2010 - June 2010" .
+    gridworks:prefix """
+@base <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix interval: <http://reference.data.gov.uk/def/intervals/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix opmv: <http://purl.org/net/opmv/ns#> .
+@prefix gridworks: <http://purl.org/net/opmv/types/gridworks#> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix payment: <http://reference.data.gov.uk/def/payment#> .
+@prefix rbwm: <http://www.rbwm.gov.uk/ontology#> .
+
+<http://www.rbwm.gov.uk/public/finance_supplier_payments>
+  a void:Dataset ;
+  void:subset <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2> .
+
+<http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2>
+  a payment:PaymentDataset , void:Dataset , opmv:Artifact ;
+  # basic metadata
+  rdfs:label "Windsor & Maidenhead Supplier Payments where charge to specific cost centre is >= £500 for period April 2010 - June 2010"@en ;
+  dct:license <http://data.gov.uk/id/licence> ;
+  dct:temporal [
+    # this time is retrieved from the Last-Modified date on the original spreadsheet
+    time:hasBeginning <http://reference.data.gov.uk/id/gregorian-instant/2010-08-02T08:37:02>
+  ] ;
+  dct:source <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2.xls> ;
+  gridworks:wasExportedBy <finance_supplier_payments_2010_q2_provenance#gridworks-export> ;
+  gridworks:wasExportedFrom <finance_supplier_payments_2010_q2_project.tar.gz> ;
+
+  # statistical metadata
+  qb:structure payment:payments-with-expenditure-structure ;
+  qb:sliceKey payment:payment-slice ;
+  payment:currency <http://dbpedia.org/resource/Pound_sterling> ;
+
+  # linked data metadata
+  void:exampleResource
+    <http://www.rbwm.gov.uk/id/transaction/2650750> ,
+    <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2#0> ;
+  void:vocabulary payment: , qb: , rbwm: ;
+  void:subset [
+    a void:Linkset ;
+    void:linkPredicate qb:slice ;
+    void:subjectsTarget <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2> ;
+    void:objectsTarget <http://www.rbwm.gov.uk/id/transaction> ;
+  ] , [
+    a void:Linkset ;
+    void:linkPredicate payment:payer ;
+    void:subjectsTarget <http://www.rbwm.gov.uk/id/transaction> ;
+    void:objectsTarget <http://statistics.data.gov.uk/id/local-authority> ;
+  ] , [
+    a void:Linkset ;
+    void:linkPredicate payment:payee ;
+    void:subjectsTarget <http://www.rbwm.gov.uk/id/transaction> ;
+    void:objectsTarget <http://www.rbwm.gov.uk/id/supplier> ;
+  ] , [
+    a void:Linkset ;
+    void:linkPredicate payment:date ;
+    void:subjectsTarget <http://www.rbwm.gov.uk/id/transaction> ;
+    void:objectsTarget <http://reference.data.gov.uk/id/day> ;
+  ] , [
+    a void:Linkset ;
+    void:linkPredicate payment:expenditureLine ;
+    void:subjectsTarget <http://www.rbwm.gov.uk/id/transaction> ;
+    void:objectsTarget <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2> ;
+  ] , [
+    a void:Linkset ;
+    void:linkPredicate payment:expenditureCode ;
+    void:subjectsTarget <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2> ;
+    void:objectsTarget <http://www.rbwm.gov.uk/def/cost-centre> ;
+  ] , [
+    a void:Linkset ;
+    void:linkPredicate rbwm:service ;
+    void:subjectsTarget <http://www.rbwm.gov.uk/def/cost-centre> ;
+    void:objectsTarget <http://www.rbwm.gov.uk/id/service> ;
+  ] , [
+    a void:Linkset ;
+    void:linkPredicate rbwm:providedBy ;
+    void:subjectsTarget <http://www.rbwm.gov.uk/id/service> ;
+    void:objectsTarget <http://www.rbwm.gov.uk/id/directorate> ;
+  ] , [
+    a void:Linkset ;
+    void:linkPredicate rbwm:provides ;
+    void:subjectsTarget <http://www.rbwm.gov.uk/id/directorate> ;
+    void:objectsTarget <http://www.rbwm.gov.uk/id/service> ;
+  ] , [
+    a void:Linkset ;
+    void:linkPredicate org:hasUnit ;
+    void:subjectsTarget <http://statistics.data.gov.uk/id/local-authority> ;
+    void:objectsTarget <http://www.rbwm.gov.uk/id/directorate> ;
+  ] , [
+    a void:Linkset ;
+    void:linkPredicate org:unitOf ;
+    void:subjectsTarget <http://www.rbwm.gov.uk/id/directorate> ;
+    void:objectsTarget <http://statistics.data.gov.uk/id/local-authority> ;
+  ] .
+	"""^^xsd:string ;
+    gridworks:rowTemplate """
+<>
+  qb:slice <${Transaction URI}> .
+
+<${Transaction URI}>
+  a payment:Payment , qb:Slice ;
+  rdfs:label "Transaction ${TransNo}"@en ;
+  qb:sliceStructure payment:payment-slice ;
+  payment:transactionReference "${TransNo}" ;
+  payment:payer <http://statistics.data.gov.uk/id/local-authority/00ME> ;
+  payment:payee <${Supplier URI}> ;
+  payment:date <${Date URI}> ;
+  payment:expenditureLine <${Line URI}> .
+  
+<${Line URI}>
+  a payment:ExpenditureLine , qb:Observation ;
+  rdfs:label "Expenditure Line {{rowIndex}}"@en ;
+  qb:dataSet <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2> ;
+  payment:expenditureCode <${Cost Centre URI}> ;
+  payment:amountExcludingVAT {{cells['Amount excl vat £'].value + 0}} .
+
+<${Supplier URI}>
+  a org:Organization ;
+  rdfs:label "${Supplier Name}"@en .
+
+<${Date URI}>
+  a interval:CalendarDay ;
+  rdfs:label "${Date}" ;
+  time:hasBeginning <http://reference.data.gov.uk/id/gregorian-instant/${Date}T00:00:00> ;
+  interval:ordinalYear {{substring(cells['Date'].value, 0, 4)}} ;
+  interval:ordinalMonthOfYear {{substring(cells['Date'].value, 5, 7)}} ;
+  interval:ordinalDayOfMonth {{substring(cells['Date'].value, 8, 10)}} .
+
+<http://reference.data.gov.uk/id/gregorian-instant/${Date}T00:00:00>
+  a time:Instant ;
+  time:inXSDDateTime "${Date}T00:00:00"^^xsd:dateTime .
+
+<${Cost Centre URI}>
+  a rbwm:CostCentre , skos:Concept ;
+  rdfs:label "Cost Centre ${Cost Centre}"@en ;
+  rbwm:costCentreCode "${Cost Centre}"^^rbwm:CostCentreCode ;
+  rbwm:service <${Service URI}> .
+
+<${Service URI}>
+  a rbwm:Service ;
+  rdfs:label "${Service}"@en ;
+  rbwm:providedBy <${Directorate URI}> .
+
+<${Directorate URI}>
+  a rbwm:Directorate ;
+  rdfs:label "${Directorate}"@en ;
+  org:unitOf <http://statistics.data.gov.uk/id/local-authority/00ME> ;
+  rbwm:provides <${Service URI}> .
+
+<http://statistics.data.gov.uk/id/local-authority/00ME>
+  org:hasUnit <${Directorate URI}> .
+
+"""^^xsd:string .
+

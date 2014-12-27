@@ -1,0 +1,10 @@
+<?php
+  include "utils.php";
+  $idUri = $_SERVER['REQUEST_URI'];
+  if (exists($idUri)) {
+    $docUri = str_replace('/id/', '/', $idUri);
+    header("Location: $docUri", true, 303);
+  } else {
+    error(404);
+  }
+?>

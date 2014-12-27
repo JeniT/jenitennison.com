@@ -1,0 +1,262 @@
+[{
+    "op":"mass-edit",
+    "description":"Mass edit cells in column Directorate",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "columnName":"Directorate",
+    "expression":"value",
+    "edits":[{
+        "fromBlank":false,
+        "fromError":false,
+        "from":["Policy,Performance & Planning"
+        ],
+        "to":"Policy, Performance & Planning"
+      }
+    ]
+  },
+  {
+    "op":"mass-edit",
+    "description":"Mass edit cells in column Service",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "columnName":"Service",
+    "expression":"value",
+    "edits":[{
+        "fromBlank":false,
+        "fromError":false,
+        "from":["Library & Information Services"
+        ],
+        "to":"Libraries & Information Services"
+      }
+    ]
+  },
+  {
+    "op":"mass-edit",
+    "description":"Mass edit cells in column Supplier Name",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "columnName":"Supplier Name",
+    "expression":"value",
+    "edits":[{
+        "fromBlank":false,
+        "fromError":false,
+        "from":["Claires Court Schools Ltd",
+          "Claires Court Schoos Ltd"
+        ],
+        "to":"Claires Court Schools Ltd"
+      },
+      {
+        "fromBlank":false,
+        "fromError":false,
+        "from":["First Steps Preschool",
+          "First Steps Pre School"
+        ],
+        "to":"First Steps Preschool"
+      },
+      {
+        "fromBlank":false,
+        "fromError":false,
+        "from":["More House School",
+          "Moor House School"
+        ],
+        "to":"More House School"
+      },
+      {
+        "fromBlank":false,
+        "fromError":false,
+        "from":["Siemens plc",
+          "Siemens PLC"
+        ],
+        "to":"Siemens plc"
+      }
+    ]
+  },
+  {
+    "op":"column-addition",
+    "description":"Create column Directorate slug at index 1 based on column Directorate using expression gel:replace(replace(toLowercase(value), ' ', '-'), /[^-a-z0-9]/, '')",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "newColumnName":"Directorate slug",
+    "columnInsertIndex":1,
+    "baseColumnName":"Directorate",
+    "expression":"gel:replace(replace(toLowercase(value), ' ', '-'), /[^-a-z0-9]/, '')",
+    "onError":"set-to-blank"
+  },
+  {
+    "op":"text-transform",
+    "description":"Text transform on cells in column Directorate slug using expression gel:replace(value, '--', '-')",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "columnName":"Directorate slug",
+    "expression":"gel:replace(value, '--', '-')",
+    "onError":"set-to-blank",
+    "repeat":true,
+    "repeatCount":10
+  },
+  {
+    "op":"column-addition",
+    "description":"Create column Service slug at index 5 based on column Service using expression gel:replace(replace(toLowercase(value), ' ', '-'), /[^-a-z0-9]/, '')",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "newColumnName":"Service slug",
+    "columnInsertIndex":5,
+    "baseColumnName":"Service",
+    "expression":"gel:replace(replace(toLowercase(value), ' ', '-'), /[^-a-z0-9]/, '')",
+    "onError":"set-to-blank"
+  },
+  {
+    "op":"text-transform",
+    "description":"Text transform on cells in column Service slug using expression gel:replace(value, '--', '-')",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "columnName":"Service slug",
+    "expression":"gel:replace(value, '--', '-')",
+    "onError":"set-to-blank",
+    "repeat":true,
+    "repeatCount":10
+  },
+  {
+    "op":"column-addition",
+    "description":"Create column Supplier slug at index 8 based on column Supplier Name using expression gel:replace(replace(toLowercase(value), ' ', '-'), /[^-a-z0-9]/, '')",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "newColumnName":"Supplier slug",
+    "columnInsertIndex":8,
+    "baseColumnName":"Supplier Name",
+    "expression":"gel:replace(replace(toLowercase(value), ' ', '-'), /[^-a-z0-9]/, '')",
+    "onError":"set-to-blank"
+  },
+  {
+    "op":"text-transform",
+    "description":"Text transform on cells in column Supplier slug using expression gel:replace(value, '--', '-')",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "columnName":"Supplier slug",
+    "expression":"gel:replace(value, '--', '-')",
+    "onError":"set-to-blank",
+    "repeat":true,
+    "repeatCount":10
+  },
+  {
+    "op":"column-addition",
+    "description":"Create column Date at index 3 based on column Updated using expression gel:datePart(value, 'year') + '-' + \u000a    if (datePart(value, 'month') < 9, '0', '') + replace(datePart(value, 'month') + 1, '.0', '') + '-' + \u000a    if (datePart(value, 'day') < 10, '0', '') + datePart(value, 'day')",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "newColumnName":"Date",
+    "columnInsertIndex":3,
+    "baseColumnName":"Updated",
+    "expression":"gel:datePart(value, 'year') + '-' + \u000a    if (datePart(value, 'month') < 9, '0', '') + replace(datePart(value, 'month') + 1, '.0', '') + '-' + \u000a    if (datePart(value, 'day') < 10, '0', '') + datePart(value, 'day')",
+    "onError":"set-to-blank"
+  },
+  {
+    "op":"column-addition",
+    "description":"Create column Directorate URI at index 2 based on column Directorate slug using expression gel:'http://www.rbwm.gov.uk/id/directorate/' + value",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "newColumnName":"Directorate URI",
+    "columnInsertIndex":2,
+    "baseColumnName":"Directorate slug",
+    "expression":"gel:'http://www.rbwm.gov.uk/id/directorate/' + value",
+    "onError":"set-to-blank"
+  },
+  {
+    "op":"column-addition",
+    "description":"Create column Transaction URI at index 6 based on column TransNo using expression gel:'http://www.rbwm.gov.uk/id/transaction/' + replace(value, '.0', '')",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "newColumnName":"Transaction URI",
+    "columnInsertIndex":6,
+    "baseColumnName":"TransNo",
+    "expression":"gel:'http://www.rbwm.gov.uk/id/transaction/' + replace(value, '.0', '')",
+    "onError":"set-to-blank"
+  },
+  {
+    "op":"column-addition",
+    "description":"Create column Service URI at index 9 based on column Service slug using expression gel:'http://www.rbwm.gov.uk/id/service/' + value",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "newColumnName":"Service URI",
+    "columnInsertIndex":9,
+    "baseColumnName":"Service slug",
+    "expression":"gel:'http://www.rbwm.gov.uk/id/service/' + value",
+    "onError":"set-to-blank"
+  },
+  {
+    "op":"column-addition",
+    "description":"Create column Cost Centre URI at index 11 based on column Cost Centre using expression gel:'http://www.rbwm.gov.uk/def/cost-centre/' + value",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "newColumnName":"Cost Centre URI",
+    "columnInsertIndex":11,
+    "baseColumnName":"Cost Centre",
+    "expression":"gel:'http://www.rbwm.gov.uk/def/cost-centre/' + value",
+    "onError":"set-to-blank"
+  },
+  {
+    "op":"column-addition",
+    "description":"Create column Supplier URI at index 14 based on column Supplier slug using expression gel:'http://www.rbwm.gov.uk/id/supplier/' + value",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "newColumnName":"Supplier URI",
+    "columnInsertIndex":14,
+    "baseColumnName":"Supplier slug",
+    "expression":"gel:'http://www.rbwm.gov.uk/id/supplier/' + value",
+    "onError":"set-to-blank"
+  },
+  {
+    "op":"column-addition",
+    "description":"Create column Line URI at index 17 based on column Type using expression gel:'#' + rowIndex",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "newColumnName":"Line URI",
+    "columnInsertIndex":17,
+    "baseColumnName":"Type",
+    "expression":"gel:'#' + rowIndex",
+    "onError":"set-to-blank"
+  },
+  {
+    "op":"column-addition",
+    "description":"Create column Date URI at index 5 based on column Date using expression gel:'http://reference.data.gov.uk/id/day/' + value",
+    "engineConfig":{
+      "facets":[],
+      "mode":"row-based"
+    },
+    "newColumnName":"Date URI",
+    "columnInsertIndex":5,
+    "baseColumnName":"Date",
+    "expression":"gel:'http://reference.data.gov.uk/id/day/' + value",
+    "onError":"set-to-blank"
+  }
+]

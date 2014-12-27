@@ -1,0 +1,41 @@
+<?php
+  $store = 'rdfquery-dev1';
+  
+  function proxy($filter, $order) {
+    global $store;
+    $start = (int)$_GET['start'];
+    $tqx = $_GET['tqx'];
+    $tq = $_GET['tq'];
+  
+    // Parse tq parameter
+    if ($tq) {
+      $select = stristr($tq, 'select ');
+      $select = substr($select, 7);
+      $select = explode(',', $select);
+      foreach ($select as $var) {
+        $var = trim($var);
+        $vars[] = "?$var";
+      }
+      $vars = implode(' ', $vars);
+    } else {
+      $vars = '*';
+    }
+    $sparql = "SELECT $vars WHERE { $filter } ORDER BY $order";
+    
+    $params = array('query' => $sparql, 'output' => 'xml');
+    $query = http_build_query($params);
+    $rdfURL = "http://api.talis.com/stores/$store/services/sparql?$query";
+
+    // URL for the transformation
+    $params = array('xml-uri' => $rdfURL, 
+      'xsl-uri' => "http://www.jenitennison.com/visualisation/data/SRXtoGoogleVisData.xsl",
+      'tqx' => $tqx);
+    $query = http_build_query($params);
+    $txURL = "http://api.talis.com/tx?$query";
+
+    $resource = fopen($txURL, 'rb');
+    header('Content-Type: application/json', true);
+    fpassthru($resource);
+    return;
+  }
+?>

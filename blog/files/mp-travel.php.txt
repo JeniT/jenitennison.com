@@ -1,0 +1,13 @@
+<?php
+  include "utils.php";
+  proxy('?rMP a <http://guardian.dataincubator.org/ns/MemberOfParliament> .
+         ?rMP <http://xmlns.com/foaf/0.1/name> ?mp .
+         ?rMP <http://guardian.dataincubator.org/ns/mp-expenses/majority> ?majority .
+         ?rMP <http://dbpedia.org/property/constituency> ?rConstituency .
+         ?rConstituency rdfs:label ?constituency .
+         ?rConstituency <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat .
+         ?rConstituency <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?long .
+         ?rMP <http://guardian.dataincubator.org/ns/mp-expenses/total-travel> ?totalTravel .',
+        'desc(?totalTravel)', 
+        'guardian');
+?>

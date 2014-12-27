@@ -1,0 +1,31 @@
+<?php
+  $store = 'rdfquery-dev1';
+  
+  function exists($idUri) {
+    global $store;
+    $host = $_SERVER['HTTP_HOST'];
+    $id = "http://$host$idUri";
+    $sparql = "ASK { <$id> ?p ?v . }";
+    $params = array('query' => $sparql, 'output' => 'json');
+    $query = http_build_query($params);
+    $request = "http://api.talis.com/stores/$store/services/sparql?$query";
+    $resource = file_get_contents($request, 'rb');
+    $result = strstr(strstr($resource, "\"boolean\":"), ":");
+    return !strstr($result, "false");
+  }
+  
+  function error() {
+    header("HTTP/1.1 404 Not Found");
+    echo <<<EOF
+<html>
+  <head>
+    <title>404 Not Found</title>
+  </head>
+  <body>
+    <h1>404 Not Found</h1>
+    <p>No such resource</p>
+  </body>
+</html>
+EOF;
+  }
+?>
