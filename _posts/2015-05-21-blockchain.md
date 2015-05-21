@@ -1,3 +1,10 @@
+---
+layout: drupal-post
+title: How might we use blockchains outside cryptocurrencies?
+tags:
+- blockchain
+- register
+---
 # How might we use blockchains outside cryptocurrencies?
 
 There's been a bit of a buzz recently about using blockchains, one of the approaches used within the Bitcoin protocol, to support things other than the bitcoin currency.
