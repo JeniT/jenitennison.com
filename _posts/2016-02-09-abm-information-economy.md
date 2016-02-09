@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Agent-Based Model the Information Economy
+title: Agent-Based Model of the Information Economy: Initial Thoughts
 ---
 
 There are several [studies on the impact of open data](https://medium.com/@ODIHQ/the-economic-impact-of-open-data-what-do-we-already-know-1a119c1958a0#.gafuoqaqu), ranging from specific case studies through to macroeconomic studies that estimate the overall impact of greater availability of information.
