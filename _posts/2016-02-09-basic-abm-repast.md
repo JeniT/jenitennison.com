@@ -107,7 +107,7 @@ def go() {
 
 When you run this code in Repast it generates a rather pretty picture of lots of multi-coloured circles (completely meaningless of course):
 
-![Randomly distributed firms in Repast](../assets/2016-02-09/firms.png)
+![Randomly distributed firms in Repast](/assets/2016-02-09/firms.png)
 
 Repast lets you monitor individual agents. So I can see that the first agent in the simulation has a `foodPerStep` of 12 and a `goldPerStep` of 1. Here's how its food and gold changes over the ticks of the simulation:
 
