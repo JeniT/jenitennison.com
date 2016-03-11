@@ -15,6 +15,11 @@ blockquote {
   font-size: $font-size-base;
 }
 
+table {
+  width: 100%
+  margin-bottom: 1em;
+}
+
 .navbar {
   background-color: $brand-primary;
   &.navbar-default {
