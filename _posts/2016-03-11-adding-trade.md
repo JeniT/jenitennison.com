@@ -81,7 +81,7 @@ In the final scenario described above, the price would be:
 
 This means Firm A should pay 2 GOLD for each FOOD from Firm B. Let's see how that price works out:
 
-| <math><msub><mi>GOLD</mi><mi>A</mi></msub></math> | <math><msub><mi>FOOD</mi><mi>A</mi></msub></math> | <math><msub><mi>U</mi><mi>A</mi></msub></math> | <math><msub><mi>mrs</mi><mi>A</mi></math> | <math><msub><mi>GOLD</mi><mi>B</mi></msub></math> | <math><msub><mi>FOOD</mi><mi>B</mi></msub></math> | <math><msub><mi>U</mi><mi>B</mi></msub></math> | <math><msub><mi>mrs</mi><mi>B</mi></math> |
+| <math><msub><mi>GOLD</mi><mi>A</mi></msub></math> | <math><msub><mi>FOOD</mi><mi>A</mi></msub></math> | <math><msub><mi>U</mi><mi>A</mi></msub></math> | <math><msub><mi>mrs</mi><mi>A</mi></msub></math> | <math><msub><mi>GOLD</mi><mi>B</mi></msub></math> | <math><msub><mi>FOOD</mi><mi>B</mi></msub></math> | <math><msub><mi>U</mi><mi>B</mi></msub></math> | <math><msub><mi>mrs</mi><mi>B</mi></msub></math> |
 | - | - | - | - | - | - |
 | 30 | 5 | 150 | 6.00 | 10 | 15 | 150 | 0.67 |
 | 28 | 6 | 168 | 4.67 | 12 | 14 | 168 | 0.86 |
