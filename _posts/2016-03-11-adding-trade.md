@@ -254,7 +254,7 @@ Because of the way the model is set up, with no consumption of either FOOD or GO
 
 ![graph showing correlation between initial utility of a Firm and its final utility](/assets/2016-03-11/utility.png)
 
-The expected utility of a firm, if it doesn't participate in any trading, can be calculated as `foodPerStep * 11 * goldPerStep * 11`. This accounts for the strong diagonal line in the above graph: one dot for each Firm that is a pure producer. The dots above that line are the Firms that participate in trade, who manage to achieve a greater utility through trading than they would if they had just produced all the time. There are no dots below the line because (unlike in real life) the Firms are very sensible about only choosing actions that are going to increase their utility.
+The expected utility of a firm, if it doesn't participate in any trading, can be calculated as `foodPerStep * 16 * goldPerStep * 16`. This accounts for the strong diagonal line in the above graph: one dot for each Firm that is a pure producer. The dots above that line are the Firms that participate in trade, who manage to achieve a greater utility through trading than they would if they had just produced all the time. There are no dots below the line because (unlike in real life) the Firms are very sensible about only choosing actions that are going to increase their utility.
 
 An example trading history of just the first activities for a Firm that does well out of trading looks like this:
 
