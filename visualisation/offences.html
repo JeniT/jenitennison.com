@@ -133,7 +133,7 @@
           }
       });
 
-      $.get('http://www.jenitennison.com/data/scheme/offence/', null, function (rdfXml) {
+      $.get('http://www.jenitennison.com/data/scheme/offence/index.rdf', null, function (rdfXml) {
         var classes, lastSelected;
         $.rdf()
           .load(rdfXml)
