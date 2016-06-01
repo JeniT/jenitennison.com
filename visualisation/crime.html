@@ -154,7 +154,7 @@
                   $('#sparkline')
                     .text('Loading...');
                   $('#data').text('');
-                  $.get(selected, null, function (rdfXml) {
+                  $.get(selected + ".rdf", null, function (rdfXml) {
                     var values = {}, 
                       lowest, highest, lowestYear, highestYear,
                       recent, recentYear, comparison, comparisonYear,

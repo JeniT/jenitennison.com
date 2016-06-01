@@ -158,7 +158,7 @@
       }, 'xml')
       
       if (view !== undefined) {
-        $.get(view, null, function (rdfXml) {
+        $.get(view + ".rdf", null, function (rdfXml) {
           var rdf, offences = {};
           rdf = $.rdf()
             .load(rdfXml)
