@@ -124,7 +124,7 @@
     };
   
     $(document).ready(function () {
-      $.get('/data/scheme/crime/', null, function (rdfXml) {
+      $.get('/data/scheme/crime/index.rdf', null, function (rdfXml) {
         var rdf, crimes, lastSelected;
         crimes = $.rdf()
           .load(rdfXml)
