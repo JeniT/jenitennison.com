@@ -1,0 +1,28 @@
+---
+layout: post
+title: What would "data literature" look like?
+---
+
+My eldest daughter is now in secondary school and, while she enjoys and is good at Maths, what she really loves studying is History and English. Watching the critical thinking and analysis skills that she is learning and using for those subjects, I have started to wonder if we should be approaching data literacy from a different angle.
+
+The need for children and adults to be equipped with data skills is well recognised. The Nesta paper [Analytic Britain: Securing the Right Skills for the Data-Driven Economy](http://www.nesta.org.uk/publications/analytic-britain-securing-right-skills-data-driven-economy) contains some recommendations, for example. However, much of this work focuses on the development of what I would frame as data science skills: the basic skills like the ability to clean data, analyse it, display it in graphs and maps, and the more advanced skills of machine learning and interactive visualisations. Data literacy becomes equated with the ability to do things with data.
+
+But for me, data literacy, and the skills we all need to have in our policymaking, businesses and lives, go beyond handling data. We need to know what data is capable of (even if we can't do those things ourselves). We need to understand the limits of data, the ways it can be used for both good and ill, the implications that has on our lives and society. Understanding these things would help us use data well in government, business and our day to day lives and have more informed debate about how we use data in society.
+
+You may remember from your own childhood studying both English Language and English Literature. English Language focuses on reading and writing, the production of material, the manipulation of language. English Literature focuses on the study of English in use, the material produced by different authors, their use of different techniques, the context in which they produced their works and the impact their work had. The two areas of study feed on each other: producing poetry enables you to understand poetry as a form, and studying great poems improves your own technique. But the focus of each is distinct. We expect children to be able to read and write when they leave school. We also expect them to understand how others’ writing has contributed to our culture and society.
+
+Could we apply the same approach to data? Children are already taught Data Language as part of the Maths curriculum. They are taught how to collect data, record it, create basic statistics, make charts and graphs from it, even in primary school. But what about Data Literature?
+
+What if children were taught about Florence Nightingale's use of data? They could unpick the method of collection, the birth of new forms of visualisation and the use of data for argument and persuasion and change. They could examine the context of Nightingale's work at the time and the repercussions through to the present day. They could create new works from her data, put together new visualisations and invent modern-day newspaper stories.
+
+They could examine the works of [great modern day data visualisers](http://bigdata-madesimple.com/30-thought-leaders-in-data-visualization/) and compare and contrast their works around particular key events, such as the Iraq war or the 2016 presidential election, or on thematic topics such as climate change. They could examine commonalities in form - citation of sources, provision of values - as well as differences in style and expression. They could produce their own visualisations in the style of one of the greats, or simply copy a work to see how it's done.
+
+They could look at the use of data in reports, from official statistical releases, through academic papers, to sports commentary. They could look at how these have evolved over time, and the varying ways in which numbers and statistics can be used to inform and substantiate a story that is being told. They could look at the choices made about what numbers get quoted in such stories, and have exercises where they select different numbers or use different rhetorical devices (eg "almost 20%" vs “less than 20%”) to reach a different conclusion.
+
+Children could be taught the history of census taking, from the Roman census that reportedly led to at least one birth in a stable, through the Doomsday book that redistributed land, to the modern day. They could examine different forms of census taking and the way in which the data is used. But they could also examine the way in which census taking, or indeed the gathering and use of any data, can exert power and change reality.
+
+There are many other topics that would make rich study material: the art of fact checking; the role of open data in government transparency and accountability; the data flows in adtech; conversational interfaces with data such as Siri and Alexa; surveillance and secret data; personalisation and data ownership in smart devices.
+
+I am not an educationalist, but I think that these kinds of topics would equip children with a much better understanding of what data really means to society. And I think it taps into the skills that those who lean towards the arts and social sciences enjoy exercising: skills such as critical thinking, context awareness and artistic appreciation. There are people who are turned off data because they don't enjoy maths. This provides a different route to reach them.
+
+I am sure there must be people thinking of and doing this already. I know of the [Calling Bullshit](http://callingbullshit.org/index.html) course, for example. What else is there? Does this idea have legs? How could we advance it? Let me know at [jeni@theodi.org](mailto:jeni@theodi.org).
