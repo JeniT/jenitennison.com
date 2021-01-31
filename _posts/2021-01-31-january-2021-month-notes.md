@@ -3,7 +3,7 @@ layout: post
 title: January 2021 Month Notes
 ---
 
-This is a month note, which is like a weeknote but for a month. You probably guessed that. My comms colleagues would question me: who is the audience for this? what's the call to action? My response is: I don't know and there isn't one. I wrote it because I thought it would be good to reflect on the month, and not bad to have a record of it beyond scribbles in my bullet journal. I honestly debated whether to publish it, because it gets quite personal near the end, but I think that's the point of week/month notes: showing others a bit of the person behind the curtain. I make no promises about writing or publishing another. Read if you like; take what you wish from it.
+This is a month note, which is like a weeknote but for a month. You probably guessed that. My comms colleagues would question me: who is the audience for this? what's the call to action? My response is: I don't know and there isn't one. I wrote it because I thought it would be good to reflect on the month, and not bad to have a record of it beyond scribbles in my bullet journal. I honestly debated whether to publish it, because it gets quite personal near the end, but I think that's the point of week/month notes: showing others a bit of the person behind the screen. I make no promises about writing or publishing another. Read if you like; take what you wish from it.
 
 ## Work
 ### ODI
@@ -128,17 +128,17 @@ In a similar vein, I couldn't really afford the time but as an intellectual trea
 ## Thoughts I had
 A random collection of things that have been in my mind, usually as a result of things I've read or the conversations above:
 
-  * while data institutions steward and act as intermediaries in data flows, they can also act as useful monitors of those flows, which can reveal additional information, such as which datasets are most useful, what kinds of things do people want to do with them, and how successful those uses are - which can then help to direct policy and investment; this should be factored into their design
+* while data institutions steward and act as intermediaries in data flows, they can also act as useful monitors of those flows, which can reveal additional information, such as which datasets are most useful, what kinds of things do people want to do with them, and how successful those uses are - which can then help to direct policy and investment; this should be factored into their design
 
-  * with great help from [Ed Parkes](https://twitter.com/edtparkes), we've been looking at the kinds of support that early stage data institutions need and where it's useful for that to come from ODI (or organisations like ODI); it feels to me as if there's a stage in the common transition from project to stand-alone institution where some operational support is useful, but it's more like incubation (the focus being on enabling them to stand on their own two feet) than long term hosting
+* with great help from [Ed Parkes](https://twitter.com/edtparkes), we've been looking at the kinds of support that early stage data institutions need and where it's useful for that to come from ODI (or organisations like ODI); it feels to me as if there's a stage in the common transition from project to stand-alone institution where some operational support is useful, but it's more like incubation (the focus being on enabling them to stand on their own two feet) than long term hosting
 
-  * a few conversations have been interesting around data literacy - we published a [blog](https://theodi.org/article/data-literacy-what-is-it-and-how-do-we-address-it-at-odi/) about where we see the gaps at ODI - there's a difference between the data capabilities that companies like DeepMind need and those required by more run-of-the-mill businesses and public sector / civil society organisations
+* a few conversations have been interesting around data literacy - we published a [blog](https://theodi.org/article/data-literacy-what-is-it-and-how-do-we-address-it-at-odi/) about where we see the gaps at ODI - there's a difference between the data capabilities that companies like DeepMind need and those required by more run-of-the-mill businesses and public sector / civil society organisations
 
-  * it's so easy to lose sight of the fact that what feels like accepted wisdom in data governance circles (eg about the inappropriateness of data ownership as a concept wrt personal data, or the limitations of consent as a mechanism for data governance) are new and revolutionary outside those circles and still need explaining
+* it's so easy to lose sight of the fact that what feels like accepted wisdom in data governance circles (eg about the inappropriateness of data ownership as a concept wrt personal data, or the limitations of consent as a mechanism for data governance) are new and revolutionary outside those circles and still need explaining
 
-  * it's been helpful in thinking through how we want to develop some of the tools we've been working on in our R&D projects to recognise that there needs to be a stage of experimenting and working out **propositions** around those tools before **productising** them
+* it's been helpful in thinking through how we want to develop some of the tools we've been working on in our R&D projects to recognise that there needs to be a stage of experimenting and working out **propositions** around those tools before **productising** them
 
-  * I learned from the team behind the [Internet & Jurisdiction Policy Network framing study on data sovereignty](https://www.internetjurisdiction.net/news/kicking-off-the-data-sovereignty-framing-study) a useful way of breaking down concerns that countries have about the free flow of data, which make them introduce data localisation (or data sovereignty) policies and laws, namely concerns about their security, about economic impacts, and about their citizen's human rights
+* I learned from the team behind the [Internet & Jurisdiction Policy Network framing study on data sovereignty](https://www.internetjurisdiction.net/news/kicking-off-the-data-sovereignty-framing-study) a useful way of breaking down concerns that countries have about the free flow of data, which make them introduce data localisation (or data sovereignty) policies and laws, namely concerns about their security, about economic impacts, and about their citizen's human rights
 
 ## Personal
 
@@ -146,15 +146,15 @@ A random collection of things that have been in my mind, usually as a result of 
 
 As is traditional, I tried to start some new habits in January in my work life, which have mostly been successful:
 
-  * email: I inbox zero'd myself by marking everything as read at the beginning of the year; now I have two modes of email interaction: **triage** where I scan through and label everything I need to actually action; and **action** where I go through that list and respond as appropriate. I have mostly been able to stick to this (but sometimes cheat and respond when I should be triaging) and have started to set aside chunks of time specifically for actioning emails, because they really build up! I am currently on zero unread emails, but about five unactioned emails.
+* email: I inbox zero'd myself by marking everything as read at the beginning of the year; now I have two modes of email interaction: **triage** where I scan through and label everything I need to actually action; and **action** where I go through that list and respond as appropriate. I have mostly been able to stick to this (but sometimes cheat and respond when I should be triaging) and have started to set aside chunks of time specifically for actioning emails, because they really build up! I am currently on zero unread emails, but about five unactioned emails.
 
-  * work pattern #1: I realised that I really like to get down to some proper work at the beginning of the day, so I have set aside 8-9am each day for heads down work (*not* looking at emails), and I decide what I'm going to do in that slot ahead of time so I'm not dilly-dallying. This has been working great for me - it gives me some guaranteed daily time for writing, reviewing and thinking and means I go into the rest of the day (which is often full of meetings) feeling I've achieved something. BUT it means an early start and given my day typically lasts until 6pm with only 30 mins for lunch means my work days are very long (though being strict about stopping work at 6pm means they're not as long as they could be)
+* work pattern #1: I realised that I really like to get down to some proper work at the beginning of the day, so I have set aside 8-9am each day for heads down work (*not* looking at emails), and I decide what I'm going to do in that slot ahead of time so I'm not dilly-dallying. This has been working great for me - it gives me some guaranteed daily time for writing, reviewing and thinking and means I go into the rest of the day (which is often full of meetings) feeling I've achieved something. BUT it means an early start and given my day typically lasts until 6pm with only 30 mins for lunch means my work days are very long (though being strict about stopping work at 6pm means they're not as long as they could be)
 
-  * work pattern #2: I have a lot of meetings, and as an introvert (and normal human being; I think we are all suffering from Zoom fatigue) I need time to recharge from them. The worst are days with multiple 30 minute back-to-back meetings (last Thursday my 12 noon meeting was the 6th meeting of the day). I'm trying to purposefully book heads down time into my calendar to break up the day and remind myself (and others) not to book meetings over them.
+* work pattern #2: I have a lot of meetings, and as an introvert (and normal human being; I think we are all suffering from Zoom fatigue) I need time to recharge from them. The worst are days with multiple 30 minute back-to-back meetings (last Thursday my 12 noon meeting was the 6th meeting of the day). I'm trying to purposefully book heads down time into my calendar to break up the day and remind myself (and others) not to book meetings over them.
 
-  * work pattern #3: I'm using a physical bullet journal for notes again, having tried using Google Docs and index cards during last year. I have a layout for each day that includes one priority task and a timeline for the day that I create at the end of the previous day, and four areas of reflection that I complete at the end of the day: what I achieved, what I learned, what I experienced and what I'm grateful for. These have been helpful in putting together this month note, but also gives just a little moment of reflection and recognition time which I think boosts my mood and helps me let go of things at the end of the day.
+* work pattern #3: I'm using a physical bullet journal for notes again, having tried using Google Docs and index cards during last year. I have a layout for each day that includes one priority task and a timeline for the day that I create at the end of the previous day, and four areas of reflection that I complete at the end of the day: what I achieved, what I learned, what I experienced and what I'm grateful for. These have been helpful in putting together this month note, but also gives just a little moment of reflection and recognition time which I think boosts my mood and helps me let go of things at the end of the day.
 
-  * exercise: I did not exercise enough last year (makes me realise how just the daily grind of commuting, racing across London for different meetings, and walk-and-talks gave a reasonably good activity baseline), especially after the kids returned to school and the weather turned nastier so I started skipping morning walks. I now have a standing desk and wobble board, which I try to use for brief meetings (it's a bit too tiring being on my feet all through longer ones). I've been trying to go on a one-hour walk every day with my 15yo, and managed that for the first couple of weeks but the combination of their school day and my work commitments has made it hard in the last couple of weeks. I've booked in a mid-afternoon walk in my calendar from now on, but I don't think I'm going to be able to manage it every day. 
+* exercise: I did not exercise enough last year (makes me realise how just the daily grind of commuting, racing across London for different meetings, and walk-and-talks gave a reasonably good activity baseline), especially after the kids returned to school and the weather turned nastier so I started skipping morning walks. I now have a standing desk and wobble board, which I try to use for brief meetings (it's a bit too tiring being on my feet all through longer ones). I've been trying to go on a one-hour walk every day with my 15yo, and managed that for the first couple of weeks but the combination of their school day and my work commitments has made it hard in the last couple of weeks. I've booked in a mid-afternoon walk in my calendar from now on, but I don't think I'm going to be able to manage it every day. 
 
 The one thing that I'm not getting/making time for is proper reading (of things other than ODI reports etc that I'm reviewing, or scans through blog posts and articles). During February, I want to try to introduce a reading slot each week.
 
@@ -172,43 +172,43 @@ News came through today that both my parents have now had their first dose vacci
 
 TV I've been watching:
 
-  * [How to Get Away with Murder](https://en.wikipedia.org/wiki/How_to_Get_Away_with_Murder) - so insanely convaluted that we shout "plot twist!" at the end of every episode but I *love* seeing the combination of competence and vulnerability in Viola Davis' portrayal of Annalise Keating
-  * [The Expanse](https://en.wikipedia.org/wiki/The_Expanse_(TV_series)) - love Amos
-  * [Wandavision](https://en.wikipedia.org/wiki/WandaVision) - 1st episode hmm, 2nd episode huh, 3rd episode ok…, 4th episode oohhhh
-  * [Criminal Minds](https://en.wikipedia.org/wiki/Criminal_Minds) - completed series 14 with 15yo
-  * [Law & Order](https://en.wikipedia.org/wiki/Law_%26_Order) - needed a replacement for Criminal Minds, just started from the very first episode; ["this really frosts my cookies"](https://www.youtube.com/watch?v=Evx-ynm6MZY) has entered into our lexicon
+* [How to Get Away with Murder](https://en.wikipedia.org/wiki/How_to_Get_Away_with_Murder) - so insanely convaluted that we shout "plot twist!" at the end of every episode but I *love* seeing the combination of competence and vulnerability in Viola Davis' portrayal of Annalise Keating
+* [The Expanse](https://en.wikipedia.org/wiki/The_Expanse_(TV_series)) - love Amos
+* [Wandavision](https://en.wikipedia.org/wiki/WandaVision) - 1st episode hmm, 2nd episode huh, 3rd episode ok…, 4th episode oohhhh
+* [Criminal Minds](https://en.wikipedia.org/wiki/Criminal_Minds) - completed series 14 with 15yo
+* [Law & Order](https://en.wikipedia.org/wiki/Law_%26_Order) - needed a replacement for Criminal Minds, just started from the very first episode; ["this really frosts my cookies"](https://www.youtube.com/watch?v=Evx-ynm6MZY) has entered into our lexicon
 
 Films we watched remotely with my family (we have had weekly remote film nights since the start of the pandemic):
 
-  * [The Piano](https://en.wikipedia.org/wiki/The_Piano) - didn't remember how problematic a film this was and felt bad for suggesting it
-  * [Four Weddings and a Funeral](https://en.wikipedia.org/wiki/Four_Weddings_and_a_Funeral)
-  * [The Theory of Everything](https://en.wikipedia.org/wiki/The_Theory_of_Everything_(2014_film))
-  * [Hunt for the Wilderpeople](https://en.wikipedia.org/wiki/Hunt_for_the_Wilderpeople) - hilarious, loved it, highly recommended, want to watch all of [Taika Waititi](https://en.wikipedia.org/wiki/Taika_Waititi)'s back catalog
+* [The Piano](https://en.wikipedia.org/wiki/The_Piano) - didn't remember how problematic a film this was and felt bad for suggesting it
+* [Four Weddings and a Funeral](https://en.wikipedia.org/wiki/Four_Weddings_and_a_Funeral)
+* [The Theory of Everything](https://en.wikipedia.org/wiki/The_Theory_of_Everything_(2014_film))
+* [Hunt for the Wilderpeople](https://en.wikipedia.org/wiki/Hunt_for_the_Wilderpeople) - hilarious, loved it, highly recommended, want to watch all of [Taika Waititi](https://en.wikipedia.org/wiki/Taika_Waititi)'s back catalog
 
 TikToks I enjoyed:
 
-  *  [Kirsten Banks on how the earth spins more quickly on some days than other days, which means days aren't all the same length!](https://vm.tiktok.com/ZMJocNbkT/)
-  *  [Fifi Dosch on millenials](https://vm.tiktok.com/ZMJo7MHr7/)
-  *  [Syd & Olivia on Trump's reaction to the Capitol insurrection](https://vm.tiktok.com/ZMJo7mB98/)
-  *  [Kalpana Pot on the distance between the earth and the moon](https://vm.tiktok.com/ZMJo75W1J/)
-  *  [Hank Green: ice is a rock and water is lava](https://vm.tiktok.com/ZMJo74qEV/)
-  *  [Geo on star-shaped sand](https://vm.tiktok.com/ZMJo79Cac/)
-  *  [Noah on how some languages include an indication of whether a statement is fact or hearsay](https://vm.tiktok.com/ZMJo74E4D/)
-  *  [Tobin Mitnick expressing solidarity with Doug Emhoff](https://vm.tiktok.com/ZMJo7SJr2/)
+*  [Kirsten Banks on how the earth spins more quickly on some days than other days, which means days aren't all the same length!](https://vm.tiktok.com/ZMJocNbkT/)
+*  [Fifi Dosch on millenials](https://vm.tiktok.com/ZMJo7MHr7/)
+*  [Syd & Olivia on Trump's reaction to the Capitol insurrection](https://vm.tiktok.com/ZMJo7mB98/)
+*  [Kalpana Pot on the distance between the earth and the moon](https://vm.tiktok.com/ZMJo75W1J/)
+*  [Hank Green: ice is a rock and water is lava](https://vm.tiktok.com/ZMJo74qEV/)
+*  [Geo on star-shaped sand](https://vm.tiktok.com/ZMJo79Cac/)
+*  [Noah on how some languages include an indication of whether a statement is fact or hearsay](https://vm.tiktok.com/ZMJo74E4D/)
+*  [Tobin Mitnick expressing solidarity with Doug Emhoff](https://vm.tiktok.com/ZMJo7SJr2/)
 
 Video games I've been playing or watching others play:
 
-  * [Wandersong](https://en.wikipedia.org/wiki/Wandersong) - my 17yo enjoyed playing this and it was a really lovely story
-  * [Wilmot's warehouse](https://en.wikipedia.org/wiki/Wilmot%27s_Warehouse) - great fun coop with 17yo
-  * [Eastshade](https://www.eastshade.com/) - really enjoyed this, and loved how this made me think about light and framing
-  * [Morkredd](https://www.morkredd.com/) - starts off as a fairly standard cooperative puzzle game and slowly descends into something amusingly disturbing
-  * [Yes, Your Grace](https://en.wikipedia.org/wiki/Yes,_Your_Grace) - haven't finished this yet, but I'm enjoying the mix of story and resource management, and the feeling of real choices
+* [Wandersong](https://en.wikipedia.org/wiki/Wandersong) - my 17yo enjoyed playing this and it was a really lovely story
+* [Wilmot's warehouse](https://en.wikipedia.org/wiki/Wilmot%27s_Warehouse) - great fun coop with 17yo
+* [Eastshade](https://www.eastshade.com/) - really enjoyed this, and loved how this made me think about light and framing
+* [Morkredd](https://www.morkredd.com/) - starts off as a fairly standard cooperative puzzle game and slowly descends into something amusingly disturbing
+* [Yes, Your Grace](https://en.wikipedia.org/wiki/Yes,_Your_Grace) - haven't finished this yet, but I'm enjoying the mix of story and resource management, and the feeling of real choices
 
 Non-video games I've been playing:
 
-  * I bought Bill a subscription to [Boxed Locks](http://www.boxedlocks.co.uk/) - escape rooms in a box - for his birthday just before Xmas; we managed to skip some clues in this one due to managing to decode something before being given the key to do so, but enjoyed it
+* I bought Bill a subscription to [Boxed Locks](http://www.boxedlocks.co.uk/) - escape rooms in a box - for his birthday just before Xmas; we managed to skip some clues in this one due to managing to decode something before being given the key to do so, but enjoyed it
 
-  * Leigh's started running [Masks](https://www.magpiegames.com/MASKS/) for me and a few others, and we had a hilarious first session talking through our characters (I'm playing a [Transformed](https://masks.fandom.com/wiki/The_Transformed) called Myco, who is entirely made of mycelium, and interfaces with plants and electronics through her hyphae) and working out how we came together as a team
+* Leigh's started running [Masks](https://www.magpiegames.com/MASKS/) for me and a few others, and we had a hilarious first session talking through our characters (I'm playing a [Transformed](https://masks.fandom.com/wiki/The_Transformed) called Myco, who is entirely made of mycelium, and interfaces with plants and electronics through her hyphae) and working out how we came together as a team
 
 ### Mental health
 
