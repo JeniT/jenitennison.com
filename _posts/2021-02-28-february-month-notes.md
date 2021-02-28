@@ -1,10 +1,10 @@
 I wrote some [month notes in January](http://www.jenitennison.com/2021/01/31/january-2021-month-notes.html). It was satisfying putting them together, and some people seemed to appreciate them, so here are some for February.
 
-# ODI
+## ODI
 
-## Strategic work
+### Strategic work
 
-### Programme planning
+#### Programme planning
 
 As I wrote last month, we're currently putting together plans for five programmes of work that we will structure our work around over the next few years, on data literacy, data assurance, data for challenges\*, data institutions, and evidence & foresight.
 
@@ -24,7 +24,7 @@ We're also putting together questions-options-and-recommendations papers for the
 
 The piece that I'm most worried about is KPIs. It's so easy to come up with KPIs that are easy to measure but meaningless, or vice versa, or that push you in the wrong direction (eg sacrificing quality and impact to meet an unrealistic quantity target). **I'd really like someone external to review, challenge and shape the KPIs that we're putting together, so if you or someone you know would be up for that (can be funded, but is under time pressure), please let me know.**
 
-### Talking about our commercial work
+#### Talking about our commercial work
 
 A second strategic area that I've been pushing at ODI is about why we do commercial work (that is, transactional work that generates margin for us, mostly for private and public sector clients) and how we talk about it.
 
@@ -40,7 +40,7 @@ This third option is the one we've generally pursued at ODI, but we also sometim
 
 This is a difficult conversation to have because it gets muddled up with the ethics of working for or accepting money from particular organisations or types of organisation; with the need to sustain the organisation and the responsibility to our team; with concerns about funder influence on organisational shape and strategy; and even personal impact on people who feel the work they do is under-appreciated or even disapproved of by others in the organisation. So I think talking about it is likely to surface other tensions, but is really necessary to give clarity and consistency.
 
-## Other internal work
+### Other internal work
 
 *   We selected a great new Head of Consultancy who will start in May. Yay!
 
@@ -50,7 +50,7 @@ This is a difficult conversation to have because it gets muddled up with the eth
 
 I wanted to share something else here. Normally, we have whole-team 15 minute standups every Monday, Wednesday and Friday. On Mondays we share our main goal for the week; on Wednesdays, give a shout out to people in the team; and on Fridays share a success or surprise from the week. This last week we mixed it up a bit and had an LGBTQ+ shout-out stand-up on Wednesday (we had a one for Black people we admire in November last year; unfortunately I missed it). It was really lovely hearing so much admiration and appreciation from the team for LGBTQ+ people in their personal lives or in the public eye. I was left with a real sense of warmth of common humanity. Highly recommended as an exercise if you want to try it in your team.
 
-## Project work
+### Project work
 
 This month I have contributed to:
 
@@ -67,7 +67,7 @@ This month I have contributed to:
     *   a workbook we're creating on developing business models in data institutions
     *   thinking around how [OpenActive](https://www.openactive.io/) might develop into a data institution
 
-## Interesting conversations
+### Interesting conversations
 
 This month I've chatted with:
 
@@ -96,7 +96,7 @@ And I saw presentations by:
 *   [Roza Vasileva](https://www.nottingham.ac.uk/research/groups/buildings-energy-and-environment/people/roza.vasileva), who is wrapping up her PhD looking at smart cities and participation, particularly in Tanzania and Kenya (ODI has been a kind of host organisation for Roza during her PhD)
 *   the University of West England, whom we commissioned to evaluate our R&D programme and had some good recommendations about how we can improve our knowledge and process management, and the evaluation of our work programmes
 
-# GPAI
+## GPAI
 
 There's not much additional to report here because over the last month we've really just been concentrating on getting the concept notes that we've been working on (and I wrote about last time) into a state where they can be shared for input from the GPAI Steering Group and other organisations.
 
@@ -128,7 +128,7 @@ I also attended SocSciFooCamp for the first time. It was a bit overwhelming and 
 
 I also attended (but didn't speak at) an "AI Dialogue" which focused on risk-based regulation around AI. A lot of the conversation made me wonder why / how there are specific issues about risk assessment or regulation around AI as opposed to other technologies. Is it because it's a general purpose technology and therefore has potentially wide-ranging effects? Is it because it's developing faster than other technologies have? Is it because the potential impact is particularly harmful? The big questions centred around how to work out which areas of AI development were the ones that were *really* problematic. One observation I found particularly interesting was a discussion of the US's comfort, with (and active pursuit of) ex post regulation, ie waiting until something goes wrong then litigating the hell out of it, compared to Europe's preference for ex ante regulation.
 
-# Thoughts I had
+## Thoughts I had
 
 *   For the talk about geospatial data, I wanted to explain why restrictive licensing around onward use is so problematic. We've previously used the phrase "poisoning the well" or "digital cholera" for this, but I wanted to incorporate the fact that we get most value from data when it is combined with other data. So I used the analogy of a tree, with data being joined together, and the results of that combination being used with yet more data, in a branching structure like the roots of a tree, growing and combining to create a wonderful canopy. A licence that doesn't restricts onward combination of data means you don't get a strong root system, and the tree is stunted. A licence that virally propagates poisons the whole tree, and if you have many of them from different sources they are like poisons that interact and kill the tree.
 
@@ -140,15 +140,15 @@ I also attended (but didn't speak at) an "AI Dialogue" which focused on risk-bas
 
 *   I've been thinking a bit about what I would do in some of the roles that have been advertised recently, or are likely to be advertised shortly, including the Executive Director of CDEI, the Innovation Commissioner, and a putative Chief Data Officer within the Central Digital and Data Office. I find this "if I had that job" exercise useful because it forces a level of practicality and understanding about the enormity of the challenges, compared to just thinking about what I'd like to see someone else do in the role. This recently published [introduction to levers for digital service groups](https://link.medium.com/0rBYOqAt7db) has some ideas but seems premised on the notion that the early GDS approach was a success (which in many ways it was, of course, but also wasn't in others). These are all roles that will need a combination of vision, systems thinking, and canny use of the limited set of levers that they will actually have at their disposal.
 
-# Personal
+## Personal
 
-## Work life
+### Work life
 
 *   Email: I'm really struggling with email (as usual). I get time to triage, which is good, and I've introduced **urgent** and **diary** labels to help give more nuanced to that. I am able to keep on top of those that require urgent action and that require diary appointments. But things that require more thought I'm just labelling as "action" and they're frankly neglected. I book time for actioning them but it gets overbooked or used for other things or simply isn't long enough. Sometimes I know I avoid them because they require thought or I simply don't have a strong idea about how to answer them. I need to be stricter about getting through them, or recognising when I'm choosing not to reply.
 
 *   Booking time: I've managed to get (most of!) the ODI team to book time into my calendar when they want me to do things, in particular things like reviewing documents. It helps keep the timing of those realistic, and it ensures that my days are usually balanced between meetings and heads down time. But there's often a few meetings that I'd really like to take earlier than my diary permits. I'm thinking about holding "last minute meeting" time in my calendar each week explicitly to enable that to happen.
 
-## Home life
+### Home life
 
 I had two days off during half term, the highlight of which was watching [Hamilton](https://en.wikipedia.org/wiki/Hamilton_(musical)) with my kids. I had tickets to go and see it live last year, for my birthday in May, but of course all the performances were cancelled. Perhaps I'll appreciate the live performance all the more for watching it (on Disney+). [King George's Songs](https://www.youtube.com/watch?v=Ti8xeyaSwCI) have been echoing in my head ever since; they're such an earworm.
 
@@ -185,7 +185,7 @@ A few films, mostly with my wider family:
 *   [Set It Up](https://en.wikipedia.org/wiki/Set_It_Up) – went for a romcom for Valentine's day; it went down ok here but the wider family didn't enjoy it
 *   [Plunkett and Macleane](https://en.wikipedia.org/wiki/Plunkett_%26_Macleane) – remember really enjoying this when it came out; the modern/historical mix seemed really innovative then, but less so now. Still adore Alan Cumming and Craig Armstrong's music though
 
-## Mental health
+### Mental health
 
 There's a lot of noise at the moment about "getting back to normal" and I've been thinking about this in particular in relation to my youngest child, and myself. There are some people who are thrilled with the idea of a return to normal office/school life, and obviously I really get that, particularly for those with difficult home situations, those living alone, those who don't have necessary equipment, those who aren't able to work during lockdown, those who have had to look after small children, and those who just love being around people and learn and get energy from those interactions.
 
