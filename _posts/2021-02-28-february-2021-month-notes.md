@@ -1,3 +1,8 @@
+---
+layout: post
+title: February 2021 Month Notes
+---
+
 I wrote some [month notes in January](http://www.jenitennison.com/2021/01/31/january-2021-month-notes.html). It was satisfying putting them together, and some people seemed to appreciate them, so here are some for February.
 
 ## ODI
