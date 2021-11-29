@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Offence Hierarchy Visualisation with rdfQuery and JIT
 created: 1250452850
 tags:

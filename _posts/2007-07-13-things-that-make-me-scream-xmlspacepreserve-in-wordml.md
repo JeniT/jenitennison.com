@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Things that make me scream: xml:space="preserve" in WordML'
 created: 1184352960
 tags:

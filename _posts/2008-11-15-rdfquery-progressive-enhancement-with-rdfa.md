@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'rdfQuery: Progressive Enhancement with RDFa'
 created: 1226767562
 tags:

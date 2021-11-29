@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Ogbuji fund
 created: 1196894072
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Hosting Gridworks Instances
 created: 1284922610
 tags:

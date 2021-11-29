@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Precious Snowflakes
 created: 1331380596
 tags:

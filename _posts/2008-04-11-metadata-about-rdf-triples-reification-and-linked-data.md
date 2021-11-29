@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Metadata about RDF triples: reification and Linked Data'
 created: 1207947547
 tags:

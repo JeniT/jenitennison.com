@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Web 2.0 Project: Using Atom and XML with Graph Data Structures'
 created: 1188763056
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: PRESTO and the limits of XPath-based URLs
 created: 1205439536
 tags:

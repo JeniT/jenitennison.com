@@ -1,5 +1,5 @@
 # Site settings
-title: Jeni's Musings
+title: Jeni Tennison
 email: jeni@jenitennison.com
 description: > # this means to ignore newlines until "baseurl:"
   Personal website for Jeni Tennison
@@ -7,9 +7,9 @@ baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://www.jenitennison.com" # the base hostname & protocol for your site
 twitter_username: jenit
 github_username:  jenit
+plugins: [jekyll-paginate]
 paginate: 5
 paginate_path: "archive/:num/"
-excerpt_separator: "<!--break-->"
 
 # Build settings
 markdown: kramdown

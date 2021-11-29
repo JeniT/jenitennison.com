@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Today''s life-skills: shoelaces and playdoh'
 created: 1184265729
 tags:

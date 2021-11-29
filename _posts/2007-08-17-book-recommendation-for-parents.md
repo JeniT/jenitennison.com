@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Book recommendation for parents
 created: 1187386033
 tags:

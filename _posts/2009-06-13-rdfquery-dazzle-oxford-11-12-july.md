@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: rdfQuery Dazzle, Oxford, 11-12 July
 created: 1244920468
 tags:

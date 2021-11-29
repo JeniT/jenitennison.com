@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Expressing Statistics with RDF
 created: 1256335670
 tags:

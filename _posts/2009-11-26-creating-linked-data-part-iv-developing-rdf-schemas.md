@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Creating Linked Data - Part IV: Developing RDF Schemas'
 created: 1259231732
 tags:

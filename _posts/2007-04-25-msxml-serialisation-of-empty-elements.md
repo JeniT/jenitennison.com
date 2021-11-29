@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: MSXML serialisation of empty elements
 created: 1177514274
 tags:

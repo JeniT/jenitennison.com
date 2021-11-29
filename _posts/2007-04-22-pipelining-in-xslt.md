@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Pipelining in XSLT
 created: 1177277330
 tags:

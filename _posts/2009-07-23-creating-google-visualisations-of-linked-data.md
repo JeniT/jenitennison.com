@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Creating Google Visualisations of Linked Data
 created: 1248385053
 tags:

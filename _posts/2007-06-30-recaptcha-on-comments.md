@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: reCAPTCHA on comments
 created: 1183200271
 tags:

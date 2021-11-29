@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Converting (people) to RDF
 created: 1195157073
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Programming robots the feminine way?
 created: 1185139589
 tags:

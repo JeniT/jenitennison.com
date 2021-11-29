@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Distributed Publication and Querying
 created: 1269293213
 tags:

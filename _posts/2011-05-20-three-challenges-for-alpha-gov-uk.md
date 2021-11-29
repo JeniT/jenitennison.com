@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Three challenges for alpha.gov.uk
 created: 1305920740
 tags:

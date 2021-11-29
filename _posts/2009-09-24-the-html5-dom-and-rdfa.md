@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: The HTML5 DOM and RDFa
 created: 1253779503
 tags:

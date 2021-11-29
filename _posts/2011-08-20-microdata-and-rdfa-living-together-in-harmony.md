@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Microdata and RDFa Living Together in Harmony
 created: 1313858351
 tags:

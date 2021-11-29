@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Publishing Linked Data on the Talis Platform, Part 2
 created: 1247863780
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Temporal Scope for RDF Triples
 created: 1234718590
 tags:

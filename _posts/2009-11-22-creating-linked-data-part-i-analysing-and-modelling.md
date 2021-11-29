@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Creating Linked Data - Part I: Analysing and Modelling'
 created: 1258909097
 tags: []

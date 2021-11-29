@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Extension primitives in XSDL
 created: 1200783620
 tags:

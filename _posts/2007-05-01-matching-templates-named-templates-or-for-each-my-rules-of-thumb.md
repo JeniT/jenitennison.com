@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Matching templates, named templates or for-each? My rules of thumb
 created: 1178055117
 tags:

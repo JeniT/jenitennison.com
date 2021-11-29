@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'XTech 2007: Thursday 17th May Afternoon'
 created: 1180303404
 tags:

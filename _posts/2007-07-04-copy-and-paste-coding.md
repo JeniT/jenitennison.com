@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Copy-and-paste coding
 created: 1183580791
 tags:

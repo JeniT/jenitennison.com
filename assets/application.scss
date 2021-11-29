@@ -9,9 +9,13 @@
 body {
   padding-top: $navbar-height;
   padding-bottom: $navbar-height;
+
+  a {
+    font-weight: bold;
+  }
 }
 
-blockquote { 
+blockquote {
   font-size: $font-size-base;
 }
 
@@ -22,13 +26,15 @@ table {
 
 .navbar {
   background-color: $brand-primary;
+  border-bottom: 0px;
+
   &.navbar-default {
     .navbar-brand {
-      color: $brand-secondary;
+      color: $brand-tertiary;
     }
     .navbar-nav > li {
       > a {
-        color: $brand-secondary;
+        color: $brand-tertiary;
       }
       &.active > a {
         background-color: lighten($brand-primary, 10%)
@@ -39,17 +45,18 @@ table {
 }
 
 .sidebar {
-  background-color: $gray-lighter;
+  background-color: $brand-tertiary;
   padding: $line-height-computed;
+  padding-bottom: $line-height-computed * 2;
 }
 
 .footer {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: $navbar-height;
-  padding-top: $navbar-height / 4;
-  padding-bottom: $navbar-height / 4;
+  height: $footer-height;
+  padding-top: $footer-height / 4;
+  padding-bottom: $footer-height / 4;
   background-color: $brand-secondary;
   color: white;
 

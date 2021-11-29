@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Web 2.0 project: privacy in genealogy'
 created: 1200606538
 tags:

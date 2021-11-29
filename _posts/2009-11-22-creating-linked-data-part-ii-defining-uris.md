@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Creating Linked Data - Part II: Defining URIs'
 created: 1258910614
 tags:

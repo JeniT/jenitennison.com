@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Using Freebase Gridworks to Create Linked Data
 created: 1282515812
 tags:
@@ -198,8 +199,8 @@ Creating the URIs for the columns proceeds in the same way, except this time the
 
 There are two that are slightly different. First, there's the URI for the date, which needs to be constructed from the date/time value held by Gridworks as follows. We can do this in two stages. First, to construct a new column called 'Date' to hold the formatted date:
 
-    datePart(value, 'year') + '-' + 
-    if (datePart(value, 'month') < 9, '0', '') + replace(datePart(value, 'month') + 1, '.0', '') + '-' + 
+    datePart(value, 'year') + '-' +
+    if (datePart(value, 'month') < 9, '0', '') + replace(datePart(value, 'month') + 1, '.0', '') + '-' +
     if (datePart(value, 'day') < 10, '0', '') + datePart(value, 'day')
 
 (note that the `datePart()` function returns a 0-based count for the month) and then to create the Date URI column based on this:
@@ -243,7 +244,7 @@ Each individual line in the spreadsheet is a `payment:ExpenditureLine` which is 
 
     <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2>
       qb:slice <http://www.rbwm.gov.uk/id/transaction/2650750> .
-    
+
     <http://www.rbwm.gov.uk/id/transaction/2650750>
       a payment:Payment , qb:Slice ;
       rdfs:label "Transaction 2650750"@en ;
@@ -253,7 +254,7 @@ Each individual line in the spreadsheet is a `payment:ExpenditureLine` which is 
       payment:payee <http://www.rbwm.gov.uk/id/supplier/1st-choice-d-b-driveways-limited> ;
       payment:date <http://reference.data.gov.uk/id/day/2010-04-09> ;
       payment:expenditureLine <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2#0> .
-      
+
     <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2#0>
       a payment:ExpenditureLine , qb:Observation ;
       rdfs:label "Expenditure Line 0"@en ;
@@ -272,7 +273,7 @@ In each of these cases, pulling the information out from each line is going to l
     <http://www.rbwm.gov.uk/id/supplier/1st-choice-d-b-driveways-limited>
       a org:Organization ;
       rdfs:label "1st Choice - D B Driveways Limited"@en .
-    
+
     <http://reference.data.gov.uk/id/day/2010-04-09>
       a interval:CalendarDay ;
       rdfs:label "2010-04-09" ;
@@ -280,28 +281,28 @@ In each of these cases, pulling the information out from each line is going to l
       interval:ordinalYear 2010 ;
       interval:ordinalMonthOfYear 4 ;
       interval:ordinalDayOfMonth 9 .
-    
+
     <http://reference.data.gov.uk/id/gregorian-instant/2010-04-09T00:00:00>
       a time:Instant ;
       time:inXSDDateTime "2010-04-09T00:00:00"^^xsd:dateTime .
-    
+
     <http://www.rbwm.gov.uk/def/cost-centre/LM05>
       a rbwm:CostCentre , skos:Concept ;
       rdfs:label "Cost Centre LM05"@en ;
       rbwm:costCentreCode "LM05"^^rbwm:CostCentreCode ;
       rbwm:service <http://www.rbwm.gov.uk/id/service/magnet-leisure-centre> .
-    
+
     <http://www.rbwm.gov.uk/id/service/magnet-leisure-centre>
       a rbwm:Service ;
       rdfs:label "Magnet Leisure Centre"@en ;
       rbwm:providedBy <http://www.rbwm.gov.uk/id/directorate/adult-community-services> .
-    
+
     <http://www.rbwm.gov.uk/id/directorate/adult-community-services>
       a rbwm:Directorate ;
       rdfs:label "Adult & Community Services"@en ;
       org:unitOf <http://statistics.data.gov.uk/id/local-authority/00ME> ;
       rbwm:provides <http://www.rbwm.gov.uk/id/service/magnet-leisure-centre> .
-    
+
     <http://statistics.data.gov.uk/id/local-authority/00ME>
       org:hasUnit <http://www.rbwm.gov.uk/id/directorate/adult-community-services> .
 
@@ -310,39 +311,39 @@ You'll see that in the last part of this I've introduced some properties and cla
     rbwm:CostCentre a rdfs:Class ;
       rdfs:label "Cost Centre"@en ;
       rdfs:comment "A cost centre."@en .
-    
+
     rbwm:Service a rdfs:Class ;
       rdfs:label "Service"@en ;
       rdfs:comment "A service provided by the council."@en .
-    
+
     rbwm:Directorate a rdfs:Class ;
       rdfs:label "Directorate"@en ;
       rdfs:comment "A directorate within the council"@en .
-    
+
     rbwm:service a rdf:Property , owl:ObjectProperty ;
       rdfs:label "Service"@en ;
       rdfs:comment "The service associated with a particular cost centre."@en ;
       rdfs:domain rbwm:CostCentre ;
       rdfs:range rbwm:Service .
-    
+
     rbwm:providedBy a rdf:Property , owl:ObjectProperty ;
       rdfs:label "Provided By"@en ;
       rdfs:comment "The directorate that provides this service."@en ;
       rdfs:domain rbwm:Service ;
       rdfs:range rbwm:Directorate .
-    
+
     rbwm:provides a rdf:Property , owl:ObjectProperty ;
       rdfs:label "Provides"@en ;
       rdfs:comment "A service provided by this directorate."@en ;
       rdfs:domain rbwm:Directorate ;
       rdfs:range rbwm:Service .
-    
+
     rbwm:costCentreCode a rdf:Property , owl:DatatypeProperty ;
       rdfs:label "Cost Centre Code"@en ;
       rdfs:comment "The code of this cost centre."@en ;
       rdfs:domain rbwm:CostCentre ;
       rdfs:range rbwm:CostCentreCode .
-    
+
     rbwm:CostCentreCode a rdfs:Datatype ;
       rdfs:label "Cost Centre Code"@en ;
       rdfs:comment "A cost centre code consisting of two capital letters followed by two digits."@en .
@@ -353,7 +354,7 @@ Now we have an idea about what data we can extract for a single row, we can turn
 
     <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2>
       qb:slice <${Transaction URI}> .
-    
+
     <${Transaction URI}>
       a payment:Payment , qb:Slice ;
       rdfs:label "Transaction ${TransNo}"@en ;
@@ -363,13 +364,13 @@ Now we have an idea about what data we can extract for a single row, we can turn
       payment:payee <${Supplier URI}> ;
       payment:date <${Date URI}> ;
       payment:expenditureLine <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2${Line URI}> .
-      
+
     <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2${Line URI}>
       a payment:ExpenditureLine , qb:Observation ;
       rdfs:label "Expenditure Line {{rowIndex}}"@en ;
       qb:dataSet <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2> ;
       payment:expenditureCode <${Cost Centre URI}> ;
-      payment:amountExcludingVAT {{cells['Amount excl vat £'].value + 0}} .
+      payment:amountExcludingVAT {% raw %}{{cells['Amount excl vat £'].value + 0}}{% endraw %} .
 
 Note that the last line here uses the expression `cells['Amount excl vat £'].value + 0` in order to ensure that every figure has a decimal place, which makes them into `xsd:decimal` values within the resulting RDF.
 
@@ -386,7 +387,7 @@ The Turtle for this description is shown here:
     <http://www.rbwm.gov.uk/public/finance_supplier_payments>
       a void:Dataset ;
       void:subset <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2> .
-    
+
     <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2>
       a payment:PaymentDataset , void:Dataset ;
       # basic metadata
@@ -396,12 +397,12 @@ The Turtle for this description is shown here:
         # this time is retrieved from the Last-Modified date on the original spreadsheet
         time:hasBeginning <http://reference.data.gov.uk/id/gregorian-instant/2010-08-02T08:37:02>
       ] ;
-      
+
       # statistical metadata
       qb:structure payment:payments-with-expenditure-structure ;
       qb:sliceKey payment:payment-slice ;
       payment:currency <http://dbpedia.org/resource/Pound_sterling> ;
-      
+
       # linked data metadata
       void:exampleResource
         <http://www.rbwm.gov.uk/id/transaction/2650750> ,
@@ -511,20 +512,20 @@ The project itself was created from the original Excel spreadsheet. The details 
       rdfs:label "Windsor & Maidenhead Supplier Payments April 2010 - June 2010 Gridworks Project"@en ;
       gridworks:wasCreatedFrom <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2.xls> ;
       opmv:wasGeneratedBy <#gridworks-processing> .
-    
+
     <#gridworks-processing>
       a gridworks:Process , opmv:Process ;
       rdfs:label "Processing on the Gridworks Project"@en ;
       common:usedData <http://www.rbwm.gov.uk/public/finance_supplier_payments_2010_q2.xls> ;
       gridworks:ignore 1 ;
       gridworks:operationDescription <finance_supplier_payments_2010_q2_operations.json> .
-    
+
     <finance_supplier_payments_2010_q2_operations.json>
       a gridworks:OperationDescription , opmv:Artifact ;
       rdfs:label "Dump of the Processing carried out by Gridworks on Windsor &amp; Maidenhead Supplier Payments April 2010 - June 2010 data"@en ;
       gridworks:wasExportedFrom <finance_supplier_payments_2010_q2_project.tar.gz> ;
       gridworks:wasExportedBy <#gridworks-operation-description-extraction> .
-    
+
     <#gridworks-operation-description-extraction>
       a gridworks:ExtractOperationDescription , opmv:Process ;
       rdfs:label "Extraction of the operation description from the Windsor &amp; Maidenhead Supplier Payments April 2010 - June 2010 Project from Gridworks"@en ;

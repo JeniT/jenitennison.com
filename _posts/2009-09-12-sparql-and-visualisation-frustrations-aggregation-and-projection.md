@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'SPARQL & Visualisation Frustrations: Aggregation and Projection'
 created: 1252795365
 tags:

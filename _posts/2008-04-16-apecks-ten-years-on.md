@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: APECKS, ten years on
 created: 1208378083
 tags:

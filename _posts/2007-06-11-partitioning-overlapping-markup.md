@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Partitioning overlapping markup
 created: 1181594169
 tags:

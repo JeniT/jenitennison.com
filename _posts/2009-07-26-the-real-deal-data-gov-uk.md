@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'The Real Deal: data.gov.uk'
 created: 1248622734
 tags:

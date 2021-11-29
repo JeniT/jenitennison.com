@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Levenshtein distance on the diagonal
 created: 1178488603
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Job Opportunity at TSO
 created: 1233345530
 tags: []

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: RELAX NG for matching
 created: 1204815543
 tags:

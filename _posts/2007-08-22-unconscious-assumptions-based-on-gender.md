@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Unconscious assumptions based on gender
 created: 1187799335
 tags:

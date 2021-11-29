@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Cross-processor XSLT extension functions
 created: 1180516707
 tags:

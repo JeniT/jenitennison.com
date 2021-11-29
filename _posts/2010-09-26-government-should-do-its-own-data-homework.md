@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Government Should Do its Own Data Homework
 created: 1285537290
 tags:

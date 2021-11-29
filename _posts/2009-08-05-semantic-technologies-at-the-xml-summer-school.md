@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Semantic Technologies at the XML Summer School
 created: 1249503713
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Getting Started with RDF and SPARQL Using 4store and RDF.rb
 created: 1295119077
 tags:

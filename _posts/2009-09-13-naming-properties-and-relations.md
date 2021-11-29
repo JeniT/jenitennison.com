@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Naming Properties and Relations
 created: 1252876786
 tags:

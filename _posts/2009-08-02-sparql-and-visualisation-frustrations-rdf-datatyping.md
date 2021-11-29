@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'SPARQL & Visualisation Frustrations: RDF Datatyping'
 created: 1249243222
 tags:

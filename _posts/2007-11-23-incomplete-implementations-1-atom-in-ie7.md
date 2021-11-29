@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Incomplete implementations #1: Atom in IE7'
 created: 1195850548
 tags:

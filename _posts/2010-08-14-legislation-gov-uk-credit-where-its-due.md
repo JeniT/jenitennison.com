@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'legislation.gov.uk: Credit Where it''s Due'
 created: 1281784718
 tags:

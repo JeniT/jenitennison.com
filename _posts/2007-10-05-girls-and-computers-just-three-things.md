@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Girls and computers: just three things'
 created: 1191621848
 tags:

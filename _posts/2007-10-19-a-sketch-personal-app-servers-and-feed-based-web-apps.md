@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'A sketch: personal APP servers and feed-based web apps'
 created: 1192829278
 tags:

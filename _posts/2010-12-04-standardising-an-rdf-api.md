@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Standardising an RDF API
 created: 1291449943
 tags:

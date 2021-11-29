@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Working With Fragmented Overlapping Markup
 created: 1230495356
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: xml.com Atom feed
 created: 1220815005
 tags:

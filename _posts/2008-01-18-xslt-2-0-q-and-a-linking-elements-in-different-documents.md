@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'XSLT 2.0 Q&A: Linking elements in different documents'
 created: 1200677594
 tags:

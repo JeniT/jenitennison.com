@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Comment spam and feed format
 created: 1179174736
 tags:

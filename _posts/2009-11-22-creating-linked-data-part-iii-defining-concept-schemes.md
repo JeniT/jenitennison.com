@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Creating Linked Data - Part III: Defining Concept Schemes'
 created: 1258923881
 tags:

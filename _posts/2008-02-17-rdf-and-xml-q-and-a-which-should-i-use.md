@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'RDF and XML Q&A: Which should I use?'
 created: 1203279012
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Things that make me scream: RDF "QNames"'
 created: 1187213908
 tags:

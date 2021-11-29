@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Establishing Trust by Describing Provenance
 created: 1256415365
 tags:

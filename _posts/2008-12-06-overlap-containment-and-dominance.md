@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Overlap, Containment and Dominance
 created: 1228597012
 tags:

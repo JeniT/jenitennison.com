@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Opaque URIs != Unreadable URIs
 created: 1248554494
 tags:

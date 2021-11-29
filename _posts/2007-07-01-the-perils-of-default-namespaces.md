@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: The perils of default namespaces
 created: 1183318364
 tags:

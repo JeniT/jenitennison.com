@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Big XSLT applications just got easier to manage
 created: 1178783922
 tags:

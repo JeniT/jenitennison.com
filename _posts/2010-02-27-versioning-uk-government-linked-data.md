@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Versioning (UK Government) Linked Data
 created: 1267308940
 tags:

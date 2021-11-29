@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Automatic markup and XML pipelines
 created: 1203976977
 tags:

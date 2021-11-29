@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Content and Descriptions of Web Resources
 created: 1333229228
 tags:

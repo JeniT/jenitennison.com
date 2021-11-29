@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: The future of computer interfaces
 created: 1177797737
 tags:

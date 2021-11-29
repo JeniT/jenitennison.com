@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: UK-based XML/XSLT job
 created: 1208462536
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: My Experience of Web Standards
 created: 1311524640
 tags:

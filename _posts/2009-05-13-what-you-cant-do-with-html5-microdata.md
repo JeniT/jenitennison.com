@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: What You Can't Do with HTML5 Microdata
 created: 1242176266
 tags:

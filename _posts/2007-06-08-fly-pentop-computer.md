@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: FLY pentop computer
 created: 1181313687
 tags:

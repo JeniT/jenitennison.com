@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Publishing Information About Inward Links
 created: 1257708620
 tags:

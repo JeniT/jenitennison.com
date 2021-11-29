@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'SPARQL & Visualisation Frustrations: Linked Data'
 created: 1249331794
 tags:

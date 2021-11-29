@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Reporting on the blogosphere
 created: 1178828571
 tags:

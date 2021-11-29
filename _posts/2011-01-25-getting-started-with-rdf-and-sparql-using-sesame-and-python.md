@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Getting Started with RDF and SPARQL Using Sesame and Python
 created: 1295976444
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Levenshtein distance in XSLT 2.0
 created: 1178226737
 tags:

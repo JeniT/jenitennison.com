@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: UK Open Standards Consultation
 created: 1334443491
 tags:

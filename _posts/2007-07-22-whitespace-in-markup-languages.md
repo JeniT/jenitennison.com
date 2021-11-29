@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Whitespace in markup languages
 created: 1185093145
 tags:

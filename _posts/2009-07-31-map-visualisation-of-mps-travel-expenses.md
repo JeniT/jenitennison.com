@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Map Visualisation of MPs Travel Expenses
 created: 1249079593
 tags:

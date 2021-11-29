@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: URL design for searches and queries
 created: 1186956000
 tags:

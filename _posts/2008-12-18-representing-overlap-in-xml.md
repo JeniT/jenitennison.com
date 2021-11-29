@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Representing Overlap in XML
 created: 1229636697
 tags:

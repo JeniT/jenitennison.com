@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Schema.org and the Responsibility of Monopoly
 created: 1307906607
 tags:

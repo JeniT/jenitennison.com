@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: The right kind of indoctrination
 created: 1182019185
 tags:

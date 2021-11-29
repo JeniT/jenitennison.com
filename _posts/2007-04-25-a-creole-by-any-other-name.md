@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: A Creole by any other name...
 created: 1177531768
 tags:

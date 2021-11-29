@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Linked Open Data in a Changing World
 created: 1247252092
 tags:

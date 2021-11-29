@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Using Multiple Vocabularies in Microdata
 created: 1311841521
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Detecting streamability in XPath expressions and patterns
 created: 1194378345
 tags:

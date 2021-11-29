@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: XML Summer School 2009
 created: 1245963794
 tags:

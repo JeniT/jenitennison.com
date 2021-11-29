@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Why Linked Data for data.gov.uk?
 created: 1264511458
 tags:

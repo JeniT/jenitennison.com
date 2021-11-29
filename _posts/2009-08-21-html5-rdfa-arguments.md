@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: HTML5/RDFa Arguments
 created: 1250879296
 tags:

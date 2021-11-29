@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Do we need more women in computing?
 created: 1182462347
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Minimising hard-disk power consumption
 created: 1187553609
 tags:

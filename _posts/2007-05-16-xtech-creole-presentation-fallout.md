@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: XTech Creole presentation fallout
 created: 1179348527
 tags:

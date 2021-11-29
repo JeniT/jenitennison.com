@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Lessons for Microdata from schema.org
 created: 1307737658
 tags:

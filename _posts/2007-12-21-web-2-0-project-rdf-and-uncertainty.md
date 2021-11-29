@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Web 2.0 project: RDF and uncertainty'
 created: 1198274631
 tags:

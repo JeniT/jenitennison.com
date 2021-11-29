@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'XSLT Q&A: Refactoring templates'
 created: 1207509600
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: RDFa, sure, but now?
 created: 1187555675
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Mapping Microdata to RDFa
 created: 1313858128
 tags:

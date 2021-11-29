@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Sleeping 'til 6am
 created: 1189284348
 tags:

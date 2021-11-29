@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Translating Existing Models to RDF
 created: 1268512546
 tags:

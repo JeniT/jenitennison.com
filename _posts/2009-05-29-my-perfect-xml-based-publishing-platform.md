@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: My Perfect XML-Based Publishing Platform
 created: 1243633220
 tags:

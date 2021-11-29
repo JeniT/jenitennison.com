@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Pipelines (of lentils) in action
 created: 1180463222
 tags:

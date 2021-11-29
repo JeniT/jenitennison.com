@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: XML Paths in Programming Languages
 created: 1181079348
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Functions or templates? My rules of thumb
 created: 1177841512
 tags:

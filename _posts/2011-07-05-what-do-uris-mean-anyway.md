@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: What Do URIs Mean Anyway?
 created: 1309903593
 tags:

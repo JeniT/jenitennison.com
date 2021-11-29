@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Creating Linked Data - Part V: Finishing Touches'
 created: 1260003028
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! 'Partial implementations #2: XSLT in Google Search Appliance'
 created: 1195856539
 tags:

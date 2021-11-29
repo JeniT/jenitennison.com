@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: ! '"Hot" compost bin'
 created: 1180445891
 tags:

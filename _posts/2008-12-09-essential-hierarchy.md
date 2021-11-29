@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Essential Hierarchy
 created: 1228845572
 tags:

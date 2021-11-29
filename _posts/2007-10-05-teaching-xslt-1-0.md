@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Teaching XSLT 1.0
 created: 1191619717
 tags:

@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: Google's RDFa Support
 created: 1242250231
 tags:

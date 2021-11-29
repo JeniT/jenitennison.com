@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: hmg.gov.uk/data and What We Can Do
 created: 1254578424
 tags:

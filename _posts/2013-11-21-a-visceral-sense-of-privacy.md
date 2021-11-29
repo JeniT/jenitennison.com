@@ -1,5 +1,6 @@
 ---
 layout: drupal-post
+excerpt_separator: "<!--break-->"
 title: A Visceral Sense of Privacy
 created: 1385072066
 tags: []
